@@ -16,7 +16,11 @@ const els = {
   puzzleMode: document.querySelector("#puzzleMode"),
   todayLabel: document.querySelector("#todayLabel"),
   proofLabel: document.querySelector("#proofLabel"),
+  bestTime: document.querySelector("#bestTime"),
   sharePreview: document.querySelector("#sharePreview"),
+  startOverlay: document.querySelector("#startOverlay"),
+  startBtn: document.querySelector("#startBtn"),
+  startLabel: document.querySelector("#startLabel"),
   resetBtn: document.querySelector("#resetBtn"),
   hintBtn: document.querySelector("#hintBtn"),
   checkBtn: document.querySelector("#checkBtn"),
@@ -37,12 +41,15 @@ const els = {
 const storage = {
   streak: "dll-streak",
   solvedDate: "dll-solved-date",
-  analytics: "dll-analytics-events"
+  analytics: "dll-analytics-events",
+  bestDailyPrefix: "dll-best-daily-",
+  bestPractice: "dll-best-practice"
 };
 
 let state = createGameState(getDailyPuzzle(), "daily");
 let timerId = null;
 let elapsed = 0;
+let startedAt = 0;
 let activeDigits = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
 init();
@@ -60,19 +67,21 @@ function init() {
   renderBoard();
   updateStats();
   updateSharePreview();
-  setStatus("Puzzle generated. Solver verified exactly one solution.", "success");
-  startTimer();
+  updateStartOverlay();
+  updateControls();
+  setStatus("Press Start when you are ready. The timer is paused.", "");
   bindGameEvents();
   renderDigits();
   bindCalculatorEvents();
   updateCombinations();
-  trackEvent("page_view", {
+  trackEvent("site_loaded", {
     path: location.pathname || "/",
     title: document.title
   });
 }
 
 function bindGameEvents() {
+  els.startBtn.addEventListener("click", startPuzzle);
   els.resetBtn.addEventListener("click", resetCurrentPuzzle);
   els.hintBtn.addEventListener("click", showHint);
   els.checkBtn.addEventListener("click", checkPuzzle);
@@ -97,6 +106,35 @@ function createGameState(puzzle, mode) {
     solved: false,
     started: false
   };
+}
+
+function startPuzzle() {
+  if (state.started || state.solved) return;
+  state.started = true;
+  elapsed = 0;
+  startedAt = Date.now();
+  startTimer();
+  renderBoard();
+  updateStartOverlay();
+  updateControls();
+  updateStats();
+  setStatus("Timer started. Solve it clean.", "success");
+  trackEvent("puzzle_start", getPuzzleEventData({ start_method: "button" }));
+}
+
+function preparePuzzle(message, tone = "") {
+  stopTimer();
+  elapsed = 0;
+  startedAt = 0;
+  state.hints.clear();
+  state.errors.clear();
+  setModeText();
+  setStatus(message, tone);
+  renderBoard();
+  updateStats();
+  updateSharePreview();
+  updateStartOverlay();
+  updateControls();
 }
 
 function getDailyPuzzle() {
@@ -342,10 +380,11 @@ function renderBoard() {
       cell.dataset.region = String(regionIndex(row, col));
       cell.setAttribute("role", "gridcell");
       cell.setAttribute("aria-label", `Row ${row + 1}, column ${col + 1}`);
+      cell.disabled = !state.started || state.solved;
       cell.addEventListener("click", () => cycleCell(row, col));
       if (state.cells[row][col] === STAR) {
         cell.classList.add("star");
-        cell.textContent = "★";
+        cell.textContent = "\u2605";
       }
       if (state.cells[row][col] === BLOCK) {
         cell.classList.add("blocked");
@@ -364,8 +403,9 @@ function renderBoard() {
 function cycleCell(row, col) {
   if (state.solved) return;
   if (!state.started) {
-    state.started = true;
-    trackEvent("puzzle_start", getPuzzleEventData());
+    setStatus("Press Start before placing stars.", "");
+    updateStartOverlay();
+    return;
   }
   state.cells[row][col] = (state.cells[row][col] + 1) % 3;
   state.hints.clear();
@@ -381,43 +421,30 @@ function cycleCell(row, col) {
 function resetCurrentPuzzle() {
   trackEvent("puzzle_reset", getPuzzleEventData());
   state = createGameState(state.puzzle, state.mode);
-  elapsed = 0;
-  setModeText();
-  setStatus("Puzzle reset.", "");
-  renderBoard();
-  updateStats();
-  updateSharePreview();
-  restartTimer();
+  preparePuzzle("Puzzle reset. Press Start when you are ready.", "");
 }
 
 function loadDailyPuzzle() {
   setStatus("Generating a unique daily puzzle...", "");
   state = createGameState(getDailyPuzzle(), "daily");
-  elapsed = 0;
-  setModeText();
-  setStatus("Daily puzzle loaded. Solver verified exactly one solution.", "success");
+  preparePuzzle("Daily puzzle ready. Press Start when you are ready.", "success");
   trackEvent("daily_puzzle_loaded", getPuzzleEventData());
-  renderBoard();
-  updateStats();
-  updateSharePreview();
-  restartTimer();
 }
 
 function loadPracticePuzzle() {
   setStatus("Generating a unique practice puzzle...", "");
   const next = generateUniquePuzzle(createPracticeSeed(), "P" + String(Date.now()).slice(-5));
   state = createGameState(next, "practice");
-  elapsed = 0;
-  setModeText();
-  setStatus("Practice puzzle loaded. Solver verified exactly one solution.", "success");
+  preparePuzzle("Practice puzzle ready. Press Start when you are ready.", "success");
   trackEvent("new_practice_clicked", getPuzzleEventData());
-  renderBoard();
-  updateStats();
-  updateSharePreview();
-  restartTimer();
 }
 
 function checkPuzzle() {
+  if (!state.started) {
+    setStatus("Press Start before checking the board.", "");
+    updateStartOverlay();
+    return;
+  }
   const result = isSolved();
   state.errors = result.errors;
   state.hints.clear();
@@ -439,6 +466,11 @@ function checkPuzzle() {
 }
 
 function showHint() {
+  if (!state.started) {
+    setStatus("Press Start before asking for a hint.", "");
+    updateStartOverlay();
+    return;
+  }
   state.errors.clear();
   state.hints.clear();
   const result = isSolved();
@@ -490,10 +522,12 @@ function showHint() {
 
 function markSolved() {
   if (state.solved) return;
+  updateElapsedFromClock();
   state.solved = true;
   stopTimer();
   state.errors.clear();
   state.hints.clear();
+  const isBest = saveBestTime();
   if (state.mode === "daily") {
     const today = getTodayKey();
     if (localStorage.getItem(storage.solvedDate) !== today) {
@@ -502,10 +536,12 @@ function markSolved() {
       localStorage.setItem(storage.solvedDate, today);
     }
   }
-  setStatus(`Solved in ${formatTime(elapsed)}. Nice.`, "success");
-  trackEvent("puzzle_solved", getPuzzleEventData({ time_seconds: elapsed }));
+  setStatus(`Solved in ${formatTime(elapsed)}. ${isBest ? "New best time." : "Nice."}`, "success");
+  trackEvent("puzzle_solved", getPuzzleEventData({ time_seconds: elapsed, new_best: isBest }));
   renderBoard();
   updateStats();
+  updateStartOverlay();
+  updateControls();
   updateSharePreview();
 }
 
@@ -642,11 +678,49 @@ function getKey(row, col) {
   return `${row}-${col}`;
 }
 
+function updateStartOverlay() {
+  const shouldShow = !state.started && !state.solved;
+  els.startOverlay.hidden = !shouldShow;
+  els.startLabel.textContent =
+    state.mode === "daily" ? `Daily puzzle #${state.puzzle.id}` : `Practice puzzle #${state.puzzle.id}`;
+  els.startBtn.textContent = state.mode === "daily" ? "Start Daily Puzzle" : "Start Practice";
+  els.startBtn.disabled = !shouldShow;
+}
+
+function updateControls() {
+  const playable = state.started && !state.solved;
+  els.hintBtn.disabled = !playable;
+  els.checkBtn.disabled = !playable;
+  els.shareBtn.disabled = !state.started && !state.solved;
+}
+
+function getBestTimeKey() {
+  if (state.mode === "daily") {
+    return `${storage.bestDailyPrefix}${getTodayKey()}`;
+  }
+  return storage.bestPractice;
+}
+
+function getBestTime() {
+  return Number(localStorage.getItem(getBestTimeKey()) || "0");
+}
+
+function saveBestTime() {
+  const best = getBestTime();
+  if (!best || elapsed < best) {
+    localStorage.setItem(getBestTimeKey(), String(elapsed));
+    return true;
+  }
+  return false;
+}
+
 function updateStats() {
   const starTotal = state.cells.flat().filter((value) => value === STAR).length;
+  const best = getBestTime();
   els.starCount.textContent = `${starTotal}/${SIZE}`;
   els.streakCount.textContent = localStorage.getItem(storage.streak) || "0";
   els.timer.textContent = formatTime(elapsed);
+  els.bestTime.textContent = best ? formatTime(best) : "--:--";
   setModeText();
 }
 
@@ -658,17 +732,14 @@ function setModeText() {
 
 function startTimer() {
   stopTimer();
-  timerId = window.setInterval(() => {
-    if (!state.solved) {
-      elapsed += 1;
-      els.timer.textContent = formatTime(elapsed);
-    }
-  }, 1000);
+  startedAt = Date.now() - elapsed * 1000;
+  timerId = window.setInterval(updateElapsedFromClock, 250);
 }
 
-function restartTimer() {
-  stopTimer();
-  startTimer();
+function updateElapsedFromClock() {
+  if (!state.started || state.solved || !startedAt) return;
+  elapsed = Math.floor((Date.now() - startedAt) / 1000);
+  els.timer.textContent = formatTime(elapsed);
 }
 
 function stopTimer() {

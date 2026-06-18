@@ -161,10 +161,23 @@
             </div>
 
             <div class="board-wrap" aria-live="polite">
-              <div id="board" class="board" role="grid" aria-label="Star Battle board"></div>
+              <div class="board-stage">
+                <div id="board" class="board" role="grid" aria-label="Star Battle board"></div>
+                <div id="startOverlay" class="start-overlay">
+                  <div class="start-card">
+                    <p class="eyebrow" id="startLabel">Daily puzzle</p>
+                    <h2>Ready to solve?</h2>
+                    <p>
+                      The timer starts only after you press Start. Place one star in each row,
+                      column, and color block.
+                    </p>
+                    <button id="startBtn" type="button" class="primary">Start Puzzle</button>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <p id="status" class="status">Place one star in each row, column, and color region.</p>
+            <p id="status" class="status">Press Start when you are ready. The timer is paused.</p>
 
             <div class="toolbar" aria-label="Puzzle controls">
               <button id="resetBtn" type="button">Reset</button>
@@ -188,6 +201,10 @@
               <div>
                 <strong id="proofLabel">Unique</strong>
                 <span>Verified</span>
+              </div>
+              <div>
+                <strong id="bestTime">--:--</strong>
+                <span>Best</span>
               </div>
             </div>
             <div id="sharePreview" class="share-preview">
