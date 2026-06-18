@@ -6,6 +6,7 @@ const REGION_LABELS = "ABCDEFG";
 const MAX_GENERATION_ATTEMPTS = 5000;
 const SITE_URL = "https://dailylogiclab.com/";
 const DISCARD_CONFIRM_MS = 3500;
+const HINT_PENALTIES = [30, 60, 120];
 const VALID_SOLUTIONS = buildSolutionPermutations();
 
 const els = {
@@ -106,6 +107,8 @@ function createGameState(puzzle, mode) {
     cells: Array.from({ length: SIZE }, () => Array(SIZE).fill(EMPTY)),
     hints: new Set(),
     errors: new Set(),
+    hintCount: 0,
+    hintPenalty: 0,
     solved: false,
     started: false
   };
@@ -570,21 +573,34 @@ function showHint() {
     updateStartOverlay();
     return;
   }
+  if (state.hintCount >= HINT_PENALTIES.length) {
+    setStatus("No hints left for this puzzle. Keep solving or start a new practice.", "");
+    return;
+  }
   state.errors.clear();
   state.hints.clear();
   const result = isSolved();
+  const hintLevel = state.hintCount;
+  const penalty = HINT_PENALTIES[hintLevel];
+
   if (result.errors.size) {
     state.errors = result.errors;
-    setStatus("Fix the highlighted conflict first.", "error");
-    trackEvent("hint_used", getPuzzleEventData({ outcome: "conflict" }));
+    applyHintPenalty(penalty);
+    setStatus(`Hint ${hintLevel + 1}: fix the highlighted conflict first. +${penalty}s`, "error");
+    trackEvent("hint_used", getPuzzleEventData({ outcome: "conflict", hint_level: hintLevel + 1, penalty_seconds: penalty }));
     renderBoard();
+    updateControls();
+    updateSharePreview();
     return;
   }
 
   if (countCurrentCompletions(1) === 0) {
-    setStatus("Your current marks have no valid completion. Undo one of them.", "error");
-    trackEvent("hint_used", getPuzzleEventData({ outcome: "no_valid_completion" }));
+    applyHintPenalty(penalty);
+    setStatus(`Hint ${hintLevel + 1}: your current marks have no valid completion. Undo one of them. +${penalty}s`, "error");
+    trackEvent("hint_used", getPuzzleEventData({ outcome: "no_valid_completion", hint_level: hintLevel + 1, penalty_seconds: penalty }));
     renderBoard();
+    updateControls();
+    updateSharePreview();
     return;
   }
 
@@ -594,29 +610,81 @@ function showHint() {
     ...groupHints("col", candidates),
     ...groupHints("region", candidates)
   ];
-  const single = groups.find((group) => group.cells.length === 1);
+  const sortedGroups = groups
+    .filter((group) => group.cells.length)
+    .sort((a, b) => a.cells.length - b.cells.length);
 
-  if (single) {
-    state.hints.add(single.cells[0]);
-    setStatus(`Only one candidate remains in this ${single.type}.`, "");
-    trackEvent("hint_used", getPuzzleEventData({ outcome: "single_candidate", hint_type: single.type }));
+  if (hintLevel === 0 && sortedGroups.length) {
+    const group = sortedGroups[0];
+    applyHintPenalty(penalty);
+    setStatus(`Hint 1: focus on ${describeHintGroup(group)}; it has the fewest options. +${penalty}s`, "");
+    trackEvent("hint_used", getPuzzleEventData({ outcome: "focus_group", hint_type: group.type, hint_group: describeHintGroup(group), hint_level: 1, penalty_seconds: penalty }));
     renderBoard();
+    updateControls();
+    updateSharePreview();
     return;
   }
 
-  const narrow = groups
-    .filter((group) => group.cells.length > 1)
-    .sort((a, b) => a.cells.length - b.cells.length)[0];
+  if (hintLevel >= 2) {
+    const starKey = getNextSolutionStarKey();
+    if (starKey) {
+      applyHintPenalty(penalty);
+      state.hints.add(starKey);
+      setStatus(`Hint 3: this square is a star in the solution. +${penalty}s`, "");
+      trackEvent("hint_used", getPuzzleEventData({ outcome: "solution_star", hint_level: 3, penalty_seconds: penalty }));
+      renderBoard();
+      updateControls();
+      updateSharePreview();
+      return;
+    }
+  }
+
+  const single = groups.find((group) => group.cells.length === 1);
+
+  if (single) {
+    applyHintPenalty(penalty);
+    state.hints.add(single.cells[0]);
+    setStatus(`Hint ${hintLevel + 1}: only one candidate remains in ${describeHintGroup(single)}. +${penalty}s`, "");
+    trackEvent("hint_used", getPuzzleEventData({ outcome: "single_candidate", hint_type: single.type, hint_group: describeHintGroup(single), hint_level: hintLevel + 1, penalty_seconds: penalty }));
+    renderBoard();
+    updateControls();
+    updateSharePreview();
+    return;
+  }
+
+  const narrow = sortedGroups.find((group) => group.cells.length > 1);
 
   if (narrow) {
+    applyHintPenalty(penalty);
     narrow.cells.forEach((key) => state.hints.add(key));
-    setStatus(`This ${narrow.type} has the fewest candidates.`, "");
-    trackEvent("hint_used", getPuzzleEventData({ outcome: "narrow_group", hint_type: narrow.type }));
+    setStatus(`Hint ${hintLevel + 1}: these are the best candidates in ${describeHintGroup(narrow)}. +${penalty}s`, "");
+    trackEvent("hint_used", getPuzzleEventData({ outcome: "narrow_group", hint_type: narrow.type, hint_group: describeHintGroup(narrow), hint_level: hintLevel + 1, penalty_seconds: penalty }));
   } else {
     setStatus("No useful hint found from the current marks.", "");
-    trackEvent("hint_used", getPuzzleEventData({ outcome: "no_hint" }));
+    trackEvent("hint_used", getPuzzleEventData({ outcome: "no_hint", hint_level: hintLevel + 1, penalty_seconds: 0 }));
   }
   renderBoard();
+  updateControls();
+  updateSharePreview();
+}
+
+function applyHintPenalty(seconds) {
+  updateElapsedFromClock();
+  elapsed += seconds;
+  state.hintCount += 1;
+  state.hintPenalty += seconds;
+  startedAt = Date.now() - elapsed * 1000;
+  updateStats();
+}
+
+function getNextSolutionStarKey() {
+  for (let row = 0; row < SIZE; row += 1) {
+    const col = state.puzzle.solution[row];
+    if (state.cells[row][col] !== STAR) {
+      return getKey(row, col);
+    }
+  }
+  return "";
 }
 
 function markSolved() {
@@ -636,7 +704,8 @@ function markSolved() {
     }
   }
   const nextStep = state.mode === "daily" ? "Share it or try New Practice." : "Share it or try another practice.";
-  setStatus(`Solved in ${formatTime(elapsed)}. ${isBest ? "New best time." : "Nice."} ${nextStep}`, "success");
+  const hintSummary = state.hintCount ? ` Hints: ${state.hintCount} (+${state.hintPenalty}s).` : "";
+  setStatus(`Solved in ${formatTime(elapsed)}. ${isBest ? "New best time." : "Nice."}${hintSummary} ${nextStep}`, "success");
   trackEvent("puzzle_solved", getPuzzleEventData({ time_seconds: elapsed, new_best: isBest }));
   renderBoard();
   updateStats();
@@ -722,9 +791,15 @@ function groupHints(type, candidates) {
       if (state.cells[row][col] === STAR) alreadySolved = true;
       if (candidates.has(key)) cells.push(key);
     });
-    if (!alreadySolved && cells.length) groups.push({ type, cells });
+    if (!alreadySolved && cells.length) groups.push({ type, index: i, cells });
   }
   return groups;
+}
+
+function describeHintGroup(group) {
+  if (group.type === "row") return `row ${group.index + 1}`;
+  if (group.type === "col") return `column ${group.index + 1}`;
+  return `color ${REGION_LABELS[group.index]}`;
 }
 
 function touchesStar(row, col) {
@@ -789,7 +864,9 @@ function updateStartOverlay() {
 
 function updateControls() {
   const playable = state.started && !state.solved;
-  els.hintBtn.disabled = !playable;
+  const nextPenalty = HINT_PENALTIES[state.hintCount];
+  els.hintBtn.textContent = nextPenalty ? `Hint +${nextPenalty}s` : "No Hints Left";
+  els.hintBtn.disabled = !playable || !nextPenalty;
   els.checkBtn.disabled = !playable;
   els.shareBtn.disabled = !state.started && !state.solved;
 }
@@ -867,6 +944,8 @@ function getPuzzleEventData(extra = {}) {
     proof: "unique_solution",
     stars: state.cells.flat().filter((value) => value === STAR).length,
     elapsed_seconds: elapsed,
+    hint_count: state.hintCount,
+    hint_penalty_seconds: state.hintPenalty,
     ...extra
   };
 }
@@ -906,7 +985,8 @@ function updateSharePreview() {
 function buildShareText() {
   const title = state.mode === "daily" ? `Daily Star Battle #${state.puzzle.id}` : `Star Battle Practice #${state.puzzle.id}`;
   const solved = state.solved ? `Solved in ${formatTime(elapsed)}` : "In progress";
-  return `${title}\n${solved}\nStars: ${state.cells.flat().filter((value) => value === STAR).length}/${SIZE}\n${getShareUrl()}`;
+  const hints = `Hints: ${state.hintCount} (+${state.hintPenalty}s)`;
+  return `${title}\n${solved}\nStars: ${state.cells.flat().filter((value) => value === STAR).length}/${SIZE}\n${hints}\n${getShareUrl()}`;
 }
 
 async function shareResult() {
