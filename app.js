@@ -5,6 +5,7 @@ const BLOCK = 2;
 const REGION_LABELS = "ABCDEFG";
 const MAX_GENERATION_ATTEMPTS = 5000;
 const SITE_URL = "https://dailylogiclab.com/";
+const DISCARD_CONFIRM_MS = 3500;
 const VALID_SOLUTIONS = buildSolutionPermutations();
 
 const els = {
@@ -50,6 +51,8 @@ let state = createGameState(getDailyPuzzle(), "daily");
 let timerId = null;
 let elapsed = 0;
 let startedAt = 0;
+let pendingAction = null;
+let pendingActionTimer = null;
 let activeDigits = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
 init();
@@ -110,6 +113,7 @@ function createGameState(puzzle, mode) {
 
 function startPuzzle() {
   if (state.started || state.solved) return;
+  clearPendingAction();
   state.started = true;
   elapsed = 0;
   startedAt = Date.now();
@@ -123,6 +127,7 @@ function startPuzzle() {
 }
 
 function preparePuzzle(message, tone = "") {
+  clearPendingAction();
   stopTimer();
   elapsed = 0;
   startedAt = 0;
@@ -379,9 +384,10 @@ function renderBoard() {
       cell.dataset.col = String(col);
       cell.dataset.region = String(regionIndex(row, col));
       cell.setAttribute("role", "gridcell");
-      cell.setAttribute("aria-label", `Row ${row + 1}, column ${col + 1}`);
+      cell.setAttribute("aria-label", getCellLabel(row, col));
       cell.disabled = !state.started || state.solved;
       cell.addEventListener("click", () => cycleCell(row, col));
+      cell.addEventListener("keydown", (event) => handleCellKeydown(event, row, col));
       if (state.cells[row][col] === STAR) {
         cell.classList.add("star");
         cell.textContent = "\u2605";
@@ -408,35 +414,128 @@ function cycleCell(row, col) {
     return;
   }
   state.cells[row][col] = (state.cells[row][col] + 1) % 3;
+  commitCellChange(row, col);
+}
+
+function setCellValue(row, col, value) {
+  if (state.solved || !state.started) return;
+  state.cells[row][col] = value;
+  commitCellChange(row, col);
+}
+
+function commitCellChange(row, col) {
+  clearPendingAction();
   state.hints.clear();
   state.errors.clear();
   setStatus("Keep going.", "");
   renderBoard();
   updateStats();
+  focusCell(row, col);
   if (isSolved().ok) {
     markSolved();
   }
 }
 
+function handleCellKeydown(event, row, col) {
+  const movement = {
+    ArrowUp: [-1, 0],
+    ArrowRight: [0, 1],
+    ArrowDown: [1, 0],
+    ArrowLeft: [0, -1]
+  }[event.key];
+
+  if (movement) {
+    event.preventDefault();
+    focusCell(clamp(row + movement[0], 0, SIZE - 1), clamp(col + movement[1], 0, SIZE - 1));
+    return;
+  }
+
+  const key = event.key.toLowerCase();
+  if (event.key === " " || event.key === "Enter") {
+    event.preventDefault();
+    cycleCell(row, col);
+  } else if (key === "s") {
+    event.preventDefault();
+    setCellValue(row, col, STAR);
+  } else if (key === "x" || key === ".") {
+    event.preventDefault();
+    setCellValue(row, col, BLOCK);
+  } else if (event.key === "Backspace" || event.key === "Delete" || key === "0") {
+    event.preventDefault();
+    setCellValue(row, col, EMPTY);
+  }
+}
+
+function focusCell(row, col) {
+  const cell = els.board.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+  if (cell && !cell.disabled) {
+    cell.focus({ preventScroll: true });
+  }
+}
+
+function getCellLabel(row, col) {
+  const value = state.cells[row][col];
+  const mark = value === STAR ? "star" : value === BLOCK ? "blocked" : "empty";
+  return `Row ${row + 1}, column ${col + 1}, color ${REGION_LABELS[regionIndex(row, col)]}, ${mark}`;
+}
+
+function hasActiveProgress() {
+  return state.started && !state.solved && state.cells.flat().some((value) => value !== EMPTY);
+}
+
+function requestDestructiveAction(actionKey, message, action) {
+  if (!hasActiveProgress()) {
+    clearPendingAction();
+    action();
+    return;
+  }
+
+  if (pendingAction === actionKey) {
+    clearPendingAction();
+    action();
+    return;
+  }
+
+  pendingAction = actionKey;
+  window.clearTimeout(pendingActionTimer);
+  pendingActionTimer = window.setTimeout(clearPendingAction, DISCARD_CONFIRM_MS);
+  setStatus(message, "");
+  trackEvent("discard_prompt_shown", getPuzzleEventData({ action: actionKey }));
+}
+
+function clearPendingAction() {
+  pendingAction = null;
+  if (pendingActionTimer) {
+    window.clearTimeout(pendingActionTimer);
+    pendingActionTimer = null;
+  }
+}
+
 function resetCurrentPuzzle() {
-  trackEvent("puzzle_reset", getPuzzleEventData());
-  state = createGameState(state.puzzle, state.mode);
-  preparePuzzle("Puzzle reset. Press Start when you are ready.", "");
+  requestDestructiveAction("reset", "Click Reset again to clear this board.", () => {
+    trackEvent("puzzle_reset", getPuzzleEventData());
+    state = createGameState(state.puzzle, state.mode);
+    preparePuzzle("Puzzle reset. Press Start when you are ready.", "");
+  });
 }
 
 function loadDailyPuzzle() {
-  setStatus("Generating a unique daily puzzle...", "");
-  state = createGameState(getDailyPuzzle(), "daily");
-  preparePuzzle("Daily puzzle ready. Press Start when you are ready.", "success");
-  trackEvent("daily_puzzle_loaded", getPuzzleEventData());
+  requestDestructiveAction("daily", "Click Daily again to discard this board.", () => {
+    setStatus("Generating a unique daily puzzle...", "");
+    state = createGameState(getDailyPuzzle(), "daily");
+    preparePuzzle("Daily puzzle ready. Press Start when you are ready.", "success");
+    trackEvent("daily_puzzle_loaded", getPuzzleEventData());
+  });
 }
 
 function loadPracticePuzzle() {
-  setStatus("Generating a unique practice puzzle...", "");
-  const next = generateUniquePuzzle(createPracticeSeed(), "P" + String(Date.now()).slice(-5));
-  state = createGameState(next, "practice");
-  preparePuzzle("Practice puzzle ready. Press Start when you are ready.", "success");
-  trackEvent("new_practice_clicked", getPuzzleEventData());
+  requestDestructiveAction("practice", "Click New Practice again to discard this board.", () => {
+    setStatus("Generating a unique practice puzzle...", "");
+    const next = generateUniquePuzzle(createPracticeSeed(), "P" + String(Date.now()).slice(-5));
+    state = createGameState(next, "practice");
+    preparePuzzle("Practice puzzle ready. Press Start when you are ready.", "success");
+    trackEvent("new_practice_clicked", getPuzzleEventData());
+  });
 }
 
 function checkPuzzle() {
@@ -536,7 +635,8 @@ function markSolved() {
       localStorage.setItem(storage.solvedDate, today);
     }
   }
-  setStatus(`Solved in ${formatTime(elapsed)}. ${isBest ? "New best time." : "Nice."}`, "success");
+  const nextStep = state.mode === "daily" ? "Share it or try New Practice." : "Share it or try another practice.";
+  setStatus(`Solved in ${formatTime(elapsed)}. ${isBest ? "New best time." : "Nice."} ${nextStep}`, "success");
   trackEvent("puzzle_solved", getPuzzleEventData({ time_seconds: elapsed, new_best: isBest }));
   renderBoard();
   updateStats();

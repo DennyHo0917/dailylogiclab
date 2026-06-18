@@ -724,10 +724,6 @@ h2 {
   .stats {
     width: 100%;
   }
-
-  .side-panel {
-    order: -1;
-  }
 }
 
 @media (max-width: 520px) {
