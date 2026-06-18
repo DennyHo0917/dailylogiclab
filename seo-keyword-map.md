@@ -9,11 +9,11 @@ This keyword map follows the demand-mining article's method: start from search i
 | Page | Primary Keyword | Secondary Keywords | Intent | Page Role |
 |---|---|---|---|---|
 | `/` | daily star battle | queens style puzzle, queens puzzle alternative, star battle online, unlimited star battle, no login logic puzzle | Play now | Main game entry |
-| `/star-battle.html` | star battle puzzle | star battle rules, how to play star battle, daily star battle, star battle online | Learn rules | Guide page |
-| `/star-battle-hints.html` | star battle hints | how to solve star battle, star battle strategy, star battle tutorial, star battle puzzle tips | Get unstuck | Tutorial page |
-| `/two-not-touch-puzzle.html` | two not touch puzzle | no touching stars puzzle, star battle two not touch, two not touch online | Find variant | Variant page |
-| `/queens-puzzle-alternative.html` | queens puzzle alternative | queens game alternative, queens unlimited, queens style puzzle, star battle queens | Find more puzzles | Comparison / alternative page |
-| `/killer-sudoku-combination-calculator.html` | killer sudoku combination calculator | killer sudoku cage calculator, sudoku cage combinations, killer sudoku helper, kakuro combination calculator | Use calculator | Tool page |
+| `/star-battle` | star battle puzzle | star battle rules, how to play star battle, daily star battle, star battle online | Learn rules | Guide page |
+| `/star-battle-hints` | star battle hints | how to solve star battle, star battle strategy, star battle tutorial, star battle puzzle tips | Get unstuck | Tutorial page |
+| `/two-not-touch-puzzle` | two not touch puzzle | no touching stars puzzle, star battle two not touch, two not touch online | Find variant | Variant page |
+| `/queens-puzzle-alternative` | queens puzzle alternative | queens game alternative, queens unlimited, queens style puzzle, star battle queens | Find more puzzles | Comparison / alternative page |
+| `/killer-sudoku-combination-calculator` | killer sudoku combination calculator | killer sudoku cage calculator, sudoku cage combinations, killer sudoku helper, kakuro combination calculator | Use calculator | Tool page |
 
 ## Evidence Notes
 
