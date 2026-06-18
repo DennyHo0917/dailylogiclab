@@ -1049,10 +1049,411 @@ const seoProfiles = {
 };
 
 const allAvailableLanguages = Object.values(seoProfiles).map((profile) => profile.languageName);
+const supportSlugs = {
+  about: "about",
+  contact: "contact",
+  privacy: "privacy-policy"
+};
 
 function seo(language) {
   return seoProfiles[language.key] || seoProfiles.en;
 }
+
+function supportPath(language, pageKey) {
+  const slug = supportSlugs[pageKey];
+  return language.key === "en" ? `/${slug}` : `${language.path}${slug}`;
+}
+
+function supportOutPath(language, pageKey) {
+  const slug = supportSlugs[pageKey];
+  if (language.key === "en") return `${slug}.html`;
+  const localeDir = language.path.replace(/^\/|\/$/g, "");
+  return `${localeDir}/${slug}.html`;
+}
+
+const supportContent = {
+  en: {
+    about: {
+      schemaType: "AboutPage",
+      title: "About Daily Logic Lab - Free Daily Logic Puzzles",
+      description: "Learn about Daily Logic Lab, a free browser-based logic puzzle site with daily Star Battle puzzles and puzzle helper tools.",
+      eyebrow: "About",
+      h1: "About Daily Logic Lab",
+      sections: [
+        {
+          paragraphs: [
+            "Daily Logic Lab is a small browser-based puzzle site for short daily logic games and practical puzzle helper tools. The first game is Daily Star Battle, a Queens-style placement puzzle where every generated board is checked by a solver before it is shown."
+          ]
+        },
+        {
+          heading: "What the Site Offers",
+          list: [
+            "A free daily Star Battle puzzle.",
+            "Unlimited practice boards with solver-verified unique solutions.",
+            "A time-cost hint system, so hints help without removing the challenge.",
+            "A Killer Sudoku cage combination calculator for pencil puzzle solving.",
+            "No account requirement for the current puzzle experience."
+          ]
+        },
+        {
+          heading: "Why It Exists",
+          paragraphs: [
+            "The goal is to make small logic puzzles easy to start, fair to solve, and worth returning to. The site focuses on fast loading, clean puzzle controls, mobile-friendly play, and useful explanations for people discovering Star Battle or related grid puzzles."
+          ]
+        },
+        {
+          heading: "How Puzzles Are Generated",
+          paragraphs: [
+            "Star Battle boards are generated in the browser and checked against a solver. A board is accepted only when the solver finds exactly one valid solution."
+          ]
+        }
+      ],
+      cta: { label: "Play today's puzzle", href: "/#play" }
+    },
+    contact: {
+      schemaType: "ContactPage",
+      title: "Contact Daily Logic Lab - Puzzle Feedback and Site Support",
+      description: "Contact Daily Logic Lab for puzzle feedback, bug reports, content corrections, and site questions.",
+      eyebrow: "Contact",
+      h1: "Contact Daily Logic Lab",
+      sections: [
+        {
+          paragraphs: [
+            "Use this page for puzzle feedback, bug reports, content corrections, and site questions. Daily Logic Lab does not require user accounts, so you do not need to send passwords or private account details."
+          ]
+        },
+        {
+          heading: "Report a Puzzle or Site Issue",
+          paragraphs: [
+            "The preferred contact method is the public GitHub issue tracker. It is useful for bug reports because you can include the page URL, browser, device, and a short description of what happened."
+          ],
+          links: [{ label: "Open a Daily Logic Lab issue on GitHub", href: "https://github.com/DennyHo0917/dailylogiclab/issues" }]
+        },
+        {
+          heading: "Helpful Details to Include",
+          list: [
+            "The page where the issue happened.",
+            "Your browser and device type.",
+            "Whether you were playing the daily puzzle or practice mode.",
+            "A short description of the expected result and the actual result."
+          ]
+        },
+        {
+          heading: "Content and Privacy Questions",
+          paragraphs: [
+            "For privacy-related questions, read the Privacy Policy first. For general site background, visit the About page."
+          ]
+        }
+      ]
+    },
+    privacy: {
+      schemaType: "WebPage",
+      title: "Privacy Policy - Daily Logic Lab",
+      description: "Read the Daily Logic Lab privacy policy, including information about analytics, local browser storage, cookies, and future advertising.",
+      eyebrow: "Privacy",
+      h1: "Privacy Policy",
+      updatedLabel: "Last updated:",
+      sections: [
+        { paragraphs: ["Daily Logic Lab provides free browser-based logic puzzles and puzzle helper tools. This policy explains what information may be collected when you use the site."] },
+        { heading: "Information You Provide", paragraphs: ["Daily Logic Lab does not currently require accounts, sign-ins, or payment details. If you contact the site through GitHub issues, the information you choose to post there is handled by GitHub and may be public."] },
+        { heading: "Local Browser Storage", paragraphs: ["The puzzle experience may store small pieces of data in your browser, such as streak status, best times, solved dates, hint counts, and recent in-browser event records. You can clear it by clearing site data in your browser settings."] },
+        { heading: "Analytics", paragraphs: ["Daily Logic Lab uses Google Analytics to understand aggregate site usage, such as page views, puzzle starts, hints, checks, and general device or browser information. Google may use cookies or similar technologies for measurement."] },
+        { heading: "Advertising", paragraphs: ["Daily Logic Lab does not currently display advertising. If advertising is added later, the site may use Google AdSense or related Google advertising services. Google and its partners may use cookies to serve, measure, and personalize ads."] },
+        { heading: "Third-Party Links", paragraphs: ["The site may link to external pages, such as GitHub or Google documentation. Daily Logic Lab is not responsible for the privacy practices of external websites."] },
+        { heading: "Children's Privacy", paragraphs: ["Daily Logic Lab is a general-audience puzzle site and does not knowingly collect personal information from children."] },
+        {
+          heading: "Useful Privacy Links",
+          links: [
+            { label: "Google Privacy Policy", href: "https://policies.google.com/privacy" },
+            { label: "Google Ads Settings", href: "https://adssettings.google.com/" }
+          ]
+        }
+      ]
+    }
+  },
+  de: {
+    about: {
+      schemaType: "AboutPage",
+      title: "Über Daily Logic Lab - Kostenlose tägliche Logikrätsel",
+      description: "Erfahre mehr über Daily Logic Lab, eine kostenlose Browser-Seite für tägliche Star-Battle-Rätsel und kleine Rätselhilfen.",
+      eyebrow: "Über uns",
+      h1: "Über Daily Logic Lab",
+      sections: [
+        { paragraphs: ["Daily Logic Lab ist eine kleine Browser-Seite für kurze Logikrätsel und praktische Rätselhilfen. Im Mittelpunkt steht Daily Star Battle, ein Platzierungsrätsel im Queens-Stil, bei dem jedes Brett vor dem Anzeigen mit einem Solver geprüft wird."] },
+        { heading: "Was die Seite bietet", list: ["Ein kostenloses tägliches Star-Battle-Rätsel.", "Unbegrenzte Trainingsbretter mit geprüfter eindeutiger Lösung.", "Hinweise mit Zeitstrafe, damit der Reiz erhalten bleibt.", "Einen Killer-Sudoku-Rechner für Käfigsummen und Kombinationen.", "Keine Anmeldung für das aktuelle Spielerlebnis."] },
+        { heading: "Warum es die Seite gibt", paragraphs: ["Das Ziel ist ein Rätsel, das schnell startet, fair lösbar ist und trotzdem zum Wiederkommen einlädt. Die Seite setzt auf kurze Ladezeiten, klare Steuerung und verständliche Erklärungen."] },
+        { heading: "Wie die Rätsel entstehen", paragraphs: ["Star-Battle-Bretter werden im Browser erzeugt und gegen einen Solver geprüft. Ein Brett wird nur akzeptiert, wenn genau eine gültige Lösung existiert."] }
+      ],
+      cta: { label: "Heutiges Rätsel spielen", href: "/de/#play" }
+    },
+    contact: {
+      schemaType: "ContactPage",
+      title: "Kontakt - Daily Logic Lab",
+      description: "Kontaktiere Daily Logic Lab für Rätsel-Feedback, Fehlerberichte, Inhaltskorrekturen und Fragen zur Website.",
+      eyebrow: "Kontakt",
+      h1: "Kontakt zu Daily Logic Lab",
+      sections: [
+        { paragraphs: ["Nutze diese Seite für Feedback, Fehlerberichte, Korrekturen oder allgemeine Fragen. Daily Logic Lab verlangt keine Konten, daher solltest du keine Passwörter oder privaten Kontodaten senden."] },
+        { heading: "Problem melden", paragraphs: ["Am besten nutzt du den öffentlichen GitHub-Issue-Tracker. Dort kannst du Seiten-URL, Browser, Gerät und eine kurze Beschreibung ergänzen."], links: [{ label: "Ein Issue auf GitHub öffnen", href: "https://github.com/DennyHo0917/dailylogiclab/issues" }] },
+        { heading: "Hilfreiche Angaben", list: ["Die Seite, auf der das Problem aufgetreten ist.", "Browser und Gerätetyp.", "Tagesrätsel oder Trainingsmodus.", "Was du erwartet hast und was tatsächlich passiert ist."] },
+        { heading: "Datenschutzfragen", paragraphs: ["Lies bei Datenschutzfragen zuerst die Datenschutzerklärung. Hintergrund zur Seite findest du auf der Über-uns-Seite."] }
+      ]
+    },
+    privacy: {
+      schemaType: "WebPage",
+      title: "Datenschutzerklärung - Daily Logic Lab",
+      description: "Datenschutzhinweise zu Daily Logic Lab, einschließlich Analytics, lokalem Browserspeicher, Cookies und möglicher späterer Werbung.",
+      eyebrow: "Datenschutz",
+      h1: "Datenschutzerklärung",
+      updatedLabel: "Zuletzt aktualisiert:",
+      sections: [
+        { paragraphs: ["Daily Logic Lab bietet kostenlose Logikrätsel und kleine Hilfswerkzeuge im Browser. Diese Erklärung beschreibt, welche Informationen bei der Nutzung anfallen können."] },
+        { heading: "Von dir bereitgestellte Informationen", paragraphs: ["Aktuell gibt es keine Konten, Logins oder Zahlungsdaten. Wenn du über GitHub Issues Kontakt aufnimmst, werden die dort geposteten Informationen von GitHub verarbeitet und können öffentlich sein."] },
+        { heading: "Lokaler Browserspeicher", paragraphs: ["Die Seite kann lokal Daten speichern, etwa Serie, Bestzeiten, gelöste Tage, Hinweise und jüngste In-Browser-Ereignisse. Du kannst diese Daten über die Website-Daten deines Browsers löschen."] },
+        { heading: "Analytics", paragraphs: ["Daily Logic Lab nutzt Google Analytics, um aggregierte Nutzung zu verstehen, zum Beispiel Seitenaufrufe, Starts, Hinweise, Prüfungen sowie allgemeine Geräte- und Browserinformationen."] },
+        { heading: "Werbung", paragraphs: ["Derzeit zeigt Daily Logic Lab keine Werbung. Wenn später Werbung ergänzt wird, kann Google AdSense oder ein verwandter Google-Dienst eingesetzt werden. Google und Partner können Cookies zur Auslieferung, Messung und Personalisierung von Anzeigen verwenden."] },
+        { heading: "Externe Links", paragraphs: ["Die Seite kann zu GitHub, Google-Dokumentation oder anderen externen Seiten verlinken. Für deren Datenschutzpraxis ist Daily Logic Lab nicht verantwortlich."] },
+        { heading: "Kinder", paragraphs: ["Daily Logic Lab ist eine allgemeine Rätselseite und sammelt wissentlich keine personenbezogenen Daten von Kindern."] },
+        { heading: "Nützliche Datenschutzlinks", links: [{ label: "Google-Datenschutzerklärung", href: "https://policies.google.com/privacy" }, { label: "Google-Anzeigeneinstellungen", href: "https://adssettings.google.com/" }] }
+      ]
+    }
+  },
+  es: {
+    about: {
+      schemaType: "AboutPage",
+      title: "Acerca de Daily Logic Lab - Puzzles lógicos gratis",
+      description: "Conoce Daily Logic Lab, un sitio gratuito para jugar Star Battle diario y usar pequeñas herramientas para puzzles.",
+      eyebrow: "Acerca de",
+      h1: "Acerca de Daily Logic Lab",
+      sections: [
+        { paragraphs: ["Daily Logic Lab es un pequeño sitio de puzzles para navegador, pensado para retos cortos y herramientas útiles. Su primer juego es Daily Star Battle, un puzzle de colocación tipo Queens verificado con solver antes de mostrarse."] },
+        { heading: "Qué ofrece", list: ["Un Star Battle diario gratis.", "Práctica ilimitada con solución única verificada.", "Pistas con penalización de tiempo.", "Una calculadora de combinaciones para Killer Sudoku.", "Sin cuenta para la experiencia actual."] },
+        { heading: "Por qué existe", paragraphs: ["La idea es que un puzzle lógico sea fácil de empezar, justo de resolver y suficientemente bueno como para volver al día siguiente."] },
+        { heading: "Cómo se generan los puzzles", paragraphs: ["Los tableros se generan en el navegador y se revisan con un solver. Solo se acepta un tablero si tiene exactamente una solución válida."] }
+      ],
+      cta: { label: "Jugar el reto de hoy", href: "/es/#play" }
+    },
+    contact: {
+      schemaType: "ContactPage",
+      title: "Contacto - Daily Logic Lab",
+      description: "Contacta con Daily Logic Lab para enviar comentarios, reportar errores o hacer preguntas sobre el sitio.",
+      eyebrow: "Contacto",
+      h1: "Contacto Daily Logic Lab",
+      sections: [
+        { paragraphs: ["Usa esta página para comentarios, errores, correcciones de contenido o preguntas. Daily Logic Lab no usa cuentas, así que no envíes contraseñas ni datos privados."] },
+        { heading: "Reportar un problema", paragraphs: ["El método recomendado es el issue tracker público de GitHub. Ayuda incluir la URL, navegador, dispositivo y una descripción breve."], links: [{ label: "Abrir un issue en GitHub", href: "https://github.com/DennyHo0917/dailylogiclab/issues" }] },
+        { heading: "Datos útiles", list: ["La página donde ocurrió el problema.", "Tu navegador y dispositivo.", "Si estabas en el reto diario o en práctica.", "Qué esperabas y qué ocurrió."] },
+        { heading: "Privacidad y contenido", paragraphs: ["Para privacidad, revisa primero la Política de privacidad. Para contexto del proyecto, visita la página Acerca de."] }
+      ]
+    },
+    privacy: {
+      schemaType: "WebPage",
+      title: "Política de privacidad - Daily Logic Lab",
+      description: "Política de privacidad de Daily Logic Lab sobre analítica, almacenamiento local, cookies y posible publicidad futura.",
+      eyebrow: "Privacidad",
+      h1: "Política de privacidad",
+      updatedLabel: "Última actualización:",
+      sections: [
+        { paragraphs: ["Daily Logic Lab ofrece puzzles lógicos y herramientas gratuitas en el navegador. Esta política explica qué información puede recogerse al usar el sitio."] },
+        { heading: "Información que proporcionas", paragraphs: ["No se requieren cuentas, inicios de sesión ni pagos. Si contactas mediante GitHub Issues, lo que publiques allí lo gestiona GitHub y puede ser público."] },
+        { heading: "Almacenamiento local", paragraphs: ["El juego puede guardar datos pequeños en tu navegador, como racha, mejores tiempos, fechas resueltas, uso de pistas y eventos recientes. Puedes borrarlos limpiando los datos del sitio."] },
+        { heading: "Analítica", paragraphs: ["Daily Logic Lab usa Google Analytics para entender el uso agregado, como páginas vistas, inicios de puzzles, pistas, revisiones e información general de dispositivo o navegador."] },
+        { heading: "Publicidad", paragraphs: ["Actualmente no hay anuncios. Si se añaden más adelante, el sitio puede usar Google AdSense u otros servicios publicitarios de Google. Google y sus socios pueden usar cookies para medir, mostrar y personalizar anuncios."] },
+        { heading: "Enlaces externos", paragraphs: ["El sitio puede enlazar a GitHub, documentación de Google u otras páginas externas. Daily Logic Lab no controla sus prácticas de privacidad."] },
+        { heading: "Privacidad de menores", paragraphs: ["Daily Logic Lab es un sitio general de puzzles y no recopila conscientemente información personal de niños."] },
+        { heading: "Enlaces útiles", links: [{ label: "Privacidad de Google", href: "https://policies.google.com/privacy" }, { label: "Configuración de anuncios de Google", href: "https://adssettings.google.com/" }] }
+      ]
+    }
+  },
+  fr: {
+    about: {
+      schemaType: "AboutPage",
+      title: "À propos de Daily Logic Lab - Puzzles logiques gratuits",
+      description: "Découvre Daily Logic Lab, un site gratuit de puzzles logiques avec Star Battle quotidien et outils d'aide.",
+      eyebrow: "À propos",
+      h1: "À propos de Daily Logic Lab",
+      sections: [
+        { paragraphs: ["Daily Logic Lab est un petit site de puzzles dans le navigateur, pensé pour des parties courtes et des outils pratiques. Le premier jeu est Daily Star Battle, un puzzle de placement façon Queens vérifié par solveur avant affichage."] },
+        { heading: "Ce que propose le site", list: ["Un Star Battle quotidien gratuit.", "Des grilles d'entraînement illimitées à solution unique.", "Des indices avec pénalité de temps.", "Une calculatrice de combinaisons Killer Sudoku.", "Aucun compte nécessaire pour jouer."] },
+        { heading: "Pourquoi ce site existe", paragraphs: ["Le but est de rendre les petits puzzles logiques rapides à lancer, justes à résoudre et agréables à reprendre chaque jour."] },
+        { heading: "Génération des grilles", paragraphs: ["Les grilles Star Battle sont générées dans le navigateur puis vérifiées par un solveur. Une grille n'est acceptée que si elle possède exactement une solution valide."] }
+      ],
+      cta: { label: "Jouer le puzzle du jour", href: "/fr/#play" }
+    },
+    contact: {
+      schemaType: "ContactPage",
+      title: "Contact - Daily Logic Lab",
+      description: "Contacter Daily Logic Lab pour un retour, un bug, une correction de contenu ou une question sur le site.",
+      eyebrow: "Contact",
+      h1: "Contacter Daily Logic Lab",
+      sections: [
+        { paragraphs: ["Utilise cette page pour les retours, bugs, corrections et questions. Daily Logic Lab ne demande pas de compte, donc n'envoie pas de mot de passe ni de données privées."] },
+        { heading: "Signaler un problème", paragraphs: ["La méthode recommandée est le tracker public GitHub. Indique l'URL, le navigateur, l'appareil et une courte description."], links: [{ label: "Ouvrir un ticket GitHub", href: "https://github.com/DennyHo0917/dailylogiclab/issues" }] },
+        { heading: "Détails utiles", list: ["La page concernée.", "Ton navigateur et ton appareil.", "Puzzle du jour ou mode entraînement.", "Le résultat attendu et ce qui s'est produit."] },
+        { heading: "Confidentialité", paragraphs: ["Pour les questions de confidentialité, consulte d'abord la politique de confidentialité. Pour le contexte du site, lis la page À propos."] }
+      ]
+    },
+    privacy: {
+      schemaType: "WebPage",
+      title: "Politique de confidentialité - Daily Logic Lab",
+      description: "Politique de confidentialité de Daily Logic Lab concernant l'analytique, le stockage local, les cookies et la publicité future.",
+      eyebrow: "Confidentialité",
+      h1: "Politique de confidentialité",
+      updatedLabel: "Dernière mise à jour :",
+      sections: [
+        { paragraphs: ["Daily Logic Lab propose des puzzles logiques gratuits et des outils d'aide dans le navigateur. Cette politique explique quelles informations peuvent être collectées."] },
+        { heading: "Informations fournies", paragraphs: ["Le site ne demande actuellement ni compte, ni connexion, ni paiement. Si tu contactes le projet via GitHub Issues, les informations publiées sont gérées par GitHub et peuvent être publiques."] },
+        { heading: "Stockage local", paragraphs: ["Le jeu peut enregistrer localement la série, les meilleurs temps, les dates résolues, les indices utilisés et des événements récents. Tu peux supprimer ces données dans les paramètres du navigateur."] },
+        { heading: "Analytique", paragraphs: ["Daily Logic Lab utilise Google Analytics pour comprendre l'usage agrégé : pages vues, lancements de puzzle, indices, vérifications et informations générales de navigateur ou d'appareil."] },
+        { heading: "Publicité", paragraphs: ["Le site n'affiche pas de publicité actuellement. Si cela change, Daily Logic Lab pourra utiliser Google AdSense ou des services publicitaires Google. Google et ses partenaires peuvent utiliser des cookies pour mesurer, afficher et personnaliser les annonces."] },
+        { heading: "Liens externes", paragraphs: ["Le site peut renvoyer vers GitHub, Google ou d'autres pages externes. Daily Logic Lab n'est pas responsable de leurs pratiques de confidentialité."] },
+        { heading: "Enfants", paragraphs: ["Daily Logic Lab est un site de puzzles grand public et ne collecte pas volontairement d'informations personnelles concernant les enfants."] },
+        { heading: "Liens utiles", links: [{ label: "Politique de confidentialité Google", href: "https://policies.google.com/privacy" }, { label: "Paramètres des annonces Google", href: "https://adssettings.google.com/" }] }
+      ]
+    }
+  },
+  ja: {
+    about: {
+      schemaType: "AboutPage",
+      title: "Daily Logic Lab について - 無料ロジックパズル",
+      description: "Daily Logic Lab は、毎日遊べる Star Battle とパズル補助ツールを提供する無料のブラウザサイトです。",
+      eyebrow: "このサイト",
+      h1: "Daily Logic Lab について",
+      sections: [
+        { paragraphs: ["Daily Logic Lab は、短時間で遊べるロジックパズルと補助ツールのための小さなブラウザサイトです。最初のゲームは Daily Star Battle で、表示前に solver で唯一解を確認しています。"] },
+        { heading: "できること", list: ["無料のデイリー Star Battle。", "唯一解チェック済みの練習問題。", "時間ペナルティ付きのヒント。", "Killer Sudoku の組み合わせ計算。", "現在のパズル体験ではアカウント不要。"] },
+        { heading: "なぜ作ったか", paragraphs: ["すぐ始められて、納得して解けて、また翌日戻りたくなる小さなパズル体験を作るためです。"] },
+        { heading: "盤面の生成", paragraphs: ["Star Battle の盤面はブラウザ内で生成され、solver で確認されます。有効な解がちょうど1つある盤面だけを採用します。"] }
+      ],
+      cta: { label: "今日のパズルを遊ぶ", href: "/ja/#play" }
+    },
+    contact: {
+      schemaType: "ContactPage",
+      title: "お問い合わせ - Daily Logic Lab",
+      description: "Daily Logic Lab へのフィードバック、不具合報告、内容修正、サイトに関する質問はこちら。",
+      eyebrow: "お問い合わせ",
+      h1: "お問い合わせ",
+      sections: [
+        { paragraphs: ["フィードバック、不具合報告、内容の修正依頼、サイトに関する質問に使えます。Daily Logic Lab はアカウントを必要としないため、パスワードや個人情報は送らないでください。"] },
+        { heading: "問題を報告する", paragraphs: ["推奨する連絡方法は公開 GitHub Issue です。URL、ブラウザ、端末、起きたことを短く書くと確認しやすくなります。"], links: [{ label: "GitHub で Issue を開く", href: "https://github.com/DennyHo0917/dailylogiclab/issues" }] },
+        { heading: "書くと助かる情報", list: ["問題が起きたページ。", "ブラウザと端末。", "今日のパズルか練習モードか。", "期待した動作と実際の動作。"] },
+        { heading: "プライバシー", paragraphs: ["プライバシーに関する質問は、まずプライバシーポリシーを確認してください。サイトの背景はこのサイトページにあります。"] }
+      ]
+    },
+    privacy: {
+      schemaType: "WebPage",
+      title: "プライバシーポリシー - Daily Logic Lab",
+      description: "Daily Logic Lab の解析、ローカル保存、Cookie、将来の広告に関するプライバシーポリシー。",
+      eyebrow: "プライバシー",
+      h1: "プライバシーポリシー",
+      updatedLabel: "最終更新:",
+      sections: [
+        { paragraphs: ["Daily Logic Lab は、無料のブラウザ型ロジックパズルと補助ツールを提供します。このページでは、サイト利用時に扱われる可能性のある情報を説明します。"] },
+        { heading: "利用者が提供する情報", paragraphs: ["現在、アカウント登録、ログイン、支払い情報は必要ありません。GitHub Issues で連絡した場合、投稿内容は GitHub によって扱われ、公開されることがあります。"] },
+        { heading: "ブラウザ内の保存", paragraphs: ["連続記録、ベストタイム、解いた日、ヒント回数、最近のイベントなどがブラウザ内に保存されることがあります。ブラウザのサイトデータ削除で消せます。"] },
+        { heading: "解析", paragraphs: ["Daily Logic Lab は Google Analytics を使い、ページ表示、パズル開始、ヒント、チェック、一般的な端末やブラウザ情報などを集計して改善に役立てます。"] },
+        { heading: "広告", paragraphs: ["現在広告は表示していません。将来広告を追加する場合、Google AdSense などの Google 広告サービスを使う可能性があります。Google とパートナーは Cookie を使って広告の配信、測定、パーソナライズを行うことがあります。"] },
+        { heading: "外部リンク", paragraphs: ["GitHub や Google ドキュメントなど外部サイトへのリンクがあります。外部サイトのプライバシー運用は Daily Logic Lab の管理外です。"] },
+        { heading: "子どものプライバシー", paragraphs: ["Daily Logic Lab は一般向けパズルサイトであり、子どもの個人情報を意図して収集しません。"] },
+        { heading: "関連リンク", links: [{ label: "Google プライバシーポリシー", href: "https://policies.google.com/privacy" }, { label: "Google 広告設定", href: "https://adssettings.google.com/" }] }
+      ]
+    }
+  },
+  pt: {
+    about: {
+      schemaType: "AboutPage",
+      title: "Sobre o Daily Logic Lab - Puzzles lógicos grátis",
+      description: "Conheça o Daily Logic Lab, um site grátis para jogar Star Battle diário e usar pequenas ferramentas de puzzle.",
+      eyebrow: "Sobre",
+      h1: "Sobre o Daily Logic Lab",
+      sections: [
+        { paragraphs: ["Daily Logic Lab é um pequeno site de puzzles no navegador, feito para partidas rápidas e ferramentas úteis. O primeiro jogo é Daily Star Battle, um puzzle de colocação no estilo Queens verificado por solver antes de aparecer."] },
+        { heading: "O que o site oferece", list: ["Um Star Battle diário grátis.", "Treino ilimitado com solução única verificada.", "Dicas com penalidade de tempo.", "Calculadora de combinações para Killer Sudoku.", "Sem conta na experiência atual."] },
+        { heading: "Por que existe", paragraphs: ["A proposta é tornar pequenos puzzles lógicos fáceis de começar, justos de resolver e bons o suficiente para voltar no dia seguinte."] },
+        { heading: "Como os puzzles são gerados", paragraphs: ["Os tabuleiros são gerados no navegador e conferidos com um solver. Só entra no site um tabuleiro com exatamente uma solução válida."] }
+      ],
+      cta: { label: "Jogar o desafio de hoje", href: "/pt-br/#play" }
+    },
+    contact: {
+      schemaType: "ContactPage",
+      title: "Contato - Daily Logic Lab",
+      description: "Entre em contato com o Daily Logic Lab para feedback, bugs, correções de conteúdo e dúvidas sobre o site.",
+      eyebrow: "Contato",
+      h1: "Contato Daily Logic Lab",
+      sections: [
+        { paragraphs: ["Use esta página para feedback, bugs, correções ou dúvidas. Daily Logic Lab não usa contas, então não envie senhas nem dados privados."] },
+        { heading: "Reportar um problema", paragraphs: ["O melhor canal é o issue tracker público no GitHub. Inclua URL, navegador, dispositivo e uma descrição curta."], links: [{ label: "Abrir um issue no GitHub", href: "https://github.com/DennyHo0917/dailylogiclab/issues" }] },
+        { heading: "Detalhes úteis", list: ["A página onde o problema aconteceu.", "Navegador e tipo de dispositivo.", "Desafio diário ou modo treino.", "Resultado esperado e resultado real."] },
+        { heading: "Privacidade", paragraphs: ["Para privacidade, leia primeiro a Política de Privacidade. Para contexto do projeto, visite a página Sobre."] }
+      ]
+    },
+    privacy: {
+      schemaType: "WebPage",
+      title: "Política de Privacidade - Daily Logic Lab",
+      description: "Política de privacidade do Daily Logic Lab sobre analytics, armazenamento local, cookies e possível publicidade futura.",
+      eyebrow: "Privacidade",
+      h1: "Política de Privacidade",
+      updatedLabel: "Última atualização:",
+      sections: [
+        { paragraphs: ["Daily Logic Lab oferece puzzles lógicos e ferramentas grátis no navegador. Esta política explica quais informações podem ser coletadas ao usar o site."] },
+        { heading: "Informações que você fornece", paragraphs: ["Não há contas, login ou pagamento no momento. Se você entrar em contato por GitHub Issues, as informações publicadas ali são tratadas pelo GitHub e podem ser públicas."] },
+        { heading: "Armazenamento local", paragraphs: ["O jogo pode salvar no navegador dados como sequência, melhores tempos, datas resolvidas, dicas usadas e eventos recentes. Você pode apagar isso limpando os dados do site no navegador."] },
+        { heading: "Analytics", paragraphs: ["Daily Logic Lab usa Google Analytics para entender uso agregado, como visualizações, início de puzzles, dicas, conferências e informações gerais de dispositivo ou navegador."] },
+        { heading: "Publicidade", paragraphs: ["O site não mostra anúncios atualmente. Se anúncios forem adicionados depois, o Daily Logic Lab pode usar Google AdSense ou serviços de publicidade do Google. Google e parceiros podem usar cookies para medir, mostrar e personalizar anúncios."] },
+        { heading: "Links externos", paragraphs: ["O site pode linkar para GitHub, documentação do Google e outros sites. Daily Logic Lab não controla as práticas de privacidade desses sites."] },
+        { heading: "Privacidade de crianças", paragraphs: ["Daily Logic Lab é um site geral de puzzles e não coleta intencionalmente informações pessoais de crianças."] },
+        { heading: "Links úteis", links: [{ label: "Política de Privacidade do Google", href: "https://policies.google.com/privacy" }, { label: "Configurações de anúncios do Google", href: "https://adssettings.google.com/" }] }
+      ]
+    }
+  },
+  zh: {
+    about: {
+      schemaType: "AboutPage",
+      title: "关于 Daily Logic Lab - 免费每日逻辑谜题",
+      description: "了解 Daily Logic Lab，一个提供每日 Star Battle 和谜题辅助工具的免费浏览器网站。",
+      eyebrow: "关于",
+      h1: "关于 Daily Logic Lab",
+      sections: [
+        { paragraphs: ["Daily Logic Lab 是一个小型浏览器谜题站，适合每天做一题短逻辑题，也提供实用的解题辅助工具。第一个游戏是 Daily Star Battle，所有盘面展示前都会用求解器验证唯一解。"] },
+        { heading: "网站提供什么", list: ["免费的每日 Star Battle。", "无限练习题，并验证唯一解。", "带时间代价的提示系统。", "杀手数独组合计算器。", "当前玩法无需注册账号。"] },
+        { heading: "为什么做这个网站", paragraphs: ["目标是让小型逻辑谜题打开就能玩、规则公平、值得每天回来。网站重点是加载快、操作清楚、移动端可用，并解释清楚新玩家容易疑惑的地方。"] },
+        { heading: "题目如何生成", paragraphs: ["Star Battle 盘面在浏览器中生成，并由求解器检查。只有正好一个有效解的盘面才会被接受。"] }
+      ],
+      cta: { label: "开始今日题", href: "/zh-cn/#play" }
+    },
+    contact: {
+      schemaType: "ContactPage",
+      title: "联系 Daily Logic Lab",
+      description: "联系 Daily Logic Lab，提交谜题反馈、错误报告、内容修正或网站问题。",
+      eyebrow: "联系",
+      h1: "联系 Daily Logic Lab",
+      sections: [
+        { paragraphs: ["你可以在这里提交反馈、错误报告、内容修正或网站问题。Daily Logic Lab 当前不需要账号，因此不要发送密码或私人账号信息。"] },
+        { heading: "报告题目或网站问题", paragraphs: ["推荐使用公开的 GitHub issue。提交时可以附上页面 URL、浏览器、设备和简短说明。"], links: [{ label: "在 GitHub 打开 issue", href: "https://github.com/DennyHo0917/dailylogiclab/issues" }] },
+        { heading: "建议包含的信息", list: ["问题发生的页面。", "浏览器和设备类型。", "当时是在每日题还是练习模式。", "你预期的结果和实际发生的结果。"] },
+        { heading: "隐私和内容问题", paragraphs: ["隐私相关问题请先阅读隐私政策。想了解网站背景，可以查看关于页面。"] }
+      ]
+    },
+    privacy: {
+      schemaType: "WebPage",
+      title: "隐私政策 - Daily Logic Lab",
+      description: "阅读 Daily Logic Lab 隐私政策，了解分析、浏览器本地存储、Cookie 和未来广告相关信息。",
+      eyebrow: "隐私",
+      h1: "隐私政策",
+      updatedLabel: "最后更新：",
+      sections: [
+        { paragraphs: ["Daily Logic Lab 提供免费的浏览器逻辑谜题和解题辅助工具。本政策说明你使用网站时可能涉及的信息。"] },
+        { heading: "你主动提供的信息", paragraphs: ["Daily Logic Lab 当前不要求注册、登录或付款。如果你通过 GitHub Issues 联系网站，你发布的信息由 GitHub 处理，并可能是公开的。"] },
+        { heading: "浏览器本地存储", paragraphs: ["谜题体验可能在你的浏览器中保存少量数据，例如连胜、最佳时间、已完成日期、提示次数和近期浏览器内事件。你可以通过清除浏览器站点数据来删除。"] },
+        { heading: "分析统计", paragraphs: ["Daily Logic Lab 使用 Google Analytics 了解聚合使用情况，例如页面浏览、开始题目、使用提示、检查盘面以及一般设备或浏览器信息。"] },
+        { heading: "广告", paragraphs: ["Daily Logic Lab 当前不展示广告。如果未来添加广告，网站可能使用 Google AdSense 或相关 Google 广告服务。Google 及其合作伙伴可能使用 Cookie 来投放、衡量和个性化广告。"] },
+        { heading: "第三方链接", paragraphs: ["网站可能链接到 GitHub、Google 文档或其他外部页面。Daily Logic Lab 不负责外部网站的隐私做法。"] },
+        { heading: "儿童隐私", paragraphs: ["Daily Logic Lab 是面向一般用户的谜题网站，不会有意收集儿童个人信息。"] },
+        { heading: "相关链接", links: [{ label: "Google 隐私政策", href: "https://policies.google.com/privacy" }, { label: "Google 广告设置", href: "https://adssettings.google.com/" }] }
+      ]
+    }
+  }
+};
 
 const languageLinks = languages
   .map((language) => `<link rel="alternate" hreflang="${language.hreflang}" href="${SITE}${language.path}">`)
@@ -1074,11 +1475,34 @@ function list(items) {
   return items.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n                  ");
 }
 
-function languageSwitcher(current) {
+function supportLinks(links = []) {
+  return links
+    .map((link) => {
+      const external = link.href.startsWith("http");
+      const rel = external ? ' rel="noopener noreferrer"' : "";
+      return `<p><a href="${link.href}"${rel}>${escapeHtml(link.label)}</a></p>`;
+    })
+    .join("\n          ");
+}
+
+function supportSections(sections) {
+  return sections
+    .map((section) => {
+      const heading = section.heading ? `\n        <h2>${escapeHtml(section.heading)}</h2>` : "";
+      const body = section.paragraphs ? `\n        ${paragraphs(section.paragraphs)}` : "";
+      const items = section.list ? `\n        <ul>\n                  ${list(section.list)}\n        </ul>` : "";
+      const links = section.links ? `\n        ${supportLinks(section.links)}` : "";
+      return `${heading}${body}${items}${links}`;
+    })
+    .join("\n");
+}
+
+function languageSwitcher(current, pageKey = "home") {
   const links = languages
     .map((language) => {
       const currentAttr = language.key === current.key ? ' aria-current="page"' : "";
-      return `<a href="${language.path}" lang="${language.htmlLang}" hreflang="${language.hreflang}"${currentAttr}>${escapeHtml(language.label)}</a>`;
+      const href = pageKey === "home" ? language.path : supportPath(language, pageKey);
+      return `<a href="${href}" lang="${language.htmlLang}" hreflang="${language.hreflang}"${currentAttr}>${escapeHtml(language.label)}</a>`;
     })
     .join("\n          ");
 
@@ -1418,15 +1842,127 @@ function page(language) {
       <div class="section-shell">
         <span>Daily Logic Lab</span>
         <nav class="footer-links" aria-label="${escapeHtml(language.footerAria)}">
-          <a href="/about">${escapeHtml(language.footer.about)}</a>
-          <a href="/contact">${escapeHtml(language.footer.contact)}</a>
-          <a href="/privacy-policy">${escapeHtml(language.footer.privacy)}</a>
+          <a href="${supportPath(language, "about")}">${escapeHtml(language.footer.about)}</a>
+          <a href="${supportPath(language, "contact")}">${escapeHtml(language.footer.contact)}</a>
+          <a href="${supportPath(language, "privacy")}">${escapeHtml(language.footer.privacy)}</a>
           <a href="/sitemap.xml">${escapeHtml(language.footer.sitemap)}</a>
         </nav>
       </div>
     </footer>
 
     <script src="${asset("app.js")}"></script>
+  </body>
+</html>
+`;
+}
+
+function supportAlternateLinks(pageKey) {
+  return languages
+    .map((language) => `<link rel="alternate" hreflang="${language.hreflang}" href="${SITE}${supportPath(language, pageKey)}">`)
+    .join("\n    ");
+}
+
+function supportJsonLd(language, pageKey, content) {
+  return JSON.stringify(
+    {
+      "@context": "https://schema.org",
+      "@type": content.schemaType,
+      name: content.h1,
+      headline: content.h1,
+      url: `${SITE}${supportPath(language, pageKey)}`,
+      inLanguage: language.htmlLang,
+      description: content.description,
+      isPartOf: { "@id": `${SITE}${language.path}#website` }
+    },
+    null,
+    8
+  );
+}
+
+function supportPage(language, pageKey) {
+  const content = supportContent[language.key][pageKey];
+  const profile = seo(language);
+  const canonical = `${SITE}${supportPath(language, pageKey)}`;
+  const asset = language.key === "en" ? "./" : "../";
+  const home = language.path;
+  const updated = pageKey === "privacy" ? `\n        <p><strong>${escapeHtml(content.updatedLabel)}</strong> June 18, 2026</p>` : "";
+  const cta = content.cta ? `\n        <p><a href="${content.cta.href}">${escapeHtml(content.cta.label)}</a></p>` : "";
+
+  return `<!doctype html>
+<html lang="${language.htmlLang}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NY29HPM34"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6NY29HPM34');
+    </script>
+    <title>${escapeHtml(content.title)}</title>
+    <meta name="description" content="${escapeHtml(content.description)}">
+    <meta name="language" content="${escapeHtml(profile.languageName)}">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#245c53">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="canonical" href="${canonical}">
+    ${supportAlternateLinks(pageKey)}
+    <link rel="alternate" hreflang="x-default" href="${SITE}/${supportSlugs[pageKey]}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="${escapeHtml(profile.ogLocale)}">
+    ${ogLocaleAlternates(language)}
+    <meta property="og:site_name" content="Daily Logic Lab">
+    <meta property="og:title" content="${escapeHtml(content.h1)}">
+    <meta property="og:description" content="${escapeHtml(content.description)}">
+    <meta property="og:url" content="${canonical}">
+    <meta property="og:image" content="${SITE}/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${escapeHtml(content.h1)}">
+    <meta name="twitter:description" content="${escapeHtml(content.description)}">
+    <meta name="twitter:image" content="${SITE}/og-image.png">
+    <link rel="stylesheet" href="${asset}styles.css">
+    <script type="application/ld+json">
+      ${supportJsonLd(language, pageKey, content)}
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="${home}#play">
+        <span class="brand-mark">DL</span>
+        <span>Daily Logic Lab</span>
+      </a>
+      <nav class="nav" aria-label="${escapeHtml(language.navAria)}">
+        <a href="${home}#play">${escapeHtml(language.nav[0])}</a>
+        <a href="${home}#calculator">${escapeHtml(language.nav[1])}</a>
+        <a href="${supportPath(language, "about")}">${escapeHtml(language.footer.about)}</a>
+      </nav>
+      ${languageSwitcher(language, pageKey)}
+    </header>
+
+    <main class="content-page">
+      <article class="section-shell content-card">
+        <p class="eyebrow">${escapeHtml(content.eyebrow)}</p>
+        <h1>${escapeHtml(content.h1)}</h1>${updated}
+        ${supportSections(content.sections)}${cta}
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section-shell">
+        <span>Daily Logic Lab</span>
+        <nav class="footer-links" aria-label="${escapeHtml(language.footerAria)}">
+          <a href="${supportPath(language, "about")}">${escapeHtml(language.footer.about)}</a>
+          <a href="${supportPath(language, "contact")}">${escapeHtml(language.footer.contact)}</a>
+          <a href="${supportPath(language, "privacy")}">${escapeHtml(language.footer.privacy)}</a>
+          <a href="/sitemap.xml">${escapeHtml(language.footer.sitemap)}</a>
+        </nav>
+      </div>
+    </footer>
   </body>
 </html>
 `;
@@ -1447,15 +1983,28 @@ ${alternateBlock}
   </url>`
     )
     .join("\n");
+  const localizedSupportPages = Object.keys(supportSlugs)
+    .flatMap((pageKey) => {
+      const supportAlternates = languages
+        .map((language) => `    <xhtml:link rel="alternate" hreflang="${language.hreflang}" href="${SITE}${supportPath(language, pageKey)}" />`)
+        .join("\n");
+      const supportAlternateBlock = `${supportAlternates}\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${supportPath(languages[0], pageKey)}" />`;
+      return languages.map(
+        (language) => `  <url>
+    <loc>${SITE}${supportPath(language, pageKey)}</loc>
+${supportAlternateBlock}
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>`
+      );
+    })
+    .join("\n");
   const supportPages = [
     ["/star-battle", "weekly", "0.8"],
     ["/star-battle-hints", "weekly", "0.8"],
     ["/two-not-touch-puzzle", "monthly", "0.7"],
     ["/queens-puzzle-alternative", "weekly", "0.7"],
-    ["/killer-sudoku-combination-calculator", "monthly", "0.8"],
-    ["/about", "yearly", "0.4"],
-    ["/contact", "yearly", "0.4"],
-    ["/privacy-policy", "yearly", "0.4"]
+    ["/killer-sudoku-combination-calculator", "monthly", "0.8"]
   ]
     .map(
       ([url, freq, priority]) => `  <url>
@@ -1469,6 +2018,7 @@ ${alternateBlock}
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${primaryPages}
+${localizedSupportPages}
 ${supportPages}
 </urlset>
 `;
@@ -1478,6 +2028,11 @@ for (const language of languages) {
   const outPath = path.resolve(language.out);
   await mkdir(path.dirname(outPath), { recursive: true });
   await writeFile(outPath, page(language), "utf8");
+  for (const pageKey of Object.keys(supportSlugs)) {
+    const supportOut = path.resolve(supportOutPath(language, pageKey));
+    await mkdir(path.dirname(supportOut), { recursive: true });
+    await writeFile(supportOut, supportPage(language, pageKey), "utf8");
+  }
 }
 
 await writeFile("sitemap.xml", sitemap(), "utf8");
