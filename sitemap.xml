@@ -1,9 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://dailylogiclab.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dailylogiclab.com/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://dailylogiclab.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://dailylogiclab.com/pt-br/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/" />
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://dailylogiclab.com/de/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dailylogiclab.com/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://dailylogiclab.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://dailylogiclab.com/pt-br/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/" />
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://dailylogiclab.com/es/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dailylogiclab.com/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://dailylogiclab.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://dailylogiclab.com/pt-br/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/" />
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://dailylogiclab.com/fr/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dailylogiclab.com/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://dailylogiclab.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://dailylogiclab.com/pt-br/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/" />
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://dailylogiclab.com/ja/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dailylogiclab.com/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://dailylogiclab.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://dailylogiclab.com/pt-br/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/" />
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://dailylogiclab.com/pt-br/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dailylogiclab.com/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://dailylogiclab.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://dailylogiclab.com/pt-br/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/" />
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://dailylogiclab.com/zh-cn/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://dailylogiclab.com/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://dailylogiclab.com/ja/" />
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://dailylogiclab.com/pt-br/" />
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/" />
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://dailylogiclab.com/star-battle</loc>

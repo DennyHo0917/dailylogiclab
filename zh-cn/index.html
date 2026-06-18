@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NY29HPM34"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6NY29HPM34');
+    </script>
+    <title>每日 Star Battle - 无需登录的逻辑小游戏</title>
+    <meta name="description" content="每天玩一题免费的 Star Battle 逻辑谜题。7x7 盘面经过求解器验证，保证唯一解，也可以无限练习。">
+    <meta name="keywords" content="star battle 中文, 每日逻辑谜题, queens puzzle 替代, star battle 在线, 不用登录小游戏, 唯一解谜题, 数独辅助工具">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="author" content="Daily Logic Lab">
+    <meta name="theme-color" content="#245c53">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="canonical" href="https://dailylogiclab.com/zh-cn/">
+    <link rel="alternate" hreflang="en" href="https://dailylogiclab.com/">
+    <link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/">
+    <link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/">
+    <link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/">
+    <link rel="alternate" hreflang="ja" href="https://dailylogiclab.com/ja/">
+    <link rel="alternate" hreflang="pt-BR" href="https://dailylogiclab.com/pt-br/">
+    <link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/">
+    <link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Logic Lab">
+    <meta property="og:title" content="每日 Star Battle - 唯一解逻辑谜题">
+    <meta property="og:description" content="一个像 Queens 一样短平快的逻辑小游戏，每日一题，也能无限练习。">
+    <meta property="og:url" content="https://dailylogiclab.com/zh-cn/">
+    <meta property="og:image" content="https://dailylogiclab.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Daily Logic Lab 的 Star Battle 盘面">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="每日 Star Battle - 唯一解逻辑谜题">
+    <meta name="twitter:description" content="一个像 Queens 一样短平快的逻辑小游戏，每日一题，也能无限练习。">
+    <meta name="twitter:image" content="https://dailylogiclab.com/og-image.png">
+    <meta name="twitter:image:alt" content="Daily Logic Lab 的 Star Battle 盘面">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+                {
+                        "@type": "WebSite",
+                        "@id": "https://dailylogiclab.com/zh-cn/#website",
+                        "name": "Daily Logic Lab",
+                        "url": "https://dailylogiclab.com/zh-cn/",
+                        "inLanguage": "zh-CN",
+                        "description": "每天玩一题免费的 Star Battle 逻辑谜题。7x7 盘面经过求解器验证，保证唯一解，也可以无限练习。"
+                },
+                {
+                        "@type": "WebApplication",
+                        "@id": "https://dailylogiclab.com/zh-cn/#app",
+                        "name": "每日 Star Battle",
+                        "url": "https://dailylogiclab.com/zh-cn/",
+                        "inLanguage": "zh-CN",
+                        "applicationCategory": "GameApplication",
+                        "operatingSystem": "Any",
+                        "isAccessibleForFree": true,
+                        "description": "每天玩一题免费的 Star Battle 逻辑谜题。7x7 盘面经过求解器验证，保证唯一解，也可以无限练习。"
+                },
+                {
+                        "@type": "FAQPage",
+                        "@id": "https://dailylogiclab.com/zh-cn/#faq",
+                        "inLanguage": "zh-CN",
+                        "mainEntity": [
+                                {
+                                        "@type": "Question",
+                                        "name": "Star Battle 的目标是什么？",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "在每一行、每一列、每个色块里各放一颗星，同时任意两颗星不能相邻，包括斜角。"
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "会不会生成无解题？",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "不会直接展示未经验证的题。生成器会先用求解器检查，只有正好一个有效解的盘面才会被接受。"
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "杀手数独计算器有什么用？",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "它按总和与格数列出可能组合，帮助你更快排除候选数字。"
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "需要注册账号吗？",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "不需要。每日题、练习、提示、检查、分享和计算器都在浏览器里直接运行。"
+                                        }
+                                }
+                        ]
+                }
+        ]
+}
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#play" aria-label="Daily Logic Lab home">
+        <span class="brand-mark">DL</span>
+        <span>Daily Logic Lab</span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="#play">开始玩</a>
+        <a href="#calculator">计算器</a>
+        <a href="#rules">规则</a>
+      </nav>
+      <details class="language-switcher">
+        <summary aria-label="切换语言">中文</summary>
+        <div class="language-menu">
+          <a href="/" lang="en" hreflang="en">English</a>
+          <a href="/de/" lang="de" hreflang="de">Deutsch</a>
+          <a href="/es/" lang="es" hreflang="es">Español</a>
+          <a href="/fr/" lang="fr" hreflang="fr">Français</a>
+          <a href="/ja/" lang="ja" hreflang="ja">日本語</a>
+          <a href="/pt-br/" lang="pt-BR" hreflang="pt-BR">Português</a>
+          <a href="/zh-cn/" lang="zh-CN" hreflang="zh-CN" aria-current="page">中文</a>
+        </div>
+      </details>
+    </header>
+
+    <main>
+      <section id="play" class="play-section">
+        <div class="section-shell play-layout">
+          <div class="game-column">
+            <div class="game-head">
+              <div>
+                <p class="eyebrow" id="puzzleMode">每日题</p>
+                <h1>每日 Star Battle</h1>
+                <p class="game-intro">这是一个接近 Queens 手感的短逻辑谜题：每天一题，也可以无限练习。每个盘面都会先经过求解器验证，只展示唯一解题目。</p>
+                <ul class="proof-points" aria-label="谜题特点">
+                  <li>每日一题</li>
+                  <li>无限练习</li>
+                  <li>唯一解</li>
+                  <li>无需账号</li>
+                </ul>
+              </div>
+              <div class="stats" aria-label="谜题状态">
+                <div>
+                  <span id="timer">00:00</span>
+                  <small>时间</small>
+                </div>
+                <div>
+                  <span id="starCount">0/7</span>
+                  <small>星星</small>
+                </div>
+                <div>
+                  <span id="streakCount">0</span>
+                  <small>连胜</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="board-wrap" aria-live="polite">
+              <div class="board-stage">
+                <div id="board" class="board" role="grid" aria-label="Star Battle 盘面"></div>
+                <div id="startOverlay" class="start-overlay">
+                  <div class="start-card">
+                    <p class="eyebrow" id="startLabel">每日题</p>
+                    <h2>准备好了吗？</h2>
+                    <p>点击开始后才会计时。你需要在每一行、每一列、每个色块里各放一颗星星。</p>
+                    <button id="startBtn" type="button" class="primary">开始</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p id="status" class="status" aria-live="polite">准备好了再点开始，计时器现在不会偷跑。</p>
+
+            <div class="toolbar" aria-label="谜题控制">
+              <button id="resetBtn" type="button">重置</button>
+              <button id="hintBtn" type="button">提示 +30s</button>
+              <button id="checkBtn" type="button">检查</button>
+              <button id="practiceBtn" type="button">新练习</button>
+              <button id="shareBtn" type="button" class="primary">分享</button>
+            </div>
+          </div>
+
+          <aside class="side-panel" aria-label="谜题说明">
+            <div class="metric-strip">
+              <div>
+                <strong id="todayLabel">今日</strong>
+                <span>题目</span>
+              </div>
+              <div>
+                <strong>7x7</strong>
+                <span>盘面</span>
+              </div>
+              <div>
+                <strong id="proofLabel">唯一解</strong>
+                <span>已验证</span>
+              </div>
+              <div>
+                <strong id="bestTime">--:--</strong>
+                <span>最佳</span>
+              </div>
+            </div>
+            <div id="sharePreview" class="share-preview">Daily Star Battle
+短逻辑题，唯一解，无需登录。</div>
+            <div class="quick-rules" aria-label="快速规则">
+              <h2>目标</h2>
+              <ul>
+                <li>每一行放一颗星。</li>
+                  <li>每一列放一颗星。</li>
+                  <li>每个色块放一颗星。</li>
+                  <li>星星之间不能相邻。</li>
+              </ul>
+              <p>点一次放星星，点两次标记为不可能。</p>
+            </div>
+            <div class="mini-actions">
+              <button id="dailyBtn" type="button">每日题</button>
+              <button id="copyLinkBtn" type="button">复制链接</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="calculator" class="tool-section">
+        <div class="section-shell tool-layout">
+          <div>
+            <p class="eyebrow">解题辅助</p>
+            <h2>杀手数独宫格组合计算器</h2>
+            <p class="lede">输入目标和与格子数量，快速列出可能的数字组合。</p>
+          </div>
+
+          <div class="calculator-panel">
+            <form id="comboForm" class="combo-form">
+              <label>
+                <span>总和</span>
+                <input id="sumInput" type="number" min="1" max="45" value="17" inputmode="numeric">
+              </label>
+              <label>
+                <span>格数</span>
+                <input id="cellsInput" type="number" min="1" max="9" value="3" inputmode="numeric">
+              </label>
+              <label class="check-label">
+                <input id="repeatInput" type="checkbox">
+                <span>允许重复</span>
+              </label>
+            </form>
+
+            <div class="digits" id="digits" aria-label="可用数字"></div>
+
+            <div class="result-head">
+              <strong id="comboCount">0 组组合</strong>
+              <button id="copyCombosBtn" type="button">复制</button>
+            </div>
+            <div id="comboResults" class="combo-results" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="rules" class="rules-section">
+        <div class="section-shell rules-grid">
+          <div>
+            <p class="eyebrow">规则</p>
+            <h2>Star Battle 基础规则</h2>
+            <p class="lede">整个 7x7 盘面一共要放 7 颗星。难点在于行、列、色块和相邻关系会同时限制每一颗星的位置。</p>
+          </div>
+          <ul class="rules-list">
+            <li>每一行必须正好有一颗星。</li>
+                  <li>每一列必须正好有一颗星。</li>
+                  <li>每个色块必须正好有一颗星。</li>
+                  <li>星星之间不能接触，包括斜角。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="guide" class="seo-section">
+        <div class="section-shell seo-grid">
+          <article>
+            <p class="eyebrow">Queens 风格逻辑谜题</p>
+            <h2>在线玩每日 Star Battle</h2>
+            <p>Daily Logic Lab 适合想每天做一题短逻辑题的人：打开网页，点击开始，直接推理。没有登录流程，也不需要安装 App。</p>
+              <p>如果你喜欢 Queens、数独变体、格子逻辑题或不想花太久的小游戏，Star Battle 的节奏会比较舒服。规则很少，但每一步都会影响多个约束。</p>
+          </article>
+
+          <article>
+            <p class="eyebrow">杀手数独辅助</p>
+            <h2>快速查看候选组合</h2>
+            <p>杀手数独组合计算器可以根据目标和、格数和可用数字列出候选组合，省掉一部分重复心算。</p>
+              <p>它也适合 Kakuro、笼和、数字组合推理等纸笔谜题场景。</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="faq" class="faq-section">
+        <div class="section-shell">
+          <p class="eyebrow">FAQ</p>
+          <h2>常见问题</h2>
+          <div class="faq-list">
+            <details>
+              <summary>Star Battle 的目标是什么？</summary>
+              <p>在每一行、每一列、每个色块里各放一颗星，同时任意两颗星不能相邻，包括斜角。</p>
+            </details>
+            <details>
+              <summary>会不会生成无解题？</summary>
+              <p>不会直接展示未经验证的题。生成器会先用求解器检查，只有正好一个有效解的盘面才会被接受。</p>
+            </details>
+            <details>
+              <summary>杀手数独计算器有什么用？</summary>
+              <p>它按总和与格数列出可能组合，帮助你更快排除候选数字。</p>
+            </details>
+            <details>
+              <summary>需要注册账号吗？</summary>
+              <p>不需要。每日题、练习、提示、检查、分享和计算器都在浏览器里直接运行。</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="internal-links-section">
+        <div class="section-shell">
+          <p class="eyebrow">继续探索</p>
+          <h2>逻辑谜题指南</h2>
+          <div class="internal-links">
+            <a href="/star-battle">Star Battle 指南</a>
+            <a href="/star-battle-hints">Star Battle 提示</a>
+            <a href="/two-not-touch-puzzle">Two Not Touch Puzzle</a>
+            <a href="/queens-puzzle-alternative">Queens 替代谜题</a>
+            <a href="/killer-sudoku-combination-calculator">杀手数独组合计算器</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section-shell">
+        <span>Daily Logic Lab</span>
+        <nav class="footer-links" aria-label="页脚">
+          <a href="/about">关于</a>
+          <a href="/contact">联系</a>
+          <a href="/privacy-policy">隐私</a>
+          <a href="/sitemap.xml">站点地图</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script src="../app.js"></script>
+  </body>
+</html>

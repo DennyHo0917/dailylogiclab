@@ -113,6 +113,7 @@ input:focus-visible {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin-left: auto;
 }
 
 .nav a {
@@ -125,6 +126,72 @@ input:focus-visible {
 .nav a:hover {
   background: rgba(36, 92, 83, 0.08);
   color: var(--ink);
+}
+
+.language-switcher {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.language-switcher summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 0 12px;
+  color: var(--ink);
+  font-size: 0.92rem;
+  font-weight: 760;
+  cursor: pointer;
+  list-style: none;
+}
+
+.language-switcher summary::-webkit-details-marker {
+  display: none;
+}
+
+.language-switcher summary::after {
+  content: "";
+  width: 7px;
+  height: 7px;
+  margin-left: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translateY(-2px);
+}
+
+.language-switcher[open] summary {
+  border-color: var(--accent);
+}
+
+.language-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 20;
+  display: grid;
+  min-width: 160px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 6px;
+  box-shadow: 0 16px 40px rgba(32, 33, 36, 0.16);
+}
+
+.language-menu a {
+  border-radius: 8px;
+  color: var(--ink);
+  padding: 8px 10px;
+  text-decoration: none;
+}
+
+.language-menu a:hover,
+.language-menu a[aria-current="page"] {
+  background: rgba(36, 92, 83, 0.1);
+  color: var(--accent);
+  font-weight: 800;
 }
 
 .section-shell {
@@ -716,6 +783,14 @@ h2 {
     flex-direction: column;
   }
 
+  .nav {
+    margin-left: 0;
+  }
+
+  .language-switcher {
+    align-self: flex-end;
+  }
+
   .site-footer .section-shell {
     align-items: start;
     flex-direction: column;
@@ -748,6 +823,20 @@ h2 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     width: 100%;
     gap: 0;
+  }
+
+  .language-switcher {
+    width: 100%;
+  }
+
+  .language-switcher summary {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .language-menu {
+    right: 0;
+    left: 0;
   }
 
   .nav a {

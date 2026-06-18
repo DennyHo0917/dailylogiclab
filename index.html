@@ -12,14 +12,8 @@
       gtag('config', 'G-6NY29HPM34');
     </script>
     <title>Daily Star Battle - Queens-Style Logic Puzzle, No Login</title>
-    <meta
-      name="description"
-      content="Play a free daily Star Battle puzzle online. Daily and unlimited Queens-style practice boards are solver-verified unique and work without login."
-    >
-    <meta
-      name="keywords"
-      content="daily star battle, queens style puzzle, queens puzzle alternative, star battle online, star battle puzzle, two not touch puzzle, unlimited star battle, unique solution puzzle, no login logic puzzle"
-    >
+    <meta name="description" content="Play a free daily Star Battle puzzle online. Daily and unlimited Queens-style practice boards are solver-verified unique and work without login.">
+    <meta name="keywords" content="daily star battle, queens style puzzle, queens puzzle alternative, star battle online, star battle puzzle, two not touch puzzle, unlimited star battle, unique solution puzzle, no login logic puzzle">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="author" content="Daily Logic Lab">
     <meta name="theme-color" content="#245c53">
@@ -28,13 +22,18 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="canonical" href="https://dailylogiclab.com/">
+    <link rel="alternate" hreflang="en" href="https://dailylogiclab.com/">
+    <link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/">
+    <link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/">
+    <link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/">
+    <link rel="alternate" hreflang="ja" href="https://dailylogiclab.com/ja/">
+    <link rel="alternate" hreflang="pt-BR" href="https://dailylogiclab.com/pt-br/">
+    <link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/">
+    <link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Daily Logic Lab">
     <meta property="og:title" content="Daily Star Battle - Queens-Style Logic Puzzle">
-    <meta
-      property="og:description"
-      content="Play a daily Queens-style Star Battle puzzle, then practice unlimited solver-verified unique boards without login."
-    >
+    <meta property="og:description" content="Play a daily Queens-style Star Battle puzzle, then practice unlimited solver-verified unique boards without login.">
     <meta property="og:url" content="https://dailylogiclab.com/">
     <meta property="og:image" content="https://dailylogiclab.com/og-image.png">
     <meta property="og:image:width" content="1200">
@@ -42,10 +41,7 @@
     <meta property="og:image:alt" content="Daily Logic Lab Star Battle puzzle board">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Daily Star Battle - Queens-Style Logic Puzzle">
-    <meta
-      name="twitter:description"
-      content="Daily and unlimited Queens-style Star Battle puzzles, solver-verified unique and no login required."
-    >
+    <meta name="twitter:description" content="Play a daily Queens-style Star Battle puzzle, then practice unlimited solver-verified unique boards without login.">
     <meta name="twitter:image" content="https://dailylogiclab.com/og-image.png">
     <meta name="twitter:image:alt" content="Daily Logic Lab Star Battle puzzle board">
     <link rel="stylesheet" href="./styles.css">
@@ -53,63 +49,66 @@
       {
         "@context": "https://schema.org",
         "@graph": [
-          {
-            "@type": "WebSite",
-            "@id": "https://dailylogiclab.com/#website",
-            "name": "Daily Logic Lab",
-            "url": "https://dailylogiclab.com/",
-            "description": "Free daily Queens-style Star Battle puzzles with unlimited practice."
-          },
-          {
-            "@type": "WebApplication",
-            "@id": "https://dailylogiclab.com/#app",
-            "name": "Daily Star Battle",
-            "url": "https://dailylogiclab.com/",
-            "applicationCategory": "GameApplication",
-            "operatingSystem": "Any",
-            "isAccessibleForFree": true,
-            "description": "Play a daily Queens-style Star Battle puzzle online with unlimited solver-verified unique practice boards, hints, checks, streaks, and sharing."
-          },
-          {
-            "@type": "FAQPage",
-            "@id": "https://dailylogiclab.com/#faq",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "What is Star Battle?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Star Battle is a logic puzzle where you place stars on a grid. Each row, column, and color region must contain exactly one star, and stars may not touch, including diagonally."
+                {
+                        "@type": "WebSite",
+                        "@id": "https://dailylogiclab.com/#website",
+                        "name": "Daily Logic Lab",
+                        "url": "https://dailylogiclab.com/",
+                        "inLanguage": "en",
+                        "description": "Play a free daily Star Battle puzzle online. Daily and unlimited Queens-style practice boards are solver-verified unique and work without login."
+                },
+                {
+                        "@type": "WebApplication",
+                        "@id": "https://dailylogiclab.com/#app",
+                        "name": "Daily Star Battle",
+                        "url": "https://dailylogiclab.com/",
+                        "inLanguage": "en",
+                        "applicationCategory": "GameApplication",
+                        "operatingSystem": "Any",
+                        "isAccessibleForFree": true,
+                        "description": "Play a free daily Star Battle puzzle online. Daily and unlimited Queens-style practice boards are solver-verified unique and work without login."
+                },
+                {
+                        "@type": "FAQPage",
+                        "@id": "https://dailylogiclab.com/#faq",
+                        "inLanguage": "en",
+                        "mainEntity": [
+                                {
+                                        "@type": "Question",
+                                        "name": "What is the goal of Star Battle?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Place one star in each row, one star in each column, and one star in each color region. Stars cannot touch each other, including diagonally."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "Can a generated puzzle have no solution?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "The generator checks every board with a solver before showing it. A puzzle is accepted only when the solver finds exactly one valid solution."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "How do I use the Killer Sudoku cage calculator?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Type the target sum, choose how many cells are in the cage, and keep only the digits that are still available. The calculator lists all matching combinations."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "Do I need an account?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "No. The daily puzzle, unlimited practice puzzles, hints, checks, sharing, and calculator all work in the browser without an account."
+                                        }
+                                }
+                        ]
                 }
-              },
-              {
-                "@type": "Question",
-                "name": "Does each puzzle have a unique solution?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Yes. Daily Logic Lab generates each Star Battle board with a solver and only shows puzzles that have exactly one valid solution."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "What is the Killer Sudoku cage calculator for?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "The Killer Sudoku cage calculator lists digit combinations for a given cage sum and number of cells, helping players check possible cage totals faster."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Is Daily Logic Lab free?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Yes. The daily Star Battle puzzle, practice boards, hints, checks, and Killer Sudoku combination calculator are free to use."
-                }
-              }
-            ]
-          }
         ]
-      }
+}
     </script>
   </head>
   <body>
@@ -123,6 +122,18 @@
         <a href="#calculator">Calculator</a>
         <a href="#rules">Rules</a>
       </nav>
+      <details class="language-switcher">
+        <summary aria-label="Change language">English</summary>
+        <div class="language-menu">
+          <a href="/" lang="en" hreflang="en" aria-current="page">English</a>
+          <a href="/de/" lang="de" hreflang="de">Deutsch</a>
+          <a href="/es/" lang="es" hreflang="es">Español</a>
+          <a href="/fr/" lang="fr" hreflang="fr">Français</a>
+          <a href="/ja/" lang="ja" hreflang="ja">日本語</a>
+          <a href="/pt-br/" lang="pt-BR" hreflang="pt-BR">Português</a>
+          <a href="/zh-cn/" lang="zh-CN" hreflang="zh-CN">中文</a>
+        </div>
+      </details>
     </header>
 
     <main>
@@ -133,10 +144,7 @@
               <div>
                 <p class="eyebrow" id="puzzleMode">Daily puzzle</p>
                 <h1>Daily Star Battle</h1>
-                <p class="game-intro">
-                  A Queens-style logic puzzle you can play daily or unlimited.
-                  Every board is solver-verified unique and works without login.
-                </p>
+                <p class="game-intro">A Queens-style logic puzzle you can play daily or unlimited. Every board is solver-verified unique and works without login.</p>
                 <ul class="proof-points" aria-label="Puzzle promises">
                   <li>Daily puzzle</li>
                   <li>Unlimited practice</li>
@@ -167,10 +175,7 @@
                   <div class="start-card">
                     <p class="eyebrow" id="startLabel">Daily puzzle</p>
                     <h2>Ready to solve?</h2>
-                    <p>
-                      The timer starts only after you press Start. Place one star in each row,
-                      column, and color block.
-                    </p>
+                    <p>The timer starts only after you press Start. Place one star in each row, column, and color block.</p>
                     <button id="startBtn" type="button" class="primary">Start Puzzle</button>
                   </div>
                 </div>
@@ -207,17 +212,15 @@
                 <span>Best</span>
               </div>
             </div>
-            <div id="sharePreview" class="share-preview">
-              Daily Star Battle<br>
-              Queens-style. Unique solution. No login.
-            </div>
+            <div id="sharePreview" class="share-preview">Daily Star Battle
+Queens-style. Unique solution. No login.</div>
             <div class="quick-rules" aria-label="Quick rules">
               <h2>Goal</h2>
               <ul>
                 <li>One star in every row.</li>
-                <li>One star in every column.</li>
-                <li>One star in every color block.</li>
-                <li>No touching stars.</li>
+                  <li>One star in every column.</li>
+                  <li>One star in every color block.</li>
+                  <li>No touching stars.</li>
               </ul>
               <p>Tap a square once for a star, twice to mark it as impossible.</p>
             </div>
@@ -234,9 +237,7 @@
           <div>
             <p class="eyebrow">Puzzle helper</p>
             <h2>Killer Sudoku Cage Calculator</h2>
-            <p class="lede">
-              Enter a cage sum and cell count to list possible digit combinations.
-            </p>
+            <p class="lede">Enter a cage sum and cell count to list possible digit combinations.</p>
           </div>
 
           <div class="calculator-panel">
@@ -271,16 +272,13 @@
           <div>
             <p class="eyebrow">Rules</p>
             <h2>Star Battle basics</h2>
-            <p class="lede">
-              Think of it as a tiny placement puzzle: the whole board needs 7 stars, but the
-              rows, columns, color areas, and neighbors all restrict where they can go.
-            </p>
+            <p class="lede">Think of it as a tiny placement puzzle: the whole board needs 7 stars, but the rows, columns, color areas, and neighbors all restrict where they can go.</p>
           </div>
           <ul class="rules-list">
             <li>Place exactly one star in each row.</li>
-            <li>Place exactly one star in each column.</li>
-            <li>Place exactly one star in each color region.</li>
-            <li>Stars may not touch, including diagonally.</li>
+                  <li>Place exactly one star in each column.</li>
+                  <li>Place exactly one star in each color region.</li>
+                  <li>Stars may not touch, including diagonally.</li>
           </ul>
         </div>
       </section>
@@ -290,33 +288,15 @@
           <article>
             <p class="eyebrow">Queens-style logic puzzle</p>
             <h2>Play Daily Star Battle Online</h2>
-            <p>
-              Daily Logic Lab is a free Star Battle puzzle site built for players looking for
-              a clean Queens-style logic puzzle they can play every day. Each board is generated
-              with a solver and only shown when it has exactly one solution. Start with the daily
-              puzzle, then use practice mode for another unique board without creating an account.
-            </p>
-            <p>
-              Star Battle is familiar to players who enjoy Queens-style placement puzzles,
-              two-not-touch puzzles, sudoku variants, and short grid logic games. The goal is
-              simple, but every star affects its row, column, color region, and neighboring
-              squares.
-            </p>
+            <p>Daily Logic Lab is a free Star Battle puzzle site built for players looking for a clean Queens-style logic puzzle they can play every day. Each board is generated with a solver and only shown when it has exactly one solution. Start with the daily puzzle, then use practice mode for another unique board without creating an account.</p>
+              <p>Star Battle is familiar to players who enjoy Queens-style placement puzzles, two-not-touch puzzles, sudoku variants, and short grid logic games. The goal is simple, but every star affects its row, column, color region, and neighboring squares.</p>
           </article>
 
           <article>
             <p class="eyebrow">Puzzle helper</p>
             <h2>Killer Sudoku Combination Calculator</h2>
-            <p>
-              The Killer Sudoku cage calculator helps you find combinations for a cage total.
-              Enter the cage sum, choose the number of cells, remove digits that are already
-              used, and copy the possible combinations into your solving notes.
-            </p>
-            <p>
-              This tool is useful for searches like killer sudoku combination calculator,
-              killer sudoku cage calculator, sudoku cage combinations, kakuro combinations,
-              and other pencil puzzle helper workflows.
-            </p>
+            <p>The Killer Sudoku cage calculator helps you find combinations for a cage total. Enter the cage sum, choose the number of cells, remove digits that are already used, and copy the possible combinations into your solving notes.</p>
+              <p>This tool is useful for searches like killer sudoku combination calculator, killer sudoku cage calculator, sudoku cage combinations, kakuro combinations, and other pencil puzzle helper workflows.</p>
           </article>
         </div>
       </section>
@@ -328,31 +308,19 @@
           <div class="faq-list">
             <details>
               <summary>What is the goal of Star Battle?</summary>
-              <p>
-                Place one star in each row, one star in each column, and one star in each
-                color region. Stars cannot touch each other, including diagonally.
-              </p>
+              <p>Place one star in each row, one star in each column, and one star in each color region. Stars cannot touch each other, including diagonally.</p>
             </details>
             <details>
               <summary>Can a generated puzzle have no solution?</summary>
-              <p>
-                The generator checks every board with a solver before showing it. A puzzle is
-                accepted only when the solver finds exactly one valid solution.
-              </p>
+              <p>The generator checks every board with a solver before showing it. A puzzle is accepted only when the solver finds exactly one valid solution.</p>
             </details>
             <details>
               <summary>How do I use the Killer Sudoku cage calculator?</summary>
-              <p>
-                Type the target sum, choose how many cells are in the cage, and keep only the
-                digits that are still available. The calculator lists all matching combinations.
-              </p>
+              <p>Type the target sum, choose how many cells are in the cage, and keep only the digits that are still available. The calculator lists all matching combinations.</p>
             </details>
             <details>
               <summary>Do I need an account?</summary>
-              <p>
-                No. The daily puzzle, unlimited practice puzzles, hints, checks, sharing, and calculator
-                all work in the browser without an account.
-              </p>
+              <p>No. The daily puzzle, unlimited practice puzzles, hints, checks, sharing, and calculator all work in the browser without an account.</p>
             </details>
           </div>
         </div>
