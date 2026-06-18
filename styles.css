@@ -656,6 +656,7 @@ h2 {
 
 .site-footer .section-shell {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 16px;
 }
@@ -663,6 +664,12 @@ h2 {
 .site-footer a {
   color: var(--accent);
   text-decoration: none;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .content-page {
@@ -705,6 +712,11 @@ h2 {
 
 @media (max-width: 840px) {
   .topbar {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .site-footer .section-shell {
     align-items: start;
     flex-direction: column;
   }
