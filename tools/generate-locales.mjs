@@ -501,12 +501,12 @@ const languages = [
     footerAria: "フッター",
     switchAria: "言語を切り替える",
     meta: {
-      title: "毎日のスター・バトル - 登録なしで遊べる論理パズル",
+      title: "毎日遊べる Star Battle - 登録なしのロジックパズル",
       description:
-        "日本語で遊べる無料の Star Battle。毎日の7x7パズル、唯一解チェック済みの練習問題、Killer Sudoku の組み合わせ計算を用意しています。",
+        "日本語で遊べる無料の Star Battle（スター・バトル）。毎日の7x7パズル、唯一解チェック済みの練習問題、Killer Sudoku の組み合わせ計算を用意しています。",
       keywords:
         "スター バトル, star battle 日本語, 論理パズル 毎日, queens パズル 代替, 無料 パズル, 登録なし ゲーム, 唯一解 パズル",
-      ogTitle: "毎日のスター・バトル - 唯一解の論理パズル",
+      ogTitle: "毎日遊べる Star Battle - 唯一解のロジックパズル",
       ogDescription:
         "Queens系の短い論理パズルを毎日1問。登録なしで練習もできます。",
       imageAlt: "Daily Logic Lab の Star Battle 盤面"
@@ -514,7 +514,7 @@ const languages = [
     nav: ["遊ぶ", "計算", "ルール"],
     hero: {
       mode: "今日のパズル",
-      h1: "毎日の Star Battle",
+      h1: "毎日遊べる Star Battle",
       intro:
         "Queensに近い感覚で遊べる、短時間向けの論理パズルです。毎日1問、または練習を好きなだけ。盤面はすべて唯一解を確認しています。",
       proofs: ["毎日更新", "練習し放題", "唯一解チェック済み", "登録なし"],
@@ -905,6 +905,155 @@ const ariaLabels = {
   }
 };
 
+const seoProfiles = {
+  en: {
+    ogLocale: "en_US",
+    languageName: "English",
+    audience: "daily logic puzzle players, Queens puzzle players, Star Battle solvers, Killer Sudoku solvers",
+    alternateNames: ["Star Battle", "Queens-style puzzle", "Two Not Touch", "Starstruck", "Killer Sudoku cage calculator"],
+    keywords: [
+      "daily star battle",
+      "star battle puzzle",
+      "queens style puzzle",
+      "queens puzzle alternative",
+      "two not touch puzzle",
+      "starstruck puzzle",
+      "star battle online",
+      "unique solution logic puzzle",
+      "killer sudoku cage calculator",
+      "killer sudoku combinations"
+    ],
+    note:
+      "Players also search for this style as Queens, Two Not Touch, Starstruck, or a no-touch stars puzzle."
+  },
+  de: {
+    ogLocale: "de_DE",
+    languageName: "Deutsch",
+    audience: "deutschsprachige Logikrätsel-Spieler, Star-Battle-Spieler, Killer-Sudoku-Spieler",
+    alternateNames: ["Star Battle", "Kampf der Sterne", "Queens", "Two Not Touch", "Starstruck", "Killer-Sudoku-Käfigrechner"],
+    keywords: [
+      "star battle deutsch",
+      "kampf der sterne",
+      "tägliches logikrätsel",
+      "star battle online",
+      "queens rätsel alternative",
+      "stern rätsel",
+      "logikspiel ohne anmeldung",
+      "eindeutige lösung rätsel",
+      "killer sudoku kombinationen",
+      "killer sudoku käfigrechner"
+    ],
+    note:
+      "Im deutschsprachigen Raum wird Star Battle auch als Kampf der Sterne gesucht; international tauchen außerdem Queens, Two Not Touch und Starstruck auf."
+  },
+  es: {
+    ogLocale: "es_ES",
+    languageName: "Español",
+    audience: "jugadores de puzzles de lógica, jugadores de Queens, solvers de Star Battle y Sudoku Killer",
+    alternateNames: ["Star Battle", "rompecabezas de lógica", "puzzle de lógica", "Queens", "Two Not Touch", "Starstruck"],
+    keywords: [
+      "star battle español",
+      "star battle diario",
+      "puzzle de lógica",
+      "rompecabezas de lógica",
+      "juego de lógica gratis",
+      "alternativa a queens puzzle",
+      "star battle online",
+      "puzzle sin registro",
+      "sudoku killer combinaciones",
+      "calculadora sudoku killer"
+    ],
+    note:
+      "En español conviene cubrir tanto puzzle de lógica como rompecabezas de lógica; Star Battle también se relaciona con Queens, Two Not Touch y Starstruck."
+  },
+  fr: {
+    ogLocale: "fr_FR",
+    languageName: "Français",
+    audience: "joueurs de puzzles logiques, joueurs de Queens, amateurs de Star Battle et Killer Sudoku",
+    alternateNames: ["Star Battle", "puzzle logique", "casse-tête logique", "Queens", "Two Not Touch", "Starstruck"],
+    keywords: [
+      "star battle français",
+      "star battle quotidien",
+      "puzzle logique",
+      "casse-tête logique",
+      "jeu de logique gratuit",
+      "alternative queens puzzle",
+      "star battle en ligne",
+      "puzzle sans compte",
+      "combinaisons killer sudoku",
+      "calculatrice killer sudoku"
+    ],
+    note:
+      "En français, les joueurs utilisent à la fois puzzle logique et casse-tête logique; les noms Queens, Two Not Touch et Starstruck décrivent le même voisinage de recherche."
+  },
+  ja: {
+    ogLocale: "ja_JP",
+    languageName: "日本語",
+    audience: "日本語のロジックパズルプレイヤー、Queens プレイヤー、Star Battle と Killer Sudoku のソルバー",
+    alternateNames: ["Star Battle", "スター・バトル", "ロジックパズル", "Queens", "Two Not Touch", "Starstruck"],
+    keywords: [
+      "star battle 日本語",
+      "スター バトル",
+      "毎日 ロジックパズル",
+      "無料 パズル",
+      "登録なし ゲーム",
+      "queens パズル 代替",
+      "two not touch",
+      "唯一解 パズル",
+      "killer sudoku 組み合わせ",
+      "キラー数独 計算"
+    ],
+    note:
+      "日本語では Star Battle、スター・バトル、ロジックパズルに加えて、Queens、Two Not Touch、Starstruck という名前でも探されることがあります。"
+  },
+  pt: {
+    ogLocale: "pt_BR",
+    languageName: "Português",
+    audience: "jogadores de quebra-cabeças lógicos, jogadores de Queens, fãs de Star Battle e Killer Sudoku",
+    alternateNames: ["Star Battle", "quebra-cabeça lógico", "jogo de lógica", "Queens", "Two Not Touch", "Starstruck"],
+    keywords: [
+      "star battle português",
+      "star battle diário",
+      "quebra-cabeça lógico",
+      "jogo de lógica",
+      "puzzle lógico",
+      "alternativa queens puzzle",
+      "star battle online",
+      "jogo sem cadastro",
+      "killer sudoku combinações",
+      "calculadora killer sudoku"
+    ],
+    note:
+      "Em português brasileiro, vale cobrir jogo de lógica e quebra-cabeça lógico; Star Battle também aparece ligado a Queens, Two Not Touch e Starstruck."
+  },
+  zh: {
+    ogLocale: "zh_CN",
+    languageName: "简体中文",
+    audience: "中文逻辑谜题玩家、Queens 玩家、Star Battle 玩家和杀手数独玩家",
+    alternateNames: ["Star Battle", "星之战", "逻辑谜题", "Queens", "Two Not Touch", "Starstruck", "杀手数独组合计算器"],
+    keywords: [
+      "star battle 中文",
+      "星之战",
+      "每日逻辑谜题",
+      "逻辑小游戏",
+      "queens puzzle 替代",
+      "star battle 在线",
+      "不用登录小游戏",
+      "唯一解谜题",
+      "杀手数独组合",
+      "杀手数独计算器"
+    ],
+    note:
+      "中文搜索里可以同时覆盖 Star Battle、星之战、逻辑谜题、Queens、Two Not Touch 和 Starstruck 这些相邻叫法。"
+  }
+};
+
+const allAvailableLanguages = Object.values(seoProfiles).map((profile) => profile.languageName);
+
+function seo(language) {
+  return seoProfiles[language.key] || seoProfiles.en;
+}
+
 const languageLinks = languages
   .map((language) => `<link rel="alternate" hreflang="${language.hreflang}" href="${SITE}${language.path}">`)
   .join("\n    ");
@@ -941,11 +1090,19 @@ function languageSwitcher(current) {
       </details>`;
 }
 
+function ogLocaleAlternates(current) {
+  return languages
+    .filter((language) => language.key !== current.key)
+    .map((language) => `<meta property="og:locale:alternate" content="${escapeHtml(seo(language).ogLocale)}">`)
+    .join("\n    ");
+}
+
 function aria(language, key) {
   return ariaLabels[language.key]?.[key] || ariaLabels.en[key];
 }
 
 function jsonLd(language) {
+  const profile = seo(language);
   const graph = [
     {
       "@type": "WebSite",
@@ -953,18 +1110,39 @@ function jsonLd(language) {
       name: "Daily Logic Lab",
       url: `${SITE}${language.path}`,
       inLanguage: language.htmlLang,
-      description: language.meta.description
+      description: language.meta.description,
+      keywords: profile.keywords.join(", "),
+      availableLanguage: allAvailableLanguages
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${SITE}${language.path}#webpage`,
+      name: language.meta.title,
+      headline: language.hero.h1,
+      url: `${SITE}${language.path}`,
+      inLanguage: language.htmlLang,
+      isPartOf: { "@id": `${SITE}${language.path}#website` },
+      description: language.meta.description,
+      keywords: profile.keywords.join(", "),
+      alternateName: profile.alternateNames
     },
     {
       "@type": "WebApplication",
       "@id": `${SITE}${language.path}#app`,
       name: language.hero.h1,
+      alternateName: profile.alternateNames,
       url: `${SITE}${language.path}`,
       inLanguage: language.htmlLang,
       applicationCategory: "GameApplication",
       operatingSystem: "Any",
       isAccessibleForFree: true,
-      description: language.meta.description
+      description: language.meta.description,
+      keywords: profile.keywords.join(", "),
+      availableLanguage: allAvailableLanguages,
+      audience: {
+        "@type": "Audience",
+        audienceType: profile.audience
+      }
     },
     {
       "@type": "FAQPage",
@@ -985,16 +1163,18 @@ function jsonLd(language) {
 }
 
 function page(language) {
+  const profile = seo(language);
   const canonical = `${SITE}${language.path}`;
   const asset = (file) => `${language.assets}${file}`;
   const guideArticles = language.guide
-    .map(
-      (article) => `<article>
+    .map((article, index) => {
+      const seoNote = index === 0 && profile.note ? `\n            <p>${escapeHtml(profile.note)}</p>` : "";
+      return `<article>
             <p class="eyebrow">${escapeHtml(article.eyebrow)}</p>
             <h2>${escapeHtml(article.title)}</h2>
-            ${paragraphs(article.paragraphs)}
-          </article>`
-    )
+            ${paragraphs(article.paragraphs)}${seoNote}
+          </article>`;
+    })
     .join("\n\n          ");
   const faqItems = language.faq
     .map(
@@ -1023,7 +1203,8 @@ function page(language) {
     </script>
     <title>${escapeHtml(language.meta.title)}</title>
     <meta name="description" content="${escapeHtml(language.meta.description)}">
-    <meta name="keywords" content="${escapeHtml(language.meta.keywords)}">
+    <meta name="keywords" content="${escapeHtml(profile.keywords.join(", "))}">
+    <meta name="language" content="${escapeHtml(profile.languageName)}">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="author" content="Daily Logic Lab">
     <meta name="theme-color" content="#245c53">
@@ -1035,6 +1216,8 @@ function page(language) {
     ${languageLinks}
     <link rel="alternate" hreflang="x-default" href="${SITE}/">
     <meta property="og:type" content="website">
+    <meta property="og:locale" content="${escapeHtml(profile.ogLocale)}">
+    ${ogLocaleAlternates(language)}
     <meta property="og:site_name" content="Daily Logic Lab">
     <meta property="og:title" content="${escapeHtml(language.meta.ogTitle)}">
     <meta property="og:description" content="${escapeHtml(language.meta.ogDescription)}">
