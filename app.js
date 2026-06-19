@@ -495,7 +495,6 @@ const els = {
 const storage = {
   streak: "dll-streak",
   solvedDate: "dll-solved-date",
-  analytics: "dll-analytics-events",
   bestDailyPrefix: "dll-best-daily-",
   bestPractice: "dll-best-practice"
 };
@@ -509,15 +508,6 @@ let pendingActionTimer = null;
 let activeDigits = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
 init();
-
-window.__dailyLogicLab = {
-  get state() {
-    return state;
-  },
-  generateUniquePuzzle,
-  solveStarBattle,
-  countCurrentCompletions
-};
 
 function getLanguageKey() {
   const lang = (document.documentElement.lang || "").toLowerCase();
@@ -1432,31 +1422,9 @@ function getPuzzleEventData(extra = {}) {
 }
 
 function trackEvent(name, params = {}) {
-  const payload = {
-    event: name,
-    ...params,
-    timestamp: new Date().toISOString()
-  };
-
-  if (Array.isArray(window.dataLayer)) {
-    window.dataLayer.push({ event: name, ...params });
-  }
   if (typeof window.gtag === "function") {
     window.gtag("event", name, params);
   }
-  if (typeof window.plausible === "function") {
-    window.plausible(name, { props: params });
-  }
-
-  try {
-    const recent = JSON.parse(localStorage.getItem(storage.analytics) || "[]");
-    recent.push(payload);
-    localStorage.setItem(storage.analytics, JSON.stringify(recent.slice(-50)));
-  } catch (error) {
-    // Analytics should never interrupt the puzzle.
-  }
-
-  document.dispatchEvent(new CustomEvent("dailylogiclab:event", { detail: payload }));
 }
 
 function updateSharePreview() {
