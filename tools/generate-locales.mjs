@@ -2452,6 +2452,7 @@ function longtailArticlePage(article, language) {
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
+    <script src="../language-redirect.js"></script>
     <link rel="canonical" href="${canonical}">
     ${longtailAlternateLinks(article.paths)}
     <meta property="og:type" content="article">

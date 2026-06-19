@@ -33,15 +33,25 @@
     saveChoice(normalizeLocale(link.getAttribute("hreflang")));
   });
 
-  const pageKey = DEFAULT_PAGE_KEYS[location.pathname];
-  if (pageKey === undefined || getCurrentLocale() !== "en") return;
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", redirectToPreferredLocale, { once: true });
+  } else {
+    redirectToPreferredLocale();
+  }
 
-  const targetLocale = readChoice() || getBrowserLocale();
-  if (targetLocale === "en") return;
+  function redirectToPreferredLocale() {
+    if (getCurrentLocale() !== "en") return;
 
-  const targetPath = pageKey ? `/${targetLocale}/${pageKey}` : `/${targetLocale}/`;
-  if (targetPath !== location.pathname) {
-    location.replace(`${targetPath}${location.search}${location.hash}`);
+    const targetLocale = readChoice() || getBrowserLocale();
+    if (targetLocale === "en") return;
+
+    const pageKey = DEFAULT_PAGE_KEYS[location.pathname];
+    const targetPath = pageKey === undefined ? getAlternatePath(targetLocale) : pageKey ? `/${targetLocale}/${pageKey}` : `/${targetLocale}/`;
+    if (!targetPath) return;
+
+    if (targetPath !== location.pathname) {
+      location.replace(`${targetPath}${location.search}${location.hash}`);
+    }
   }
 
   function getCurrentLocale() {
@@ -80,6 +90,17 @@
       localStorage.setItem(CHOICE_KEY, locale);
     } catch (error) {
       // Ignore private-mode storage failures.
+    }
+  }
+
+  function getAlternatePath(locale) {
+    const alternate = document.querySelector(`link[rel="alternate"][hreflang="${locale}"]`);
+    if (!alternate) return "";
+    try {
+      const url = new URL(alternate.href, location.href);
+      return url.origin === location.origin ? url.pathname : "";
+    } catch (error) {
+      return "";
     }
   }
 })();
