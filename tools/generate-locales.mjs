@@ -1636,6 +1636,7 @@ function page(language) {
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
+    <script src="${asset("language-redirect.js")}"></script>
     <link rel="canonical" href="${canonical}">
     ${languageLinks}
     <link rel="alternate" hreflang="x-default" href="${SITE}/">
@@ -1910,6 +1911,7 @@ function supportPage(language, pageKey) {
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
+    <script src="${asset}language-redirect.js"></script>
     <link rel="canonical" href="${canonical}">
     ${supportAlternateLinks(pageKey)}
     <link rel="alternate" hreflang="x-default" href="${SITE}/${supportSlugs[pageKey]}">
