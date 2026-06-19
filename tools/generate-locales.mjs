@@ -844,9 +844,9 @@ const languages = [
       title: "逻辑谜题指南",
       links: [
         ["Star Battle 指南", "/zh-cn/star-battle"],
-        ["Star Battle 提示", "/star-battle-hints"],
-        ["Two Not Touch Puzzle", "/two-not-touch-puzzle"],
-        ["Queens 替代谜题", "/queens-puzzle-alternative"],
+        ["Star Battle 提示", "/zh-cn/star-battle-hints"],
+        ["Two Not Touch Puzzle", "/zh-cn/two-not-touch"],
+        ["Queens 替代谜题", "/zh-cn/queens-alternative"],
         ["杀手数独组合计算器", "/zh-cn/#calculator"]
       ]
     },
@@ -1063,7 +1063,8 @@ const localizedLongtailArticles = [
       en: "/star-battle-hints",
       de: "/de/star-battle-hinweise",
       es: "/es/pistas-star-battle",
-      fr: "/fr/indices-star-battle"
+      fr: "/fr/indices-star-battle",
+      zh: "/zh-cn/star-battle-hints"
     },
     changefreq: "weekly",
     priority: "0.8",
@@ -1205,6 +1206,52 @@ const localizedLongtailArticles = [
           ["Les étoiles peuvent-elles se toucher en diagonale ?", "Non. Le contact diagonal est interdit."],
           ["Faut-il deviner ?", "Une grille vérifiée devrait avoir un chemin logique. Cherche d'abord les cases forcées."]
         ]
+      },
+      zh: {
+        title: "Star Battle 提示 - 不靠猜的解题方法",
+        description: "Star Battle 中文提示：数合法格、排除相邻格、比较行列和区域，找到不用猜也能确定的下一颗星。",
+        keywords: "star battle 提示, star battle 解法, star battle 攻略, 逻辑谜题提示",
+        eyebrow: "Star Battle 提示",
+        h1: "Star Battle 提示：不用猜也能推进",
+        ogTitle: "Star Battle 中文提示",
+        ogDescription: "用行、列、区域和不相邻规则找到安全下一步。",
+        cta: { label: "在线玩 Star Battle", href: "/zh-cn/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "好的 Star Battle 提示不应该只是告诉你答案，而是帮你看清哪一行、哪一列或哪个区域已经只剩一个合法位置。",
+              "Daily Logic Lab 的棋盘是 7x7，但这套检查方法也适合很多 Star Battle、Two Not Touch 和 Queens 风格的摆放类谜题。"
+            ]
+          },
+          {
+            heading: "快速检查清单",
+            list: [
+              "先找候选格最少的行、列或颜色区域。",
+              "只有当其他位置都被排除时，才放下一颗星。",
+              "每放一颗星，就把周围八个相邻格标成不可能。",
+              "同时排除同一行、同一列和同一区域里的其他格。"
+            ]
+          },
+          {
+            heading: "数合法格，不是数空格",
+            paragraphs: [
+              "一个格子虽然是空的，但如果它碰到已有星星，或者所在行、列、区域已经满足条件，它就不再是合法位置。",
+              "当某个组还需要一颗星，而只剩一个合法格时，这一步就是确定的，不是猜测。"
+            ]
+          },
+          {
+            heading: "卡住时怎么找下一步",
+            paragraphs: [
+              "把区域和行列放在一起看。如果一个区域的所有候选格都落在同一行，那么这行在其他区域里的候选格往往可以被排除。",
+              "使用提示按钮前，先按这个顺序检查一遍。这样提示会帮你确认漏掉的模式，而不是直接替你解题。"
+            ]
+          }
+        ],
+        faq: [
+          ["第一步该看哪里？", "先看合法格最少的行、列或区域。"],
+          ["星星可以斜着相邻吗？", "不可以。横向、纵向和斜向相邻都不允许。"],
+          ["卡住时可以猜吗？", "经过验证的题目应该有逻辑路径，先找只剩一个合法格的位置。"]
+        ]
       }
     }
   },
@@ -1214,7 +1261,8 @@ const localizedLongtailArticles = [
       en: "/two-not-touch-puzzle",
       de: "/de/two-not-touch",
       es: "/es/two-not-touch",
-      fr: "/fr/two-not-touch"
+      fr: "/fr/two-not-touch",
+      zh: "/zh-cn/two-not-touch"
     },
     changefreq: "monthly",
     priority: "0.7",
@@ -1338,6 +1386,46 @@ const localizedLongtailArticles = [
           ["Est-ce Star Battle ?", "C'est très proche. Star Battle ajoute les contraintes de lignes, colonnes et régions."],
           ["Peut-on jouer gratuitement ?", "Oui. Le puzzle quotidien et les grilles d'entraînement sont accessibles dans le navigateur."]
         ]
+      },
+      zh: {
+        title: "Two Not Touch Puzzle 中文 - 在线玩 Star Battle",
+        description: "Two Not Touch 中文说明：星星不能互相接触，包含斜向相邻。在线玩免费 Star Battle 逻辑谜题。",
+        keywords: "two not touch puzzle, star battle 中文, 星星不能相邻, 逻辑谜题",
+        eyebrow: "Two Not Touch",
+        h1: "Two Not Touch Puzzle 中文说明",
+        ogTitle: "Two Not Touch Puzzle 中文",
+        ogDescription: "一种星星不能相邻的 Star Battle 风格逻辑谜题。",
+        cta: { label: "在线玩 Two Not Touch", href: "/zh-cn/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "Two Not Touch 的核心规则很直接：放下的棋子不能互相接触，连斜着碰到也不行。在 Daily Logic Lab 里，这个规则表现为 Star Battle 棋盘上的星星。",
+              "你需要让每一行、每一列、每个颜色区域都有一颗星，同时任意两颗星都不能相邻。"
+            ]
+          },
+          {
+            heading: "这个版本的规则",
+            list: [
+              "每一行恰好一颗星。",
+              "每一列恰好一颗星。",
+              "每个颜色区域恰好一颗星。",
+              "星星不能横向、纵向或斜向相邻。",
+              "每个棋盘都会先检查是否只有一个解。"
+            ]
+          },
+          {
+            heading: "为什么不相邻规则很重要",
+            paragraphs: [
+              "一颗星不只是填掉一个格子。它会同时排除周围八个格子，并可能让附近的行、列或区域只剩一个合法位置。",
+              "所以解题时不要只盯着空格。每放一颗星，都要立刻更新周围候选格，这样经常会形成连续推理。"
+            ]
+          }
+        ],
+        faq: [
+          ["Two Not Touch 是什么意思？", "意思是两个已放置的棋子不能共享边或角。"],
+          ["它和 Star Battle 一样吗？", "非常接近。Star Battle 在不相邻规则之外，还加入了行、列和区域限制。"],
+          ["可以免费玩吗？", "可以。每日题和练习题都能直接在浏览器里玩。"]
+        ]
       }
     }
   },
@@ -1347,7 +1435,8 @@ const localizedLongtailArticles = [
       en: "/queens-puzzle-alternative",
       de: "/de/queens-alternative",
       es: "/es/alternativa-queens",
-      fr: "/fr/alternative-queens"
+      fr: "/fr/alternative-queens",
+      zh: "/zh-cn/queens-alternative"
     },
     changefreq: "weekly",
     priority: "0.8",
@@ -1491,6 +1580,53 @@ const localizedLongtailArticles = [
           ["Quelle est une bonne alternative à Queens ?", "Star Battle est une bonne option car il garde la logique de placement et ajoute la règle de non-contact."],
           ["Peut-on s'entraîner sans limite ?", "Oui. Le puzzle quotidien peut être suivi de grilles d'entraînement."],
           ["Faut-il créer un compte ?", "Non. Le jeu fonctionne directement dans le navigateur."]
+        ]
+      },
+      zh: {
+        title: "Queens 替代谜题 - 在线玩 Star Battle",
+        description: "想找 Queens 替代谜题？试试 Star Battle：行、列、区域和不相邻规则，免费在线玩，无需登录。",
+        keywords: "queens 替代谜题, queens puzzle alternative, star battle 中文, 逻辑谜题",
+        eyebrow: "Queens 替代谜题",
+        h1: "Queens 替代谜题：在线玩 Star Battle",
+        ogTitle: "Queens 替代谜题",
+        ogDescription: "适合 Queens 玩家继续练习的 Star Battle 中文入口。",
+        cta: { label: "在线玩 Queens 替代谜题", href: "/zh-cn/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "如果你喜欢 Queens，又想找更多同类谜题，Star Battle 是很自然的替代选择。它同样依靠行、列和区域推理，只是把棋子换成星星。",
+              "关键差别在于不相邻规则：任意两颗星都不能横向、纵向或斜向相邻。这个规则会让每一步都产生更多排除。"
+            ]
+          },
+          {
+            heading: "为什么适合 Queens 玩家",
+            list: [
+              "规则短，打开浏览器就能开始。",
+              "有每日题，也有练习模式。",
+              "不需要注册账号。",
+              "棋盘会先验证唯一解。",
+              "提示会引导推理，而不是只给答案。"
+            ]
+          },
+          {
+            heading: "从 Queens 切换到 Star Battle",
+            paragraphs: [
+              "保留你检查行、列和区域的习惯，但每放一颗星都多问一句：它碰到了哪些格子？",
+              "把这些相邻格马上标成不可能，棋盘会清楚很多，也能避免大多数非法摆放。"
+            ]
+          },
+          {
+            heading: "不只是每日一题",
+            paragraphs: [
+              "很多人找 Queens 替代谜题，是因为一天一题不够玩。Daily Logic Lab 把每日挑战和练习模式分开：每日题适合比较成绩，练习模式可以继续生成新棋盘。",
+              "这样你不用安装 App、登录账号或等到明天，也能继续练同一类逻辑。"
+            ]
+          }
+        ],
+        faq: [
+          ["有什么好的 Queens 替代谜题？", "Star Battle 很适合，因为它保留摆放类推理，并加入星星不能相邻的规则。"],
+          ["可以一直练习吗？", "可以。完成每日题后，可以继续生成练习棋盘。"],
+          ["需要登录吗？", "不需要，直接在浏览器里玩。"]
         ]
       }
     }

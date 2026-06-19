@@ -94,7 +94,8 @@
   }
 
   function getAlternatePath(locale) {
-    const alternate = document.querySelector(`link[rel="alternate"][hreflang="${locale}"]`);
+    const alternates = document.querySelectorAll('link[rel="alternate"][hreflang]');
+    const alternate = Array.from(alternates).find((link) => normalizeLocale(link.getAttribute("hreflang")) === locale);
     if (!alternate) return "";
     try {
       const url = new URL(alternate.href, location.href);

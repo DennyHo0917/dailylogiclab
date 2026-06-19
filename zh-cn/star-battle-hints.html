@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NY29HPM34"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6NY29HPM34');
+    </script>
+    <title>Star Battle 提示 - 不靠猜的解题方法</title>
+    <meta name="description" content="Star Battle 中文提示：数合法格、排除相邻格、比较行列和区域，找到不用猜也能确定的下一颗星。">
+    <meta name="keywords" content="star battle 提示, star battle 解法, star battle 攻略, 逻辑谜题提示">
+    <meta name="language" content="简体中文">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#245c53">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <script src="../language-redirect.js"></script>
+    <link rel="canonical" href="https://dailylogiclab.com/zh-cn/star-battle-hints">
+    <link rel="alternate" hreflang="en" href="https://dailylogiclab.com/star-battle-hints">
+    <link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/star-battle-hinweise">
+    <link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/pistas-star-battle">
+    <link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/indices-star-battle">
+    <link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/star-battle-hints">
+    <link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/star-battle-hints">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:site_name" content="Daily Logic Lab">
+    <meta property="og:title" content="Star Battle 中文提示">
+    <meta property="og:description" content="用行、列、区域和不相邻规则找到安全下一步。">
+    <meta property="og:url" content="https://dailylogiclab.com/zh-cn/star-battle-hints">
+    <meta property="og:image" content="https://dailylogiclab.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Star Battle 中文提示">
+    <meta name="twitter:description" content="用行、列、区域和不相邻规则找到安全下一步。">
+    <meta name="twitter:image" content="https://dailylogiclab.com/og-image.png">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+                {
+                        "@type": "Article",
+                        "headline": "Star Battle 提示：不用猜也能推进",
+                        "description": "Star Battle 中文提示：数合法格、排除相邻格、比较行列和区域，找到不用猜也能确定的下一颗星。",
+                        "inLanguage": "zh-CN",
+                        "mainEntityOfPage": "https://dailylogiclab.com/zh-cn/star-battle-hints",
+                        "isPartOf": {
+                                "@id": "https://dailylogiclab.com/zh-cn/#website"
+                        }
+                },
+                {
+                        "@type": "FAQPage",
+                        "inLanguage": "zh-CN",
+                        "mainEntity": [
+                                {
+                                        "@type": "Question",
+                                        "name": "第一步该看哪里？",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "先看合法格最少的行、列或区域。"
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "星星可以斜着相邻吗？",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "不可以。横向、纵向和斜向相邻都不允许。"
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "卡住时可以猜吗？",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "经过验证的题目应该有逻辑路径，先找只剩一个合法格的位置。"
+                                        }
+                                }
+                        ]
+                }
+        ]
+}
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/zh-cn/#play">
+        <span class="brand-mark">DL</span>
+        <span>Daily Logic Lab</span>
+      </a>
+      <nav class="nav" aria-label="主导航">
+        <a href="/zh-cn/#play">开始玩</a>
+        <a href="/zh-cn/star-battle">Star Battle</a>
+        <a href="/zh-cn/#calculator">计算器</a>
+      </nav>
+      <details class="language-switcher">
+        <summary aria-label="切换语言">中文</summary>
+        <div class="language-menu">
+          <a href="/star-battle-hints" lang="en" hreflang="en">English</a>
+          <a href="/de/star-battle-hinweise" lang="de" hreflang="de">Deutsch</a>
+          <a href="/es/pistas-star-battle" lang="es" hreflang="es">Español</a>
+          <a href="/fr/indices-star-battle" lang="fr" hreflang="fr">Français</a>
+          <a href="/zh-cn/star-battle-hints" lang="zh-CN" hreflang="zh-CN" aria-current="page">中文</a>
+        </div>
+      </details>
+    </header>
+
+    <main class="content-page">
+      <article class="section-shell content-card">
+        <p class="eyebrow">Star Battle 提示</p>
+        <h1>Star Battle 提示：不用猜也能推进</h1>
+        
+        <p>好的 Star Battle 提示不应该只是告诉你答案，而是帮你看清哪一行、哪一列或哪个区域已经只剩一个合法位置。</p>
+              <p>Daily Logic Lab 的棋盘是 7x7，但这套检查方法也适合很多 Star Battle、Two Not Touch 和 Queens 风格的摆放类谜题。</p>
+
+        <h2>快速检查清单</h2>
+        <ul>
+                  <li>先找候选格最少的行、列或颜色区域。</li>
+                  <li>只有当其他位置都被排除时，才放下一颗星。</li>
+                  <li>每放一颗星，就把周围八个相邻格标成不可能。</li>
+                  <li>同时排除同一行、同一列和同一区域里的其他格。</li>
+        </ul>
+
+        <h2>数合法格，不是数空格</h2>
+        <p>一个格子虽然是空的，但如果它碰到已有星星，或者所在行、列、区域已经满足条件，它就不再是合法位置。</p>
+              <p>当某个组还需要一颗星，而只剩一个合法格时，这一步就是确定的，不是猜测。</p>
+
+        <h2>卡住时怎么找下一步</h2>
+        <p>把区域和行列放在一起看。如果一个区域的所有候选格都落在同一行，那么这行在其他区域里的候选格往往可以被排除。</p>
+              <p>使用提示按钮前，先按这个顺序检查一遍。这样提示会帮你确认漏掉的模式，而不是直接替你解题。</p>
+        <p><a href="/zh-cn/#play">在线玩 Star Battle</a></p>
+
+        <h2>FAQ</h2>
+        <div class="faq-list">
+          <details>
+            <summary>第一步该看哪里？</summary>
+            <p>先看合法格最少的行、列或区域。</p>
+          </details>
+          <details>
+            <summary>星星可以斜着相邻吗？</summary>
+            <p>不可以。横向、纵向和斜向相邻都不允许。</p>
+          </details>
+          <details>
+            <summary>卡住时可以猜吗？</summary>
+            <p>经过验证的题目应该有逻辑路径，先找只剩一个合法格的位置。</p>
+          </details>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section-shell">
+        <span>Daily Logic Lab</span>
+        <nav class="footer-links" aria-label="页脚">
+          <a href="/zh-cn/about">关于</a>
+          <a href="/zh-cn/contact">联系</a>
+          <a href="/zh-cn/privacy-policy">隐私</a>
+          <a href="/sitemap.xml">站点地图</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
