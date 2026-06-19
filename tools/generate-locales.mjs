@@ -238,11 +238,11 @@ const languages = [
       eyebrow: "Mehr entdecken",
       title: "Logikrätsel-Guides",
       links: [
-        ["Star Battle Guide", "/star-battle"],
-        ["Star Battle Hinweise", "/star-battle-hints"],
-        ["Two Not Touch Puzzle", "/two-not-touch-puzzle"],
-        ["Queens-Alternative", "/queens-puzzle-alternative"],
-        ["Killer-Sudoku-Rechner", "/killer-sudoku-combination-calculator"]
+        ["Star Battle Regeln", "/de/star-battle"],
+        ["Star Battle Hinweise", "/de/star-battle-hinweise"],
+        ["Two Not Touch", "/de/two-not-touch"],
+        ["Queens-Alternative", "/de/queens-alternative"],
+        ["Killer-Sudoku-Rechner", "/de/killer-sudoku-kombinationen-rechner"]
       ]
     },
     footer: { about: "Über uns", contact: "Kontakt", privacy: "Datenschutz", sitemap: "Sitemap" }
@@ -359,11 +359,11 @@ const languages = [
       eyebrow: "Explorar",
       title: "Guías de puzzles lógicos",
       links: [
-        ["Guía de Star Battle", "/star-battle"],
-        ["Pistas de Star Battle", "/star-battle-hints"],
-        ["Two Not Touch Puzzle", "/two-not-touch-puzzle"],
-        ["Alternativa a Queens", "/queens-puzzle-alternative"],
-        ["Calculadora Killer Sudoku", "/killer-sudoku-combination-calculator"]
+        ["Guía de Star Battle", "/es/star-battle"],
+        ["Pistas de Star Battle", "/es/pistas-star-battle"],
+        ["Two Not Touch", "/es/two-not-touch"],
+        ["Alternativa a Queens", "/es/alternativa-queens"],
+        ["Calculadora Killer Sudoku", "/es/calculadora-combinaciones-sudoku-killer"]
       ]
     },
     footer: { about: "Acerca de", contact: "Contacto", privacy: "Privacidad", sitemap: "Mapa del sitio" }
@@ -480,11 +480,11 @@ const languages = [
       eyebrow: "Explorer",
       title: "Guides de puzzles logiques",
       links: [
-        ["Guide Star Battle", "/star-battle"],
-        ["Indices Star Battle", "/star-battle-hints"],
-        ["Two Not Touch Puzzle", "/two-not-touch-puzzle"],
-        ["Alternative à Queens", "/queens-puzzle-alternative"],
-        ["Calculatrice Killer Sudoku", "/killer-sudoku-combination-calculator"]
+        ["Guide Star Battle", "/fr/star-battle"],
+        ["Indices Star Battle", "/fr/indices-star-battle"],
+        ["Two Not Touch", "/fr/two-not-touch"],
+        ["Alternative à Queens", "/fr/alternative-queens"],
+        ["Calculatrice Killer Sudoku", "/fr/#calculator"]
       ]
     },
     footer: { about: "À propos", contact: "Contact", privacy: "Confidentialité", sitemap: "Plan du site" }
@@ -843,11 +843,11 @@ const languages = [
       eyebrow: "继续探索",
       title: "逻辑谜题指南",
       links: [
-        ["Star Battle 指南", "/star-battle"],
+        ["Star Battle 指南", "/zh-cn/star-battle"],
         ["Star Battle 提示", "/star-battle-hints"],
         ["Two Not Touch Puzzle", "/two-not-touch-puzzle"],
         ["Queens 替代谜题", "/queens-puzzle-alternative"],
-        ["杀手数独组合计算器", "/killer-sudoku-combination-calculator"]
+        ["杀手数独组合计算器", "/zh-cn/#calculator"]
       ]
     },
     footer: { about: "关于", contact: "联系", privacy: "隐私", sitemap: "站点地图" }
@@ -1056,6 +1056,447 @@ const supportSlugs = {
   privacy: "privacy-policy"
 };
 
+const localizedLongtailArticles = [
+  {
+    key: "starBattleHints",
+    paths: {
+      en: "/star-battle-hints",
+      de: "/de/star-battle-hinweise",
+      es: "/es/pistas-star-battle",
+      fr: "/fr/indices-star-battle"
+    },
+    changefreq: "weekly",
+    priority: "0.8",
+    pages: {
+      de: {
+        title: "Star Battle Hinweise - Logisch lösen ohne Raten",
+        description: "Praktische Star-Battle-Hinweise auf Deutsch: legale Felder zählen, Nachbarschaften sperren, Regionen vergleichen und sichere Sterne finden.",
+        keywords: "star battle hinweise, star battle lösen, star battle strategie, kampf der sterne tipps",
+        eyebrow: "Star Battle Hinweise",
+        h1: "Star Battle Hinweise: lösen ohne Raten",
+        ogTitle: "Star Battle Hinweise",
+        ogDescription: "Eine kurze deutsche Anleitung für sichere Star-Battle-Schritte.",
+        cta: { label: "Star Battle online spielen", href: "/de/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "Gute Star-Battle-Hinweise zeigen nicht einfach eine Antwort, sondern den nächsten sicheren Schritt. Prüfe immer, welche Felder nach Zeile, Spalte, Region und Nicht-Berühren-Regel noch legal sind.",
+              "Diese Anleitung passt zur 7x7-Version von Daily Logic Lab, funktioniert aber auch für viele andere Star-Battle- und Two-Not-Touch-Rätsel."
+            ]
+          },
+          {
+            heading: "Kurze Checkliste",
+            list: [
+              "Suche die Region, Zeile oder Spalte mit den wenigsten legalen Feldern.",
+              "Setze einen Stern nur, wenn alle anderen Felder ausgeschlossen sind.",
+              "Sperre nach jedem Stern alle acht Nachbarfelder.",
+              "Entferne danach die übrigen Felder in derselben Zeile, Spalte und Region."
+            ]
+          },
+          {
+            heading: "Legale Felder zählen",
+            paragraphs: [
+              "Zähle nicht einfach leere Felder. Ein Feld ist nur legal, wenn es keinen Stern berührt und nicht zu einer bereits gelösten Zeile, Spalte oder Region gehört.",
+              "Wenn eine Gruppe nur noch ein legales Feld hat, ist der Stern dort erzwungen. Das ist der wichtigste Unterschied zwischen einem Hinweis und einer Vermutung."
+            ]
+          },
+          {
+            heading: "Wenn du feststeckst",
+            paragraphs: [
+              "Vergleiche Regionen mit Zeilen und Spalten. Liegen alle Kandidaten einer Region in derselben Zeile, kann diese Zeile an anderer Stelle oft Kandidaten verlieren.",
+              "Nutze den Hinweis-Button erst nach dieser Prüfung. So erkennst du, welches Muster du übersehen hast, statt nur die Lösung zu übernehmen."
+            ]
+          }
+        ],
+        faq: [
+          ["Was ist der beste erste Hinweis?", "Beginne mit der Gruppe, die die wenigsten legalen Felder hat."],
+          ["Dürfen Sterne diagonal benachbart sein?", "Nein. Diagonales Berühren ist genauso verboten wie horizontales oder vertikales Berühren."],
+          ["Sollte man raten?", "Bei einem geprüften Rätsel sollte ein logischer Weg existieren. Suche zuerst nach erzwungenen Feldern."]
+        ]
+      },
+      es: {
+        title: "Pistas de Star Battle - Resolver sin adivinar",
+        description: "Pistas prácticas de Star Battle en español: cuenta casillas legales, bloquea vecinos, compara regiones y encuentra estrellas forzadas.",
+        keywords: "pistas star battle, resolver star battle, estrategia star battle, star battle español",
+        eyebrow: "Pistas de Star Battle",
+        h1: "Pistas de Star Battle para resolver sin adivinar",
+        ogTitle: "Pistas de Star Battle",
+        ogDescription: "Una guía breve para encontrar pasos seguros en Star Battle.",
+        cta: { label: "Jugar Star Battle online", href: "/es/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "Una buena pista de Star Battle no debería ser una apuesta. Debe mostrarte qué fila, columna o región ya tiene una única casilla legal para colocar una estrella.",
+              "Esta guía usa la versión 7x7 de Daily Logic Lab, pero las mismas ideas sirven para muchos puzzles tipo Two Not Touch y Queens."
+            ]
+          },
+          {
+            heading: "Lista rápida",
+            list: [
+              "Busca la fila, columna o región con menos casillas legales.",
+              "Coloca una estrella solo cuando la posición esté forzada.",
+              "Bloquea las ocho casillas vecinas después de cada estrella.",
+              "Elimina también el resto de su fila, columna y región."
+            ]
+          },
+          {
+            heading: "Cuenta casillas legales",
+            paragraphs: [
+              "No basta con contar casillas vacías. Una casilla deja de ser legal si toca una estrella o si pertenece a una fila, columna o región ya resuelta.",
+              "Cuando una zona necesita una estrella y solo queda una casilla legal, tienes un paso seguro. Esa es la base de la mayoría de las deducciones."
+            ]
+          },
+          {
+            heading: "Si te atascas",
+            paragraphs: [
+              "Compara regiones con filas y columnas. Si todos los candidatos de una región están en la misma fila, esa fila puede bloquear candidatos en otras regiones.",
+              "Usa la pista del juego después de hacer esta revisión. Así la pista confirma el patrón que faltaba, en lugar de sustituir tu razonamiento."
+            ]
+          }
+        ],
+        faq: [
+          ["¿Cuál es la mejor primera pista?", "Empieza por el grupo con menos casillas legales."],
+          ["¿Las estrellas pueden tocarse en diagonal?", "No. No pueden tocarse ni en horizontal, ni en vertical, ni en diagonal."],
+          ["¿Conviene adivinar?", "En un tablero verificado debería existir un camino lógico. Busca primero casillas forzadas."]
+        ]
+      },
+      fr: {
+        title: "Indices Star Battle - Résoudre sans deviner",
+        description: "Indices Star Battle en français : compter les cases légales, bloquer les voisines, comparer les régions et trouver les étoiles forcées.",
+        keywords: "indices star battle, résoudre star battle, stratégie star battle, star battle français",
+        eyebrow: "Indices Star Battle",
+        h1: "Indices Star Battle pour résoudre sans deviner",
+        ogTitle: "Indices Star Battle",
+        ogDescription: "Une méthode courte pour trouver les prochains coups sûrs.",
+        cta: { label: "Jouer à Star Battle en ligne", href: "/fr/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "Un bon indice Star Battle ne remplace pas la logique : il pointe vers le prochain groupe vraiment contraint. Cherche les cases encore légales après les règles de ligne, colonne, région et non-contact.",
+              "La version Daily Logic Lab est en 7x7, mais la méthode s'applique aussi aux grilles Star Battle et Two Not Touch plus grandes."
+            ]
+          },
+          {
+            heading: "Checklist rapide",
+            list: [
+              "Repère la ligne, colonne ou région avec le moins de cases légales.",
+              "Place une étoile seulement si toutes les autres cases sont interdites.",
+              "Bloque les huit cases voisines après chaque étoile.",
+              "Supprime aussi les autres cases de sa ligne, colonne et région."
+            ]
+          },
+          {
+            heading: "Compter les cases légales",
+            paragraphs: [
+              "Une case vide n'est pas toujours possible. Elle est interdite si elle touche une étoile ou si son groupe possède déjà son étoile.",
+              "Quand un groupe doit encore recevoir une étoile et qu'il ne reste qu'une case légale, le placement est forcé. C'est le signal le plus fiable."
+            ]
+          },
+          {
+            heading: "Quand la grille bloque",
+            paragraphs: [
+              "Compare les régions avec les lignes et les colonnes. Si tous les candidats d'une région sont dans la même ligne, cette ligne peut éliminer des candidats ailleurs.",
+              "Utilise ensuite le bouton d'indice pour vérifier ton analyse. Le but est d'apprendre le motif, pas seulement d'obtenir la réponse."
+            ]
+          }
+        ],
+        faq: [
+          ["Quel est le meilleur premier indice ?", "Commence par le groupe qui possède le moins de cases légales."],
+          ["Les étoiles peuvent-elles se toucher en diagonale ?", "Non. Le contact diagonal est interdit."],
+          ["Faut-il deviner ?", "Une grille vérifiée devrait avoir un chemin logique. Cherche d'abord les cases forcées."]
+        ]
+      }
+    }
+  },
+  {
+    key: "twoNotTouch",
+    paths: {
+      en: "/two-not-touch-puzzle",
+      de: "/de/two-not-touch",
+      es: "/es/two-not-touch",
+      fr: "/fr/two-not-touch"
+    },
+    changefreq: "monthly",
+    priority: "0.7",
+    pages: {
+      de: {
+        title: "Two Not Touch Puzzle - Star Battle online spielen",
+        description: "Two Not Touch auf Deutsch erklärt: Sterne dürfen sich nicht berühren. Spiele eine kostenlose Star-Battle-Variante mit eindeutiger Lösung.",
+        keywords: "two not touch puzzle, star battle deutsch, nicht berühren rätsel, sterne rätsel",
+        eyebrow: "Two Not Touch",
+        h1: "Two Not Touch Puzzle online",
+        ogTitle: "Two Not Touch Puzzle",
+        ogDescription: "Eine Star-Battle-Variante, bei der Sterne sich nicht berühren dürfen.",
+        cta: { label: "Two Not Touch online spielen", href: "/de/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "Two Not Touch beschreibt eine einfache, aber starke Regel: gesetzte Teile dürfen sich nicht berühren, auch nicht diagonal. In Daily Logic Lab sind diese Teile Sterne auf einem Star-Battle-Brett.",
+              "Das Ziel bleibt kompakt: je ein Stern in jede Zeile, Spalte und Farbregion. Die Nicht-Berühren-Regel sorgt dafür, dass ein einziger Stern viele Nachbarfelder ausschließt."
+            ]
+          },
+          {
+            heading: "Regeln dieser Version",
+            list: [
+              "Genau ein Stern in jeder Zeile.",
+              "Genau ein Stern in jeder Spalte.",
+              "Genau ein Stern in jeder Farbregion.",
+              "Keine zwei Sterne berühren sich, auch nicht diagonal.",
+              "Jedes Brett wird auf eine eindeutige Lösung geprüft."
+            ]
+          },
+          {
+            heading: "Warum die Regel wichtig ist",
+            paragraphs: [
+              "Ein Stern füllt nicht nur ein Feld. Er blockiert alle acht Nachbarn und kann dadurch eine andere Zeile, Spalte oder Region sofort einschränken.",
+              "Wenn du nach jedem Stern die Umgebung markierst, entstehen oft Ketten aus erzwungenen Zügen. Genau das macht Two Not Touch so gut für kurze Logikrunden."
+            ]
+          }
+        ],
+        faq: [
+          ["Was bedeutet Two Not Touch?", "Zwei gesetzte Teile dürfen sich weder an einer Kante noch an einer Ecke berühren."],
+          ["Ist das dasselbe wie Star Battle?", "Es ist eng verwandt. Star Battle kombiniert die Nicht-Berühren-Regel mit Zeilen, Spalten und Regionen."],
+          ["Kann ich mehr als ein Rätsel spielen?", "Ja. Neben dem Tagesrätsel gibt es neue Trainingsbretter."]
+        ]
+      },
+      es: {
+        title: "Two Not Touch Puzzle - Jugar Star Battle online",
+        description: "Qué significa Two Not Touch en español: estrellas que no se tocan, reglas de Star Battle y práctica online gratis con solución única.",
+        keywords: "two not touch puzzle, star battle español, estrellas no se tocan, puzzle lógico",
+        eyebrow: "Two Not Touch",
+        h1: "Two Not Touch Puzzle online",
+        ogTitle: "Two Not Touch Puzzle",
+        ogDescription: "Un puzzle tipo Star Battle donde las estrellas no pueden tocarse.",
+        cta: { label: "Jugar Two Not Touch online", href: "/es/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "Two Not Touch significa que dos piezas colocadas no pueden tocarse, ni siquiera por las esquinas. En Daily Logic Lab esa idea se juega como un tablero de Star Battle con estrellas.",
+              "El objetivo es colocar una estrella en cada fila, columna y región de color. La regla de no tocarse convierte cada estrella en una fuente de eliminaciones."
+            ]
+          },
+          {
+            heading: "Reglas de esta versión",
+            list: [
+              "Una estrella en cada fila.",
+              "Una estrella en cada columna.",
+              "Una estrella en cada región de color.",
+              "Ninguna estrella toca otra, tampoco en diagonal.",
+              "Cada tablero se verifica para tener una solución única."
+            ]
+          },
+          {
+            heading: "Cómo resolver mejor",
+            paragraphs: [
+              "Después de colocar una estrella, marca las ocho casillas vecinas como imposibles. Luego revisa si alguna fila, columna o región quedó con una sola casilla legal.",
+              "La mayoría de los avances aparecen cuando combinas la regla de no tocarse con las restricciones de fila, columna y región."
+            ]
+          }
+        ],
+        faq: [
+          ["¿Qué significa Two Not Touch?", "Que dos piezas no pueden tocarse por un lado ni por una esquina."],
+          ["¿Es lo mismo que Star Battle?", "Está muy relacionado. Star Battle añade filas, columnas y regiones a la regla de no tocarse."],
+          ["¿Puedo jugar más de un tablero?", "Sí. Hay puzzle diario y tableros de práctica."]
+        ]
+      },
+      fr: {
+        title: "Two Not Touch Puzzle - Jouer à Star Battle en ligne",
+        description: "Two Not Touch expliqué en français : les étoiles ne se touchent pas. Joue une grille Star Battle gratuite à solution unique.",
+        keywords: "two not touch puzzle, star battle français, étoiles ne se touchent pas, puzzle logique",
+        eyebrow: "Two Not Touch",
+        h1: "Two Not Touch Puzzle en ligne",
+        ogTitle: "Two Not Touch Puzzle",
+        ogDescription: "Une grille Star Battle où les étoiles ne peuvent jamais se toucher.",
+        cta: { label: "Jouer à Two Not Touch", href: "/fr/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "Two Not Touch désigne une règle simple : deux pièces posées ne peuvent pas se toucher, même par un coin. Sur Daily Logic Lab, cette idée devient une grille Star Battle avec des étoiles.",
+              "Chaque ligne, colonne et région doit recevoir une étoile. La règle de non-contact transforme chaque étoile placée en une série d'éliminations autour d'elle."
+            ]
+          },
+          {
+            heading: "Règles de cette version",
+            list: [
+              "Une étoile dans chaque ligne.",
+              "Une étoile dans chaque colonne.",
+              "Une étoile dans chaque région colorée.",
+              "Aucune étoile ne touche une autre, même en diagonale.",
+              "Chaque grille est vérifiée pour garder une solution unique."
+            ]
+          },
+          {
+            heading: "Méthode simple",
+            paragraphs: [
+              "Après chaque étoile, bloque les huit cases voisines. Vérifie ensuite si une ligne, colonne ou région n'a plus qu'une case possible.",
+              "Ce va-et-vient entre non-contact et groupes à compléter donne la plupart des déductions sans deviner."
+            ]
+          }
+        ],
+        faq: [
+          ["Que veut dire Two Not Touch ?", "Deux pièces ne peuvent pas se toucher par un côté ou un coin."],
+          ["Est-ce Star Battle ?", "C'est très proche. Star Battle ajoute les contraintes de lignes, colonnes et régions."],
+          ["Peut-on jouer gratuitement ?", "Oui. Le puzzle quotidien et les grilles d'entraînement sont accessibles dans le navigateur."]
+        ]
+      }
+    }
+  },
+  {
+    key: "queensAlternative",
+    paths: {
+      en: "/queens-puzzle-alternative",
+      de: "/de/queens-alternative",
+      es: "/es/alternativa-queens",
+      fr: "/fr/alternative-queens"
+    },
+    changefreq: "weekly",
+    priority: "0.8",
+    pages: {
+      de: {
+        title: "Queens Alternative - Star Battle ohne Anmeldung spielen",
+        description: "Suchst du eine Queens-Alternative? Spiele Star Battle online: Zeilen, Spalten, Regionen, Nicht-Berühren-Regel und unbegrenztes Training.",
+        keywords: "queens alternative, queens rätsel alternative, star battle deutsch, queens style puzzle",
+        eyebrow: "Queens Alternative",
+        h1: "Eine Queens-Alternative: Star Battle online",
+        ogTitle: "Queens Alternative",
+        ogDescription: "Star Battle für Spieler, die mehr Queens-ähnliche Rätsel möchten.",
+        cta: { label: "Queens-Alternative spielen", href: "/de/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "Wenn du Queens magst und nach mehr Rätseln suchst, ist Star Battle ein naheliegender nächster Schritt. Auch hier zählen Zeilen, Spalten und Regionen, aber statt Kronen setzt du Sterne.",
+              "Der wichtigste Zusatz ist die Nicht-Berühren-Regel: Sterne dürfen sich nicht horizontal, vertikal oder diagonal berühren. Dadurch fühlt sich jedes gesetzte Feld noch stärker an."
+            ]
+          },
+          {
+            heading: "Warum es für Queens-Spieler passt",
+            list: [
+              "Kurze Runden direkt im Browser.",
+              "Tagesrätsel plus unbegrenzte Trainingsbretter.",
+              "Keine Anmeldung nötig.",
+              "Jedes Brett wird auf eine eindeutige Lösung geprüft.",
+              "Hinweise helfen, ohne sofort alles zu verraten."
+            ]
+          },
+          {
+            heading: "Der wichtigste Unterschied",
+            paragraphs: [
+              "Bei Queens beendest du mit einem gesetzten Teil vor allem die Zeile, Spalte oder Region. Bei Star Battle blockiert ein Stern zusätzlich alle Nachbarfelder.",
+              "Wenn du von Queens kommst, behalte dein Scanmuster bei und frage nach jedem Stern: Welche Felder berührt er? Diese Gewohnheit verhindert die meisten Fehler."
+            ]
+          },
+          {
+            heading: "Mehr als nur ein Tagesrätsel",
+            paragraphs: [
+              "Viele Spieler suchen nach einer Queens-Alternative, weil sie nach dem täglichen Brett weiter knobeln möchten. Daily Logic Lab trennt deshalb Tagesrätsel und Training: Das Tagesrätsel bleibt der Vergleichspunkt, Practice erzeugt weitere Bretter.",
+              "So kannst du dieselbe Logikfamilie länger üben, ohne App-Installation, Login oder Wartezeit bis morgen."
+            ]
+          }
+        ],
+        faq: [
+          ["Was ist eine gute Queens-Alternative?", "Star Battle ist eine starke Alternative, weil es ähnliche Platzierungslogik mit einer zusätzlichen Nicht-Berühren-Regel kombiniert."],
+          ["Kann ich unbegrenzt üben?", "Ja. Nach dem Tagesrätsel kannst du weitere Trainingsbretter starten."],
+          ["Brauche ich ein Konto?", "Nein. Alles läuft ohne Anmeldung im Browser."]
+        ]
+      },
+      es: {
+        title: "Alternativa a Queens - Jugar Star Battle sin registro",
+        description: "¿Buscas una alternativa a Queens? Prueba Star Battle online con filas, columnas, regiones, regla de no tocarse y práctica ilimitada.",
+        keywords: "alternativa queens, queens puzzle alternativa, star battle español, puzzle tipo queens",
+        eyebrow: "Alternativa a Queens",
+        h1: "Una alternativa a Queens: Star Battle online",
+        ogTitle: "Alternativa a Queens",
+        ogDescription: "Star Battle para jugadores que quieren más puzzles tipo Queens.",
+        cta: { label: "Jugar la alternativa a Queens", href: "/es/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "Si te gusta Queens y quieres más tableros, Star Battle es una continuación natural. Sigues razonando con filas, columnas y regiones, pero colocas estrellas.",
+              "La diferencia clave es que las estrellas no pueden tocarse, ni siquiera en diagonal. Una sola estrella puede bloquear muchas casillas cercanas."
+            ]
+          },
+          {
+            heading: "Por qué encaja con jugadores de Queens",
+            list: [
+              "Partidas cortas en el navegador.",
+              "Puzzle diario y práctica ilimitada.",
+              "Sin crear cuenta.",
+              "Tableros verificados con solución única.",
+              "Pistas útiles para aprender patrones."
+            ]
+          },
+          {
+            heading: "Cómo cambiar de Queens a Star Battle",
+            paragraphs: [
+              "Mantén tu forma de escanear filas, columnas y regiones, pero añade una pregunta después de cada estrella: ¿qué casillas toca?",
+              "Marcar esas vecinas como imposibles hace que el tablero se aclare rápido y evita colocaciones ilegales."
+            ]
+          },
+          {
+            heading: "Más que un puzzle diario",
+            paragraphs: [
+              "Mucha gente busca una alternativa a Queens porque quiere seguir jugando después del tablero del día. Daily Logic Lab separa el reto diario de la práctica: el diario es el punto de comparación y Practice genera más tableros.",
+              "Así puedes entrenar la misma familia de lógica durante más tiempo, sin instalar una app, crear una cuenta o esperar a mañana."
+            ]
+          }
+        ],
+        faq: [
+          ["¿Cuál es una buena alternativa a Queens?", "Star Battle es una buena opción porque conserva la lógica de colocación y añade la regla de no tocarse."],
+          ["¿Hay práctica ilimitada?", "Sí. Puedes jugar el tablero diario y generar nuevos tableros de práctica."],
+          ["¿Necesito registrarme?", "No. Funciona directamente en el navegador."]
+        ]
+      },
+      fr: {
+        title: "Alternative à Queens - Jouer à Star Battle sans compte",
+        description: "Tu cherches une alternative à Queens ? Essaie Star Battle en ligne avec lignes, colonnes, régions, règle de non-contact et entraînement illimité.",
+        keywords: "alternative queens, puzzle queens alternative, star battle français, puzzle type queens",
+        eyebrow: "Alternative à Queens",
+        h1: "Une alternative à Queens : Star Battle en ligne",
+        ogTitle: "Alternative à Queens",
+        ogDescription: "Star Battle pour les joueurs qui veulent plus de puzzles façon Queens.",
+        cta: { label: "Jouer à l'alternative Queens", href: "/fr/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "Si tu aimes Queens et que tu veux plus de grilles, Star Battle est une suite naturelle. On garde le raisonnement par lignes, colonnes et régions, mais on place des étoiles.",
+              "La différence importante est la règle de non-contact : deux étoiles ne peuvent pas se toucher, même en diagonale. Un seul placement peut donc bloquer tout un voisinage."
+            ]
+          },
+          {
+            heading: "Pourquoi cela plaît aux joueurs de Queens",
+            list: [
+              "Parties courtes dans le navigateur.",
+              "Puzzle du jour et entraînement illimité.",
+              "Aucun compte requis.",
+              "Grilles vérifiées avec solution unique.",
+              "Indices utiles pour apprendre les motifs."
+            ]
+          },
+          {
+            heading: "Passer de Queens à Star Battle",
+            paragraphs: [
+              "Garde ton habitude de scanner les lignes, colonnes et régions, puis ajoute une question après chaque étoile : quelles cases touche-t-elle ?",
+              "Bloquer ces voisines immédiatement rend la grille plus lisible et évite la plupart des erreurs de placement."
+            ]
+          },
+          {
+            heading: "Plus qu'un puzzle quotidien",
+            paragraphs: [
+              "Beaucoup de joueurs cherchent une alternative à Queens parce qu'ils veulent continuer après la grille du jour. Daily Logic Lab sépare donc le puzzle quotidien et l'entraînement : le premier sert de repère, le second génère d'autres grilles.",
+              "Tu peux ainsi pratiquer la même famille logique plus longtemps, sans installer d'application, créer de compte ou attendre demain."
+            ]
+          }
+        ],
+        faq: [
+          ["Quelle est une bonne alternative à Queens ?", "Star Battle est une bonne option car il garde la logique de placement et ajoute la règle de non-contact."],
+          ["Peut-on s'entraîner sans limite ?", "Oui. Le puzzle quotidien peut être suivi de grilles d'entraînement."],
+          ["Faut-il créer un compte ?", "Non. Le jeu fonctionne directement dans le navigateur."]
+        ]
+      }
+    }
+  }
+];
+
 const localizedLongtailGroups = [
   {
     paths: {
@@ -1076,7 +1517,8 @@ const localizedLongtailGroups = [
     },
     changefreq: "monthly",
     priority: "0.8"
-  }
+  },
+  ...localizedLongtailArticles.map(({ paths, changefreq, priority }) => ({ paths, changefreq, priority }))
 ];
 
 function seo(language) {
@@ -1897,6 +2339,180 @@ function longtailAlternateBlock(paths) {
   return `${alternates}\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${paths.en}" />`;
 }
 
+function longtailAlternateLinks(paths) {
+  const alternates = Object.entries(paths)
+    .map(([languageKey, url]) => {
+      const language = languages.find((item) => item.key === languageKey);
+      return `<link rel="alternate" hreflang="${language.hreflang}" href="${SITE}${url}">`;
+    })
+    .join("\n    ");
+  return `${alternates}\n    <link rel="alternate" hreflang="x-default" href="${SITE}${paths.en}">`;
+}
+
+function longtailLanguageSwitcher(current, paths) {
+  const links = Object.entries(paths)
+    .map(([languageKey, href]) => {
+      const language = languages.find((item) => item.key === languageKey);
+      const currentAttr = language.key === current.key ? ' aria-current="page"' : "";
+      return `<a href="${href}" lang="${language.htmlLang}" hreflang="${language.hreflang}"${currentAttr}>${escapeHtml(language.label)}</a>`;
+    })
+    .join("\n          ");
+
+  return `<details class="language-switcher">
+        <summary aria-label="${escapeHtml(current.switchAria)}">${escapeHtml(current.currentLabel)}</summary>
+        <div class="language-menu">
+          ${links}
+        </div>
+      </details>`;
+}
+
+function longtailOutPath(url) {
+  return `${url.replace(/^\//, "")}.html`;
+}
+
+function longtailSections(sections) {
+  return sections
+    .map((section) => {
+      const heading = section.heading ? `\n        <h2>${escapeHtml(section.heading)}</h2>` : "";
+      const body = section.paragraphs ? `\n        ${paragraphs(section.paragraphs)}` : "";
+      const items = section.list ? `\n        <ul>\n                  ${list(section.list)}\n        </ul>` : "";
+      const links = section.links ? `\n        ${supportLinks(section.links)}` : "";
+      return `${heading}${body}${items}${links}`;
+    })
+    .join("\n");
+}
+
+function longtailArticleJsonLd(article, language, content) {
+  return JSON.stringify(
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Article",
+          headline: content.h1,
+          description: content.description,
+          inLanguage: language.htmlLang,
+          mainEntityOfPage: `${SITE}${article.paths[language.key]}`,
+          isPartOf: { "@id": `${SITE}${language.path}#website` }
+        },
+        {
+          "@type": "FAQPage",
+          inLanguage: language.htmlLang,
+          mainEntity: content.faq.map(([question, answer]) => ({
+            "@type": "Question",
+            name: question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: answer
+            }
+          }))
+        }
+      ]
+    },
+    null,
+    8
+  );
+}
+
+function longtailArticlePage(article, language) {
+  const content = article.pages[language.key];
+  const profile = seo(language);
+  const canonical = `${SITE}${article.paths[language.key]}`;
+  const starBattlePath = localizedLongtailGroups[0].paths[language.key] || "/star-battle";
+  const cta = content.cta ? `\n        <p><a href="${content.cta.href}">${escapeHtml(content.cta.label)}</a></p>` : "";
+  const faqItems = content.faq
+    .map(
+      ([question, answer]) => `<details>
+            <summary>${escapeHtml(question)}</summary>
+            <p>${escapeHtml(answer)}</p>
+          </details>`
+    )
+    .join("\n          ");
+
+  return `<!doctype html>
+<html lang="${language.htmlLang}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NY29HPM34"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6NY29HPM34');
+    </script>
+    <title>${escapeHtml(content.title)}</title>
+    <meta name="description" content="${escapeHtml(content.description)}">
+    <meta name="keywords" content="${escapeHtml(content.keywords)}">
+    <meta name="language" content="${escapeHtml(profile.languageName)}">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#245c53">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="canonical" href="${canonical}">
+    ${longtailAlternateLinks(article.paths)}
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="${escapeHtml(profile.ogLocale)}">
+    <meta property="og:site_name" content="Daily Logic Lab">
+    <meta property="og:title" content="${escapeHtml(content.ogTitle)}">
+    <meta property="og:description" content="${escapeHtml(content.ogDescription)}">
+    <meta property="og:url" content="${canonical}">
+    <meta property="og:image" content="${SITE}/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="${escapeHtml(content.ogTitle)}">
+    <meta name="twitter:description" content="${escapeHtml(content.ogDescription)}">
+    <meta name="twitter:image" content="${SITE}/og-image.png">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+      ${longtailArticleJsonLd(article, language, content)}
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="${language.path}#play">
+        <span class="brand-mark">DL</span>
+        <span>Daily Logic Lab</span>
+      </a>
+      <nav class="nav" aria-label="${escapeHtml(language.navAria)}">
+        <a href="${language.path}#play">${escapeHtml(language.nav[0])}</a>
+        <a href="${starBattlePath}">Star Battle</a>
+        <a href="${language.path}#calculator">${escapeHtml(language.nav[1])}</a>
+      </nav>
+      ${longtailLanguageSwitcher(language, article.paths)}
+    </header>
+
+    <main class="content-page">
+      <article class="section-shell content-card">
+        <p class="eyebrow">${escapeHtml(content.eyebrow)}</p>
+        <h1>${escapeHtml(content.h1)}</h1>
+        ${longtailSections(content.sections)}${cta}
+
+        <h2>FAQ</h2>
+        <div class="faq-list">
+          ${faqItems}
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section-shell">
+        <span>Daily Logic Lab</span>
+        <nav class="footer-links" aria-label="${escapeHtml(language.footerAria)}">
+          <a href="${supportPath(language, "about")}">${escapeHtml(language.footer.about)}</a>
+          <a href="${supportPath(language, "contact")}">${escapeHtml(language.footer.contact)}</a>
+          <a href="${supportPath(language, "privacy")}">${escapeHtml(language.footer.privacy)}</a>
+          <a href="/sitemap.xml">${escapeHtml(language.footer.sitemap)}</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
+`;
+}
+
 function supportJsonLd(language, pageKey, content) {
   return JSON.stringify(
     {
@@ -2051,20 +2667,7 @@ ${alternateBlock}
       );
     })
     .join("\n");
-  const supportPages = [
-    ["/star-battle-hints", "weekly", "0.8"],
-    ["/two-not-touch-puzzle", "monthly", "0.7"],
-    ["/queens-puzzle-alternative", "weekly", "0.7"]
-  ]
-    .map(
-      ([url, freq, priority]) => `  <url>
-    <loc>${SITE}${url}</loc>
-    <lastmod>${SITEMAP_LASTMOD}</lastmod>
-    <changefreq>${freq}</changefreq>
-    <priority>${priority}</priority>
-  </url>`
-    )
-    .join("\n");
+  const supportPages = "";
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
@@ -2084,6 +2687,15 @@ for (const language of languages) {
     const supportOut = path.resolve(supportOutPath(language, pageKey));
     await mkdir(path.dirname(supportOut), { recursive: true });
     await writeFile(supportOut, supportPage(language, pageKey), "utf8");
+  }
+}
+
+for (const article of localizedLongtailArticles) {
+  for (const language of languages) {
+    if (!article.pages[language.key]) continue;
+    const articleOut = path.resolve(longtailOutPath(article.paths[language.key]));
+    await mkdir(path.dirname(articleOut), { recursive: true });
+    await writeFile(articleOut, longtailArticlePage(article, language), "utf8");
   }
 }
 

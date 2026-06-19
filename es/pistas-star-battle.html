@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NY29HPM34"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6NY29HPM34');
+    </script>
+    <title>Pistas de Star Battle - Resolver sin adivinar</title>
+    <meta name="description" content="Pistas prácticas de Star Battle en español: cuenta casillas legales, bloquea vecinos, compara regiones y encuentra estrellas forzadas.">
+    <meta name="keywords" content="pistas star battle, resolver star battle, estrategia star battle, star battle español">
+    <meta name="language" content="Español">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#245c53">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="canonical" href="https://dailylogiclab.com/es/pistas-star-battle">
+    <link rel="alternate" hreflang="en" href="https://dailylogiclab.com/star-battle-hints">
+    <link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/star-battle-hinweise">
+    <link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/pistas-star-battle">
+    <link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/indices-star-battle">
+    <link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/star-battle-hints">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:site_name" content="Daily Logic Lab">
+    <meta property="og:title" content="Pistas de Star Battle">
+    <meta property="og:description" content="Una guía breve para encontrar pasos seguros en Star Battle.">
+    <meta property="og:url" content="https://dailylogiclab.com/es/pistas-star-battle">
+    <meta property="og:image" content="https://dailylogiclab.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pistas de Star Battle">
+    <meta name="twitter:description" content="Una guía breve para encontrar pasos seguros en Star Battle.">
+    <meta name="twitter:image" content="https://dailylogiclab.com/og-image.png">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+                {
+                        "@type": "Article",
+                        "headline": "Pistas de Star Battle para resolver sin adivinar",
+                        "description": "Pistas prácticas de Star Battle en español: cuenta casillas legales, bloquea vecinos, compara regiones y encuentra estrellas forzadas.",
+                        "inLanguage": "es",
+                        "mainEntityOfPage": "https://dailylogiclab.com/es/pistas-star-battle",
+                        "isPartOf": {
+                                "@id": "https://dailylogiclab.com/es/#website"
+                        }
+                },
+                {
+                        "@type": "FAQPage",
+                        "inLanguage": "es",
+                        "mainEntity": [
+                                {
+                                        "@type": "Question",
+                                        "name": "¿Cuál es la mejor primera pista?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Empieza por el grupo con menos casillas legales."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "¿Las estrellas pueden tocarse en diagonal?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "No. No pueden tocarse ni en horizontal, ni en vertical, ni en diagonal."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "¿Conviene adivinar?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "En un tablero verificado debería existir un camino lógico. Busca primero casillas forzadas."
+                                        }
+                                }
+                        ]
+                }
+        ]
+}
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/es/#play">
+        <span class="brand-mark">DL</span>
+        <span>Daily Logic Lab</span>
+      </a>
+      <nav class="nav" aria-label="Navegación principal">
+        <a href="/es/#play">Jugar</a>
+        <a href="/es/star-battle">Star Battle</a>
+        <a href="/es/#calculator">Calculadora</a>
+      </nav>
+      <details class="language-switcher">
+        <summary aria-label="Cambiar idioma">Español</summary>
+        <div class="language-menu">
+          <a href="/star-battle-hints" lang="en" hreflang="en">English</a>
+          <a href="/de/star-battle-hinweise" lang="de" hreflang="de">Deutsch</a>
+          <a href="/es/pistas-star-battle" lang="es" hreflang="es" aria-current="page">Español</a>
+          <a href="/fr/indices-star-battle" lang="fr" hreflang="fr">Français</a>
+        </div>
+      </details>
+    </header>
+
+    <main class="content-page">
+      <article class="section-shell content-card">
+        <p class="eyebrow">Pistas de Star Battle</p>
+        <h1>Pistas de Star Battle para resolver sin adivinar</h1>
+        
+        <p>Una buena pista de Star Battle no debería ser una apuesta. Debe mostrarte qué fila, columna o región ya tiene una única casilla legal para colocar una estrella.</p>
+              <p>Esta guía usa la versión 7x7 de Daily Logic Lab, pero las mismas ideas sirven para muchos puzzles tipo Two Not Touch y Queens.</p>
+
+        <h2>Lista rápida</h2>
+        <ul>
+                  <li>Busca la fila, columna o región con menos casillas legales.</li>
+                  <li>Coloca una estrella solo cuando la posición esté forzada.</li>
+                  <li>Bloquea las ocho casillas vecinas después de cada estrella.</li>
+                  <li>Elimina también el resto de su fila, columna y región.</li>
+        </ul>
+
+        <h2>Cuenta casillas legales</h2>
+        <p>No basta con contar casillas vacías. Una casilla deja de ser legal si toca una estrella o si pertenece a una fila, columna o región ya resuelta.</p>
+              <p>Cuando una zona necesita una estrella y solo queda una casilla legal, tienes un paso seguro. Esa es la base de la mayoría de las deducciones.</p>
+
+        <h2>Si te atascas</h2>
+        <p>Compara regiones con filas y columnas. Si todos los candidatos de una región están en la misma fila, esa fila puede bloquear candidatos en otras regiones.</p>
+              <p>Usa la pista del juego después de hacer esta revisión. Así la pista confirma el patrón que faltaba, en lugar de sustituir tu razonamiento.</p>
+        <p><a href="/es/#play">Jugar Star Battle online</a></p>
+
+        <h2>FAQ</h2>
+        <div class="faq-list">
+          <details>
+            <summary>¿Cuál es la mejor primera pista?</summary>
+            <p>Empieza por el grupo con menos casillas legales.</p>
+          </details>
+          <details>
+            <summary>¿Las estrellas pueden tocarse en diagonal?</summary>
+            <p>No. No pueden tocarse ni en horizontal, ni en vertical, ni en diagonal.</p>
+          </details>
+          <details>
+            <summary>¿Conviene adivinar?</summary>
+            <p>En un tablero verificado debería existir un camino lógico. Busca primero casillas forzadas.</p>
+          </details>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section-shell">
+        <span>Daily Logic Lab</span>
+        <nav class="footer-links" aria-label="Pie de página">
+          <a href="/es/about">Acerca de</a>
+          <a href="/es/contact">Contacto</a>
+          <a href="/es/privacy-policy">Privacidad</a>
+          <a href="/sitemap.xml">Mapa del sitio</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NY29HPM34"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6NY29HPM34');
+    </script>
+    <title>Indices Star Battle - Résoudre sans deviner</title>
+    <meta name="description" content="Indices Star Battle en français : compter les cases légales, bloquer les voisines, comparer les régions et trouver les étoiles forcées.">
+    <meta name="keywords" content="indices star battle, résoudre star battle, stratégie star battle, star battle français">
+    <meta name="language" content="Français">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#245c53">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="canonical" href="https://dailylogiclab.com/fr/indices-star-battle">
+    <link rel="alternate" hreflang="en" href="https://dailylogiclab.com/star-battle-hints">
+    <link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/star-battle-hinweise">
+    <link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/pistas-star-battle">
+    <link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/indices-star-battle">
+    <link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/star-battle-hints">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Daily Logic Lab">
+    <meta property="og:title" content="Indices Star Battle">
+    <meta property="og:description" content="Une méthode courte pour trouver les prochains coups sûrs.">
+    <meta property="og:url" content="https://dailylogiclab.com/fr/indices-star-battle">
+    <meta property="og:image" content="https://dailylogiclab.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Indices Star Battle">
+    <meta name="twitter:description" content="Une méthode courte pour trouver les prochains coups sûrs.">
+    <meta name="twitter:image" content="https://dailylogiclab.com/og-image.png">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+                {
+                        "@type": "Article",
+                        "headline": "Indices Star Battle pour résoudre sans deviner",
+                        "description": "Indices Star Battle en français : compter les cases légales, bloquer les voisines, comparer les régions et trouver les étoiles forcées.",
+                        "inLanguage": "fr",
+                        "mainEntityOfPage": "https://dailylogiclab.com/fr/indices-star-battle",
+                        "isPartOf": {
+                                "@id": "https://dailylogiclab.com/fr/#website"
+                        }
+                },
+                {
+                        "@type": "FAQPage",
+                        "inLanguage": "fr",
+                        "mainEntity": [
+                                {
+                                        "@type": "Question",
+                                        "name": "Quel est le meilleur premier indice ?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Commence par le groupe qui possède le moins de cases légales."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "Les étoiles peuvent-elles se toucher en diagonale ?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Non. Le contact diagonal est interdit."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "Faut-il deviner ?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Une grille vérifiée devrait avoir un chemin logique. Cherche d'abord les cases forcées."
+                                        }
+                                }
+                        ]
+                }
+        ]
+}
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/fr/#play">
+        <span class="brand-mark">DL</span>
+        <span>Daily Logic Lab</span>
+      </a>
+      <nav class="nav" aria-label="Navigation principale">
+        <a href="/fr/#play">Jouer</a>
+        <a href="/fr/star-battle">Star Battle</a>
+        <a href="/fr/#calculator">Calculatrice</a>
+      </nav>
+      <details class="language-switcher">
+        <summary aria-label="Changer de langue">Français</summary>
+        <div class="language-menu">
+          <a href="/star-battle-hints" lang="en" hreflang="en">English</a>
+          <a href="/de/star-battle-hinweise" lang="de" hreflang="de">Deutsch</a>
+          <a href="/es/pistas-star-battle" lang="es" hreflang="es">Español</a>
+          <a href="/fr/indices-star-battle" lang="fr" hreflang="fr" aria-current="page">Français</a>
+        </div>
+      </details>
+    </header>
+
+    <main class="content-page">
+      <article class="section-shell content-card">
+        <p class="eyebrow">Indices Star Battle</p>
+        <h1>Indices Star Battle pour résoudre sans deviner</h1>
+        
+        <p>Un bon indice Star Battle ne remplace pas la logique : il pointe vers le prochain groupe vraiment contraint. Cherche les cases encore légales après les règles de ligne, colonne, région et non-contact.</p>
+              <p>La version Daily Logic Lab est en 7x7, mais la méthode s'applique aussi aux grilles Star Battle et Two Not Touch plus grandes.</p>
+
+        <h2>Checklist rapide</h2>
+        <ul>
+                  <li>Repère la ligne, colonne ou région avec le moins de cases légales.</li>
+                  <li>Place une étoile seulement si toutes les autres cases sont interdites.</li>
+                  <li>Bloque les huit cases voisines après chaque étoile.</li>
+                  <li>Supprime aussi les autres cases de sa ligne, colonne et région.</li>
+        </ul>
+
+        <h2>Compter les cases légales</h2>
+        <p>Une case vide n'est pas toujours possible. Elle est interdite si elle touche une étoile ou si son groupe possède déjà son étoile.</p>
+              <p>Quand un groupe doit encore recevoir une étoile et qu'il ne reste qu'une case légale, le placement est forcé. C'est le signal le plus fiable.</p>
+
+        <h2>Quand la grille bloque</h2>
+        <p>Compare les régions avec les lignes et les colonnes. Si tous les candidats d'une région sont dans la même ligne, cette ligne peut éliminer des candidats ailleurs.</p>
+              <p>Utilise ensuite le bouton d'indice pour vérifier ton analyse. Le but est d'apprendre le motif, pas seulement d'obtenir la réponse.</p>
+        <p><a href="/fr/#play">Jouer à Star Battle en ligne</a></p>
+
+        <h2>FAQ</h2>
+        <div class="faq-list">
+          <details>
+            <summary>Quel est le meilleur premier indice ?</summary>
+            <p>Commence par le groupe qui possède le moins de cases légales.</p>
+          </details>
+          <details>
+            <summary>Les étoiles peuvent-elles se toucher en diagonale ?</summary>
+            <p>Non. Le contact diagonal est interdit.</p>
+          </details>
+          <details>
+            <summary>Faut-il deviner ?</summary>
+            <p>Une grille vérifiée devrait avoir un chemin logique. Cherche d'abord les cases forcées.</p>
+          </details>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section-shell">
+        <span>Daily Logic Lab</span>
+        <nav class="footer-links" aria-label="Pied de page">
+          <a href="/fr/about">À propos</a>
+          <a href="/fr/contact">Contact</a>
+          <a href="/fr/privacy-policy">Confidentialité</a>
+          <a href="/sitemap.xml">Plan du site</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
