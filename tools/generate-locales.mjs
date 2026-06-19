@@ -2,6 +2,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const SITE = "https://dailylogiclab.com";
+const ADSENSE_CLIENT = "ca-pub-9244949928133071";
 const SITEMAP_LASTMOD = new Date().toISOString().slice(0, 10);
 
 const languages = [
@@ -1751,7 +1752,7 @@ const supportContent = {
     privacy: {
       schemaType: "WebPage",
       title: "Privacy Policy - Daily Logic Lab",
-      description: "Read the Daily Logic Lab privacy policy, including information about analytics, local browser storage, cookies, and future advertising.",
+      description: "Read the Daily Logic Lab privacy policy, including information about analytics, local browser storage, cookies, and advertising.",
       eyebrow: "Privacy",
       h1: "Privacy Policy",
       updatedLabel: "Last updated:",
@@ -1760,7 +1761,7 @@ const supportContent = {
         { heading: "Information You Provide", paragraphs: ["Daily Logic Lab does not currently require accounts, sign-ins, or payment details. If you contact the site through GitHub issues, the information you choose to post there is handled by GitHub and may be public."] },
         { heading: "Local Browser Storage", paragraphs: ["The puzzle experience may store small pieces of data in your browser, such as streak status, best times, solved dates, hint counts, and recent in-browser event records. You can clear it by clearing site data in your browser settings."] },
         { heading: "Analytics", paragraphs: ["Daily Logic Lab uses Google Analytics to understand aggregate site usage, such as page views, puzzle starts, hints, checks, and general device or browser information. Google may use cookies or similar technologies for measurement."] },
-        { heading: "Advertising", paragraphs: ["Daily Logic Lab does not currently display advertising. If advertising is added later, the site may use Google AdSense or related Google advertising services. Google and its partners may use cookies to serve, measure, and personalize ads."] },
+        { heading: "Advertising", paragraphs: ["Daily Logic Lab uses Google AdSense to show ads. Google and its partners may use cookies to serve, measure, and personalize ads. You can review and manage ad personalization through Google Ads Settings."] },
         { heading: "Third-Party Links", paragraphs: ["The site may link to external pages, such as GitHub or Google documentation. Daily Logic Lab is not responsible for the privacy practices of external websites."] },
         { heading: "Children's Privacy", paragraphs: ["Daily Logic Lab is a general-audience puzzle site and does not knowingly collect personal information from children."] },
         {
@@ -1804,7 +1805,7 @@ const supportContent = {
     privacy: {
       schemaType: "WebPage",
       title: "Datenschutzerklärung - Daily Logic Lab",
-      description: "Datenschutzhinweise zu Daily Logic Lab, einschließlich Analytics, lokalem Browserspeicher, Cookies und möglicher späterer Werbung.",
+      description: "Datenschutzhinweise zu Daily Logic Lab, einschließlich Analytics, lokalem Browserspeicher, Cookies und Werbung.",
       eyebrow: "Datenschutz",
       h1: "Datenschutzerklärung",
       updatedLabel: "Zuletzt aktualisiert:",
@@ -1813,7 +1814,7 @@ const supportContent = {
         { heading: "Von dir bereitgestellte Informationen", paragraphs: ["Aktuell gibt es keine Konten, Logins oder Zahlungsdaten. Wenn du über GitHub Issues Kontakt aufnimmst, werden die dort geposteten Informationen von GitHub verarbeitet und können öffentlich sein."] },
         { heading: "Lokaler Browserspeicher", paragraphs: ["Die Seite kann lokal Daten speichern, etwa Serie, Bestzeiten, gelöste Tage, Hinweise und jüngste In-Browser-Ereignisse. Du kannst diese Daten über die Website-Daten deines Browsers löschen."] },
         { heading: "Analytics", paragraphs: ["Daily Logic Lab nutzt Google Analytics, um aggregierte Nutzung zu verstehen, zum Beispiel Seitenaufrufe, Starts, Hinweise, Prüfungen sowie allgemeine Geräte- und Browserinformationen."] },
-        { heading: "Werbung", paragraphs: ["Derzeit zeigt Daily Logic Lab keine Werbung. Wenn später Werbung ergänzt wird, kann Google AdSense oder ein verwandter Google-Dienst eingesetzt werden. Google und Partner können Cookies zur Auslieferung, Messung und Personalisierung von Anzeigen verwenden."] },
+        { heading: "Werbung", paragraphs: ["Daily Logic Lab verwendet Google AdSense, um Anzeigen zu zeigen. Google und Partner können Cookies zur Auslieferung, Messung und Personalisierung von Anzeigen verwenden. Du kannst die Personalisierung in den Google-Anzeigeneinstellungen prüfen und verwalten."] },
         { heading: "Externe Links", paragraphs: ["Die Seite kann zu GitHub, Google-Dokumentation oder anderen externen Seiten verlinken. Für deren Datenschutzpraxis ist Daily Logic Lab nicht verantwortlich."] },
         { heading: "Kinder", paragraphs: ["Daily Logic Lab ist eine allgemeine Rätselseite und sammelt wissentlich keine personenbezogenen Daten von Kindern."] },
         { heading: "Nützliche Datenschutzlinks", links: [{ label: "Google-Datenschutzerklärung", href: "https://policies.google.com/privacy" }, { label: "Google-Anzeigeneinstellungen", href: "https://adssettings.google.com/" }] }
@@ -1851,7 +1852,7 @@ const supportContent = {
     privacy: {
       schemaType: "WebPage",
       title: "Política de privacidad - Daily Logic Lab",
-      description: "Política de privacidad de Daily Logic Lab sobre analítica, almacenamiento local, cookies y posible publicidad futura.",
+      description: "Política de privacidad de Daily Logic Lab sobre analítica, almacenamiento local, cookies y publicidad.",
       eyebrow: "Privacidad",
       h1: "Política de privacidad",
       updatedLabel: "Última actualización:",
@@ -1860,7 +1861,7 @@ const supportContent = {
         { heading: "Información que proporcionas", paragraphs: ["No se requieren cuentas, inicios de sesión ni pagos. Si contactas mediante GitHub Issues, lo que publiques allí lo gestiona GitHub y puede ser público."] },
         { heading: "Almacenamiento local", paragraphs: ["El juego puede guardar datos pequeños en tu navegador, como racha, mejores tiempos, fechas resueltas, uso de pistas y eventos recientes. Puedes borrarlos limpiando los datos del sitio."] },
         { heading: "Analítica", paragraphs: ["Daily Logic Lab usa Google Analytics para entender el uso agregado, como páginas vistas, inicios de puzzles, pistas, revisiones e información general de dispositivo o navegador."] },
-        { heading: "Publicidad", paragraphs: ["Actualmente no hay anuncios. Si se añaden más adelante, el sitio puede usar Google AdSense u otros servicios publicitarios de Google. Google y sus socios pueden usar cookies para medir, mostrar y personalizar anuncios."] },
+        { heading: "Publicidad", paragraphs: ["Daily Logic Lab usa Google AdSense para mostrar anuncios. Google y sus socios pueden usar cookies para medir, mostrar y personalizar anuncios. Puedes revisar y gestionar la personalización en la Configuración de anuncios de Google."] },
         { heading: "Enlaces externos", paragraphs: ["El sitio puede enlazar a GitHub, documentación de Google u otras páginas externas. Daily Logic Lab no controla sus prácticas de privacidad."] },
         { heading: "Privacidad de menores", paragraphs: ["Daily Logic Lab es un sitio general de puzzles y no recopila conscientemente información personal de niños."] },
         { heading: "Enlaces útiles", links: [{ label: "Privacidad de Google", href: "https://policies.google.com/privacy" }, { label: "Configuración de anuncios de Google", href: "https://adssettings.google.com/" }] }
@@ -1898,7 +1899,7 @@ const supportContent = {
     privacy: {
       schemaType: "WebPage",
       title: "Politique de confidentialité - Daily Logic Lab",
-      description: "Politique de confidentialité de Daily Logic Lab concernant l'analytique, le stockage local, les cookies et la publicité future.",
+      description: "Politique de confidentialité de Daily Logic Lab concernant l'analytique, le stockage local, les cookies et la publicité.",
       eyebrow: "Confidentialité",
       h1: "Politique de confidentialité",
       updatedLabel: "Dernière mise à jour :",
@@ -1907,7 +1908,7 @@ const supportContent = {
         { heading: "Informations fournies", paragraphs: ["Le site ne demande actuellement ni compte, ni connexion, ni paiement. Si tu contactes le projet via GitHub Issues, les informations publiées sont gérées par GitHub et peuvent être publiques."] },
         { heading: "Stockage local", paragraphs: ["Le jeu peut enregistrer localement la série, les meilleurs temps, les dates résolues, les indices utilisés et des événements récents. Tu peux supprimer ces données dans les paramètres du navigateur."] },
         { heading: "Analytique", paragraphs: ["Daily Logic Lab utilise Google Analytics pour comprendre l'usage agrégé : pages vues, lancements de puzzle, indices, vérifications et informations générales de navigateur ou d'appareil."] },
-        { heading: "Publicité", paragraphs: ["Le site n'affiche pas de publicité actuellement. Si cela change, Daily Logic Lab pourra utiliser Google AdSense ou des services publicitaires Google. Google et ses partenaires peuvent utiliser des cookies pour mesurer, afficher et personnaliser les annonces."] },
+        { heading: "Publicité", paragraphs: ["Daily Logic Lab utilise Google AdSense pour afficher des annonces. Google et ses partenaires peuvent utiliser des cookies pour mesurer, afficher et personnaliser les annonces. Tu peux consulter et gérer la personnalisation dans les paramètres des annonces Google."] },
         { heading: "Liens externes", paragraphs: ["Le site peut renvoyer vers GitHub, Google ou d'autres pages externes. Daily Logic Lab n'est pas responsable de leurs pratiques de confidentialité."] },
         { heading: "Enfants", paragraphs: ["Daily Logic Lab est un site de puzzles grand public et ne collecte pas volontairement d'informations personnelles concernant les enfants."] },
         { heading: "Liens utiles", links: [{ label: "Politique de confidentialité Google", href: "https://policies.google.com/privacy" }, { label: "Paramètres des annonces Google", href: "https://adssettings.google.com/" }] }
@@ -1945,7 +1946,7 @@ const supportContent = {
     privacy: {
       schemaType: "WebPage",
       title: "プライバシーポリシー - Daily Logic Lab",
-      description: "Daily Logic Lab の解析、ローカル保存、Cookie、将来の広告に関するプライバシーポリシー。",
+      description: "Daily Logic Lab の解析、ローカル保存、Cookie、広告に関するプライバシーポリシー。",
       eyebrow: "プライバシー",
       h1: "プライバシーポリシー",
       updatedLabel: "最終更新:",
@@ -1954,7 +1955,7 @@ const supportContent = {
         { heading: "利用者が提供する情報", paragraphs: ["現在、アカウント登録、ログイン、支払い情報は必要ありません。GitHub Issues で連絡した場合、投稿内容は GitHub によって扱われ、公開されることがあります。"] },
         { heading: "ブラウザ内の保存", paragraphs: ["連続記録、ベストタイム、解いた日、ヒント回数、最近のイベントなどがブラウザ内に保存されることがあります。ブラウザのサイトデータ削除で消せます。"] },
         { heading: "解析", paragraphs: ["Daily Logic Lab は Google Analytics を使い、ページ表示、パズル開始、ヒント、チェック、一般的な端末やブラウザ情報などを集計して改善に役立てます。"] },
-        { heading: "広告", paragraphs: ["現在広告は表示していません。将来広告を追加する場合、Google AdSense などの Google 広告サービスを使う可能性があります。Google とパートナーは Cookie を使って広告の配信、測定、パーソナライズを行うことがあります。"] },
+        { heading: "広告", paragraphs: ["Daily Logic Lab は広告表示に Google AdSense を使用します。Google とパートナーは Cookie を使って広告の配信、測定、パーソナライズを行うことがあります。広告のパーソナライズは Google 広告設定で確認、管理できます。"] },
         { heading: "外部リンク", paragraphs: ["GitHub や Google ドキュメントなど外部サイトへのリンクがあります。外部サイトのプライバシー運用は Daily Logic Lab の管理外です。"] },
         { heading: "子どものプライバシー", paragraphs: ["Daily Logic Lab は一般向けパズルサイトであり、子どもの個人情報を意図して収集しません。"] },
         { heading: "関連リンク", links: [{ label: "Google プライバシーポリシー", href: "https://policies.google.com/privacy" }, { label: "Google 広告設定", href: "https://adssettings.google.com/" }] }
@@ -1992,7 +1993,7 @@ const supportContent = {
     privacy: {
       schemaType: "WebPage",
       title: "Política de Privacidade - Daily Logic Lab",
-      description: "Política de privacidade do Daily Logic Lab sobre analytics, armazenamento local, cookies e possível publicidade futura.",
+      description: "Política de privacidade do Daily Logic Lab sobre analytics, armazenamento local, cookies e publicidade.",
       eyebrow: "Privacidade",
       h1: "Política de Privacidade",
       updatedLabel: "Última atualização:",
@@ -2001,7 +2002,7 @@ const supportContent = {
         { heading: "Informações que você fornece", paragraphs: ["Não há contas, login ou pagamento no momento. Se você entrar em contato por GitHub Issues, as informações publicadas ali são tratadas pelo GitHub e podem ser públicas."] },
         { heading: "Armazenamento local", paragraphs: ["O jogo pode salvar no navegador dados como sequência, melhores tempos, datas resolvidas, dicas usadas e eventos recentes. Você pode apagar isso limpando os dados do site no navegador."] },
         { heading: "Analytics", paragraphs: ["Daily Logic Lab usa Google Analytics para entender uso agregado, como visualizações, início de puzzles, dicas, conferências e informações gerais de dispositivo ou navegador."] },
-        { heading: "Publicidade", paragraphs: ["O site não mostra anúncios atualmente. Se anúncios forem adicionados depois, o Daily Logic Lab pode usar Google AdSense ou serviços de publicidade do Google. Google e parceiros podem usar cookies para medir, mostrar e personalizar anúncios."] },
+        { heading: "Publicidade", paragraphs: ["Daily Logic Lab usa Google AdSense para mostrar anúncios. Google e parceiros podem usar cookies para medir, mostrar e personalizar anúncios. Você pode revisar e gerenciar a personalização nas Configurações de anúncios do Google."] },
         { heading: "Links externos", paragraphs: ["O site pode linkar para GitHub, documentação do Google e outros sites. Daily Logic Lab não controla as práticas de privacidade desses sites."] },
         { heading: "Privacidade de crianças", paragraphs: ["Daily Logic Lab é um site geral de puzzles e não coleta intencionalmente informações pessoais de crianças."] },
         { heading: "Links úteis", links: [{ label: "Política de Privacidade do Google", href: "https://policies.google.com/privacy" }, { label: "Configurações de anúncios do Google", href: "https://adssettings.google.com/" }] }
@@ -2039,7 +2040,7 @@ const supportContent = {
     privacy: {
       schemaType: "WebPage",
       title: "隐私政策 - Daily Logic Lab",
-      description: "阅读 Daily Logic Lab 隐私政策，了解分析、浏览器本地存储、Cookie 和未来广告相关信息。",
+      description: "阅读 Daily Logic Lab 隐私政策，了解分析、浏览器本地存储、Cookie 和广告相关信息。",
       eyebrow: "隐私",
       h1: "隐私政策",
       updatedLabel: "最后更新：",
@@ -2048,7 +2049,7 @@ const supportContent = {
         { heading: "你主动提供的信息", paragraphs: ["Daily Logic Lab 当前不要求注册、登录或付款。如果你通过 GitHub Issues 联系网站，你发布的信息由 GitHub 处理，并可能是公开的。"] },
         { heading: "浏览器本地存储", paragraphs: ["谜题体验可能在你的浏览器中保存少量数据，例如连胜、最佳时间、已完成日期、提示次数和近期浏览器内事件。你可以通过清除浏览器站点数据来删除。"] },
         { heading: "分析统计", paragraphs: ["Daily Logic Lab 使用 Google Analytics 了解聚合使用情况，例如页面浏览、开始题目、使用提示、检查盘面以及一般设备或浏览器信息。"] },
-        { heading: "广告", paragraphs: ["Daily Logic Lab 当前不展示广告。如果未来添加广告，网站可能使用 Google AdSense 或相关 Google 广告服务。Google 及其合作伙伴可能使用 Cookie 来投放、衡量和个性化广告。"] },
+        { heading: "广告", paragraphs: ["Daily Logic Lab 使用 Google AdSense 展示广告。Google 及其合作伙伴可能使用 Cookie 来投放、衡量和个性化广告。你可以通过 Google 广告设置查看和管理广告个性化。"] },
         { heading: "第三方链接", paragraphs: ["网站可能链接到 GitHub、Google 文档或其他外部页面。Daily Logic Lab 不负责外部网站的隐私做法。"] },
         { heading: "儿童隐私", paragraphs: ["Daily Logic Lab 是面向一般用户的谜题网站，不会有意收集儿童个人信息。"] },
         { heading: "相关链接", links: [{ label: "Google 隐私政策", href: "https://policies.google.com/privacy" }, { label: "Google 广告设置", href: "https://adssettings.google.com/" }] }
@@ -2067,6 +2068,10 @@ function escapeHtml(value) {
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
+}
+
+function adsenseScript() {
+  return `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}" crossorigin="anonymous"></script>`;
 }
 
 function paragraphs(items) {
@@ -2227,6 +2232,7 @@ function page(language) {
       gtag('js', new Date());
       gtag('config', 'G-6NY29HPM34');
     </script>
+    ${adsenseScript()}
     <title>${escapeHtml(language.meta.title)}</title>
     <meta name="description" content="${escapeHtml(language.meta.description)}">
     <meta name="keywords" content="${escapeHtml(profile.keywords.join(", "))}">
@@ -2578,6 +2584,7 @@ function longtailArticlePage(article, language) {
       gtag('js', new Date());
       gtag('config', 'G-6NY29HPM34');
     </script>
+    ${adsenseScript()}
     <title>${escapeHtml(content.title)}</title>
     <meta name="description" content="${escapeHtml(content.description)}">
     <meta name="keywords" content="${escapeHtml(content.keywords)}">
@@ -2673,7 +2680,7 @@ function supportPage(language, pageKey) {
   const canonical = `${SITE}${supportPath(language, pageKey)}`;
   const asset = language.key === "en" ? "./" : "../";
   const home = language.path;
-  const updated = pageKey === "privacy" ? `\n        <p><strong>${escapeHtml(content.updatedLabel)}</strong> June 18, 2026</p>` : "";
+  const updated = pageKey === "privacy" ? `\n        <p><strong>${escapeHtml(content.updatedLabel)}</strong> June 19, 2026</p>` : "";
   const cta = content.cta ? `\n        <p><a href="${content.cta.href}">${escapeHtml(content.cta.label)}</a></p>` : "";
 
   return `<!doctype html>
@@ -2689,6 +2696,7 @@ function supportPage(language, pageKey) {
       gtag('js', new Date());
       gtag('config', 'G-6NY29HPM34');
     </script>
+    ${adsenseScript()}
     <title>${escapeHtml(content.title)}</title>
     <meta name="description" content="${escapeHtml(content.description)}">
     <meta name="language" content="${escapeHtml(profile.languageName)}">
