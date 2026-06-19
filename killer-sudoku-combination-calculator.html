@@ -14,7 +14,7 @@
     <title>Killer Sudoku Combination Calculator - Cage Sum Helper</title>
     <meta
       name="description"
-      content="Use a free Killer Sudoku combination calculator to find possible cage digit combinations by sum, cell count, and available digits."
+      content="Use a free Killer Sudoku combination calculator to find possible cage digit combinations by sum, cell count, repeats, and available digits."
     >
     <meta
       name="keywords"
@@ -27,10 +27,14 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="canonical" href="https://dailylogiclab.com/killer-sudoku-combination-calculator">
+    <link rel="alternate" hreflang="en" href="https://dailylogiclab.com/killer-sudoku-combination-calculator">
+    <link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/killer-sudoku-kombinationen-rechner">
+    <link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/calculadora-combinaciones-sudoku-killer">
+    <link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/killer-sudoku-combination-calculator">
     <meta property="og:title" content="Killer Sudoku Combination Calculator">
     <meta
       property="og:description"
-      content="Find Killer Sudoku cage combinations by sum, cell count, and available digits."
+      content="Find Killer Sudoku cage combinations by sum, cell count, repeats, and available digits."
     >
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dailylogiclab.com/killer-sudoku-combination-calculator">
@@ -40,19 +44,53 @@
     <meta property="og:image:alt" content="Daily Logic Lab Star Battle puzzle board">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Killer Sudoku Combination Calculator">
-    <meta name="twitter:description" content="Find Killer Sudoku cage combinations by sum, cell count, and available digits.">
+    <meta name="twitter:description" content="Find Killer Sudoku cage combinations by sum, cell count, repeats, and available digits.">
     <meta name="twitter:image" content="https://dailylogiclab.com/og-image.png">
     <meta name="twitter:image:alt" content="Daily Logic Lab Star Battle puzzle board">
     <link rel="stylesheet" href="./styles.css">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "SoftwareApplication",
-        "name": "Killer Sudoku Combination Calculator",
-        "applicationCategory": "UtilitiesApplication",
-        "operatingSystem": "Any",
-        "isAccessibleForFree": true,
-        "description": "A browser-based calculator for Killer Sudoku cage combinations."
+        "@graph": [
+          {
+            "@type": "SoftwareApplication",
+            "name": "Killer Sudoku Combination Calculator",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "isAccessibleForFree": true,
+            "url": "https://dailylogiclab.com/killer-sudoku-combination-calculator",
+            "description": "A browser-based calculator for Killer Sudoku cage combinations by target sum, cell count, repeat rule, and available digits."
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What does a Killer Sudoku combination calculator do?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "It lists the digit sets that can make a cage total for a chosen number of cells. You can remove unavailable digits and choose whether repeated digits are allowed."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can digits repeat in a Killer Sudoku cage?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Most standard Killer Sudoku cages do not repeat digits, but some related sum puzzles allow repeats. Use the repeat checkbox only when your puzzle rules allow it."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I use this calculator for Kakuro or KenKen?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. The same sum-combination search is useful for Kakuro, KenKen, and other cage or clue based number puzzles."
+                }
+              }
+            ]
+          }
+        ]
       }
     </script>
   </head>
@@ -63,7 +101,7 @@
         <span>Daily Logic Lab</span>
       </a>
       <nav class="nav" aria-label="Primary">
-        <a href="/#calculator">Use Calculator</a>
+        <a href="#calculator">Use Calculator</a>
         <a href="/#play">Play</a>
         <a href="/star-battle">Star Battle</a>
       </nav>
@@ -74,31 +112,146 @@
         <p class="eyebrow">Killer Sudoku Helper</p>
         <h1>Killer Sudoku Combination Calculator</h1>
         <p>
-          A Killer Sudoku cage tells you the total sum for a group of cells. This calculator helps
-          you list possible digit combinations for that cage, so you can solve faster without
-          repeatedly doing arithmetic by hand.
+          Use this Killer Sudoku combination calculator to list every digit set that can fit a
+          cage. Enter the target sum, choose how many cells are in the cage, remove digits that
+          are already impossible, and copy the remaining combinations into your notes.
         </p>
+        <p>
+          The calculator runs in your browser. It works for standard no-repeat Killer Sudoku
+          cages, and it can also allow repeated digits for Kakuro, KenKen, or custom sum puzzles
+          where repeats are part of the rules.
+        </p>
+
+        <section id="calculator" class="tool-layout content-tool" aria-label="Killer Sudoku combination calculator">
+          <div>
+            <h2>Find Cage Combinations</h2>
+            <p>
+              Start with the cage clue, then narrow the available digit buttons as your grid fills
+              in. For example, if a row already contains 7, turn off 7 before checking the cage.
+            </p>
+            <ul>
+              <li>Use no repeats for ordinary Killer Sudoku cages.</li>
+              <li>Allow repeats only when the puzzle explicitly permits them.</li>
+              <li>Copy the output when you want to compare candidates in another note.</li>
+            </ul>
+          </div>
+
+          <div class="calculator-panel">
+            <form id="pageComboForm" class="combo-form">
+              <label>
+                <span>Sum</span>
+                <input id="pageSumInput" type="number" min="1" max="90" value="17" inputmode="numeric">
+              </label>
+              <label>
+                <span>Cells</span>
+                <input id="pageCellsInput" type="number" min="1" max="9" value="3" inputmode="numeric">
+              </label>
+              <label class="check-label">
+                <input id="pageRepeatInput" type="checkbox">
+                <span>Allow repeats</span>
+              </label>
+            </form>
+
+            <div class="digits" id="pageDigits" aria-label="Available digits"></div>
+
+            <div class="result-head">
+              <strong id="pageComboCount">0 combinations</strong>
+              <button id="pageCopyCombosBtn" type="button">Copy</button>
+            </div>
+            <div id="pageComboResults" class="combo-results" aria-live="polite"></div>
+          </div>
+        </section>
 
         <h2>How to Use the Calculator</h2>
         <ol>
           <li>Enter the cage sum, such as 17.</li>
           <li>Enter the number of cells in the cage, such as 3.</li>
-          <li>Remove any digits that are already impossible or already used.</li>
-          <li>Copy the remaining combinations into your solving notes.</li>
+          <li>Keep repeats turned off for normal Killer Sudoku.</li>
+          <li>Turn off any digits that the row, column, box, or cage already rules out.</li>
+          <li>Use the remaining combinations to decide which candidates are worth penciling in.</li>
         </ol>
 
-        <h2>Example</h2>
+        <h2>Worked Example: 17 in 3 Cells</h2>
         <p>
-          For a 3-cell cage with a sum of 17 and no repeated digits, possible combinations include
-          1 + 7 + 9, 2 + 6 + 9, 2 + 7 + 8, 3 + 5 + 9, 3 + 6 + 8, 4 + 5 + 8, and 4 + 6 + 7.
+          A 3-cell cage with a sum of 17 and no repeated digits has seven basic combinations:
+          1 + 7 + 9, 2 + 6 + 9, 2 + 7 + 8, 3 + 5 + 9, 3 + 6 + 8, 4 + 5 + 8,
+          and 4 + 6 + 7. If one of those digits is already used in the same row, column, or box,
+          remove it from the available digits and the list gets shorter.
         </p>
+        <p>
+          This is the main value of a cage calculator: it does the arithmetic quickly, but the
+          solving still comes from Sudoku logic. The output tells you what can fit the cage; the
+          grid tells you which of those combinations can actually survive.
+        </p>
+
+        <h2>Common Cage Patterns</h2>
+        <table class="example-table">
+          <thead>
+            <tr>
+              <th>Clue</th>
+              <th>Typical no-repeat combinations</th>
+              <th>Why it helps</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>3 in 2 cells</td>
+              <td>1 + 2</td>
+              <td>Both digits are forced as a pair.</td>
+            </tr>
+            <tr>
+              <td>17 in 2 cells</td>
+              <td>8 + 9</td>
+              <td>High pair, useful for row and box eliminations.</td>
+            </tr>
+            <tr>
+              <td>10 in 4 cells</td>
+              <td>1 + 2 + 3 + 4</td>
+              <td>Low four-cell cage with no room for larger digits.</td>
+            </tr>
+            <tr>
+              <td>30 in 4 cells</td>
+              <td>6 + 7 + 8 + 9</td>
+              <td>High four-cell cage that blocks low digits.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Killer Sudoku, Kakuro, and KenKen</h2>
+        <p>
+          Killer Sudoku usually combines Sudoku placement rules with cage sums, so a digit cannot
+          repeat inside a cage. Kakuro also uses clue sums and combinations, but the layout is
+          different. KenKen and other arithmetic puzzles may allow or disallow repeats depending on
+          the publisher. That is why the repeat toggle is included here: the same search is useful
+          across several puzzle families, but the rule has to match the puzzle in front of you.
+        </p>
+
+        <h2>FAQ</h2>
+        <div class="faq-list">
+          <details>
+            <summary>What does a Killer Sudoku combination calculator do?</summary>
+            <p>It lists the possible digit sets for a cage total and cell count, then lets you remove unavailable digits.</p>
+          </details>
+          <details>
+            <summary>Should I allow repeated digits?</summary>
+            <p>Leave repeats off for standard Killer Sudoku. Turn repeats on only for puzzle variants that explicitly allow duplicate digits in a cage.</p>
+          </details>
+          <details>
+            <summary>Why is the maximum sum higher than 45?</summary>
+            <p>No-repeat Sudoku digits 1 through 9 total 45, but repeat-friendly variants can exceed that when a cage has many cells.</p>
+          </details>
+          <details>
+            <summary>Can this solve the full Killer Sudoku grid?</summary>
+            <p>No. It only finds cage combinations. You still use Sudoku logic, row and column restrictions, boxes, and cage placement to solve the grid.</p>
+          </details>
+        </div>
 
         <h2>Related Puzzle Tools</h2>
         <p>
-          The same combination idea is useful for Kakuro, KenKen, and other cage or sum-based
-          logic puzzles. Daily Logic Lab currently includes the calculator on the main game page.
+          Daily Logic Lab also has a daily <a href="/#play">Star Battle puzzle</a> and a
+          <a href="/star-battle">Star Battle rules guide</a>. If you like short logic puzzles,
+          the main game is solver-verified and works without login.
         </p>
-        <p><a href="/#calculator">Open the Killer Sudoku calculator</a></p>
       </article>
     </main>
 
@@ -113,5 +266,98 @@
         </nav>
       </div>
     </footer>
+
+    <script>
+      (() => {
+        const activeDigits = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        const sumInput = document.querySelector("#pageSumInput");
+        const cellsInput = document.querySelector("#pageCellsInput");
+        const repeatInput = document.querySelector("#pageRepeatInput");
+        const digits = document.querySelector("#pageDigits");
+        const comboCount = document.querySelector("#pageComboCount");
+        const comboResults = document.querySelector("#pageComboResults");
+        const copyButton = document.querySelector("#pageCopyCombosBtn");
+
+        for (let digit = 1; digit <= 9; digit += 1) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "digit-toggle active";
+          button.textContent = String(digit);
+          button.setAttribute("aria-pressed", "true");
+          button.addEventListener("click", () => {
+            if (activeDigits.has(digit)) {
+              activeDigits.delete(digit);
+            } else {
+              activeDigits.add(digit);
+            }
+            button.classList.toggle("active", activeDigits.has(digit));
+            button.setAttribute("aria-pressed", activeDigits.has(digit) ? "true" : "false");
+            updateCombinations();
+          });
+          digits.appendChild(button);
+        }
+
+        document.querySelector("#pageComboForm").addEventListener("input", updateCombinations);
+        copyButton.addEventListener("click", async () => {
+          const text = [...comboResults.querySelectorAll(".combo-pill")]
+            .map((node) => node.textContent)
+            .join("\n");
+          if (navigator.clipboard) {
+            await navigator.clipboard.writeText(text);
+            comboCount.textContent = "Copied";
+            window.setTimeout(updateCombinations, 900);
+          }
+        });
+
+        updateCombinations();
+
+        function updateCombinations() {
+          const sum = clamp(Number(sumInput.value || 0), 1, 90);
+          const count = clamp(Number(cellsInput.value || 0), 1, 9);
+          const allowRepeats = repeatInput.checked;
+          const combos = findCombos(sum, count, [...activeDigits].sort((a, b) => a - b), allowRepeats);
+          comboCount.textContent = `${combos.length} ${combos.length === 1 ? "combination" : "combinations"}`;
+          comboResults.innerHTML = "";
+
+          if (!combos.length) {
+            appendPill("No match");
+            return;
+          }
+
+          combos.forEach((combo) => appendPill(combo.join(" + ")));
+        }
+
+        function appendPill(text) {
+          const pill = document.createElement("span");
+          pill.className = "combo-pill";
+          pill.textContent = text;
+          comboResults.appendChild(pill);
+        }
+
+        function findCombos(target, length, digitList, allowRepeats) {
+          const results = [];
+          function walk(startIndex, combo, total) {
+            if (combo.length === length) {
+              if (total === target) results.push([...combo]);
+              return;
+            }
+            if (total >= target) return;
+
+            for (let i = startIndex; i < digitList.length; i += 1) {
+              const digit = digitList[i];
+              combo.push(digit);
+              walk(allowRepeats ? i : i + 1, combo, total + digit);
+              combo.pop();
+            }
+          }
+          walk(0, [], 0);
+          return results;
+        }
+
+        function clamp(value, min, max) {
+          return Math.min(max, Math.max(min, value));
+        }
+      })();
+    </script>
   </body>
 </html>

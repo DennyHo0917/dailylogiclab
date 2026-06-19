@@ -2,6 +2,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const SITE = "https://dailylogiclab.com";
+const SITEMAP_LASTMOD = new Date().toISOString().slice(0, 10);
 
 const languages = [
   {
@@ -1055,6 +1056,29 @@ const supportSlugs = {
   privacy: "privacy-policy"
 };
 
+const localizedLongtailGroups = [
+  {
+    paths: {
+      en: "/star-battle",
+      de: "/de/star-battle",
+      es: "/es/star-battle",
+      fr: "/fr/star-battle",
+      zh: "/zh-cn/star-battle"
+    },
+    changefreq: "weekly",
+    priority: "0.8"
+  },
+  {
+    paths: {
+      en: "/killer-sudoku-combination-calculator",
+      de: "/de/killer-sudoku-kombinationen-rechner",
+      es: "/es/calculadora-combinaciones-sudoku-killer"
+    },
+    changefreq: "monthly",
+    priority: "0.8"
+  }
+];
+
 function seo(language) {
   return seoProfiles[language.key] || seoProfiles.en;
 }
@@ -1863,6 +1887,16 @@ function supportAlternateLinks(pageKey) {
     .join("\n    ");
 }
 
+function longtailAlternateBlock(paths) {
+  const alternates = Object.entries(paths)
+    .map(([languageKey, url]) => {
+      const language = languages.find((item) => item.key === languageKey);
+      return `    <xhtml:link rel="alternate" hreflang="${language.hreflang}" href="${SITE}${url}" />`;
+    })
+    .join("\n");
+  return `${alternates}\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}${paths.en}" />`;
+}
+
 function supportJsonLd(language, pageKey, content) {
   return JSON.stringify(
     {
@@ -1979,6 +2013,7 @@ function sitemap() {
     .map(
       (language) => `  <url>
     <loc>${SITE}${language.path}</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
 ${alternateBlock}
     <changefreq>daily</changefreq>
     <priority>${language.key === "en" ? "1.0" : "0.9"}</priority>
@@ -1994,6 +2029,7 @@ ${alternateBlock}
       return languages.map(
         (language) => `  <url>
     <loc>${SITE}${supportPath(language, pageKey)}</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
 ${supportAlternateBlock}
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
@@ -2001,16 +2037,29 @@ ${supportAlternateBlock}
       );
     })
     .join("\n");
+  const localizedLongtailPages = localizedLongtailGroups
+    .flatMap((group) => {
+      const alternateBlock = longtailAlternateBlock(group.paths);
+      return Object.values(group.paths).map(
+        (url) => `  <url>
+    <loc>${SITE}${url}</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
+${alternateBlock}
+    <changefreq>${group.changefreq}</changefreq>
+    <priority>${group.priority}</priority>
+  </url>`
+      );
+    })
+    .join("\n");
   const supportPages = [
-    ["/star-battle", "weekly", "0.8"],
     ["/star-battle-hints", "weekly", "0.8"],
     ["/two-not-touch-puzzle", "monthly", "0.7"],
-    ["/queens-puzzle-alternative", "weekly", "0.7"],
-    ["/killer-sudoku-combination-calculator", "monthly", "0.8"]
+    ["/queens-puzzle-alternative", "weekly", "0.7"]
   ]
     .map(
       ([url, freq, priority]) => `  <url>
     <loc>${SITE}${url}</loc>
+    <lastmod>${SITEMAP_LASTMOD}</lastmod>
     <changefreq>${freq}</changefreq>
     <priority>${priority}</priority>
   </url>`
@@ -2021,6 +2070,7 @@ ${supportAlternateBlock}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${primaryPages}
 ${localizedSupportPages}
+${localizedLongtailPages}
 ${supportPages}
 </urlset>
 `;

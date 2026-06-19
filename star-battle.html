@@ -14,7 +14,7 @@
     <title>Star Battle Puzzle - Rules, Strategy, and Daily Online Practice</title>
     <meta
       name="description"
-      content="Learn how to play Star Battle puzzles, understand the one-star rules, and practice a free daily Star Battle board online."
+      content="Learn Star Battle puzzle rules, no-touch strategy, row and column logic, region constraints, and play a free daily Star Battle board online."
     >
     <meta
       name="keywords"
@@ -27,6 +27,12 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="canonical" href="https://dailylogiclab.com/star-battle">
+    <link rel="alternate" hreflang="en" href="https://dailylogiclab.com/star-battle">
+    <link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/star-battle">
+    <link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/star-battle">
+    <link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/star-battle">
+    <link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/star-battle">
+    <link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/star-battle">
     <meta property="og:title" content="Star Battle Puzzle Guide">
     <meta
       property="og:description"
@@ -47,10 +53,43 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "Star Battle Puzzle Guide",
-        "description": "Learn Star Battle rules, beginner strategy, and where to play a daily Star Battle puzzle online.",
-        "mainEntityOfPage": "https://dailylogiclab.com/star-battle"
+        "@graph": [
+          {
+            "@type": "Article",
+            "headline": "Star Battle Puzzle Guide",
+            "description": "Learn Star Battle rules, beginner strategy, no-touch logic, and where to play a daily Star Battle puzzle online.",
+            "mainEntityOfPage": "https://dailylogiclab.com/star-battle"
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What is the goal of a Star Battle puzzle?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Place the required number of stars so every row, column, and region has the right number of stars, and no stars touch each other."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can stars touch diagonally?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. Stars cannot touch horizontally, vertically, or diagonally."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is Star Battle the same as Queens?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "They are related placement puzzles. Star Battle uses row, column, region, and no-touch rules, while Queens-style puzzles often use queen pieces and may use slightly different constraints."
+                }
+              }
+            ]
+          }
+        ]
       }
     </script>
   </head>
@@ -62,8 +101,8 @@
       </a>
       <nav class="nav" aria-label="Primary">
         <a href="/#play">Play</a>
+        <a href="/star-battle-hints">Hints</a>
         <a href="/#calculator">Calculator</a>
-        <a href="/#faq">FAQ</a>
       </nav>
     </header>
 
@@ -72,18 +111,62 @@
         <p class="eyebrow">Star Battle Puzzle</p>
         <h1>Star Battle Puzzle Rules and Online Practice</h1>
         <p>
-          Star Battle is a grid logic puzzle where the goal is to place stars without guessing.
-          Each row, each column, and each outlined or colored region must contain exactly one star.
-          Stars may not touch one another, including diagonally.
+          Star Battle is a grid logic puzzle about placing stars under four simple constraints:
+          every row needs a star, every column needs a star, every outlined or colored region
+          needs a star, and stars cannot touch one another, even diagonally.
         </p>
+        <p>
+          Daily Logic Lab uses a compact 7x7 one-star version. Each generated board is checked by
+          a solver before it is shown, so the daily puzzle and practice boards are designed to have
+          exactly one solution.
+        </p>
+        <p><a href="/#play">Play the daily Star Battle puzzle</a></p>
+
+        <h2>Star Battle Rules</h2>
+        <ul>
+          <li>Place exactly one star in each row.</li>
+          <li>Place exactly one star in each column.</li>
+          <li>Place exactly one star in each color region.</li>
+          <li>Stars may not touch horizontally, vertically, or diagonally.</li>
+          <li>Every shown board should be solvable by logic, not guessing.</li>
+        </ul>
 
         <h2>How to Play</h2>
         <ol>
-          <li>Look for a row, column, or region with very few possible star positions.</li>
-          <li>Place a star only when that position is forced by the rules.</li>
-          <li>Mark neighboring squares as impossible after placing a star.</li>
-          <li>Keep checking rows, columns, and color regions until all stars are placed.</li>
+          <li>Scan the rows, columns, and regions for groups with very few possible star cells.</li>
+          <li>Mark cells that cannot hold a star because they touch another star or belong to a solved group.</li>
+          <li>Place a star when a row, column, or region has exactly one legal cell left.</li>
+          <li>After placing a star, remove all cells touching it and the rest of its row, column, and region.</li>
+          <li>Repeat until every row, column, and region has its star.</li>
         </ol>
+
+        <h2>What Makes Star Battle Different?</h2>
+        <table class="example-table">
+          <thead>
+            <tr>
+              <th>Puzzle idea</th>
+              <th>Main rule</th>
+              <th>What to watch</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Star Battle</td>
+              <td>Rows, columns, regions, and no touching stars.</td>
+              <td>Diagonal neighbors are forbidden.</td>
+            </tr>
+            <tr>
+              <td>Queens-style puzzle</td>
+              <td>Place one queen-like piece per row, column, or region.</td>
+              <td>Rules vary by site or app.</td>
+            </tr>
+            <tr>
+              <td>Two Not Touch</td>
+              <td>Pieces cannot touch each other.</td>
+              <td>Often another name for the same no-touch idea.</td>
+            </tr>
+          </tbody>
+        </table>
 
         <h2>Beginner Strategy</h2>
         <p>
@@ -91,14 +174,56 @@
           square that can still hold a star, that square is forced. Once a star is placed, it
           eliminates its row, column, region, and all touching squares.
         </p>
+        <p>
+          When a move is not obvious, count legal cells. Empty cells are not automatically legal.
+          A cell is illegal if a star already exists in its row, column, or region, or if it
+          touches a star. This simple distinction solves many beginner mistakes.
+        </p>
+
+        <h2>Worked Example</h2>
+        <p>
+          Imagine a region has three empty cells. One touches a star, so it is illegal. One is in a
+          row that already has a star, so it is illegal too. The third cell is the only legal
+          position left, so the region forces a star there.
+        </p>
+        <p>
+          After placing that star, mark all eight neighboring squares as impossible. Then mark the
+          rest of the row, column, and region. Those eliminations often create another forced move
+          in a nearby group.
+        </p>
 
         <h2>Daily Star Battle Online</h2>
         <p>
-          Daily Logic Lab publishes a generated Star Battle board that is verified by a solver.
-          Only puzzles with exactly one solution are shown. You can play today's puzzle or create
-          more practice boards from the main page.
+          The daily puzzle gives you one fresh board for the day. Practice mode creates more boards
+          when you want to keep solving. Both modes run in the browser, require no account, and
+          keep the puzzle focused on quick logic rather than setup.
         </p>
-        <p><a href="/#play">Play the daily Star Battle puzzle</a></p>
+        <p>
+          If you get stuck, use the <a href="/star-battle-hints">Star Battle hints guide</a> to
+          compare your position with common solving patterns. If you also solve number puzzles,
+          the <a href="/killer-sudoku-combination-calculator">Killer Sudoku combination calculator</a>
+          is available as a separate helper.
+        </p>
+
+        <h2>FAQ</h2>
+        <div class="faq-list">
+          <details>
+            <summary>What is the goal of a Star Battle puzzle?</summary>
+            <p>Place the required stars so every row, column, and region is satisfied, while no stars touch each other.</p>
+          </details>
+          <details>
+            <summary>Can stars touch diagonally?</summary>
+            <p>No. Diagonal touching is forbidden, just like horizontal and vertical touching.</p>
+          </details>
+          <details>
+            <summary>Do I need to guess?</summary>
+            <p>A well-checked Star Battle puzzle should have a logical path. Look for the group with the fewest legal cells before guessing.</p>
+          </details>
+          <details>
+            <summary>Is this the same as Queens?</summary>
+            <p>It is related. Both are placement puzzles, but Star Battle emphasizes regions and the no-touch rule.</p>
+          </details>
+        </div>
       </article>
     </main>
 

@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NY29HPM34"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6NY29HPM34');
+    </script>
+    <title>Calculadora de combinaciones Sudoku Killer - Sumas de jaula</title>
+    <meta name="description" content="Calculadora gratis de combinaciones para Sudoku Killer: encuentra dígitos posibles por suma, número de celdas, repeticiones y dígitos disponibles.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#245c53">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="canonical" href="https://dailylogiclab.com/es/calculadora-combinaciones-sudoku-killer">
+    <link rel="alternate" hreflang="en" href="https://dailylogiclab.com/killer-sudoku-combination-calculator">
+    <link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/killer-sudoku-kombinationen-rechner">
+    <link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/calculadora-combinaciones-sudoku-killer">
+    <link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/killer-sudoku-combination-calculator">
+    <meta property="og:title" content="Calculadora de combinaciones Sudoku Killer">
+    <meta property="og:description" content="Encuentra combinaciones de jaula por suma, celdas y dígitos disponibles.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dailylogiclab.com/es/calculadora-combinaciones-sudoku-killer">
+    <meta property="og:image" content="https://dailylogiclab.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Calculadora de combinaciones Sudoku Killer">
+    <meta name="twitter:description" content="Encuentra combinaciones de jaula por suma, celdas y dígitos disponibles.">
+    <meta name="twitter:image" content="https://dailylogiclab.com/og-image.png">
+    <link rel="stylesheet" href="../styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "SoftwareApplication",
+            "name": "Calculadora de combinaciones Sudoku Killer",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any",
+            "isAccessibleForFree": true,
+            "inLanguage": "es",
+            "url": "https://dailylogiclab.com/es/calculadora-combinaciones-sudoku-killer",
+            "description": "Calculadora en navegador para combinaciones de jaulas de Sudoku Killer por suma, celdas y dígitos disponibles."
+          },
+          {
+            "@type": "FAQPage",
+            "inLanguage": "es",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "¿Qué hace una calculadora de combinaciones de Sudoku Killer?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Lista los grupos de dígitos que pueden formar una suma de jaula para un número determinado de celdas."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "¿Se pueden repetir dígitos?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "En Sudoku Killer normal, normalmente no se repiten dígitos dentro de una jaula. Activa repeticiones solo si la variante lo permite."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/es/#play">
+        <span class="brand-mark">DL</span>
+        <span>Daily Logic Lab</span>
+      </a>
+      <nav class="nav" aria-label="Navegación principal">
+        <a href="#calculator">Calculadora</a>
+        <a href="/es/#play">Jugar</a>
+        <a href="/es/star-battle">Star Battle</a>
+      </nav>
+    </header>
+
+    <main class="content-page">
+      <article class="section-shell content-card">
+        <p class="eyebrow">Ayuda para Sudoku Killer</p>
+        <h1>Calculadora de combinaciones para Sudoku Killer</h1>
+        <p>
+          Esta calculadora muestra combinaciones posibles para una jaula de Sudoku Killer. Escribe
+          la suma objetivo, el número de celdas, elimina dígitos imposibles y compara los resultados
+          con tu cuadrícula.
+        </p>
+        <p>
+          Mantén las repeticiones desactivadas para Sudoku Killer estándar. Actívalas solo para
+          Kakuro, KenKen u otras variantes donde las reglas permitan dígitos repetidos.
+        </p>
+
+        <section id="calculator" class="tool-layout content-tool" aria-label="Calculadora de combinaciones Sudoku Killer">
+          <div>
+            <h2>Encontrar combinaciones de jaula</h2>
+            <p>
+              Por ejemplo, una jaula de 17 en 3 celdas sin repeticiones tiene siete combinaciones.
+              Si un dígito ya no puede aparecer por las reglas de fila, columna o caja, apágalo.
+            </p>
+          </div>
+
+          <div class="calculator-panel">
+            <form id="localComboForm" class="combo-form">
+              <label>
+                <span>Suma</span>
+                <input id="localSumInput" type="number" min="1" max="90" value="17" inputmode="numeric">
+              </label>
+              <label>
+                <span>Celdas</span>
+                <input id="localCellsInput" type="number" min="1" max="9" value="3" inputmode="numeric">
+              </label>
+              <label class="check-label">
+                <input id="localRepeatInput" type="checkbox">
+                <span>Permitir repeticiones</span>
+              </label>
+            </form>
+            <div class="digits" id="localDigits" aria-label="Dígitos disponibles"></div>
+            <div class="result-head">
+              <strong id="localComboCount">0 combinaciones</strong>
+              <button id="localCopyCombosBtn" type="button">Copiar</button>
+            </div>
+            <div id="localComboResults" class="combo-results" aria-live="polite"></div>
+          </div>
+        </section>
+
+        <h2>Cómo usarla</h2>
+        <ol>
+          <li>Introduce la suma de la jaula, por ejemplo 17.</li>
+          <li>Introduce cuántas celdas tiene la jaula.</li>
+          <li>Desactiva los dígitos que ya sean imposibles.</li>
+          <li>Usa las combinaciones restantes como candidatos de resolución.</li>
+        </ol>
+
+        <h2>Cuándo ayuda más la calculadora</h2>
+        <p>
+          La calculadora es más útil cuando una jaula tiene varias combinaciones aritméticas, pero
+          la cuadrícula ya impone restricciones de Sudoku. Quita primero los dígitos que no pueden
+          aparecer por fila, columna o caja. Muchas veces la lista baja de muchas opciones a una o
+          dos combinaciones realmente jugables.
+        </p>
+        <ul>
+          <li>Úsala en jaulas medianas de tres a cinco celdas.</li>
+          <li>Compara cada combinación con los candidatos de fila, columna y caja.</li>
+          <li>No copies todas las sumas al tablero; conserva solo los dígitos que siguen siendo posibles.</li>
+        </ul>
+
+        <h2>Sumas típicas para comprobar rápido</h2>
+        <table class="example-table">
+          <thead>
+            <tr>
+              <th scope="col">Jaula</th>
+              <th scope="col">Sin repetición</th>
+              <th scope="col">Pista</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>3 celdas, suma 6</td>
+              <td>1 + 2 + 3</td>
+              <td>Un único resultado se convierte en una pista fuerte.</td>
+            </tr>
+            <tr>
+              <td>2 celdas, suma 17</td>
+              <td>8 + 9</td>
+              <td>Ambos dígitos deben aparecer en la jaula.</td>
+            </tr>
+            <tr>
+              <td>4 celdas, suma 10</td>
+              <td>1 + 2 + 3 + 4</td>
+              <td>Las sumas bajas suelen forzar dígitos pequeños.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>FAQ</h2>
+        <div class="faq-list">
+          <details>
+            <summary>¿Resuelve todo el Sudoku Killer?</summary>
+            <p>No. Solo encuentra combinaciones de jaula. La solución completa sigue dependiendo de la lógica de Sudoku.</p>
+          </details>
+          <details>
+            <summary>¿Sirve para Kakuro?</summary>
+            <p>Sí. Las combinaciones por suma también son útiles para Kakuro y otros puzzles numéricos.</p>
+          </details>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="section-shell">
+        <span>Daily Logic Lab</span>
+        <nav class="footer-links" aria-label="Pie de página">
+          <a href="/es/about">Acerca de</a>
+          <a href="/es/contact">Contacto</a>
+          <a href="/es/privacy-policy">Privacidad</a>
+          <a href="/sitemap.xml">Sitemap</a>
+        </nav>
+      </div>
+    </footer>
+
+    <script>
+      (() => {
+        const activeDigits = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+        const sumInput = document.querySelector("#localSumInput");
+        const cellsInput = document.querySelector("#localCellsInput");
+        const repeatInput = document.querySelector("#localRepeatInput");
+        const digits = document.querySelector("#localDigits");
+        const comboCount = document.querySelector("#localComboCount");
+        const comboResults = document.querySelector("#localComboResults");
+        const copyButton = document.querySelector("#localCopyCombosBtn");
+
+        for (let digit = 1; digit <= 9; digit += 1) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "digit-toggle active";
+          button.textContent = String(digit);
+          button.setAttribute("aria-pressed", "true");
+          button.addEventListener("click", () => {
+            activeDigits.has(digit) ? activeDigits.delete(digit) : activeDigits.add(digit);
+            button.classList.toggle("active", activeDigits.has(digit));
+            button.setAttribute("aria-pressed", activeDigits.has(digit) ? "true" : "false");
+            updateCombinations();
+          });
+          digits.appendChild(button);
+        }
+
+        document.querySelector("#localComboForm").addEventListener("input", updateCombinations);
+        copyButton.addEventListener("click", async () => {
+          const text = [...comboResults.querySelectorAll(".combo-pill")].map((node) => node.textContent).join("\n");
+          if (navigator.clipboard) {
+            await navigator.clipboard.writeText(text);
+            comboCount.textContent = "Copiado";
+            window.setTimeout(updateCombinations, 900);
+          }
+        });
+
+        updateCombinations();
+
+        function updateCombinations() {
+          const combos = findCombos(clamp(Number(sumInput.value || 0), 1, 90), clamp(Number(cellsInput.value || 0), 1, 9), [...activeDigits].sort((a, b) => a - b), repeatInput.checked);
+          comboCount.textContent = `${combos.length} ${combos.length === 1 ? "combinación" : "combinaciones"}`;
+          comboResults.innerHTML = "";
+          if (!combos.length) {
+            appendPill("Sin resultado");
+            return;
+          }
+          combos.forEach((combo) => appendPill(combo.join(" + ")));
+        }
+
+        function appendPill(text) {
+          const pill = document.createElement("span");
+          pill.className = "combo-pill";
+          pill.textContent = text;
+          comboResults.appendChild(pill);
+        }
+
+        function findCombos(target, length, digitList, allowRepeats) {
+          const results = [];
+          function walk(startIndex, combo, total) {
+            if (combo.length === length) {
+              if (total === target) results.push([...combo]);
+              return;
+            }
+            if (total >= target) return;
+            for (let i = startIndex; i < digitList.length; i += 1) {
+              combo.push(digitList[i]);
+              walk(allowRepeats ? i : i + 1, combo, total + digitList[i]);
+              combo.pop();
+            }
+          }
+          walk(0, [], 0);
+          return results;
+        }
+
+        function clamp(value, min, max) {
+          return Math.min(max, Math.max(min, value));
+        }
+      })();
+    </script>
+  </body>
+</html>

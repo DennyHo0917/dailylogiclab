@@ -14,7 +14,7 @@
     <title>Two Not Touch Puzzle - Play a Star Battle Style Logic Game</title>
     <meta
       name="description"
-      content="Play a free two-not-touch style logic puzzle. Place stars so no two stars touch while each row, column, and region has one star."
+      content="Play a free two-not-touch style Star Battle puzzle. Place stars so no two touch while every row, column, and region has one star."
     >
     <meta
       name="keywords"
@@ -44,6 +44,48 @@
     <meta name="twitter:image" content="https://dailylogiclab.com/og-image.png">
     <meta name="twitter:image:alt" content="Daily Logic Lab Star Battle puzzle board">
     <link rel="stylesheet" href="./styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Article",
+            "headline": "Two Not Touch Puzzle",
+            "description": "Learn how two-not-touch puzzles work and play a Star Battle style no-touch logic puzzle online.",
+            "mainEntityOfPage": "https://dailylogiclab.com/two-not-touch-puzzle"
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What does two not touch mean?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "It means two placed pieces cannot touch each other horizontally, vertically, or diagonally."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is Two Not Touch the same as Star Battle?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "They are closely related. Star Battle is a common no-touch star placement puzzle with row, column, and region rules."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I play Two Not Touch online for free?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Daily Logic Lab provides a free browser-based Star Battle board that follows the two-not-touch idea."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <header class="topbar">
@@ -54,7 +96,7 @@
       <nav class="nav" aria-label="Primary">
         <a href="/#play">Play</a>
         <a href="/star-battle">Star Battle</a>
-        <a href="/#rules">Rules</a>
+        <a href="/star-battle-hints">Hints</a>
       </nav>
     </header>
 
@@ -63,16 +105,22 @@
         <p class="eyebrow">Two Not Touch Puzzle</p>
         <h1>Two Not Touch Puzzle Online</h1>
         <p>
-          A two-not-touch puzzle is a short placement puzzle where pieces cannot touch each other.
-          Daily Logic Lab uses the Star Battle version: place seven stars on a 7x7 board so each
-          row, column, and color region has exactly one star.
+          A two-not-touch puzzle is a placement puzzle where pieces cannot touch each other. Daily
+          Logic Lab uses the Star Battle version: place stars on a grid so every row, column, and
+          color region has a star, while no two stars touch.
         </p>
-
-        <h2>Why Players Search for Two Not Touch</h2>
         <p>
-          Many players enjoy the simple rule: no two stars may touch, even diagonally. The puzzle
-          is quick to learn, easy to play on mobile, and deep enough to solve with logic instead
-          of trial and error.
+          The rule sounds small, but it drives most of the solving. A single star blocks its
+          neighboring cells and can force new moves across the board.
+        </p>
+        <p><a href="/#play">Play a free two-not-touch puzzle</a></p>
+
+        <h2>What Does Two Not Touch Mean?</h2>
+        <p>
+          Two placed pieces are not allowed to share an edge or a corner. In Star Battle terms, no
+          two stars may be horizontal neighbors, vertical neighbors, or diagonal neighbors. If a
+          star sits in the middle of the board, the eight cells around it are immediately
+          impossible.
         </p>
 
         <h2>How This Version Works</h2>
@@ -84,7 +132,95 @@
           <li>Every generated board is solver-verified for a unique solution.</li>
         </ul>
 
-        <p><a href="/#play">Play a free two-not-touch puzzle</a></p>
+        <h2>Two Not Touch vs Star Battle</h2>
+        <table class="example-table">
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>What it emphasizes</th>
+              <th>How to solve it</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Two Not Touch</td>
+              <td>The neighbor rule: placed pieces cannot touch.</td>
+              <td>Use every star to block surrounding cells.</td>
+            </tr>
+            <tr>
+              <td>Star Battle</td>
+              <td>The full puzzle system of rows, columns, regions, and stars.</td>
+              <td>Combine no-touch logic with row, column, and region constraints.</td>
+            </tr>
+            <tr>
+              <td>Queens-style puzzle</td>
+              <td>A related placement-puzzle family.</td>
+              <td>Check the exact rules for the version you are playing.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Beginner Solving Tips</h2>
+        <p>
+          Start by marking cells around any star you place. Then check whether a row, column, or
+          region has only one legal cell left. That is the most common forced move in a
+          two-not-touch puzzle.
+        </p>
+        <p>
+          If nothing is forced, look for a region whose candidates all sit in the same row or
+          column. That row or column may be reserved by the region, which can remove candidates
+          elsewhere. This is the step that often separates a clean solve from random guessing.
+        </p>
+
+        <h2>Worked Example</h2>
+        <p>
+          Suppose a star is placed in the center of a small area. The cells directly above, below,
+          left, and right are now impossible. The four diagonal cells are impossible too. If one of
+          those cells was the last candidate for another region, that region must look elsewhere.
+        </p>
+        <p>
+          This is why the no-touch rule is powerful: one confirmed star does more than fill one
+          square. It reshapes the candidate map around it.
+        </p>
+
+        <h2>Common Mistakes</h2>
+        <ul>
+          <li>Forgetting that corners count as touching.</li>
+          <li>Placing a star before checking whether its row or column already has one.</li>
+          <li>Only scanning rows and columns while ignoring color regions.</li>
+          <li>Leaving neighboring cells unmarked after a star is placed.</li>
+        </ul>
+        <p>
+          The safest habit is to mark first and solve second. Each impossible cell you mark makes
+          the remaining legal cells easier to see, and the puzzle usually opens up without guessing.
+        </p>
+
+        <h2>FAQ</h2>
+        <div class="faq-list">
+          <details>
+            <summary>What does two not touch mean?</summary>
+            <p>It means no two placed pieces can touch by an edge or a corner.</p>
+          </details>
+          <details>
+            <summary>Is this the same as Star Battle?</summary>
+            <p>It is closely related. Daily Logic Lab uses a Star Battle board where the no-touch rule is one of the main constraints.</p>
+          </details>
+          <details>
+            <summary>Can stars touch diagonally?</summary>
+            <p>No. Diagonal touching is forbidden.</p>
+          </details>
+          <details>
+            <summary>Can I play more puzzles after the daily board?</summary>
+            <p>Yes. Use practice mode to generate additional unique-solution boards.</p>
+          </details>
+        </div>
+
+        <h2>Play Online</h2>
+        <p>
+          Try the <a href="/#play">daily two-not-touch puzzle</a>, then use the
+          <a href="/star-battle-hints">Star Battle hints guide</a> if you want a step-by-step way
+          to find forced stars without guessing.
+        </p>
       </article>
     </main>
 

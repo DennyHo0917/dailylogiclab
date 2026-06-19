@@ -14,7 +14,7 @@
     <title>Star Battle Hints - How to Solve Star Battle Puzzles</title>
     <meta
       name="description"
-      content="Learn practical Star Battle hints and solving strategies for one-star placement puzzles. Use rows, columns, regions, and no-touch rules to find forced stars."
+      content="Learn practical Star Battle hints and solving strategies for rows, columns, regions, no-touch eliminations, forced stars, and stuck puzzle positions."
     >
     <meta
       name="keywords"
@@ -44,10 +44,43 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "Star Battle Hints",
-        "description": "Solving tips for Star Battle puzzles, including forced cells, no-touch eliminations, and region scanning.",
-        "mainEntityOfPage": "https://dailylogiclab.com/star-battle-hints"
+        "@graph": [
+          {
+            "@type": "Article",
+            "headline": "Star Battle Hints",
+            "description": "Solving tips for Star Battle puzzles, including forced cells, no-touch eliminations, region scanning, and stuck-position checks.",
+            "mainEntityOfPage": "https://dailylogiclab.com/star-battle-hints"
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What is the best first hint for Star Battle?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Start with the most constrained row, column, or region. If only one cell can still hold a star, that star is forced."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How do I use the no-touch rule?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "After a star is placed, all eight neighboring cells are impossible. This often creates new forced cells in nearby rows, columns, and regions."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Should I guess in Star Battle?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Good Star Battle puzzles should be solvable with logic. If you feel stuck, look for a group with the fewest legal cells before guessing."
+                }
+              }
+            ]
+          }
+        ]
       }
     </script>
   </head>
@@ -69,37 +102,141 @@
         <p class="eyebrow">Star Battle Hints</p>
         <h1>How to Solve Star Battle Puzzles</h1>
         <p>
-          Star Battle puzzles are solved by eliminating impossible cells until a star is forced.
-          The most useful hints come from rows, columns, color regions, and the rule that stars
-          cannot touch, even diagonally.
+          Star Battle hints work best when they point you toward a forced placement, not a guess.
+          The core question is always the same: which cells can still hold a star after the row,
+          column, region, and no-touch rules are applied?
         </p>
-
-        <h2>Hint 1: Scan Small Regions First</h2>
         <p>
-          A narrow or oddly shaped region often has fewer possible star cells. If every other
-          square in that region is blocked by a row, column, or neighbor rule, the remaining
-          square must contain a star.
+          Use this guide when you are stuck on a daily Star Battle puzzle, a Queens-style puzzle,
+          or a Two Not Touch variant. The examples use one-star-per-row puzzles like the daily
+          boards on Daily Logic Lab, but the same thinking scales to larger Star Battle grids.
+        </p>
+        <p><a href="/#play">Play today's Star Battle puzzle</a></p>
+
+        <h2>Quick Star Battle Solving Checklist</h2>
+        <ol>
+          <li>Scan every row, column, and color region for groups with very few legal cells.</li>
+          <li>Place a star only when a group has one possible cell left.</li>
+          <li>After placing a star, mark all touching cells as impossible.</li>
+          <li>Also remove the rest of that star's row, column, and region.</li>
+          <li>Repeat the scan. Each forced star should make the next step easier.</li>
+        </ol>
+
+        <h2>Hint 1: Start With the Tightest Region</h2>
+        <p>
+          A color region is often the best place to begin because it has an unusual shape. A long,
+          thin, corner-heavy, or broken-looking region may only have two or three cells that can
+          still hold a star. Compare those cells against the row and column rules.
+        </p>
+        <p>
+          If every candidate but one is blocked by an existing star, by a row that already has a
+          star, or by the no-touch rule, the remaining cell is forced. This is stronger than a
+          hunch: the region must contain one star, and there is only one legal place left.
         </p>
 
         <h2>Hint 2: Mark Around Every Star</h2>
         <p>
-          After placing a star, mark the eight surrounding squares as impossible. Then mark the
-          rest of that star's row, column, and color region. This creates new forced positions.
+          The no-touch rule is easy to underuse. When a star is placed, the eight surrounding
+          squares become impossible, including diagonal neighbors. Then the rest of the star's row,
+          column, and color region become impossible too.
+        </p>
+        <p>
+          This marking step is where many Star Battle puzzles open up. A cell that looked possible
+          a moment ago may be touching a new star. A row that had three candidates may suddenly
+          have one. Good solvers do not just place stars; they harvest every elimination that the
+          star creates.
         </p>
 
         <h2>Hint 3: Look for Only-One-Place Groups</h2>
         <p>
-          If a row, column, or color region has only one cell left where a star can go, that cell
-          is forced. This is the simplest Star Battle strategy and works well for daily puzzles.
+          Rows, columns, and regions all need exactly one star. When one of those groups has only
+          one legal cell left, place the star there. This is the simplest Star Battle strategy, and
+          it is also the most reliable.
         </p>
+        <p>
+          The trick is to count legal cells, not empty cells. A square is not legal if it touches a
+          star, sits in a row that already has a star, sits in a column that already has a star, or
+          belongs to a region that already has a star.
+        </p>
+
+        <h2>Hint 4: Use Rows and Columns Together</h2>
+        <p>
+          Sometimes a region has two possible cells, but both are in the same row. That means the
+          star for that region must use that row, even if you do not yet know which of the two cells
+          is correct. You can often remove other candidates from the same row in nearby regions.
+        </p>
+        <p>
+          The same idea works with columns. If all possible cells for a region sit in one column,
+          that region reserves the column. These locked-row and locked-column patterns are useful
+          when the puzzle does not give you an immediate forced star.
+        </p>
+
+        <h2>Worked Example: What to Do When Stuck</h2>
+        <p>
+          Suppose a row has three empty cells left: A, B, and C. Cell A touches an existing star,
+          so it cannot hold a star. Cell B is in a color region that already has a star. Cell C is
+          the only legal cell left in the row. You can place a star in C, then mark every touching
+          cell around C as impossible.
+        </p>
+        <p>
+          Now check what changed. The column containing C is solved, so every other cell in that
+          column is impossible. The color region containing C is solved too. Those eliminations may
+          leave another row, column, or region with only one possible star cell. This chain reaction
+          is the normal rhythm of a Star Battle solve.
+        </p>
+
+        <h2>Common Mistakes</h2>
+        <ul>
+          <li>Forgetting diagonal touching. Diagonal stars are illegal.</li>
+          <li>Counting empty cells instead of legal cells.</li>
+          <li>Placing a star because it feels likely instead of proving it is forced.</li>
+          <li>Ignoring color regions after focusing on rows and columns.</li>
+          <li>Not revisiting earlier groups after a new star creates fresh eliminations.</li>
+        </ul>
+
+        <h2>Using the Daily Logic Lab Hint Button</h2>
+        <p>
+          The in-game Hint button is designed to nudge you toward the same logic described here.
+          The first hint usually highlights a constrained group. Later hints may narrow candidates
+          or reveal a solution star. Each hint adds a time penalty, so it is best used after you
+          have tried the checklist yourself.
+        </p>
+        <p>
+          A good habit is to pause before accepting the hint and ask, "Which row, column, or region
+          has the fewest legal cells?" If your answer matches the highlighted area, you are learning
+          the pattern instead of only receiving the answer.
+        </p>
+
+        <h2>FAQ</h2>
+        <div class="faq-list">
+          <details>
+            <summary>What is the best first hint for Star Battle?</summary>
+            <p>Start with the tightest row, column, or color region. The best first move is usually a group with only one or two legal cells.</p>
+          </details>
+          <details>
+            <summary>How do I know a star is forced?</summary>
+            <p>A star is forced when a row, column, or region needs a star and every other cell in that group is illegal.</p>
+          </details>
+          <details>
+            <summary>Can stars touch diagonally?</summary>
+            <p>No. Stars cannot touch horizontally, vertically, or diagonally.</p>
+          </details>
+          <details>
+            <summary>Should I guess if I am stuck?</summary>
+            <p>Try the checklist first. A solver-verified puzzle should have a logical path, even if the next constrained group is easy to miss.</p>
+          </details>
+          <details>
+            <summary>What is the difference between Star Battle and Queens?</summary>
+            <p>Both use row, column, and region placement logic. Star Battle adds the no-touch rule, which makes nearby cells much more important.</p>
+          </details>
+        </div>
 
         <h2>Practice With Verified Boards</h2>
         <p>
-          Daily Logic Lab generates Star Battle boards with a solver and shows only unique-solution
-          puzzles. Use the Hint button when you are stuck, then compare the highlighted area with
-          these solving rules.
+          Daily Logic Lab generates Star Battle boards with a solver and only shows puzzles with a
+          unique solution. Use <a href="/#play">the daily puzzle</a> for one focused solve, or start
+          a new practice board when you want more examples of the same patterns.
         </p>
-        <p><a href="/#play">Play Star Battle online</a></p>
       </article>
     </main>
 
