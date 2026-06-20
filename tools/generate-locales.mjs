@@ -19,23 +19,23 @@ const languages = [
     footerAria: "Footer",
     switchAria: "Change language",
     meta: {
-      title: "Daily Star Battle - Queens-Style Logic Puzzle, No Login",
+      title: "Two Not Touch Online - Free Daily Star Battle Puzzle",
       description:
-        "Play a free daily Star Battle puzzle online. Daily and unlimited Queens-style practice boards are solver-verified unique and work without login.",
+        "Play Two Not Touch online free. Daily Logic Lab offers a daily Star Battle puzzle with no touching stars, unique solutions, and no login.",
       keywords:
         "daily star battle, two not touch online, two not touch puzzle, queens style puzzle, queens puzzle alternative, star battle online, star battle puzzle, unlimited star battle, unique solution puzzle, no login logic puzzle",
-      ogTitle: "Daily Star Battle - Queens-Style Logic Puzzle",
+      ogTitle: "Two Not Touch Online - Daily Star Battle Puzzle",
       ogDescription:
-        "Play a daily Queens-style Star Battle puzzle, then practice unlimited solver-verified unique boards without login.",
+        "Play a free Two Not Touch puzzle online, also known as Star Battle, with daily and practice boards.",
       imageAlt: "Daily Logic Lab Star Battle puzzle board"
     },
     nav: ["Play", "Calculator", "Rules"],
     hero: {
-      mode: "Daily puzzle",
-      h1: "Daily Star Battle",
+      mode: "Two Not Touch online",
+      h1: "Two Not Touch Online",
       intro:
-        "A Queens-style logic puzzle you can play daily or unlimited. Every board is solver-verified unique and works without login.",
-      proofs: ["Daily puzzle", "Unlimited practice", "Unique solution", "No account"],
+        "Play a free daily Two Not Touch puzzle, also known as Star Battle. Place stars so no two touch, with one star in every row, column, and color region.",
+      proofs: ["Free online", "No touching stars", "Unique solution", "No account"],
       stats: ["Time", "Stars", "Streak"],
       boardLabel: "Star Battle board",
       startMode: "Daily puzzle",
@@ -61,7 +61,7 @@ const languages = [
       proof: "Unique",
       verified: "Verified",
       best: "Best",
-      share: "Daily Star Battle\nQueens-style. Unique solution. No login.",
+      share: "Two Not Touch Online\nNo touching stars. Unique solution. No login.",
       goal: "Goal",
       rules: ["One star in every row.", "One star in every column.", "One star in every color block.", "No touching stars."],
       tip: "Tap a square once for a star, twice to mark it as impossible."
@@ -91,10 +91,10 @@ const languages = [
     guide: [
       {
         eyebrow: "Queens-style logic puzzle",
-        title: "Play Daily Star Battle Online",
+        title: "Play Two Not Touch Online",
         paragraphs: [
-          "Daily Logic Lab is a free Star Battle puzzle site built for players looking for a clean Queens-style logic puzzle they can play every day. Each board is generated with a solver and only shown when it has exactly one solution. Start with the daily puzzle, then use practice mode for another unique board without creating an account.",
-          "Star Battle is familiar to players who enjoy Queens-style placement puzzles, Two Not Touch online puzzles, sudoku variants, and short grid logic games. The goal is simple, but every star affects its row, column, color region, and neighboring squares."
+          "Daily Logic Lab is a free Two Not Touch online puzzle site for players looking for a clean no-touch stars puzzle they can play every day. Each board is generated with a solver and only shown when it has exactly one solution. Start with the daily puzzle, then use practice mode for another unique board without creating an account.",
+          "Two Not Touch is also known as Star Battle. It is familiar to players who enjoy Queens-style placement puzzles, sudoku variants, and short grid logic games. The goal is simple, but every star affects its row, column, color region, and neighboring squares."
         ]
       },
       {
