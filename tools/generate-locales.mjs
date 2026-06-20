@@ -19,12 +19,12 @@ const languages = [
     footerAria: "Footer",
     switchAria: "Change language",
     meta: {
-      title: "Two Not Touch Online - Free Daily Star Battle Puzzle",
+      title: "Two Not Touch Online - Free Star Battle Puzzle",
       description:
-        "Play Two Not Touch online free. Daily Logic Lab offers a daily Star Battle puzzle with no touching stars, unique solutions, and no login.",
+        "Play Two Not Touch online for free. Two Not Touch is the Star Battle puzzle format with no touching stars, unique solutions, and no login.",
       keywords:
         "daily star battle, two not touch online, two not touch puzzle, queens style puzzle, queens puzzle alternative, star battle online, star battle puzzle, unlimited star battle, unique solution puzzle, no login logic puzzle",
-      ogTitle: "Two Not Touch Online - Daily Star Battle Puzzle",
+      ogTitle: "Two Not Touch Online - Free Star Battle Puzzle",
       ogDescription:
         "Play a free Two Not Touch puzzle online, also known as Star Battle, with daily and practice boards.",
       imageAlt: "Daily Logic Lab Star Battle puzzle board"
@@ -34,7 +34,7 @@ const languages = [
       mode: "Two Not Touch online",
       h1: "Two Not Touch Online",
       intro:
-        "Play a free daily Two Not Touch puzzle, also known as Star Battle. Place stars so no two touch, with one star in every row, column, and color region.",
+        "Play Two Not Touch online for free. Two Not Touch is the Star Battle puzzle format where you place stars so no two touch, even diagonally, with one star in every row, column, and region.",
       proofs: ["Free online", "No touching stars", "Unique solution", "No account"],
       stats: ["Time", "Stars", "Streak"],
       boardLabel: "Star Battle board",
@@ -140,23 +140,23 @@ const languages = [
     footerAria: "Fußzeile",
     switchAria: "Sprache wechseln",
     meta: {
-      title: "Tägliches Star Battle - Logikrätsel ohne Anmeldung",
+      title: "Two Not Touch Online - Kostenloses Star-Battle-Rätsel",
       description:
-        "Spiele täglich ein kostenloses Star-Battle-Rätsel auf Deutsch. Jede 7x7-Aufgabe hat eine geprüfte eindeutige Lösung, dazu gibt es unbegrenzte Übungsfelder.",
+        "Spiele Two Not Touch online kostenlos. Two Not Touch ist das Star-Battle-Format mit Sternen, die sich nicht berühren dürfen, eindeutigen Lösungen und ohne Anmeldung.",
       keywords:
-        "star battle deutsch, tägliches logikrätsel, queens rätsel alternative, star battle online, stern rätsel, logikspiel ohne anmeldung, eindeutige lösung rätsel",
-      ogTitle: "Tägliches Star Battle - Logikrätsel mit eindeutiger Lösung",
+        "two not touch online, two not touch puzzle, star battle deutsch, tägliches logikrätsel, queens rätsel alternative, star battle online, stern rätsel, logikspiel ohne anmeldung, eindeutige lösung rätsel",
+      ogTitle: "Two Not Touch Online - Kostenloses Star-Battle-Rätsel",
       ogDescription:
-        "Ein kurzes Star-Battle-Rätsel für jeden Tag, plus unbegrenztes Training mit geprüfter eindeutiger Lösung.",
+        "Spiele Two Not Touch kostenlos online, auch bekannt als Star Battle, mit Tagesrätsel und Training.",
       imageAlt: "Daily Logic Lab Star-Battle-Rätselbrett"
     },
     nav: ["Spielen", "Rechner", "Regeln"],
     hero: {
-      mode: "Tagesrätsel",
-      h1: "Tägliches Star Battle",
+      mode: "Two Not Touch online",
+      h1: "Two Not Touch Online",
       intro:
-        "Ein klares Logikrätsel im Queens-Stil: jeden Tag eine neue Aufgabe oder so viele Trainingsrunden, wie du möchtest. Jedes Brett wird vom Solver geprüft.",
-      proofs: ["Täglich neu", "Unbegrenzt üben", "Eindeutige Lösung", "Kein Konto"],
+        "Spiele Two Not Touch kostenlos online. Two Not Touch ist das Star-Battle-Rätsel, bei dem Sterne sich nicht berühren dürfen; in jeder Zeile, Spalte und Farbfläche steht ein Stern.",
+      proofs: ["Kostenlos online", "Keine berührenden Sterne", "Eindeutige Lösung", "Kein Konto"],
       stats: ["Zeit", "Sterne", "Serie"],
       boardLabel: "Star-Battle-Brett",
       startMode: "Tagesrätsel",
@@ -182,7 +182,7 @@ const languages = [
       proof: "Eindeutig",
       verified: "Geprüft",
       best: "Bestzeit",
-      share: "Daily Star Battle\nKnifflig, eindeutig, ohne Konto.",
+      share: "Two Not Touch Online\nKeine berührenden Sterne. Eindeutig. Ohne Konto.",
       goal: "Ziel",
       rules: ["Ein Stern in jede Zeile.", "Ein Stern in jede Spalte.", "Ein Stern in jede Farbfläche.", "Sterne dürfen sich nicht berühren."],
       tip: "Tippe einmal für einen Stern, zweimal für eine gesperrte Zelle."
@@ -212,10 +212,10 @@ const languages = [
     guide: [
       {
         eyebrow: "Logikrätsel im Queens-Stil",
-        title: "Star Battle online spielen",
+        title: "Two Not Touch online spielen",
         paragraphs: [
-          "Daily Logic Lab ist für kurze, saubere Logikrunden gedacht: kein Login, keine App, einfach öffnen und lösen. Das tägliche Brett wird nur veröffentlicht, wenn der Solver genau eine Lösung findet.",
-          "Wenn du Queens, Sudoku-Varianten oder kleine Gitterrätsel magst, fühlt sich Star Battle sofort vertraut an. Der Reiz liegt darin, dass ein einzelner Stern gleichzeitig Zeile, Spalte, Farbe und Nachbarschaft einschränkt."
+          "Daily Logic Lab ist eine kostenlose Two-Not-Touch-Online-Seite für kurze, saubere Logikrunden: kein Login, keine App, einfach öffnen und lösen. Das tägliche Brett wird nur veröffentlicht, wenn der Solver genau eine Lösung findet.",
+          "Two Not Touch ist auch als Star Battle bekannt. Wenn du Queens, Sudoku-Varianten oder kleine Gitterrätsel magst, fühlt es sich sofort vertraut an: Jeder Stern schränkt Zeile, Spalte, Farbe und Nachbarschaft ein."
         ]
       },
       {
@@ -261,23 +261,23 @@ const languages = [
     footerAria: "Pie de página",
     switchAria: "Cambiar idioma",
     meta: {
-      title: "Star Battle diario - Puzzle lógico gratis sin registro",
+      title: "Two Not Touch Online - Puzzle Star Battle gratis",
       description:
-        "Juega un Star Battle diario en español. Tableros 7x7 con solución única verificada, modo práctica ilimitado y calculadora para Killer Sudoku.",
+        "Juega Two Not Touch online gratis. Two Not Touch es el formato Star Battle con estrellas que no se tocan, solución única y sin registro.",
       keywords:
-        "star battle español, puzzle lógico diario, alternativa a queens puzzle, star battle online, juego de lógica gratis, puzzle sin registro, solución única",
-      ogTitle: "Star Battle diario - Puzzle lógico con solución única",
+        "two not touch online, two not touch puzzle, star battle español, puzzle lógico diario, alternativa a queens puzzle, star battle online, juego de lógica gratis, puzzle sin registro, solución única",
+      ogTitle: "Two Not Touch Online - Puzzle Star Battle gratis",
       ogDescription:
-        "Un reto diario tipo Queens y práctica ilimitada, todo gratis y sin crear cuenta.",
+        "Juega Two Not Touch gratis online, también conocido como Star Battle, con reto diario y práctica.",
       imageAlt: "Tablero de Star Battle en Daily Logic Lab"
     },
     nav: ["Jugar", "Calculadora", "Reglas"],
     hero: {
-      mode: "Reto diario",
-      h1: "Star Battle diario",
+      mode: "Two Not Touch online",
+      h1: "Two Not Touch Online",
       intro:
-        "Un puzzle lógico rápido, cercano a Queens, para jugar cada día o practicar sin límite. Cada tablero se publica solo si el solver confirma una solución única.",
-      proofs: ["Reto diario", "Práctica ilimitada", "Solución única", "Sin cuenta"],
+        "Juega Two Not Touch online gratis. Two Not Touch es el formato Star Battle: coloca estrellas para que no se toquen, con una estrella en cada fila, columna y región.",
+      proofs: ["Gratis online", "Estrellas no se tocan", "Solución única", "Sin cuenta"],
       stats: ["Tiempo", "Estrellas", "Racha"],
       boardLabel: "Tablero de Star Battle",
       startMode: "Reto diario",
@@ -303,7 +303,7 @@ const languages = [
       proof: "Única",
       verified: "Verificada",
       best: "Mejor",
-      share: "Daily Star Battle\nReto corto, solución única, sin cuenta.",
+      share: "Two Not Touch Online\nEstrellas sin tocarse. Solución única. Sin cuenta.",
       goal: "Objetivo",
       rules: ["Una estrella en cada fila.", "Una estrella en cada columna.", "Una estrella en cada zona.", "Las estrellas no se tocan."],
       tip: "Toca una casilla una vez para estrella y dos veces para marcarla como imposible."
@@ -333,10 +333,10 @@ const languages = [
     guide: [
       {
         eyebrow: "Puzzle lógico tipo Queens",
-        title: "Juega Star Battle online",
+        title: "Juega Two Not Touch online",
         paragraphs: [
-          "Daily Logic Lab está pensado para quienes quieren un reto limpio de unos minutos: abres la página, pulsas Start y resuelves. No hay registro y cada tablero se comprueba antes de aparecer.",
-          "Star Battle engancha a jugadores de Queens, sudoku y otros juegos de cuadrícula porque la regla es simple, pero cada decisión reduce muchas posibilidades a la vez."
+          "Daily Logic Lab es una página gratuita para jugar Two Not Touch online: abres la página, pulsas Start y resuelves. No hay registro y cada tablero se comprueba antes de aparecer.",
+          "Two Not Touch también se conoce como Star Battle. Encaja con jugadores de Queens, sudoku y otros juegos de cuadrícula porque la regla es simple, pero cada decisión reduce muchas posibilidades a la vez."
         ]
       },
       {
@@ -382,23 +382,23 @@ const languages = [
     footerAria: "Pied de page",
     switchAria: "Changer de langue",
     meta: {
-      title: "Star Battle quotidien - Puzzle logique gratuit sans compte",
+      title: "Two Not Touch Online - Puzzle Star Battle gratuit",
       description:
-        "Joue chaque jour à un Star Battle en français. Grilles 7x7 à solution unique vérifiée, entraînement illimité et calculatrice Killer Sudoku.",
+        "Joue à Two Not Touch en ligne gratuitement. Two Not Touch est le format Star Battle avec étoiles sans contact, solution unique et sans compte.",
       keywords:
-        "star battle français, puzzle logique quotidien, alternative queens puzzle, star battle en ligne, jeu de logique gratuit, puzzle sans compte, solution unique",
-      ogTitle: "Star Battle quotidien - Puzzle logique à solution unique",
+        "two not touch online, two not touch puzzle, star battle français, puzzle logique quotidien, alternative queens puzzle, star battle en ligne, jeu de logique gratuit, puzzle sans compte, solution unique",
+      ogTitle: "Two Not Touch Online - Puzzle Star Battle gratuit",
       ogDescription:
-        "Un puzzle façon Queens à jouer chaque jour, avec entraînement illimité et sans inscription.",
+        "Joue gratuitement à Two Not Touch en ligne, aussi appelé Star Battle, avec grille du jour et entraînement.",
       imageAlt: "Grille Star Battle de Daily Logic Lab"
     },
     nav: ["Jouer", "Calculatrice", "Règles"],
     hero: {
-      mode: "Puzzle du jour",
-      h1: "Star Battle quotidien",
+      mode: "Two Not Touch online",
+      h1: "Two Not Touch Online",
       intro:
-        "Un petit puzzle logique dans l'esprit de Queens, à jouer chaque jour ou en entraînement libre. Chaque grille est contrôlée par un solveur avant publication.",
-      proofs: ["Chaque jour", "Entraînement illimité", "Solution unique", "Sans compte"],
+        "Joue gratuitement à Two Not Touch en ligne. Two Not Touch est le format Star Battle : place des étoiles qui ne se touchent pas, avec une étoile dans chaque ligne, colonne et région.",
+      proofs: ["Gratuit en ligne", "Étoiles sans contact", "Solution unique", "Sans compte"],
       stats: ["Temps", "Étoiles", "Série"],
       boardLabel: "Grille Star Battle",
       startMode: "Puzzle du jour",
@@ -424,7 +424,7 @@ const languages = [
       proof: "Unique",
       verified: "Vérifiée",
       best: "Meilleur",
-      share: "Daily Star Battle\nUne grille courte, unique, sans compte.",
+      share: "Two Not Touch Online\nÉtoiles sans contact. Solution unique. Sans compte.",
       goal: "Objectif",
       rules: ["Une étoile par ligne.", "Une étoile par colonne.", "Une étoile par zone.", "Les étoiles ne se touchent pas."],
       tip: "Tape une case une fois pour une étoile, deux fois pour la barrer."
@@ -454,10 +454,10 @@ const languages = [
     guide: [
       {
         eyebrow: "Puzzle logique façon Queens",
-        title: "Jouer à Star Battle en ligne",
+        title: "Jouer à Two Not Touch en ligne",
         paragraphs: [
-          "Daily Logic Lab vise une partie courte et propre : une grille quotidienne, un bouton Start, puis la résolution. Pas de compte, pas d'installation, et seulement des grilles à solution unique.",
-          "Si tu aimes Queens, les variantes de sudoku ou les petits jeux de logique en grille, Star Battle donne vite cette sensation de déduction compacte où chaque étoile compte."
+          "Daily Logic Lab est une page gratuite pour jouer à Two Not Touch en ligne : une grille quotidienne, un bouton Start, puis la résolution. Pas de compte, pas d'installation, et seulement des grilles à solution unique.",
+          "Two Not Touch est aussi connu sous le nom Star Battle. Si tu aimes Queens, les variantes de sudoku ou les petits jeux de logique en grille, chaque étoile donne vite cette sensation de déduction compacte."
         ]
       },
       {
@@ -503,23 +503,23 @@ const languages = [
     footerAria: "フッター",
     switchAria: "言語を切り替える",
     meta: {
-      title: "毎日遊べる Star Battle - 登録なしのロジックパズル",
+      title: "Two Not Touch Online - 無料の Star Battle パズル",
       description:
-        "日本語で遊べる無料の Star Battle（スター・バトル）。毎日の7x7パズル、唯一解チェック済みの練習問題、Killer Sudoku の組み合わせ計算を用意しています。",
+        "Two Not Touch を無料でオンラインプレイ。Two Not Touch は星が接しないように配置する Star Battle 形式のパズルで、登録なしで遊べます。",
       keywords:
-        "スター バトル, star battle 日本語, 論理パズル 毎日, queens パズル 代替, 無料 パズル, 登録なし ゲーム, 唯一解 パズル",
-      ogTitle: "毎日遊べる Star Battle - 唯一解のロジックパズル",
+        "two not touch online, two not touch puzzle, スター バトル, star battle 日本語, 論理パズル 毎日, queens パズル 代替, 無料 パズル, 登録なし ゲーム, 唯一解 パズル",
+      ogTitle: "Two Not Touch Online - 無料の Star Battle パズル",
       ogDescription:
-        "Queens系の短い論理パズルを毎日1問。登録なしで練習もできます。",
+        "Two Not Touch を無料でオンラインプレイ。Star Battle としても知られる、星が接しない論理パズルです。",
       imageAlt: "Daily Logic Lab の Star Battle 盤面"
     },
     nav: ["遊ぶ", "計算", "ルール"],
     hero: {
-      mode: "今日のパズル",
-      h1: "毎日遊べる Star Battle",
+      mode: "Two Not Touch online",
+      h1: "Two Not Touch Online",
       intro:
-        "Queensに近い感覚で遊べる、短時間向けの論理パズルです。毎日1問、または練習を好きなだけ。盤面はすべて唯一解を確認しています。",
-      proofs: ["毎日更新", "練習し放題", "唯一解チェック済み", "登録なし"],
+        "Two Not Touch を無料でオンラインプレイ。Two Not Touch は Star Battle 形式のパズルで、星が縦・横・斜めに接しないように配置します。",
+      proofs: ["無料オンライン", "星は接しない", "唯一解チェック済み", "登録なし"],
       stats: ["時間", "星", "連続"],
       boardLabel: "Star Battle の盤面",
       startMode: "今日のパズル",
@@ -545,7 +545,7 @@ const languages = [
       proof: "唯一解",
       verified: "確認済み",
       best: "ベスト",
-      share: "Daily Star Battle\n短く遊べる、唯一解の論理パズル。",
+      share: "Two Not Touch Online\n星は接しない。唯一解。登録なし。",
       goal: "目的",
       rules: ["各行に星を1つ。", "各列に星を1つ。", "各色エリアに星を1つ。", "星どうしは接しません。"],
       tip: "マスを1回押すと星、2回押すと置けない印になります。"
@@ -575,10 +575,10 @@ const languages = [
     guide: [
       {
         eyebrow: "Queens 系の論理パズル",
-        title: "Star Battle をオンラインで遊ぶ",
+        title: "Two Not Touch Online で遊ぶ",
         paragraphs: [
-          "Daily Logic Lab は、数分で集中して解けるパズルのためのサイトです。今日の1問を開き、Start を押して、盤面と向き合うだけです。",
-          "Queens、数独のバリエーション、グリッド系の論理ゲームが好きなら、Star Battle の制約の重なり方はすぐにしっくり来るはずです。"
+          "Daily Logic Lab は、Two Not Touch を無料でオンラインプレイするためのサイトです。今日の1問を開き、Start を押して、盤面と向き合うだけです。",
+          "Two Not Touch は Star Battle としても知られています。Queens、数独のバリエーション、グリッド系の論理ゲームが好きなら、星による制約の重なり方はすぐにしっくり来るはずです。"
         ]
       },
       {
@@ -624,23 +624,23 @@ const languages = [
     footerAria: "Rodapé",
     switchAria: "Trocar idioma",
     meta: {
-      title: "Star Battle diário - Puzzle lógico grátis sem cadastro",
+      title: "Two Not Touch Online - Puzzle Star Battle grátis",
       description:
-        "Jogue Star Battle em português todos os dias. Tabuleiros 7x7 com solução única verificada, treino ilimitado e calculadora para Killer Sudoku.",
+        "Jogue Two Not Touch online grátis. Two Not Touch é o formato Star Battle com estrelas que não encostam, solução única e sem cadastro.",
       keywords:
-        "star battle português, puzzle lógico diário, alternativa queens puzzle, star battle online, jogo de lógica grátis, puzzle sem cadastro, solução única",
-      ogTitle: "Star Battle diário - Puzzle lógico com solução única",
+        "two not touch online, two not touch puzzle, star battle português, puzzle lógico diário, alternativa queens puzzle, star battle online, jogo de lógica grátis, puzzle sem cadastro, solução única",
+      ogTitle: "Two Not Touch Online - Puzzle Star Battle grátis",
       ogDescription:
-        "Um desafio diário no estilo Queens, treino ilimitado e nenhuma conta para criar.",
+        "Jogue Two Not Touch grátis online, também conhecido como Star Battle, com desafio diário e treino.",
       imageAlt: "Tabuleiro Star Battle do Daily Logic Lab"
     },
     nav: ["Jogar", "Calculadora", "Regras"],
     hero: {
-      mode: "Desafio diário",
-      h1: "Star Battle diário",
+      mode: "Two Not Touch online",
+      h1: "Two Not Touch Online",
       intro:
-        "Um puzzle lógico curto, no clima de Queens, para jogar todo dia ou treinar quanto quiser. Cada tabuleiro passa por um solver antes de aparecer.",
-      proofs: ["Desafio diário", "Treino ilimitado", "Solução única", "Sem conta"],
+        "Jogue Two Not Touch online grátis. Two Not Touch é o formato Star Battle: coloque estrelas sem que elas encostem, com uma estrela em cada linha, coluna e região.",
+      proofs: ["Grátis online", "Estrelas não encostam", "Solução única", "Sem conta"],
       stats: ["Tempo", "Estrelas", "Sequência"],
       boardLabel: "Tabuleiro Star Battle",
       startMode: "Desafio diário",
@@ -666,7 +666,7 @@ const languages = [
       proof: "Única",
       verified: "Verificada",
       best: "Melhor",
-      share: "Daily Star Battle\nCurto, lógico, sem cadastro.",
+      share: "Two Not Touch Online\nEstrelas não encostam. Solução única. Sem cadastro.",
       goal: "Objetivo",
       rules: ["Uma estrela em cada linha.", "Uma estrela em cada coluna.", "Uma estrela em cada região.", "Estrelas não encostam."],
       tip: "Toque uma vez para estrela e duas vezes para marcar como impossível."
@@ -696,10 +696,10 @@ const languages = [
     guide: [
       {
         eyebrow: "Puzzle lógico no estilo Queens",
-        title: "Jogue Star Battle online",
+        title: "Jogue Two Not Touch online",
         paragraphs: [
-          "Daily Logic Lab foi feito para uma partida rápida e limpa: abra, aperte Start e resolva. Não precisa instalar nada nem criar conta.",
-          "Quem gosta de Queens, sudoku e jogos de grade costuma gostar de Star Battle porque a regra é simples, mas cada estrela corta várias possibilidades ao mesmo tempo."
+          "Daily Logic Lab foi feito para jogar Two Not Touch online grátis: abra, aperte Start e resolva. Não precisa instalar nada nem criar conta.",
+          "Two Not Touch também é conhecido como Star Battle. Quem gosta de Queens, sudoku e jogos de grade costuma gostar desse formato porque cada estrela corta várias possibilidades ao mesmo tempo."
         ]
       },
       {
@@ -745,23 +745,23 @@ const languages = [
     footerAria: "页脚",
     switchAria: "切换语言",
     meta: {
-      title: "每日 Star Battle - 无需登录的逻辑小游戏",
+      title: "Two Not Touch Online - 免费 Star Battle 逻辑谜题",
       description:
-        "每天玩一题免费的 Star Battle 逻辑谜题。7x7 盘面经过求解器验证，保证唯一解，也可以无限练习。",
+        "免费在线玩 Two Not Touch。Two Not Touch 是 Star Battle 的常见叫法：放置星星且任意两颗不能接触，唯一解，无需登录。",
       keywords:
-        "star battle 中文, 每日逻辑谜题, queens puzzle 替代, star battle 在线, 不用登录小游戏, 唯一解谜题, 数独辅助工具",
-      ogTitle: "每日 Star Battle - 唯一解逻辑谜题",
+        "two not touch online, two not touch puzzle, star battle 中文, 每日逻辑谜题, queens puzzle 替代, star battle 在线, 不用登录小游戏, 唯一解谜题, 数独辅助工具",
+      ogTitle: "Two Not Touch Online - 免费 Star Battle 逻辑谜题",
       ogDescription:
-        "一个像 Queens 一样短平快的逻辑小游戏，每日一题，也能无限练习。",
+        "免费在线玩 Two Not Touch，也就是 Star Battle：星星不能相邻，每日一题，也能练习。",
       imageAlt: "Daily Logic Lab 的 Star Battle 盘面"
     },
     nav: ["开始玩", "计算器", "规则"],
     hero: {
-      mode: "每日题",
-      h1: "每日 Star Battle",
+      mode: "Two Not Touch 在线",
+      h1: "Two Not Touch Online",
       intro:
-        "这是一个接近 Queens 手感的短逻辑谜题：每天一题，也可以无限练习。每个盘面都会先经过求解器验证，只展示唯一解题目。",
-      proofs: ["每日一题", "无限练习", "唯一解", "无需账号"],
+        "免费在线玩 Two Not Touch。Two Not Touch 是 Star Battle 的常见叫法：放置星星，让任意两颗都不能接触，同时每行、每列、每个区域各有一颗星。",
+      proofs: ["免费在线", "星星不相邻", "唯一解", "无需账号"],
       stats: ["时间", "星星", "连胜"],
       boardLabel: "Star Battle 盘面",
       startMode: "每日题",
@@ -787,7 +787,7 @@ const languages = [
       proof: "唯一解",
       verified: "已验证",
       best: "最佳",
-      share: "Daily Star Battle\n短逻辑题，唯一解，无需登录。",
+      share: "Two Not Touch Online\n星星不相邻，唯一解，无需登录。",
       goal: "目标",
       rules: ["每一行放一颗星。", "每一列放一颗星。", "每个色块放一颗星。", "星星之间不能相邻。"],
       tip: "点一次放星星，点两次标记为不可能。"
@@ -817,10 +817,10 @@ const languages = [
     guide: [
       {
         eyebrow: "Queens 风格逻辑谜题",
-        title: "在线玩每日 Star Battle",
+        title: "在线玩 Two Not Touch",
         paragraphs: [
-          "Daily Logic Lab 适合想每天做一题短逻辑题的人：打开网页，点击开始，直接推理。没有登录流程，也不需要安装 App。",
-          "如果你喜欢 Queens、数独变体、格子逻辑题或不想花太久的小游戏，Star Battle 的节奏会比较舒服。规则很少，但每一步都会影响多个约束。"
+          "Daily Logic Lab 是一个可以免费在线玩 Two Not Touch 的站点：打开网页，点击开始，直接推理。没有登录流程，也不需要安装 App。",
+          "Two Not Touch 也叫 Star Battle。如果你喜欢 Queens、数独变体或格子逻辑题，这种玩法会比较舒服：规则很少，但每一步都会影响多个约束。"
         ]
       },
       {
@@ -935,6 +935,8 @@ const seoProfiles = {
     audience: "deutschsprachige Logikrätsel-Spieler, Star-Battle-Spieler, Killer-Sudoku-Spieler",
     alternateNames: ["Star Battle", "Kampf der Sterne", "Queens", "Two Not Touch", "Starstruck", "Killer-Sudoku-Käfigrechner"],
     keywords: [
+      "two not touch online",
+      "two not touch puzzle",
       "star battle deutsch",
       "kampf der sterne",
       "tägliches logikrätsel",
@@ -955,6 +957,8 @@ const seoProfiles = {
     audience: "jugadores de puzzles de lógica, jugadores de Queens, solvers de Star Battle y Sudoku Killer",
     alternateNames: ["Star Battle", "rompecabezas de lógica", "puzzle de lógica", "Queens", "Two Not Touch", "Starstruck"],
     keywords: [
+      "two not touch online",
+      "two not touch puzzle",
       "star battle español",
       "star battle diario",
       "puzzle de lógica",
@@ -975,6 +979,8 @@ const seoProfiles = {
     audience: "joueurs de puzzles logiques, joueurs de Queens, amateurs de Star Battle et Killer Sudoku",
     alternateNames: ["Star Battle", "puzzle logique", "casse-tête logique", "Queens", "Two Not Touch", "Starstruck"],
     keywords: [
+      "two not touch online",
+      "two not touch puzzle",
       "star battle français",
       "star battle quotidien",
       "puzzle logique",
@@ -1001,6 +1007,7 @@ const seoProfiles = {
       "無料 パズル",
       "登録なし ゲーム",
       "queens パズル 代替",
+      "two not touch online",
       "two not touch",
       "唯一解 パズル",
       "killer sudoku 組み合わせ",
@@ -1015,6 +1022,8 @@ const seoProfiles = {
     audience: "jogadores de quebra-cabeças lógicos, jogadores de Queens, fãs de Star Battle e Killer Sudoku",
     alternateNames: ["Star Battle", "quebra-cabeça lógico", "jogo de lógica", "Queens", "Two Not Touch", "Starstruck"],
     keywords: [
+      "two not touch online",
+      "two not touch puzzle",
       "star battle português",
       "star battle diário",
       "quebra-cabeça lógico",
@@ -1035,6 +1044,8 @@ const seoProfiles = {
     audience: "中文逻辑谜题玩家、Queens 玩家、Star Battle 玩家和杀手数独玩家",
     alternateNames: ["Star Battle", "星之战", "逻辑谜题", "Queens", "Two Not Touch", "Starstruck", "杀手数独组合计算器"],
     keywords: [
+      "two not touch online",
+      "two not touch puzzle",
       "star battle 中文",
       "星之战",
       "每日逻辑谜题",
