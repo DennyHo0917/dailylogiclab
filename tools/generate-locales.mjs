@@ -23,7 +23,7 @@ const languages = [
       description:
         "Play a free daily Star Battle puzzle online. Daily and unlimited Queens-style practice boards are solver-verified unique and work without login.",
       keywords:
-        "daily star battle, queens style puzzle, queens puzzle alternative, star battle online, star battle puzzle, two not touch puzzle, unlimited star battle, unique solution puzzle, no login logic puzzle",
+        "daily star battle, two not touch online, two not touch puzzle, queens style puzzle, queens puzzle alternative, star battle online, star battle puzzle, unlimited star battle, unique solution puzzle, no login logic puzzle",
       ogTitle: "Daily Star Battle - Queens-Style Logic Puzzle",
       ogDescription:
         "Play a daily Queens-style Star Battle puzzle, then practice unlimited solver-verified unique boards without login.",
@@ -94,7 +94,7 @@ const languages = [
         title: "Play Daily Star Battle Online",
         paragraphs: [
           "Daily Logic Lab is a free Star Battle puzzle site built for players looking for a clean Queens-style logic puzzle they can play every day. Each board is generated with a solver and only shown when it has exactly one solution. Start with the daily puzzle, then use practice mode for another unique board without creating an account.",
-          "Star Battle is familiar to players who enjoy Queens-style placement puzzles, two-not-touch puzzles, sudoku variants, and short grid logic games. The goal is simple, but every star affects its row, column, color region, and neighboring squares."
+          "Star Battle is familiar to players who enjoy Queens-style placement puzzles, Two Not Touch online puzzles, sudoku variants, and short grid logic games. The goal is simple, but every star affects its row, column, color region, and neighboring squares."
         ]
       },
       {
@@ -120,7 +120,7 @@ const languages = [
       links: [
         ["Star Battle Puzzle Guide", "/star-battle"],
         ["Star Battle Hints", "/star-battle-hints"],
-        ["Two Not Touch Puzzle", "/two-not-touch-puzzle"],
+        ["Play Two Not Touch Online", "/two-not-touch-puzzle"],
         ["Queens Puzzle Alternative", "/queens-puzzle-alternative"],
         ["Killer Sudoku Combination Calculator", "/killer-sudoku-combination-calculator"]
       ]
@@ -918,6 +918,7 @@ const seoProfiles = {
       "star battle puzzle",
       "queens style puzzle",
       "queens puzzle alternative",
+      "two not touch online",
       "two not touch puzzle",
       "starstruck puzzle",
       "star battle online",
