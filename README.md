@@ -1,5 +1,9 @@
 # Daily Logic Lab MVP
 
+Live website: [Daily Logic Lab](https://dailylogiclab.com/)
+
+Key pages: [Star Battle](https://dailylogiclab.com/star-battle) | [Killer Sudoku Combination Calculator](https://dailylogiclab.com/killer-sudoku-combination-calculator) | [Star Battle Hints](https://dailylogiclab.com/star-battle-hints) | [Two Not Touch Puzzle](https://dailylogiclab.com/two-not-touch-puzzle) | [Queens Puzzle Alternative](https://dailylogiclab.com/queens-puzzle-alternative) | [Sitemap](https://dailylogiclab.com/sitemap.xml)
+
 Static MVP for a daily logic puzzle site.
 
 ## Open Locally
