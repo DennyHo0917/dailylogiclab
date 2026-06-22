@@ -46,6 +46,8 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Daily Logic Lab Star Battle puzzle board">
+    <meta property="article:published_time" content="2026-06-18">
+    <meta property="article:modified_time" content="2026-06-22">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Two Not Touch Online">
     <meta name="twitter:description" content="Play a free Star Battle style puzzle where no two stars may touch.">
@@ -57,10 +59,26 @@
         "@context": "https://schema.org",
         "@graph": [
           {
+            "@type": "Organization",
+            "@id": "https://dailylogiclab.com/#organization",
+            "name": "Daily Logic Lab",
+            "url": "https://dailylogiclab.com",
+            "logo": "https://dailylogiclab.com/icon-512.png",
+            "sameAs": ["https://github.com/DennyHo0917/dailylogiclab"]
+          },
+          {
             "@type": "Article",
             "headline": "Two Not Touch Online",
             "description": "Learn how Two Not Touch puzzles work and play a free Star Battle style no-touch logic puzzle online.",
-            "mainEntityOfPage": "https://dailylogiclab.com/two-not-touch-puzzle"
+            "image": "https://dailylogiclab.com/og-image.png",
+            "author": { "@id": "https://dailylogiclab.com/#organization" },
+            "publisher": { "@id": "https://dailylogiclab.com/#organization" },
+            "datePublished": "2026-06-18",
+            "dateModified": "2026-06-22",
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": "https://dailylogiclab.com/two-not-touch-puzzle"
+            }
           },
           {
             "@type": "FAQPage",
@@ -122,6 +140,28 @@
       <article class="section-shell content-card">
         <p class="eyebrow">Two Not Touch Online</p>
         <h1>Two Not Touch Online</h1>
+        <section class="answer-summary">
+          <p class="eyebrow">Quick facts</p>
+          <h2>Two Not Touch facts</h2>
+          <dl class="facts-list">
+            <div>
+              <dt>Meaning</dt>
+              <dd>Two Not Touch means placed pieces cannot touch by an edge or corner.</dd>
+            </div>
+            <div>
+              <dt>Daily Logic Lab version</dt>
+              <dd>Daily Logic Lab plays this rule as a Star Battle board with stars.</dd>
+            </div>
+            <div>
+              <dt>Goal</dt>
+              <dd>Put one star in each row, column, and color region while keeping stars separated.</dd>
+            </div>
+            <div>
+              <dt>Cost</dt>
+              <dd>The daily puzzle and practice boards are free in the browser.</dd>
+            </div>
+          </dl>
+        </section>
         <p>
           Two Not Touch is the New York Times name for Star Battle: place stars on a grid so no two
           stars touch, even diagonally. Daily Logic Lab lets you play that no-touch stars puzzle

@@ -60,11 +60,25 @@
         "@context": "https://schema.org",
         "@graph": [
                 {
+                        "@type": "Organization",
+                        "@id": "https://dailylogiclab.com/#organization",
+                        "name": "Daily Logic Lab",
+                        "url": "https://dailylogiclab.com",
+                        "logo": "https://dailylogiclab.com/icon-512.png",
+                        "sameAs": [
+                                "https://github.com/DennyHo0917/dailylogiclab"
+                        ]
+                },
+                {
                         "@type": "WebSite",
                         "@id": "https://dailylogiclab.com/es/#website",
                         "name": "Daily Logic Lab",
                         "url": "https://dailylogiclab.com/es/",
                         "inLanguage": "es",
+                        "publisher": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "dateModified": "2026-06-22",
                         "description": "Juega Two Not Touch online gratis. Two Not Touch es el formato Star Battle con estrellas que no se tocan, solución única y sin registro.",
                         "keywords": "two not touch online, two not touch puzzle, star battle español, star battle diario, puzzle de lógica, rompecabezas de lógica, juego de lógica gratis, alternativa a queens puzzle, star battle online, puzzle sin registro, sudoku killer combinaciones, calculadora sudoku killer",
                         "availableLanguage": [
@@ -86,6 +100,9 @@
                         "inLanguage": "es",
                         "isPartOf": {
                                 "@id": "https://dailylogiclab.com/es/#website"
+                        },
+                        "publisher": {
+                                "@id": "https://dailylogiclab.com/#organization"
                         },
                         "description": "Juega Two Not Touch online gratis. Two Not Touch es el formato Star Battle con estrellas que no se tocan, solución única y sin registro.",
                         "keywords": "two not touch online, two not touch puzzle, star battle español, star battle diario, puzzle de lógica, rompecabezas de lógica, juego de lógica gratis, alternativa a queens puzzle, star battle online, puzzle sin registro, sudoku killer combinaciones, calculadora sudoku killer",
@@ -115,6 +132,14 @@
                         "applicationCategory": "GameApplication",
                         "operatingSystem": "Any",
                         "isAccessibleForFree": true,
+                        "author": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "publisher": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "datePublished": "2026-06-18",
+                        "dateModified": "2026-06-22",
                         "description": "Juega Two Not Touch online gratis. Two Not Touch es el formato Star Battle con estrellas que no se tocan, solución única y sin registro.",
                         "keywords": "two not touch online, two not touch puzzle, star battle español, star battle diario, puzzle de lógica, rompecabezas de lógica, juego de lógica gratis, alternativa a queens puzzle, star battle online, puzzle sin registro, sudoku killer combinaciones, calculadora sudoku killer",
                         "availableLanguage": [

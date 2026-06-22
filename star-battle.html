@@ -45,6 +45,8 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Daily Logic Lab Star Battle puzzle board">
+    <meta property="article:published_time" content="2026-06-18">
+    <meta property="article:modified_time" content="2026-06-22">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Star Battle Puzzle Guide">
     <meta name="twitter:description" content="Rules, solving tips, and free daily practice for Star Battle logic puzzles.">
@@ -56,10 +58,26 @@
         "@context": "https://schema.org",
         "@graph": [
           {
+            "@type": "Organization",
+            "@id": "https://dailylogiclab.com/#organization",
+            "name": "Daily Logic Lab",
+            "url": "https://dailylogiclab.com",
+            "logo": "https://dailylogiclab.com/icon-512.png",
+            "sameAs": ["https://github.com/DennyHo0917/dailylogiclab"]
+          },
+          {
             "@type": "Article",
             "headline": "Star Battle Puzzle Guide",
             "description": "Learn Star Battle rules, beginner strategy, no-touch logic, and where to play a daily Star Battle puzzle online.",
-            "mainEntityOfPage": "https://dailylogiclab.com/star-battle"
+            "image": "https://dailylogiclab.com/og-image.png",
+            "author": { "@id": "https://dailylogiclab.com/#organization" },
+            "publisher": { "@id": "https://dailylogiclab.com/#organization" },
+            "datePublished": "2026-06-18",
+            "dateModified": "2026-06-22",
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": "https://dailylogiclab.com/star-battle"
+            }
           },
           {
             "@type": "FAQPage",
@@ -111,6 +129,28 @@
       <article class="section-shell content-card">
         <p class="eyebrow">Star Battle Puzzle</p>
         <h1>Star Battle Puzzle Rules and Online Practice</h1>
+        <section class="answer-summary">
+          <p class="eyebrow">Quick facts</p>
+          <h2>Star Battle facts</h2>
+          <dl class="facts-list">
+            <div>
+              <dt>Goal</dt>
+              <dd>Place one star in every row, column, and color region.</dd>
+            </div>
+            <div>
+              <dt>No-touch rule</dt>
+              <dd>Stars cannot touch horizontally, vertically, or diagonally.</dd>
+            </div>
+            <div>
+              <dt>Daily Logic Lab version</dt>
+              <dd>The site uses a compact 7x7 one-star Star Battle board.</dd>
+            </div>
+            <div>
+              <dt>Verification</dt>
+              <dd>Generated boards are checked by a solver before they are shown.</dd>
+            </div>
+          </dl>
+        </section>
         <p>
           Star Battle is a grid logic puzzle about placing stars under four simple constraints:
           every row needs a star, every column needs a star, every outlined or colored region

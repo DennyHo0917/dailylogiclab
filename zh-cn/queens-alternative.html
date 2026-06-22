@@ -37,6 +37,8 @@
     <meta property="og:description" content="适合 Queens 玩家继续练习的 Star Battle 中文入口。">
     <meta property="og:url" content="https://dailylogiclab.com/zh-cn/queens-alternative">
     <meta property="og:image" content="https://dailylogiclab.com/og-image.png">
+    <meta property="article:published_time" content="2026-06-18">
+    <meta property="article:modified_time" content="2026-06-22">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Queens 替代谜题">
     <meta name="twitter:description" content="适合 Queens 玩家继续练习的 Star Battle 中文入口。">
@@ -47,11 +49,33 @@
         "@context": "https://schema.org",
         "@graph": [
                 {
+                        "@type": "Organization",
+                        "@id": "https://dailylogiclab.com/#organization",
+                        "name": "Daily Logic Lab",
+                        "url": "https://dailylogiclab.com",
+                        "logo": "https://dailylogiclab.com/icon-512.png",
+                        "sameAs": [
+                                "https://github.com/DennyHo0917/dailylogiclab"
+                        ]
+                },
+                {
                         "@type": "Article",
                         "headline": "Queens 替代谜题：在线玩 Star Battle",
                         "description": "想找 Queens 替代谜题？试试 Star Battle：行、列、区域和不相邻规则，免费在线玩，无需登录。",
                         "inLanguage": "zh-CN",
-                        "mainEntityOfPage": "https://dailylogiclab.com/zh-cn/queens-alternative",
+                        "image": "https://dailylogiclab.com/og-image.png",
+                        "author": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "publisher": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "datePublished": "2026-06-18",
+                        "dateModified": "2026-06-22",
+                        "mainEntityOfPage": {
+                                "@type": "WebPage",
+                                "@id": "https://dailylogiclab.com/zh-cn/queens-alternative"
+                        },
                         "isPartOf": {
                                 "@id": "https://dailylogiclab.com/zh-cn/#website"
                         }

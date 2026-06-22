@@ -60,11 +60,25 @@
         "@context": "https://schema.org",
         "@graph": [
                 {
+                        "@type": "Organization",
+                        "@id": "https://dailylogiclab.com/#organization",
+                        "name": "Daily Logic Lab",
+                        "url": "https://dailylogiclab.com",
+                        "logo": "https://dailylogiclab.com/icon-512.png",
+                        "sameAs": [
+                                "https://github.com/DennyHo0917/dailylogiclab"
+                        ]
+                },
+                {
                         "@type": "WebSite",
                         "@id": "https://dailylogiclab.com/zh-cn/#website",
                         "name": "Daily Logic Lab",
                         "url": "https://dailylogiclab.com/zh-cn/",
                         "inLanguage": "zh-CN",
+                        "publisher": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "dateModified": "2026-06-22",
                         "description": "免费在线玩 Two Not Touch。Two Not Touch 是 Star Battle 的常见叫法：放置星星且任意两颗不能接触，唯一解，无需登录。",
                         "keywords": "two not touch online, two not touch puzzle, star battle 中文, 星之战, 每日逻辑谜题, 逻辑小游戏, queens puzzle 替代, star battle 在线, 不用登录小游戏, 唯一解谜题, 杀手数独组合, 杀手数独计算器",
                         "availableLanguage": [
@@ -86,6 +100,9 @@
                         "inLanguage": "zh-CN",
                         "isPartOf": {
                                 "@id": "https://dailylogiclab.com/zh-cn/#website"
+                        },
+                        "publisher": {
+                                "@id": "https://dailylogiclab.com/#organization"
                         },
                         "description": "免费在线玩 Two Not Touch。Two Not Touch 是 Star Battle 的常见叫法：放置星星且任意两颗不能接触，唯一解，无需登录。",
                         "keywords": "two not touch online, two not touch puzzle, star battle 中文, 星之战, 每日逻辑谜题, 逻辑小游戏, queens puzzle 替代, star battle 在线, 不用登录小游戏, 唯一解谜题, 杀手数独组合, 杀手数独计算器",
@@ -117,6 +134,14 @@
                         "applicationCategory": "GameApplication",
                         "operatingSystem": "Any",
                         "isAccessibleForFree": true,
+                        "author": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "publisher": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "datePublished": "2026-06-18",
+                        "dateModified": "2026-06-22",
                         "description": "免费在线玩 Two Not Touch。Two Not Touch 是 Star Battle 的常见叫法：放置星星且任意两颗不能接触，唯一解，无需登录。",
                         "keywords": "two not touch online, two not touch puzzle, star battle 中文, 星之战, 每日逻辑谜题, 逻辑小游戏, queens puzzle 替代, star battle 在线, 不用登录小游戏, 唯一解谜题, 杀手数独组合, 杀手数独计算器",
                         "availableLanguage": [

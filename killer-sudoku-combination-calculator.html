@@ -54,13 +54,31 @@
         "@context": "https://schema.org",
         "@graph": [
           {
+            "@type": "Organization",
+            "@id": "https://dailylogiclab.com/#organization",
+            "name": "Daily Logic Lab",
+            "url": "https://dailylogiclab.com",
+            "logo": "https://dailylogiclab.com/icon-512.png",
+            "sameAs": ["https://github.com/DennyHo0917/dailylogiclab"]
+          },
+          {
             "@type": "SoftwareApplication",
             "name": "Killer Sudoku Combination Calculator",
             "applicationCategory": "UtilitiesApplication",
             "operatingSystem": "Any",
             "isAccessibleForFree": true,
+            "author": { "@id": "https://dailylogiclab.com/#organization" },
+            "publisher": { "@id": "https://dailylogiclab.com/#organization" },
+            "image": "https://dailylogiclab.com/og-image.png",
             "url": "https://dailylogiclab.com/killer-sudoku-combination-calculator",
-            "description": "A browser-based calculator for Killer Sudoku cage combinations by target sum, cell count, repeat rule, and available digits."
+            "description": "A browser-based calculator for Killer Sudoku cage combinations by target sum, cell count, repeat rule, and available digits.",
+            "datePublished": "2026-06-18",
+            "dateModified": "2026-06-22",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            }
           },
           {
             "@type": "FAQPage",
@@ -112,6 +130,28 @@
       <article class="section-shell content-card">
         <p class="eyebrow">Killer Sudoku Helper</p>
         <h1>Killer Sudoku Combination Calculator</h1>
+        <section class="answer-summary">
+          <p class="eyebrow">Quick facts</p>
+          <h2>Killer Sudoku calculator facts</h2>
+          <dl class="facts-list">
+            <div>
+              <dt>Purpose</dt>
+              <dd>Lists digit combinations that match a cage sum and cell count.</dd>
+            </div>
+            <div>
+              <dt>Inputs</dt>
+              <dd>Use sum, number of cells, available digits, and the repeat setting.</dd>
+            </div>
+            <div>
+              <dt>Standard use</dt>
+              <dd>Keep repeats off for ordinary Killer Sudoku cages.</dd>
+            </div>
+            <div>
+              <dt>Access</dt>
+              <dd>The calculator is free and runs in the browser without an account.</dd>
+            </div>
+          </dl>
+        </section>
         <p>
           Use this Killer Sudoku combination calculator to list every digit set that can fit a
           cage. Enter the target sum, choose how many cells are in the cage, remove digits that

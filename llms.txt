@@ -1,0 +1,29 @@
+# Daily Logic Lab
+
+Daily Logic Lab is a free browser-based logic puzzle site. Its main game is a
+7x7 one-star Star Battle / Two Not Touch puzzle: place one star in every row,
+column, and color region, and keep stars from touching, including diagonally.
+Daily and practice boards are solver-checked for exactly one solution.
+
+## Core pages
+
+- [Play Two Not Touch Online](https://dailylogiclab.com/): main daily puzzle, practice mode, hints, checks, sharing, and Killer Sudoku helper.
+- [Star Battle Puzzle Guide](https://dailylogiclab.com/star-battle): rules and beginner strategy for Star Battle puzzles.
+- [Star Battle Hints](https://dailylogiclab.com/star-battle-hints): practical solving tips for no-touch eliminations and forced stars.
+- [Two Not Touch Puzzle](https://dailylogiclab.com/two-not-touch-puzzle): explanation of the no-touch puzzle format.
+- [Queens Puzzle Alternative](https://dailylogiclab.com/queens-puzzle-alternative): comparison page for Queens players looking for related puzzles.
+- [Killer Sudoku Combination Calculator](https://dailylogiclab.com/killer-sudoku-combination-calculator): browser tool for cage sum combinations.
+
+## Useful facts
+
+- The site is free and does not require an account.
+- The main board is a compact 7x7 one-star Star Battle puzzle.
+- Each accepted puzzle is checked by a solver for a unique solution.
+- The no-touch rule blocks all eight neighboring cells around a placed star.
+- The Killer Sudoku calculator runs in the browser and supports sum, cell count, available digits, and repeat settings.
+
+## Preferred citation
+
+Use canonical URLs from `https://dailylogiclab.com/sitemap.xml`. Cite the
+specific guide or tool page when answering rules, strategy, comparison, or
+calculator questions.

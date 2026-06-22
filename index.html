@@ -60,11 +60,25 @@
         "@context": "https://schema.org",
         "@graph": [
                 {
+                        "@type": "Organization",
+                        "@id": "https://dailylogiclab.com/#organization",
+                        "name": "Daily Logic Lab",
+                        "url": "https://dailylogiclab.com",
+                        "logo": "https://dailylogiclab.com/icon-512.png",
+                        "sameAs": [
+                                "https://github.com/DennyHo0917/dailylogiclab"
+                        ]
+                },
+                {
                         "@type": "WebSite",
                         "@id": "https://dailylogiclab.com/#website",
                         "name": "Daily Logic Lab",
                         "url": "https://dailylogiclab.com/",
                         "inLanguage": "en",
+                        "publisher": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "dateModified": "2026-06-22",
                         "description": "Play Two Not Touch online for free. Two Not Touch is the Star Battle puzzle format with no touching stars, unique solutions, and no login.",
                         "keywords": "daily star battle, star battle puzzle, queens style puzzle, queens puzzle alternative, two not touch online, two not touch puzzle, starstruck puzzle, star battle online, unique solution logic puzzle, killer sudoku cage calculator, killer sudoku combinations",
                         "availableLanguage": [
@@ -86,6 +100,9 @@
                         "inLanguage": "en",
                         "isPartOf": {
                                 "@id": "https://dailylogiclab.com/#website"
+                        },
+                        "publisher": {
+                                "@id": "https://dailylogiclab.com/#organization"
                         },
                         "description": "Play Two Not Touch online for free. Two Not Touch is the Star Battle puzzle format with no touching stars, unique solutions, and no login.",
                         "keywords": "daily star battle, star battle puzzle, queens style puzzle, queens puzzle alternative, two not touch online, two not touch puzzle, starstruck puzzle, star battle online, unique solution logic puzzle, killer sudoku cage calculator, killer sudoku combinations",
@@ -113,6 +130,14 @@
                         "applicationCategory": "GameApplication",
                         "operatingSystem": "Any",
                         "isAccessibleForFree": true,
+                        "author": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "publisher": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "datePublished": "2026-06-18",
+                        "dateModified": "2026-06-22",
                         "description": "Play Two Not Touch online for free. Two Not Touch is the Star Battle puzzle format with no touching stars, unique solutions, and no login.",
                         "keywords": "daily star battle, star battle puzzle, queens style puzzle, queens puzzle alternative, two not touch online, two not touch puzzle, starstruck puzzle, star battle online, unique solution logic puzzle, killer sudoku cage calculator, killer sudoku combinations",
                         "availableLanguage": [
@@ -341,6 +366,35 @@ No touching stars. Unique solution. No login.</div>
                   <li>Place exactly one star in each color region.</li>
                   <li>Stars may not touch, including diagonally.</li>
           </ul>
+        </div>
+      </section>
+
+      <section class="facts-section">
+        <div class="section-shell">
+          <p class="eyebrow">Quick facts</p>
+          <h2>Daily Logic Lab facts</h2>
+          <dl class="facts-list">
+            <div>
+              <dt>What it is</dt>
+              <dd>Daily Logic Lab is a free browser-based logic puzzle site.</dd>
+            </div>
+            <div>
+              <dt>Main puzzle</dt>
+              <dd>The main game is a 7x7 one-star Star Battle / Two Not Touch puzzle.</dd>
+            </div>
+            <div>
+              <dt>Rules</dt>
+              <dd>Place one star in every row, column, and color region; stars cannot touch, including diagonally.</dd>
+            </div>
+            <div>
+              <dt>Access</dt>
+              <dd>The puzzle, practice boards, hints, checks, sharing, and calculator work without an account.</dd>
+            </div>
+            <div>
+              <dt>Verification</dt>
+              <dd>Generated boards are checked by a solver and shown only when they have exactly one solution.</dd>
+            </div>
+          </dl>
         </div>
       </section>
 

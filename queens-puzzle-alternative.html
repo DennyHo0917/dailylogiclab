@@ -43,6 +43,8 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Daily Logic Lab Star Battle puzzle board">
+    <meta property="article:published_time" content="2026-06-18">
+    <meta property="article:modified_time" content="2026-06-22">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Queens Puzzle Alternative">
     <meta name="twitter:description" content="A free no-login Star Battle practice site for players who want more Queens-style puzzles.">
@@ -54,10 +56,26 @@
         "@context": "https://schema.org",
         "@graph": [
           {
+            "@type": "Organization",
+            "@id": "https://dailylogiclab.com/#organization",
+            "name": "Daily Logic Lab",
+            "url": "https://dailylogiclab.com",
+            "logo": "https://dailylogiclab.com/icon-512.png",
+            "sameAs": ["https://github.com/DennyHo0917/dailylogiclab"]
+          },
+          {
             "@type": "Article",
             "headline": "Queens Puzzle Alternative",
             "description": "A guide for Queens puzzle players who want a free Star Battle style logic puzzle with unlimited practice and no login.",
-            "mainEntityOfPage": "https://dailylogiclab.com/queens-puzzle-alternative"
+            "image": "https://dailylogiclab.com/og-image.png",
+            "author": { "@id": "https://dailylogiclab.com/#organization" },
+            "publisher": { "@id": "https://dailylogiclab.com/#organization" },
+            "datePublished": "2026-06-18",
+            "dateModified": "2026-06-22",
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": "https://dailylogiclab.com/queens-puzzle-alternative"
+            }
           },
           {
             "@type": "FAQPage",
@@ -127,6 +145,28 @@
       <article class="section-shell content-card">
         <p class="eyebrow">Queens Puzzle Alternative</p>
         <h1>Play a Queens-Style Star Battle Puzzle</h1>
+        <section class="answer-summary">
+          <p class="eyebrow">Quick facts</p>
+          <h2>Queens alternative facts</h2>
+          <dl class="facts-list">
+            <div>
+              <dt>Why it fits</dt>
+              <dd>Star Battle is a natural Queens alternative because both use row, column, and region placement logic.</dd>
+            </div>
+            <div>
+              <dt>Main difference</dt>
+              <dd>Star Battle adds a no-touch rule: stars cannot be adjacent, even diagonally.</dd>
+            </div>
+            <div>
+              <dt>Practice</dt>
+              <dd>Daily Logic Lab offers a daily board and unlimited practice boards.</dd>
+            </div>
+            <div>
+              <dt>Account</dt>
+              <dd>No signup is required.</dd>
+            </div>
+          </dl>
+        </section>
         <p>
           If you like Queens-style placement puzzles, Star Battle is a natural next puzzle to try.
           You still reason about rows, columns, and regions, but the board uses stars and adds one

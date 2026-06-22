@@ -4,6 +4,54 @@ import path from "node:path";
 const SITE = "https://dailylogiclab.com";
 const ADSENSE_CLIENT = "ca-pub-9244949928133071";
 const SITEMAP_LASTMOD = new Date().toISOString().slice(0, 10);
+const DATE_PUBLISHED = "2026-06-18";
+const DATE_MODIFIED = "2026-06-22";
+const OG_IMAGE = `${SITE}/og-image.png`;
+const GITHUB_URL = "https://github.com/DennyHo0917/dailylogiclab";
+
+const geoFacts = {
+  home: {
+    eyebrow: "Quick facts",
+    title: "Daily Logic Lab facts",
+    items: [
+      ["What it is", "Daily Logic Lab is a free browser-based logic puzzle site."],
+      ["Main puzzle", "The main game is a 7x7 one-star Star Battle / Two Not Touch puzzle."],
+      ["Rules", "Place one star in every row, column, and color region; stars cannot touch, including diagonally."],
+      ["Access", "The puzzle, practice boards, hints, checks, sharing, and calculator work without an account."],
+      ["Verification", "Generated boards are checked by a solver and shown only when they have exactly one solution."]
+    ]
+  },
+  starBattleHints: {
+    eyebrow: "Quick facts",
+    title: "Star Battle hints facts",
+    items: [
+      ["Best first step", "Start with the row, column, or region that has the fewest legal cells."],
+      ["No-touch rule", "After placing a star, all eight neighboring cells become impossible."],
+      ["Guessing", "A verified Star Battle puzzle should have a logical path before guessing is needed."],
+      ["Use on Daily Logic Lab", "Hints on Daily Logic Lab add a time penalty so they help without replacing the solve."]
+    ]
+  },
+  twoNotTouch: {
+    eyebrow: "Quick facts",
+    title: "Two Not Touch facts",
+    items: [
+      ["Meaning", "Two Not Touch means placed pieces cannot touch by an edge or corner."],
+      ["Daily Logic Lab version", "Daily Logic Lab plays this rule as a Star Battle board with stars."],
+      ["Goal", "Put one star in each row, column, and color region while keeping stars separated."],
+      ["Cost", "The daily puzzle and practice boards are free in the browser."]
+    ]
+  },
+  queensAlternative: {
+    eyebrow: "Quick facts",
+    title: "Queens alternative facts",
+    items: [
+      ["Why it fits", "Star Battle is a natural Queens alternative because both use row, column, and region placement logic."],
+      ["Main difference", "Star Battle adds a no-touch rule: stars cannot be adjacent, even diagonally."],
+      ["Practice", "Daily Logic Lab offers a daily board and unlimited practice boards."],
+      ["Account", "No signup is required."]
+    ]
+  }
+};
 
 const languages = [
   {
@@ -2094,6 +2142,60 @@ function list(items) {
   return items.map((item) => `<li>${escapeHtml(item)}</li>`).join("\n                  ");
 }
 
+function organizationSchema() {
+  return {
+    "@type": "Organization",
+    "@id": `${SITE}/#organization`,
+    name: "Daily Logic Lab",
+    url: SITE,
+    logo: `${SITE}/icon-512.png`,
+    sameAs: [GITHUB_URL]
+  };
+}
+
+function geoFactsSection(facts) {
+  if (!facts) return "";
+  const items = facts.items
+    .map(
+      ([term, detail]) => `<div>
+              <dt>${escapeHtml(term)}</dt>
+              <dd>${escapeHtml(detail)}</dd>
+            </div>`
+    )
+    .join("\n            ");
+
+  return `<section class="facts-section">
+        <div class="section-shell">
+          <p class="eyebrow">${escapeHtml(facts.eyebrow)}</p>
+          <h2>${escapeHtml(facts.title)}</h2>
+          <dl class="facts-list">
+            ${items}
+          </dl>
+        </div>
+      </section>`;
+}
+
+function contentFactsBlock(facts) {
+  if (!facts) return "";
+  const items = facts.items
+    .map(
+      ([term, detail]) => `<div>
+            <dt>${escapeHtml(term)}</dt>
+            <dd>${escapeHtml(detail)}</dd>
+          </div>`
+    )
+    .join("\n          ");
+
+  return `
+        <section class="answer-summary">
+          <p class="eyebrow">${escapeHtml(facts.eyebrow)}</p>
+          <h2>${escapeHtml(facts.title)}</h2>
+          <dl class="facts-list">
+          ${items}
+          </dl>
+        </section>`;
+}
+
 function supportLinks(links = []) {
   return links
     .map((link) => {
@@ -2147,12 +2249,15 @@ function aria(language, key) {
 function jsonLd(language) {
   const profile = seo(language);
   const graph = [
+    organizationSchema(),
     {
       "@type": "WebSite",
       "@id": `${SITE}${language.path}#website`,
       name: "Daily Logic Lab",
       url: `${SITE}${language.path}`,
       inLanguage: language.htmlLang,
+      publisher: { "@id": `${SITE}/#organization` },
+      dateModified: DATE_MODIFIED,
       description: language.meta.description,
       keywords: profile.keywords.join(", "),
       availableLanguage: allAvailableLanguages
@@ -2165,6 +2270,7 @@ function jsonLd(language) {
       url: `${SITE}${language.path}`,
       inLanguage: language.htmlLang,
       isPartOf: { "@id": `${SITE}${language.path}#website` },
+      publisher: { "@id": `${SITE}/#organization` },
       description: language.meta.description,
       keywords: profile.keywords.join(", "),
       alternateName: profile.alternateNames
@@ -2179,6 +2285,10 @@ function jsonLd(language) {
       applicationCategory: "GameApplication",
       operatingSystem: "Any",
       isAccessibleForFree: true,
+      author: { "@id": `${SITE}/#organization` },
+      publisher: { "@id": `${SITE}/#organization` },
+      datePublished: DATE_PUBLISHED,
+      dateModified: DATE_MODIFIED,
       description: language.meta.description,
       keywords: profile.keywords.join(", "),
       availableLanguage: allAvailableLanguages,
@@ -2432,7 +2542,7 @@ function page(language) {
         </div>
       </section>
 
-      <section id="guide" class="seo-section">
+${language.key === "en" ? `      ${geoFactsSection(geoFacts.home)}\n\n` : ""}      <section id="guide" class="seo-section">
         <div class="section-shell seo-grid">
           ${guideArticles}
         </div>
@@ -2541,12 +2651,21 @@ function longtailArticleJsonLd(article, language, content) {
     {
       "@context": "https://schema.org",
       "@graph": [
+        organizationSchema(),
         {
           "@type": "Article",
           headline: content.h1,
           description: content.description,
           inLanguage: language.htmlLang,
-          mainEntityOfPage: `${SITE}${article.paths[language.key]}`,
+          image: OG_IMAGE,
+          author: { "@id": `${SITE}/#organization` },
+          publisher: { "@id": `${SITE}/#organization` },
+          datePublished: DATE_PUBLISHED,
+          dateModified: DATE_MODIFIED,
+          mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": `${SITE}${article.paths[language.key]}`
+          },
           isPartOf: { "@id": `${SITE}${language.path}#website` }
         },
         {
@@ -2572,8 +2691,10 @@ function longtailArticlePage(article, language) {
   const content = article.pages[language.key];
   const profile = seo(language);
   const canonical = `${SITE}${article.paths[language.key]}`;
+  const asset = language.key === "en" ? "./" : "../";
   const starBattlePath = localizedLongtailGroups[0].paths[language.key] || "/star-battle";
   const cta = content.cta ? `\n        <p><a href="${content.cta.href}">${escapeHtml(content.cta.label)}</a></p>` : "";
+  const facts = language.key === "en" ? `${contentFactsBlock(geoFacts[article.key])}\n` : "";
   const faqItems = content.faq
     .map(
       ([question, answer]) => `<details>
@@ -2607,7 +2728,7 @@ function longtailArticlePage(article, language) {
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <script src="../language-redirect.js"></script>
+    <script src="${asset}language-redirect.js"></script>
     <link rel="canonical" href="${canonical}">
     ${longtailAlternateLinks(article.paths)}
     <meta property="og:type" content="article">
@@ -2617,11 +2738,13 @@ function longtailArticlePage(article, language) {
     <meta property="og:description" content="${escapeHtml(content.ogDescription)}">
     <meta property="og:url" content="${canonical}">
     <meta property="og:image" content="${SITE}/og-image.png">
+    <meta property="article:published_time" content="${DATE_PUBLISHED}">
+    <meta property="article:modified_time" content="${DATE_MODIFIED}">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="${escapeHtml(content.ogTitle)}">
     <meta name="twitter:description" content="${escapeHtml(content.ogDescription)}">
     <meta name="twitter:image" content="${SITE}/og-image.png">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="${asset}styles.css">
     <script type="application/ld+json">
       ${longtailArticleJsonLd(article, language, content)}
     </script>
@@ -2644,7 +2767,7 @@ function longtailArticlePage(article, language) {
       <article class="section-shell content-card">
         <p class="eyebrow">${escapeHtml(content.eyebrow)}</p>
         <h1>${escapeHtml(content.h1)}</h1>
-        ${longtailSections(content.sections)}${cta}
+${facts}        ${longtailSections(content.sections)}${cta}
 
         <h2>FAQ</h2>
         <div class="faq-list">

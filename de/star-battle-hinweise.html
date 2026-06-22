@@ -37,6 +37,8 @@
     <meta property="og:description" content="Eine kurze deutsche Anleitung für sichere Star-Battle-Schritte.">
     <meta property="og:url" content="https://dailylogiclab.com/de/star-battle-hinweise">
     <meta property="og:image" content="https://dailylogiclab.com/og-image.png">
+    <meta property="article:published_time" content="2026-06-18">
+    <meta property="article:modified_time" content="2026-06-22">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Star Battle Hinweise">
     <meta name="twitter:description" content="Eine kurze deutsche Anleitung für sichere Star-Battle-Schritte.">
@@ -47,11 +49,33 @@
         "@context": "https://schema.org",
         "@graph": [
                 {
+                        "@type": "Organization",
+                        "@id": "https://dailylogiclab.com/#organization",
+                        "name": "Daily Logic Lab",
+                        "url": "https://dailylogiclab.com",
+                        "logo": "https://dailylogiclab.com/icon-512.png",
+                        "sameAs": [
+                                "https://github.com/DennyHo0917/dailylogiclab"
+                        ]
+                },
+                {
                         "@type": "Article",
                         "headline": "Star Battle Hinweise: lösen ohne Raten",
                         "description": "Praktische Star-Battle-Hinweise auf Deutsch: legale Felder zählen, Nachbarschaften sperren, Regionen vergleichen und sichere Sterne finden.",
                         "inLanguage": "de",
-                        "mainEntityOfPage": "https://dailylogiclab.com/de/star-battle-hinweise",
+                        "image": "https://dailylogiclab.com/og-image.png",
+                        "author": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "publisher": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "datePublished": "2026-06-18",
+                        "dateModified": "2026-06-22",
+                        "mainEntityOfPage": {
+                                "@type": "WebPage",
+                                "@id": "https://dailylogiclab.com/de/star-battle-hinweise"
+                        },
                         "isPartOf": {
                                 "@id": "https://dailylogiclab.com/de/#website"
                         }

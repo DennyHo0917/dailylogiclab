@@ -60,11 +60,25 @@
         "@context": "https://schema.org",
         "@graph": [
                 {
+                        "@type": "Organization",
+                        "@id": "https://dailylogiclab.com/#organization",
+                        "name": "Daily Logic Lab",
+                        "url": "https://dailylogiclab.com",
+                        "logo": "https://dailylogiclab.com/icon-512.png",
+                        "sameAs": [
+                                "https://github.com/DennyHo0917/dailylogiclab"
+                        ]
+                },
+                {
                         "@type": "WebSite",
                         "@id": "https://dailylogiclab.com/ja/#website",
                         "name": "Daily Logic Lab",
                         "url": "https://dailylogiclab.com/ja/",
                         "inLanguage": "ja",
+                        "publisher": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "dateModified": "2026-06-22",
                         "description": "Two Not Touch を無料でオンラインプレイ。Two Not Touch は星が接しないように配置する Star Battle 形式のパズルで、登録なしで遊べます。",
                         "keywords": "star battle 日本語, スター バトル, 毎日 ロジックパズル, 無料 パズル, 登録なし ゲーム, queens パズル 代替, two not touch online, two not touch, 唯一解 パズル, killer sudoku 組み合わせ, キラー数独 計算",
                         "availableLanguage": [
@@ -86,6 +100,9 @@
                         "inLanguage": "ja",
                         "isPartOf": {
                                 "@id": "https://dailylogiclab.com/ja/#website"
+                        },
+                        "publisher": {
+                                "@id": "https://dailylogiclab.com/#organization"
                         },
                         "description": "Two Not Touch を無料でオンラインプレイ。Two Not Touch は星が接しないように配置する Star Battle 形式のパズルで、登録なしで遊べます。",
                         "keywords": "star battle 日本語, スター バトル, 毎日 ロジックパズル, 無料 パズル, 登録なし ゲーム, queens パズル 代替, two not touch online, two not touch, 唯一解 パズル, killer sudoku 組み合わせ, キラー数独 計算",
@@ -115,6 +132,14 @@
                         "applicationCategory": "GameApplication",
                         "operatingSystem": "Any",
                         "isAccessibleForFree": true,
+                        "author": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "publisher": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "datePublished": "2026-06-18",
+                        "dateModified": "2026-06-22",
                         "description": "Two Not Touch を無料でオンラインプレイ。Two Not Touch は星が接しないように配置する Star Battle 形式のパズルで、登録なしで遊べます。",
                         "keywords": "star battle 日本語, スター バトル, 毎日 ロジックパズル, 無料 パズル, 登録なし ゲーム, queens パズル 代替, two not touch online, two not touch, 唯一解 パズル, killer sudoku 組み合わせ, キラー数独 計算",
                         "availableLanguage": [
