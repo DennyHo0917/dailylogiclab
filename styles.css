@@ -888,31 +888,68 @@ h2 {
     width: calc(100% - 20px);
   }
 
+  .topbar {
+    align-items: center;
+    flex-direction: row;
+    padding: 8px 10px;
+  }
+
+  .brand {
+    gap: 8px;
+  }
+
+  .brand span:last-child {
+    display: none;
+  }
+
   .nav {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    width: 100%;
-    gap: 0;
+    display: none;
   }
 
   .language-switcher {
-    width: 100%;
+    width: auto;
+    margin-left: auto;
+    align-self: auto;
   }
 
   .language-switcher summary {
     justify-content: center;
-    width: 100%;
+    min-height: 34px;
+    padding: 0 10px;
   }
 
   .language-menu {
     right: 0;
-    left: 0;
+    left: auto;
   }
 
-  .nav a {
-    flex: 1;
-    min-width: 0;
-    text-align: center;
+  .play-section {
+    padding: 10px 0 20px;
+  }
+
+  .game-column {
+    padding: 10px;
+  }
+
+  .game-head {
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  .game-intro {
+    display: -webkit-box;
+    margin-top: 6px;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .proof-points {
+    display: none;
   }
 
   .stats div,

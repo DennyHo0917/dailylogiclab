@@ -2,7 +2,7 @@
 
 Live website: [Daily Logic Lab](https://dailylogiclab.com/)
 
-Key pages: [Star Battle](https://dailylogiclab.com/star-battle) | [Killer Sudoku Combination Calculator](https://dailylogiclab.com/killer-sudoku-combination-calculator) | [Star Battle Hints](https://dailylogiclab.com/star-battle-hints) | [Two Not Touch Puzzle](https://dailylogiclab.com/two-not-touch-puzzle) | [Queens Puzzle Alternative](https://dailylogiclab.com/queens-puzzle-alternative) | [Sitemap](https://dailylogiclab.com/sitemap.xml)
+Key pages: [Two Not Touch](https://dailylogiclab.com/) | [Star Battle](https://dailylogiclab.com/star-battle) | [Killer Sudoku Combination Calculator](https://dailylogiclab.com/killer-sudoku-combination-calculator) | [Star Battle Hints](https://dailylogiclab.com/star-battle-hints) | [Queens Puzzle Alternative](https://dailylogiclab.com/queens-puzzle-alternative) | [Sitemap](https://dailylogiclab.com/sitemap.xml)
 
 Static MVP for a daily logic puzzle site.
 
@@ -12,7 +12,7 @@ Open `index.html` in a browser.
 
 ## Included
 
-- Daily Star Battle puzzle
+- Daily Two Not Touch puzzle
 - Practice puzzle button
 - Seeded random puzzle generation
 - Solver verification: only unique-solution puzzles are shown

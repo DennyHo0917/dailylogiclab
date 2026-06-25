@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://dailylogiclab.com/</loc>
@@ -541,66 +541,6 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/star-battle-hints" />
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://dailylogiclab.com/two-not-touch-puzzle</loc>
-    <lastmod>2026-06-22</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://dailylogiclab.com/two-not-touch-puzzle" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/two-not-touch-puzzle" />
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://dailylogiclab.com/de/two-not-touch</loc>
-    <lastmod>2026-06-22</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://dailylogiclab.com/two-not-touch-puzzle" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/two-not-touch-puzzle" />
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://dailylogiclab.com/es/two-not-touch</loc>
-    <lastmod>2026-06-22</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://dailylogiclab.com/two-not-touch-puzzle" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/two-not-touch-puzzle" />
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://dailylogiclab.com/fr/two-not-touch</loc>
-    <lastmod>2026-06-22</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://dailylogiclab.com/two-not-touch-puzzle" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/two-not-touch-puzzle" />
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://dailylogiclab.com/zh-cn/two-not-touch</loc>
-    <lastmod>2026-06-22</lastmod>
-    <xhtml:link rel="alternate" hreflang="en" href="https://dailylogiclab.com/two-not-touch-puzzle" />
-    <xhtml:link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/two-not-touch" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/two-not-touch-puzzle" />
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://dailylogiclab.com/queens-puzzle-alternative</loc>

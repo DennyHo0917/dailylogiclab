@@ -8,17 +8,16 @@ This keyword map follows the demand-mining article's method: start from search i
 
 | Page | Primary Keyword | Secondary Keywords | Intent | Page Role |
 |---|---|---|---|---|
-| `/` | daily star battle | queens style puzzle, queens puzzle alternative, star battle online, unlimited star battle, no login logic puzzle | Play now | Main game entry |
+| `/` | two not touch online | two not touch online free, two not touch puzzle, no touching stars puzzle, star battle online, queens style puzzle | Play now | Main game entry |
 | `/star-battle` | star battle puzzle | star battle rules, how to play star battle, daily star battle, star battle online | Learn rules | Guide page |
 | `/star-battle-hints` | star battle hints | how to solve star battle, star battle strategy, star battle tutorial, star battle puzzle tips | Get unstuck | Tutorial page |
-| `/two-not-touch-puzzle` | two not touch online | two not touch online free, two not touch puzzle, star battle two not touch, no touching stars puzzle | Play variant | Variant page |
 | `/queens-puzzle-alternative` | queens puzzle alternative | queens game alternative, queens unlimited, queens style puzzle, star battle queens | Find more puzzles | Comparison / alternative page |
 | `/killer-sudoku-combination-calculator` | killer sudoku combination calculator | killer sudoku cage calculator, sudoku cage combinations, killer sudoku helper, kakuro combination calculator | Use calculator | Tool page |
 
 ## Evidence Notes
 
 - `Star Battle` SERPs contain established online puzzle competitors such as Puzzle Star Battle, KrazyDad, Puzzle Madness, MindGames, Braingle, and Puzzle Baron.
-- `Two Not Touch` is a known adjacent name used by KrazyDad and connected to Star Battle style puzzles.
+- `Two Not Touch` is the homepage keyword because SERP intent is to play the no-touch stars game immediately.
 - `Queens` is a related placement-puzzle term, and app-store/SERP language commonly connects Queens with Star Battle and Two Not Touch.
 - `Killer Sudoku combination calculator` has direct tool competitors such as Godoku, Craig M. Booth's calculator, Sudoku Tools, Djape, BrainBashers, and SudoCue.
 
@@ -50,7 +49,7 @@ These pages are language SEO entries, not separate products. Each one targets a 
 - Social previews: Open Graph and Twitter tags on the homepage.
 - Multilingual metadata: language-specific title, description, keywords, canonical, hreflang, Open Graph locale, and sitemap alternates.
 - Structured data: WebSite, WebPage, WebApplication, FAQPage, Article, SoftwareApplication.
-- Indexable pages: homepage, six localized homepage variants, plus five keyword-focused static pages.
+- Indexable pages: homepage, six localized homepage variants, plus four keyword-focused static pages.
 - Internal linking: homepage links to all keyword pages.
 - Crawl files: robots.txt and sitemap.xml.
 
