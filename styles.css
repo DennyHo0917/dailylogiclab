@@ -373,11 +373,12 @@ h2 {
   position: absolute;
   inset: 0;
   display: grid;
-  place-items: center;
+  place-items: start center;
   border: 3px solid #2f3336;
   background: rgba(246, 244, 239, 0.92);
   padding: clamp(14px, 4vw, 28px);
   backdrop-filter: blur(6px);
+  cursor: pointer;
 }
 
 .start-overlay[hidden] {
@@ -385,7 +386,10 @@ h2 {
 }
 
 .start-card {
+  display: flex;
+  flex-direction: column;
   width: min(100%, 360px);
+  margin-top: clamp(8px, 3vw, 28px);
   border: 1px solid var(--line);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.94);
@@ -404,7 +408,9 @@ h2 {
 }
 
 .start-card .primary {
+  order: -1;
   width: 100%;
+  margin-bottom: 12px;
 }
 
 .cell[data-region="0"] {

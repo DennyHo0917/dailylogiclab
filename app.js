@@ -548,6 +548,7 @@ function init() {
 
 function bindGameEvents() {
   els.startBtn.addEventListener("click", startPuzzle);
+  els.startOverlay.addEventListener("click", startPuzzle);
   els.resetBtn.addEventListener("click", resetCurrentPuzzle);
   els.hintBtn.addEventListener("click", showHint);
   els.checkBtn.addEventListener("click", checkPuzzle);
