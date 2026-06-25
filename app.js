@@ -536,9 +536,11 @@ function init() {
   updateControls();
   setStatus(t("statusReady"), "");
   bindGameEvents();
-  renderDigits();
-  bindCalculatorEvents();
-  updateCombinations();
+  if (els.comboForm) {
+    renderDigits();
+    bindCalculatorEvents();
+    updateCombinations();
+  }
   trackEvent("site_loaded", {
     path: location.pathname || "/",
     title: document.title,

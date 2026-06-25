@@ -27,7 +27,6 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <script src="./language-redirect.js"></script>
     <link rel="canonical" href="https://dailylogiclab.com/two-not-touch-puzzle">
     <link rel="alternate" hreflang="en" href="https://dailylogiclab.com/two-not-touch-puzzle">
     <link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/two-not-touch">
@@ -115,12 +114,12 @@
   </head>
   <body>
     <header class="topbar">
-      <a class="brand" href="/#play">
+      <a class="brand" href="#play">
         <span class="brand-mark">DL</span>
         <span>Daily Logic Lab</span>
       </a>
       <nav class="nav" aria-label="Primary">
-        <a href="/#play">Play</a>
+        <a href="#play">Play</a>
         <a href="/star-battle">Star Battle</a>
         <a href="/star-battle-hints">Hints</a>
       </nav>
@@ -136,10 +135,106 @@
       </details>
     </header>
 
-    <main class="content-page">
+    <main>
+      <section id="play" class="play-section">
+        <div class="section-shell play-layout">
+          <div class="game-column">
+            <div class="game-head">
+              <div>
+                <p class="eyebrow" id="puzzleMode">Two Not Touch online</p>
+                <h1>Two Not Touch Online</h1>
+                <p class="game-intro">Play Two Not Touch online free. Place stars so no two touch, even diagonally, while each row, column, and region has one star.</p>
+                <ul class="proof-points" aria-label="Puzzle promises">
+                  <li>Free online</li>
+                  <li>No touching stars</li>
+                  <li>Unique solution</li>
+                  <li>No account</li>
+                </ul>
+              </div>
+              <div class="stats" aria-label="Puzzle stats">
+                <div>
+                  <span id="timer">00:00</span>
+                  <small>Time</small>
+                </div>
+                <div>
+                  <span id="starCount">0/7</span>
+                  <small>Stars</small>
+                </div>
+                <div>
+                  <span id="streakCount">0</span>
+                  <small>Streak</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="board-wrap" aria-live="polite">
+              <div class="board-stage">
+                <div id="board" class="board" role="grid" aria-label="Star Battle board"></div>
+                <div id="startOverlay" class="start-overlay">
+                  <div class="start-card">
+                    <p class="eyebrow" id="startLabel">Daily puzzle</p>
+                    <h2>Ready to solve?</h2>
+                    <p>The timer starts only after you press Start. Place one star in each row, column, and color block.</p>
+                    <button id="startBtn" type="button" class="primary">Start Puzzle</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p id="status" class="status" aria-live="polite">Press Start when you are ready. The timer is paused.</p>
+
+            <div class="toolbar" aria-label="Puzzle controls">
+              <button id="resetBtn" type="button">Reset</button>
+              <button id="hintBtn" type="button">Hint +30s</button>
+              <button id="checkBtn" type="button">Check</button>
+              <button id="practiceBtn" type="button">New Practice</button>
+              <button id="shareBtn" type="button" class="primary">Share</button>
+            </div>
+          </div>
+
+          <aside class="side-panel" aria-label="Puzzle notes">
+            <div class="metric-strip">
+              <div>
+                <strong id="todayLabel">Today</strong>
+                <span>Puzzle</span>
+              </div>
+              <div>
+                <strong>7x7</strong>
+                <span>Grid</span>
+              </div>
+              <div>
+                <strong id="proofLabel">Unique</strong>
+                <span>Verified</span>
+              </div>
+              <div>
+                <strong id="bestTime">--:--</strong>
+                <span>Best</span>
+              </div>
+            </div>
+            <div id="sharePreview" class="share-preview">Two Not Touch Online
+No touching stars. Unique solution. No login.</div>
+            <div class="quick-rules" aria-label="Quick rules">
+              <h2>Goal</h2>
+              <ul>
+                <li>One star in every row.</li>
+                <li>One star in every column.</li>
+                <li>One star in every color block.</li>
+                <li>No touching stars.</li>
+              </ul>
+              <p>Tap a square once for a star, twice to mark it as impossible.</p>
+            </div>
+            <div class="mini-actions">
+              <button id="dailyBtn" type="button">Daily</button>
+              <button id="copyLinkBtn" type="button">Copy Link</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="content-page">
       <article class="section-shell content-card">
-        <p class="eyebrow">Two Not Touch Online</p>
-        <h1>Two Not Touch Online</h1>
+        <p class="eyebrow">Guide</p>
+        <h2>Two Not Touch Rules and Tips</h2>
         <section class="answer-summary">
           <p class="eyebrow">Quick facts</p>
           <h2>Two Not Touch facts</h2>
@@ -172,7 +267,7 @@
           drives most of the solving because a single star blocks all eight neighboring cells and
           can force new moves across the board.
         </p>
-        <p><a href="/#play">Play Two Not Touch online free</a></p>
+        <p><a href="#play">Play Two Not Touch online free</a></p>
 
         <h2>What Does Two Not Touch Mean?</h2>
         <p>
@@ -276,11 +371,12 @@
 
         <h2>Play Two Not Touch Online Free</h2>
         <p>
-          Try the <a href="/#play">daily two-not-touch puzzle</a>, then use the
+          Try the <a href="#play">daily two-not-touch puzzle</a>, then use the
           <a href="/star-battle-hints">Star Battle hints guide</a> if you want a step-by-step way
           to find forced stars without guessing.
         </p>
       </article>
+      </section>
     </main>
 
     <footer class="site-footer">
@@ -294,5 +390,6 @@
         </nav>
       </div>
     </footer>
+    <script src="./app.js"></script>
   </body>
 </html>
