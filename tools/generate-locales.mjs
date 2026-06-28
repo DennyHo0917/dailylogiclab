@@ -168,7 +168,7 @@ const languages = [
       links: [
         ["Star Battle Puzzle Guide", "/star-battle"],
         ["Star Battle Hints", "/star-battle-hints"],
-        ["Play Two Not Touch Online", "/two-not-touch-puzzle"],
+        ["Play Two Not Touch Online", "/"],
         ["Queens Puzzle Alternative", "/queens-puzzle-alternative"],
         ["Killer Sudoku Combination Calculator", "/killer-sudoku-combination-calculator"]
       ]
@@ -652,7 +652,7 @@ const languages = [
       links: [
         ["Star Battle ガイド", "/star-battle"],
         ["Star Battle ヒント", "/star-battle-hints"],
-        ["Two Not Touch Puzzle", "/two-not-touch-puzzle"],
+        ["Two Not Touch Puzzle", "/ja/"],
         ["Queens の代替パズル", "/queens-puzzle-alternative"],
         ["Killer Sudoku 計算機", "/killer-sudoku-combination-calculator"]
       ]
@@ -773,7 +773,7 @@ const languages = [
       links: [
         ["Guia Star Battle", "/star-battle"],
         ["Dicas de Star Battle", "/star-battle-hints"],
-        ["Two Not Touch Puzzle", "/two-not-touch-puzzle"],
+        ["Two Not Touch Puzzle", "/pt-br/"],
         ["Alternativa a Queens", "/queens-puzzle-alternative"],
         ["Calculadora Killer Sudoku", "/killer-sudoku-combination-calculator"]
       ]
@@ -1318,12 +1318,13 @@ const localizedLongtailArticles = [
   },
   {
     key: "twoNotTouch",
+    deprecated: true,
     paths: {
-      en: "/two-not-touch-puzzle",
-      de: "/de/two-not-touch",
-      es: "/es/two-not-touch",
-      fr: "/fr/two-not-touch",
-      zh: "/zh-cn/two-not-touch"
+      en: "/",
+      de: "/de/",
+      es: "/es/",
+      fr: "/fr/",
+      zh: "/zh-cn/"
     },
     changefreq: "monthly",
     priority: "0.7",
@@ -1694,6 +1695,8 @@ const localizedLongtailArticles = [
   }
 ];
 
+const activeLocalizedLongtailArticles = localizedLongtailArticles.filter((article) => !article.deprecated);
+
 const localizedLongtailGroups = [
   {
     paths: {
@@ -1715,7 +1718,7 @@ const localizedLongtailGroups = [
     changefreq: "monthly",
     priority: "0.8"
   },
-  ...localizedLongtailArticles.map(({ paths, changefreq, priority }) => ({ paths, changefreq, priority }))
+  ...activeLocalizedLongtailArticles.map(({ paths, changefreq, priority }) => ({ paths, changefreq, priority }))
 ];
 
 function seo(language) {
@@ -2970,7 +2973,7 @@ for (const language of languages) {
   }
 }
 
-for (const article of localizedLongtailArticles) {
+for (const article of activeLocalizedLongtailArticles) {
   for (const language of languages) {
     if (!article.pages[language.key]) continue;
     const articleOut = path.resolve(longtailOutPath(article.paths[language.key]));

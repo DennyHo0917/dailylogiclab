@@ -10,7 +10,7 @@ Daily and practice boards are solver-checked for exactly one solution.
 - [Play Two Not Touch Online](https://dailylogiclab.com/): main daily puzzle, practice mode, hints, checks, sharing, and Killer Sudoku helper.
 - [Star Battle Puzzle Guide](https://dailylogiclab.com/star-battle): rules and beginner strategy for Star Battle puzzles.
 - [Star Battle Hints](https://dailylogiclab.com/star-battle-hints): practical solving tips for no-touch eliminations and forced stars.
-- [Two Not Touch Puzzle](https://dailylogiclab.com/two-not-touch-puzzle): explanation of the no-touch puzzle format.
+- [Two Not Touch Puzzle](https://dailylogiclab.com/): explanation of the no-touch puzzle format.
 - [Queens Puzzle Alternative](https://dailylogiclab.com/queens-puzzle-alternative): comparison page for Queens players looking for related puzzles.
 - [Killer Sudoku Combination Calculator](https://dailylogiclab.com/killer-sudoku-combination-calculator): browser tool for cage sum combinations.
 
