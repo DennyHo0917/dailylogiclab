@@ -496,7 +496,8 @@ const storage = {
   streak: "dll-streak",
   solvedDate: "dll-solved-date",
   bestDailyPrefix: "dll-best-daily-",
-  bestPractice: "dll-best-practice"
+  bestPractice: "dll-best-practice",
+  lastVisit: "dll-last-visit"
 };
 
 let state = createGameState(getDailyPuzzle(), "daily");
@@ -546,6 +547,7 @@ function init() {
     title: document.title,
     language: LANGUAGE_KEY
   });
+  trackReturnVisit();
 }
 
 function bindGameEvents() {
@@ -558,6 +560,7 @@ function bindGameEvents() {
   els.dailyBtn.addEventListener("click", loadDailyPuzzle);
   els.shareBtn.addEventListener("click", shareResult);
   els.copyLinkBtn.addEventListener("click", copyPageLink);
+  window.addEventListener("pagehide", () => trackAbandonedPuzzle("pagehide"), { once: true });
 }
 
 function bindCalculatorEvents() {
@@ -575,7 +578,9 @@ function createGameState(puzzle, mode) {
     hintCount: 0,
     hintPenalty: 0,
     solved: false,
-    started: false
+    started: false,
+    firstMoveTracked: false,
+    abandonmentTracked: false
   };
 }
 
@@ -895,6 +900,10 @@ function commitCellChange(row, col) {
   clearPendingAction();
   state.hints.clear();
   state.errors.clear();
+  if (!state.firstMoveTracked) {
+    state.firstMoveTracked = true;
+    trackEvent("puzzle_first_move", getPuzzleEventData());
+  }
   setStatus(t("keepGoing"), "");
   renderBoard();
   updateStats();
@@ -981,6 +990,7 @@ function clearPendingAction() {
 
 function resetCurrentPuzzle() {
   requestDestructiveAction("reset", t("resetConfirm"), () => {
+    trackAbandonedPuzzle("reset");
     trackEvent("puzzle_reset", getPuzzleEventData());
     state = createGameState(state.puzzle, state.mode);
     preparePuzzle(t("resetReady"), "");
@@ -989,6 +999,7 @@ function resetCurrentPuzzle() {
 
 function loadDailyPuzzle() {
   requestDestructiveAction("daily", t("dailyConfirm"), () => {
+    trackAbandonedPuzzle("daily");
     setStatus(t("generatingDaily"), "");
     state = createGameState(getDailyPuzzle(), "daily");
     preparePuzzle(t("dailyReady"), "success");
@@ -998,6 +1009,7 @@ function loadDailyPuzzle() {
 
 function loadPracticePuzzle() {
   requestDestructiveAction("practice", t("practiceConfirm"), () => {
+    trackAbandonedPuzzle("practice");
     setStatus(t("generatingPractice"), "");
     const next = generateUniquePuzzle(createPracticeSeed(), "P" + String(Date.now()).slice(-5));
     state = createGameState(next, "practice");
@@ -1428,6 +1440,24 @@ function trackEvent(name, params = {}) {
   if (typeof window.gtag === "function") {
     window.gtag("event", name, params);
   }
+}
+
+function trackReturnVisit() {
+  const today = getTodayKey();
+  const previousVisit = localStorage.getItem(storage.lastVisit);
+  if (previousVisit && previousVisit !== today) {
+    trackEvent("return_visit", {
+      path: location.pathname || "/",
+      language: LANGUAGE_KEY
+    });
+  }
+  localStorage.setItem(storage.lastVisit, today);
+}
+
+function trackAbandonedPuzzle(reason) {
+  if (!state.started || state.solved || !state.firstMoveTracked || state.abandonmentTracked) return;
+  state.abandonmentTracked = true;
+  trackEvent("puzzle_abandoned", getPuzzleEventData({ reason }));
 }
 
 function updateSharePreview() {
