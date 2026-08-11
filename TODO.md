@@ -77,6 +77,15 @@
 - [x] Verify no new horizontal overflow at 390px, 430px, 768px, and desktop widths.
 - [x] Start a local server on an available port and hand the preview URL back for inspection.
 
+## Phase 9 — regression hardening
+
+- [x] Remove stored-solution comparisons from live Tents and Nonogram validation.
+- [x] Complete Tents from tree adjacency, no-touch rules, and row/column totals; complete Nonogram from row/column runs.
+- [x] Retry failed generation up to five deterministic seeds and show a recoverable localized error state.
+- [x] Assert average, p95, and maximum generation time for each game and difficulty.
+- [x] Require at least 85 distinct visible puzzles from 100 seeds for every game and difficulty.
+- [x] Run generator, SEO, route, HTML, and JavaScript checks on pushes and pull requests.
+
 ## Known risks
 
 - The production site is static, so clean route support depends on folder index files and `_redirects`; local preview will use the same folder routes.

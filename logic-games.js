@@ -75,6 +75,7 @@
     pressStartCheck: "Press Start before checking the puzzle.",
     checkConflicts: "Check found conflicts. Red marks show where to look.",
     noConflicts: "No direct conflicts yet. Keep solving.",
+    generationError: "Could not generate this puzzle. Please try again.",
     complete: "Puzzle complete. Nice work.",
     modeDaily: "Daily puzzle",
     modePractice: "Unlimited practice",
@@ -179,10 +180,19 @@
 
   function loadPuzzle(mode, difficulty, cause = "load") {
     stopTimer();
-    const seed = mode === "daily"
+    const baseSeed = mode === "daily"
       ? core.hashString(`daily-${game}-${todayKey}-${difficulty}`)
       : createPracticeSeed();
-    const puzzle = core.generatePuzzle(game, seed, difficulty);
+    let generated;
+    try {
+      generated = core.generatePuzzleWithRetry(game, baseSeed, difficulty, mode);
+    } catch (error) {
+      state = { mode, difficulty, seed: baseSeed, generationFailed: true };
+      if (cause !== "initial" || new URLSearchParams(window.location.search).has("mode")) syncRoute(mode);
+      showGenerationError(error);
+      return;
+    }
+    const { puzzle, seed } = generated;
     state = {
       puzzle,
       mode,
@@ -204,6 +214,28 @@
     setStatus(mode === "daily" ? ui.todayReady : ui.practiceReady, "");
     trackEvent("game_view", { game_name: game, mode, difficulty });
     if (cause === "new_puzzle") trackEvent("new_puzzle", { game_name: game, mode, difficulty });
+  }
+
+  function showGenerationError(error) {
+    console.error("Puzzle generation failed:", ...(error.failures || [error]));
+    els.board.className = "logic-board";
+    els.board.textContent = ui.generationError;
+    els.gameMode.textContent = state.mode === "daily" ? ui.modeDaily : ui.modePractice;
+    els.startNote.textContent = ui.generationError;
+    els.gridSize.textContent = "--";
+    els.verified.textContent = "--";
+    els.startBtn.disabled = true;
+    els.resetBtn.disabled = true;
+    els.checkBtn.disabled = true;
+    els.shareBtn.disabled = true;
+    els.newPuzzleBtn.disabled = false;
+    setStatus(ui.generationError, "error");
+    trackEvent("puzzle_generation_error", {
+      game_name: game,
+      difficulty: state.difficulty,
+      mode: state.mode,
+      retry_count: error.retryCount || 5
+    });
   }
 
   function syncRoute(mode) {

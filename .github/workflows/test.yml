@@ -1,0 +1,25 @@
+name: Test
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Generator, solver, validator, performance, and diversity checks
+        run: node tools/test-logic-games.mjs
+      - name: SEO audit
+        run: node tools/audit-game-seo.mjs
+      - name: HTML and JavaScript syntax checks
+        run: node tools/check-site.mjs
+      - name: Route audit
+        run: node tools/audit-routes.mjs

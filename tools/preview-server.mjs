@@ -1,6 +1,6 @@
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
-import { extname, join, resolve } from "node:path";
+import { extname, isAbsolute, join, relative as relativePath, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
@@ -21,13 +21,15 @@ const server = createServer(async (request, response) => {
     const pathname = decodeURIComponent(new URL(request.url || "/", "http://localhost").pathname);
     const relative = pathname.replace(/^\/+/, "");
     const candidate = resolve(root, relative);
-    if (candidate !== root && !candidate.startsWith(`${root}\\`)) {
+    const candidatePath = relativePath(root, candidate);
+    if (candidatePath.startsWith("..") || isAbsolute(candidatePath)) {
       response.writeHead(403);
       response.end("Forbidden");
       return;
     }
     const info = await stat(candidate).catch(() => null);
-    const file = info?.isDirectory() ? join(candidate, "index.html") : candidate;
+    const cleanUrlFile = !info && !extname(candidate) ? `${candidate}.html` : candidate;
+    const file = info?.isDirectory() ? join(candidate, "index.html") : cleanUrlFile;
     const body = await readFile(file);
     response.writeHead(200, { "Content-Type": types[extname(file).toLowerCase()] || "application/octet-stream", "Cache-Control": "no-store" });
     response.end(body);

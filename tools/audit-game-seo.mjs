@@ -44,6 +44,7 @@ for (const [prefix, language] of locales) {
     if ((html.match(/class="game-card compact-game-card"/g) || []).length !== 4) failures.push(`${relative}: expected 4 related-game cards`);
     if ((html.match(/class="mini-preview /g) || []).length !== 4) failures.push(`${relative}: expected 4 game previews`);
     if (!html.includes(`${prefix}#play">Two Not Touch</a>`)) failures.push(`${relative}: missing localized Two Not Touch link`);
+    if (!html.includes('"generationError":')) failures.push(`${relative}: missing localized generation error`);
     if (!sitemap.includes(`<loc>${canonical}</loc>`)) failures.push(`${relative}: missing from sitemap`);
     for (const mode of ["daily", "practice"]) {
       const wrapper = path.join(root, relative, mode, "index.html");

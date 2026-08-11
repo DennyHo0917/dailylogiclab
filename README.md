@@ -50,3 +50,11 @@ Run the full generator, solver, determinism, performance, and diversity check wi
 ```text
 node tools/test-logic-games.mjs
 ```
+
+Run the remaining CI checks with:
+
+```text
+node tools/audit-game-seo.mjs
+node tools/check-site.mjs
+node tools/audit-routes.mjs
+```

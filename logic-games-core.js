@@ -204,7 +204,6 @@
 
   function validateTents(puzzle, tentKeys) {
     const tents = [...tentKeys].map(parseCellKey);
-    const solution = new Set(puzzle.solutionTents.map(([row, col]) => cellKey(row, col)));
     const treeSet = new Set(puzzle.trees.map(([row, col]) => cellKey(row, col)));
     const errors = new Set();
     const rowCounts = Array(puzzle.size).fill(0);
@@ -212,9 +211,15 @@
 
     tents.forEach(([row, col]) => {
       const key = cellKey(row, col);
+      if (row < 0 || row >= puzzle.size || col < 0 || col >= puzzle.size) {
+        errors.add(key);
+        return;
+      }
       rowCounts[row] += 1;
       colCounts[col] += 1;
-      if (treeSet.has(key) || !solution.has(key)) errors.add(key);
+      const besideTree = orthogonalNeighbors(row, col, puzzle.size)
+        .some(([treeRow, treeCol]) => treeSet.has(cellKey(treeRow, treeCol)));
+      if (treeSet.has(key) || !besideTree) errors.add(key);
     });
     for (let first = 0; first < tents.length; first += 1) {
       for (let second = first + 1; second < tents.length; second += 1) {
@@ -231,6 +236,10 @@
     colCounts.forEach((count, col) => {
       if (count > puzzle.colClues[col]) tents.filter(([, tentCol]) => tentCol === col)
         .forEach(([row, tentCol]) => errors.add(cellKey(row, tentCol)));
+    });
+    puzzle.trees.forEach(([treeRow, treeCol]) => {
+      const adjacent = tents.filter(([row, col]) => Math.abs(row - treeRow) + Math.abs(col - treeCol) === 1);
+      if (adjacent.length > 1) adjacent.forEach(([row, col]) => errors.add(cellKey(row, col)));
     });
     const allCluesMatch = rowCounts.every((count, row) => count === puzzle.rowClues[row]) &&
       colCounts.every((count, col) => count === puzzle.colClues[col]);
@@ -827,13 +836,19 @@
         for (let offset = 0; offset < length; offset += 1) add(horizontal ? fixed : start + offset, horizontal ? start + offset : fixed);
       }
     } else if (style === 3) {
-      const center = (profile.size - 1) / 2;
+      const centerRow = (profile.size - 1) / 2 + randomInt(rng, 3) - 1;
+      const centerCol = (profile.size - 1) / 2 + randomInt(rng, 3) - 1;
       const radius = Math.max(2, Math.floor(profile.size / 2));
       for (let row = 0; row < profile.size; row += 1) for (let col = 0; col < profile.size; col += 1) {
-        const distance = Math.abs(row - center) + Math.abs(col - center);
+        const distance = Math.abs(row - centerRow) + Math.abs(col - centerCol);
         if (distance === radius || distance === radius - 1) add(row, col);
       }
-      if (rng() < 0.5) for (let index = 1; index < profile.size - 1; index += 1) add(index, Math.floor(center));
+      if (rng() < 0.5) {
+        const vertical = rng() < 0.5;
+        for (let index = 1; index < profile.size - 1; index += 1) {
+          add(vertical ? index : Math.floor(centerRow), vertical ? Math.floor(centerCol) : index);
+        }
+      }
     } else {
       for (let cluster = 0; cluster < profile.clusters; cluster += 1) {
         grow([randomInt(rng, profile.size), randomInt(rng, profile.size)], Math.ceil(profile.filled / profile.clusters));
@@ -876,11 +891,45 @@
         const key = cellKey(row, col);
         const isFilled = marks.get(key) === 1;
         filled[row][col] = isFilled;
-        if (isFilled !== puzzle.solution[row][col] && (isFilled || marks.get(key) === 2)) errors.add(key);
       }
     }
-    const completed = filled.every((row, rowIndex) => row.every((value, colIndex) => value === puzzle.solution[rowIndex][colIndex]));
+    const rowMarks = Array.from({ length: puzzle.size }, (_, row) =>
+      Array.from({ length: puzzle.size }, (_, col) => marks.get(cellKey(row, col)) || 0));
+    const colMarks = Array.from({ length: puzzle.size }, (_, col) =>
+      Array.from({ length: puzzle.size }, (_, row) => marks.get(cellKey(row, col)) || 0));
+    rowMarks.forEach((line, row) => {
+      if (!nonogramLineCanMatch(puzzle.rowClues[row], line)) {
+        line.forEach((value, col) => { if (value) errors.add(cellKey(row, col)); });
+      }
+    });
+    colMarks.forEach((line, col) => {
+      if (!nonogramLineCanMatch(puzzle.colClues[col], line)) {
+        line.forEach((value, row) => { if (value) errors.add(cellKey(row, col)); });
+      }
+    });
+    const rowsMatch = filled.every((row, index) => sameArray(countRuns(row), puzzle.rowClues[index]));
+    const colsMatch = Array.from({ length: puzzle.size }, (_, col) =>
+      sameArray(countRuns(filled.map((row) => row[col])), puzzle.colClues[col])).every(Boolean);
+    const completed = !errors.size && rowsMatch && colsMatch;
     return { errors, completed, filled };
+  }
+
+  function nonogramLineCanMatch(clues, marks) {
+    if (!clues.length) return marks.every((mark) => mark !== 1);
+    const suffix = clues.map((_, index) => clues.slice(index).reduce((sum, clue) => sum + clue, 0) + clues.length - index - 1);
+    function place(clueIndex, position) {
+      if (clueIndex === clues.length) return marks.slice(position).every((mark) => mark !== 1);
+      const run = clues[clueIndex];
+      for (let start = position; start + suffix[clueIndex] <= marks.length; start += 1) {
+        if (marks.slice(position, start).some((mark) => mark === 1)) break;
+        if (marks.slice(start, start + run).some((mark) => mark === 2)) continue;
+        const end = start + run;
+        if (end < marks.length && marks[end] === 1) continue;
+        if (place(clueIndex + 1, end + (clueIndex < clues.length - 1 ? 1 : 0))) return true;
+      }
+      return false;
+    }
+    return place(0, 0);
   }
 
   function generatePuzzle(game, seed, difficulty) {
@@ -891,6 +940,22 @@
     throw new Error(`Unknown game: ${game}`);
   }
 
+  function generatePuzzleWithRetry(game, seed, difficulty, mode, generate = generatePuzzle) {
+    const failures = [];
+    for (let attempt = 0; attempt < 5; attempt += 1) {
+      const retrySeed = attempt === 0 ? seed : hashString(`${seed}-retry-${attempt}`);
+      try {
+        return { puzzle: generate(game, retrySeed, difficulty), seed: retrySeed, retryCount: attempt };
+      } catch (error) {
+        failures.push(error);
+      }
+    }
+    const error = new Error(`Could not generate this ${mode || "puzzle"} puzzle after 5 attempts.`);
+    error.failures = failures;
+    error.retryCount = 5;
+    throw error;
+  }
+
   const api = {
     DIFFICULTIES,
     GAME_ORDER,
@@ -899,6 +964,7 @@
     cellKey,
     parseCellKey,
     generatePuzzle,
+    generatePuzzleWithRetry,
     generateTents,
     solveTents,
     validateTents,
