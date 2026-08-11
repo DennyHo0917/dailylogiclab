@@ -500,7 +500,11 @@ const storage = {
   lastVisit: "dll-last-visit"
 };
 
-let state = createGameState(getDailyPuzzle(), "daily");
+const INITIAL_MODE = new URLSearchParams(window.location.search).get("mode") === "practice" ? "practice" : "daily";
+let state = createGameState(
+  INITIAL_MODE === "practice" ? generateUniquePuzzle(createPracticeSeed(), "P" + String(Date.now()).slice(-5)) : getDailyPuzzle(),
+  INITIAL_MODE
+);
 let timerId = null;
 let elapsed = 0;
 let startedAt = 0;

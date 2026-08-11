@@ -903,6 +903,121 @@ const languages = [
   }
 ];
 
+const gameCatalog = {
+  en: {
+    nav: "Games",
+    menuAria: "Choose a logic game",
+    current: "Two Not Touch",
+    eyebrow: "Keep solving",
+    title: "More logic games",
+    lede: "Try another daily puzzle or keep practicing for free.",
+    daily: "Daily puzzle",
+    practice: "Practice",
+    cards: [
+      ["tents-and-trees", "Tents and Trees", "Place one tent beside every tree without letting tents touch."],
+      ["hashi", "Hashi", "Connect every numbered island with bridges that never cross."],
+      ["slitherlink", "Slitherlink", "Use the clues to draw one continuous loop with no branches."],
+      ["nonogram", "Nonogram", "Reveal a black-and-white picture from the row and column clues."]
+    ]
+  },
+  de: {
+    nav: "Spiele",
+    menuAria: "Logikspiel auswählen",
+    current: "Two Not Touch",
+    eyebrow: "Weiterknobeln",
+    title: "Mehr Logikspiele",
+    lede: "Wechsle zum nächsten Tagesrätsel oder übe kostenlos weiter.",
+    daily: "Tagesrätsel",
+    practice: "Üben",
+    cards: [
+      ["tents-and-trees", "Zelte und Bäume", "Stelle zu jedem Baum ein Zelt, ohne dass sich Zelte berühren."],
+      ["hashi", "Hashi – Brücken", "Verbinde alle nummerierten Inseln mit Brücken, die sich nie kreuzen."],
+      ["slitherlink", "Slitherlink", "Zeichne mit den Hinweisen eine einzige geschlossene Linie ohne Abzweigungen."],
+      ["nonogram", "Nonogramm", "Decke mit den Zeilen- und Spaltenhinweisen ein Schwarz-Weiß-Bild auf."]
+    ]
+  },
+  es: {
+    nav: "Juegos",
+    menuAria: "Elegir un juego de lógica",
+    current: "Two Not Touch",
+    eyebrow: "Sigue resolviendo",
+    title: "Más juegos de lógica",
+    lede: "Prueba el reto diario de otro juego o practica gratis todo lo que quieras.",
+    daily: "Reto diario",
+    practice: "Practicar",
+    cards: [
+      ["tents-and-trees", "Tents and Trees", "Coloca una tienda junto a cada árbol sin que las tiendas se toquen."],
+      ["hashi", "Hashi – Puentes", "Conecta todas las islas numeradas con puentes que nunca se crucen."],
+      ["slitherlink", "Slitherlink", "Usa las pistas para dibujar un único bucle cerrado y sin ramificaciones."],
+      ["nonogram", "Nonograma", "Descubre una imagen en blanco y negro con las pistas de filas y columnas."]
+    ]
+  },
+  fr: {
+    nav: "Jeux",
+    menuAria: "Choisir un jeu de logique",
+    current: "Two Not Touch",
+    eyebrow: "Continuer à jouer",
+    title: "D’autres jeux de logique",
+    lede: "Essayez un autre défi du jour ou entraînez-vous gratuitement, sans limite.",
+    daily: "Défi du jour",
+    practice: "Entraînement",
+    cards: [
+      ["tents-and-trees", "Tentes et arbres", "Placez une tente près de chaque arbre sans que deux tentes se touchent."],
+      ["hashi", "Hashi – Ponts", "Reliez toutes les îles numérotées avec des ponts qui ne se croisent jamais."],
+      ["slitherlink", "Slitherlink", "Suivez les indices pour tracer une seule boucle fermée, sans embranchement."],
+      ["nonogram", "Nonogramme", "Révélez une image en noir et blanc grâce aux indices des lignes et colonnes."]
+    ]
+  },
+  ja: {
+    nav: "ゲーム",
+    menuAria: "ロジックパズルを選ぶ",
+    current: "Two Not Touch",
+    eyebrow: "次のパズルへ",
+    title: "ほかのロジックパズル",
+    lede: "別のデイリーパズルに挑戦するか、無料で何問でも練習できます。",
+    daily: "今日の問題",
+    practice: "練習する",
+    cards: [
+      ["tents-and-trees", "テントと木", "すべての木の隣にテントを置き、テント同士が接しないようにします。"],
+      ["hashi", "橋をかけろ（Hashi）", "数字の島を、交差しない橋ですべてつなぎます。"],
+      ["slitherlink", "スリザーリンク", "数字を手がかりに、枝分かれのない一つの輪を描きます。"],
+      ["nonogram", "ノノグラム", "行と列の数字から白黒の絵を完成させます。"]
+    ]
+  },
+  pt: {
+    nav: "Jogos",
+    menuAria: "Escolher um jogo de lógica",
+    current: "Two Not Touch",
+    eyebrow: "Continue jogando",
+    title: "Mais jogos de lógica",
+    lede: "Experimente outro desafio diário ou pratique de graça, quantas vezes quiser.",
+    daily: "Desafio diário",
+    practice: "Praticar",
+    cards: [
+      ["tents-and-trees", "Tendas e Árvores", "Coloque uma tenda ao lado de cada árvore sem deixar as tendas se encostarem."],
+      ["hashi", "Hashi – Pontes", "Conecte todas as ilhas numeradas com pontes que nunca se cruzam."],
+      ["slitherlink", "Slitherlink", "Use as pistas para desenhar um único laço fechado, sem ramificações."],
+      ["nonogram", "Nonograma", "Revele uma imagem em preto e branco usando as pistas das linhas e colunas."]
+    ]
+  },
+  zh: {
+    nav: "游戏",
+    menuAria: "选择逻辑游戏",
+    current: "Two Not Touch",
+    eyebrow: "继续挑战",
+    title: "更多逻辑游戏",
+    lede: "换一道每日题，或者继续无限免费练习。",
+    daily: "每日题",
+    practice: "无限练习",
+    cards: [
+      ["tents-and-trees", "帐篷与树", "在每棵树旁放一顶帐篷，同时保证帐篷之间互不相邻。"],
+      ["hashi", "数桥（Hashi）", "用不交叉的桥连接所有编号岛屿，并满足每座岛的数字。"],
+      ["slitherlink", "数回（Slitherlink）", "根据数字提示画出一条连续、闭合且没有分叉的环线。"],
+      ["nonogram", "数织（Nonogram）", "根据行列数字提示还原一幅黑白图案。"]
+    ]
+  }
+};
+
 const ariaLabels = {
   en: {
     promises: "Puzzle promises",
@@ -2318,6 +2433,57 @@ function jsonLd(language) {
   return JSON.stringify({ "@context": "https://schema.org", "@graph": graph }, null, 8);
 }
 
+function gamesSwitcher(language) {
+  const catalog = gameCatalog[language.key];
+  const links = [
+    [catalog.current, `${language.path}#play`],
+    ...catalog.cards.map(([slug, title]) => [title, `${language.path}${slug}/`])
+  ]
+    .map(([label, href]) => `<a href="${href}">${escapeHtml(label)}</a>`)
+    .join("\n          ");
+  return `<details class="language-switcher games-switcher">
+        <summary aria-label="${escapeHtml(catalog.menuAria)}">${escapeHtml(catalog.nav)}</summary>
+        <div class="language-menu games-menu">
+          ${links}
+        </div>
+      </details>`;
+}
+
+function gamePreview(slug) {
+  const previews = {
+    "tents-and-trees": `<div class="mini-preview mini-tents" aria-hidden="true"><span class="tree">♣</span><span></span><span class="tent">▲</span><span></span><span class="tree">♣</span><span></span><span class="tent">▲</span><span></span><span class="tree">♣</span></div>`,
+    hashi: `<div class="mini-preview mini-hashi" aria-hidden="true"><i class="bridge bridge-a"></i><i class="bridge bridge-b"></i><i class="bridge bridge-c"></i><span class="island island-a">2</span><span class="island island-b">3</span><span class="island island-c">1</span><span class="island island-d">2</span></div>`,
+    slitherlink: `<div class="mini-preview mini-slither" aria-hidden="true"><span>2</span><span></span><span>1</span><span></span><span>3</span><span></span><span>2</span><span></span><span>1</span></div>`,
+    nonogram: `<div class="mini-preview mini-nonogram" aria-hidden="true"><span></span><span></span><span class="filled"></span><span></span><span></span><span></span><span class="filled"></span><span class="filled"></span><span class="filled"></span><span></span><span class="filled"></span><span class="filled"></span><span class="filled"></span><span class="filled"></span><span class="filled"></span><span></span><span class="filled"></span><span class="filled"></span><span class="filled"></span><span></span><span></span><span></span><span class="filled"></span><span></span><span></span></div>`
+  };
+  return previews[slug];
+}
+
+function moreGamesSection(language) {
+  const catalog = gameCatalog[language.key];
+  const cards = catalog.cards
+    .map(([slug, title, description]) => `<article class="game-card compact-game-card">
+              ${gamePreview(slug)}
+              <h2>${escapeHtml(title)}</h2>
+              <p>${escapeHtml(description)}</p>
+              <div class="game-card-actions">
+                <a class="primary" href="${language.path}${slug}/daily/">${escapeHtml(catalog.daily)}</a>
+                <a href="${language.path}${slug}/practice/">${escapeHtml(catalog.practice)}</a>
+              </div>
+            </article>`)
+    .join("\n            ");
+  return `<section class="more-games-section">
+        <div class="section-shell">
+          <p class="eyebrow">${escapeHtml(catalog.eyebrow)}</p>
+          <h2>${escapeHtml(catalog.title)}</h2>
+          <p class="home-lede">${escapeHtml(catalog.lede)}</p>
+          <div class="game-card-grid more-games-grid">
+            ${cards}
+          </div>
+        </div>
+      </section>`;
+}
+
 function page(language) {
   const profile = seo(language);
   const canonical = `${SITE}${language.path}`;
@@ -2400,6 +2566,7 @@ function page(language) {
         <span class="brand-mark">DL</span>
         <span>Daily Logic Lab</span>
       </a>
+      ${gamesSwitcher(language)}
       <nav class="nav" aria-label="${escapeHtml(language.navAria)}">
         <a href="#play">${escapeHtml(language.nav[0])}</a>
         <a href="#calculator">${escapeHtml(language.nav[1])}</a>
@@ -2496,6 +2663,8 @@ function page(language) {
           </aside>
         </div>
       </section>
+
+      ${moreGamesSection(language)}
 
       <section id="calculator" class="tool-section">
         <div class="section-shell tool-layout">
@@ -2962,10 +3131,16 @@ ${supportPages}
 `;
 }
 
-for (const language of languages) {
+const homeOnly = process.argv.includes("--home-only");
+const localeOption = process.argv.find((argument) => argument.startsWith("--locales="));
+const selectedKeys = localeOption ? new Set(localeOption.slice("--locales=".length).split(",")) : null;
+const selectedLanguages = selectedKeys ? languages.filter((language) => selectedKeys.has(language.key)) : languages;
+
+for (const language of selectedLanguages) {
   const outPath = path.resolve(language.out);
   await mkdir(path.dirname(outPath), { recursive: true });
   await writeFile(outPath, page(language), "utf8");
+  if (homeOnly) continue;
   for (const pageKey of Object.keys(supportSlugs)) {
     const supportOut = path.resolve(supportOutPath(language, pageKey));
     await mkdir(path.dirname(supportOut), { recursive: true });
@@ -2973,13 +3148,15 @@ for (const language of languages) {
   }
 }
 
-for (const article of activeLocalizedLongtailArticles) {
-  for (const language of languages) {
-    if (!article.pages[language.key]) continue;
-    const articleOut = path.resolve(longtailOutPath(article.paths[language.key]));
-    await mkdir(path.dirname(articleOut), { recursive: true });
-    await writeFile(articleOut, longtailArticlePage(article, language), "utf8");
+if (!homeOnly) {
+  for (const article of activeLocalizedLongtailArticles) {
+    for (const language of languages) {
+      if (!article.pages[language.key]) continue;
+      const articleOut = path.resolve(longtailOutPath(article.paths[language.key]));
+      await mkdir(path.dirname(articleOut), { recursive: true });
+      await writeFile(articleOut, longtailArticlePage(article, language), "utf8");
+    }
   }
-}
 
-await writeFile("sitemap.xml", sitemap(), "utf8");
+  await writeFile("sitemap.xml", sitemap(), "utf8");
+}

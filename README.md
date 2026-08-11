@@ -2,7 +2,7 @@
 
 Live website: [Daily Logic Lab](https://dailylogiclab.com/)
 
-Key pages: [Two Not Touch](https://dailylogiclab.com/) | [Star Battle](https://dailylogiclab.com/star-battle) | [Killer Sudoku Combination Calculator](https://dailylogiclab.com/killer-sudoku-combination-calculator) | [Star Battle Hints](https://dailylogiclab.com/star-battle-hints) | [Queens Puzzle Alternative](https://dailylogiclab.com/queens-puzzle-alternative) | [Sitemap](https://dailylogiclab.com/sitemap.xml)
+Key pages: [Two Not Touch](https://dailylogiclab.com/) | [Tents and Trees](https://dailylogiclab.com/tents-and-trees/) | [Hashi](https://dailylogiclab.com/hashi/) | [Slitherlink](https://dailylogiclab.com/slitherlink/) | [Nonogram](https://dailylogiclab.com/nonogram/) | [Sitemap](https://dailylogiclab.com/sitemap.xml)
 
 Static MVP for a daily logic puzzle site.
 
@@ -13,9 +13,11 @@ Open `index.html` in a browser.
 ## Included
 
 - Daily Two Not Touch puzzle
+- Daily and unlimited practice Tents and Trees, Hashi, Slitherlink, and Nonogram puzzles
+- Full game pages and controls in English, German, Spanish, French, Japanese, Brazilian Portuguese, and Simplified Chinese
 - Practice puzzle button
 - Seeded random puzzle generation
-- Solver verification: only unique-solution puzzles are shown
+- Seeded puzzle validation and solver checks for the new game families
 - Reset, check, hint, share
 - Timer, star count, local streak
 - Killer Sudoku cage combination calculator
@@ -26,12 +28,19 @@ Open `index.html` in a browser.
 - `index.html`
 - `styles.css`
 - `app.js`
+- `logic-games-core.js`
+- `logic-games.js`
+- `tools/generate-game-locales.mjs`
 - `screenshot-desktop.png`
 - `screenshot-mobile.png`
 
-## Next Build Steps
+## Local preview
 
-1. Add archive URLs for daily puzzles.
-2. Add one indexed rules page per puzzle type.
-3. Add difficulty grading from solver steps.
-4. Deploy to Cloudflare Pages, Vercel, or Netlify.
+The site is static. Serve the repository root, then open `/` or any game route:
+
+```text
+python -m http.server 4173
+http://localhost:4173/
+```
+
+See [TODO.md](TODO.md) for the staged product plan and remaining upgrades.
