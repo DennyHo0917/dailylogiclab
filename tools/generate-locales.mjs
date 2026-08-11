@@ -3,9 +3,9 @@ import path from "node:path";
 
 const SITE = "https://dailylogiclab.com";
 const ADSENSE_CLIENT = "ca-pub-9244949928133071";
-const SITEMAP_LASTMOD = new Date().toISOString().slice(0, 10);
+const SITEMAP_LASTMOD = "2026-08-11";
 const DATE_PUBLISHED = "2026-06-18";
-const DATE_MODIFIED = "2026-06-22";
+const DATE_MODIFIED = "2026-08-11";
 const OG_IMAGE = `${SITE}/og-image.png`;
 const GITHUB_URL = "https://github.com/DennyHo0917/dailylogiclab";
 

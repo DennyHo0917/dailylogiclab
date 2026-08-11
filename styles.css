@@ -1171,7 +1171,7 @@ body[data-game] .logic-play-section {
 }
 
 .tents-board {
-  aspect-ratio: auto;
+  aspect-ratio: 1;
 }
 
 .board-corner,
@@ -1231,6 +1231,7 @@ body[data-game] .logic-play-section {
 
 .nonogram-board {
   width: min(100%, 600px);
+  aspect-ratio: 1;
 }
 
 .nonogram-board .logic-cell {
@@ -1401,6 +1402,14 @@ body[data-game] .logic-play-section {
   position: absolute;
   content: "";
   background: transparent;
+}
+
+.edge-horizontal {
+  height: 32px;
+}
+
+.edge-vertical {
+  width: 32px;
 }
 
 .edge-horizontal::after {

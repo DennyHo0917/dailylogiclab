@@ -17,7 +17,7 @@ Open `index.html` in a browser.
 - Full game pages and controls in English, German, Spanish, French, Japanese, Brazilian Portuguese, and Simplified Chinese
 - Practice puzzle button
 - Seeded random puzzle generation
-- Seeded puzzle validation and solver checks for the new game families
+- Procedural generation with unique-solution solver checks for all four new game families
 - Reset, check, hint, share
 - Timer, star count, local streak
 - Killer Sudoku cage combination calculator
@@ -44,3 +44,9 @@ http://localhost:4173/
 ```
 
 See [TODO.md](TODO.md) for the staged product plan and remaining upgrades.
+
+Run the full generator, solver, determinism, performance, and diversity check with:
+
+```text
+node tools/test-logic-games.mjs
+```

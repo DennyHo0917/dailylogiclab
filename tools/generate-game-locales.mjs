@@ -163,7 +163,7 @@ function page(localeKey, gameKey) {
   const related = ["two-not-touch", ...games].filter((key) => key !== gameKey).map((key) => relatedGameCard(locale, key)).join("");
   const ogAlternates = order.filter((key) => key !== localeKey).map((key) => `<meta property="og:locale:alternate" content="${locales[key].lang.replace("-", "_")}">`).join("");
   const faqJson = game.faq.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } }));
-  const schema = { "@context": "https://schema.org", "@graph": [{ "@type": "WebApplication", name: game.title, url: `${SITE}${canonicalPath}`, inLanguage: locale.lang, applicationCategory: "GameApplication", operatingSystem: "Any", isAccessibleForFree: true, description: game.desc }, { "@type": "FAQPage", inLanguage: locale.lang, mainEntity: faqJson }] };
+  const schema = { "@context": "https://schema.org", "@graph": [{ "@type": "WebApplication", name: game.title, url: `${SITE}${canonicalPath}`, inLanguage: locale.lang, dateModified: "2026-08-11", applicationCategory: "GameApplication", operatingSystem: "Any", isAccessibleForFree: true, description: game.desc }, { "@type": "FAQPage", inLanguage: locale.lang, mainEntity: faqJson }] };
   const runtimeCopy = { game: { title: game.title, intro: game.intro, prompt: game.prompt, goal: game.goal, rules: game.rules, how: game.how, tips: game.tips, faq: game.faq }, ui: c.ui };
   return `<!doctype html>
 <html lang="${locale.lang}">
@@ -208,7 +208,7 @@ function wrapper(localeKey, gameKey, mode) {
   const base = route(locale, gameKey);
   const label = mode === "daily" ? locale.c.daily : locale.c.practice;
   const target = `${base}?mode=${mode}`;
-  return `<!doctype html><html lang="${locale.lang}"><head><meta charset="utf-8"><meta name="robots" content="noindex, follow"><meta http-equiv="refresh" content="0; url=${target}"><link rel="canonical" href="${SITE}${base}${mode}/"><title>${esc(label)} – ${esc(game.name)}</title></head><body><p><a href="${target}">${esc(label)} – ${esc(game.name)}</a></p></body></html>`;
+  return `<!doctype html><html lang="${locale.lang}"><head><meta charset="utf-8"><meta name="robots" content="noindex, follow"><meta http-equiv="refresh" content="0; url=${target}"><link rel="canonical" href="${SITE}${base}"><title>${esc(label)} – ${esc(game.name)}</title></head><body><p><a href="${target}">${esc(label)} – ${esc(game.name)}</a></p></body></html>`;
 }
 
 function writePages() {
@@ -242,6 +242,10 @@ function sitemapBlock() {
 function updateSitemap() {
   const sitemapPath = path.join(ROOT, "sitemap.xml");
   let xml = fs.readFileSync(sitemapPath, "utf8");
+  for (const localeKey of order) {
+    const home = `${SITE}${locales[localeKey].path}`;
+    xml = xml.replace(new RegExp(`(<loc>${home.replaceAll(".", "\\.")}<\\/loc>\\s*<lastmod>)[^<]+`), "$1" + "2026-08-11");
+  }
   const start = xml.search(/\s*<url>\s*<loc>https:\/\/dailylogiclab\.com\/tents-and-trees\/<\/loc>/);
   if (start >= 0) xml = `${xml.slice(0, start)}\n${sitemapBlock()}\n</urlset>\n`;
   else xml = xml.replace(/\s*<\/urlset>\s*$/, `\n${sitemapBlock()}\n</urlset>\n`);

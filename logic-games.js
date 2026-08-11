@@ -204,7 +204,6 @@
     setStatus(mode === "daily" ? ui.todayReady : ui.practiceReady, "");
     trackEvent("game_view", { game_name: game, mode, difficulty });
     if (cause === "new_puzzle") trackEvent("new_puzzle", { game_name: game, mode, difficulty });
-    if (mode === "daily") trackEvent("daily_puzzle_start", { game_name: game, mode, difficulty, state: "ready" });
   }
 
   function syncRoute(mode) {
@@ -493,7 +492,7 @@
         clue.className = "slither-clue";
         clue.style.left = `${((col + 0.5) / size) * 100}%`;
         clue.style.top = `${((row + 0.5) / size) * 100}%`;
-        clue.textContent = String(state.puzzle.clues[row][col]);
+        clue.textContent = state.puzzle.clues[row][col] == null ? "" : String(state.puzzle.clues[row][col]);
         if (state.errors.has(`cell:${row}:${col}`)) clue.classList.add("game-error");
         els.board.appendChild(clue);
       }

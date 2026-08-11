@@ -149,12 +149,11 @@
   function generateTents(seed, difficulty) {
     const profile = TENT_PROFILES[difficulty] || TENT_PROFILES.medium;
     const rng = createRng(seed);
-    let fallback = null;
     const allCells = Array.from({ length: profile.size }, (_, row) =>
       Array.from({ length: profile.size }, (_, col) => [row, col])
     ).flat();
 
-    for (let attempt = 0; attempt < 240; attempt += 1) {
+    for (let attempt = 0; attempt < 400; attempt += 1) {
       const tents = [];
       const trees = [];
       const usedTrees = new Set();
@@ -172,6 +171,9 @@
       }
       if (tents.length !== profile.trees) continue;
       if (trees.some(([treeRow, treeCol]) => tents.filter(([tentRow, tentCol]) =>
+        Math.abs(tentRow - treeRow) + Math.abs(tentCol - treeCol) === 1
+      ).length !== 1)) continue;
+      if (tents.some(([tentRow, tentCol]) => trees.filter(([treeRow, treeCol]) =>
         Math.abs(tentRow - treeRow) + Math.abs(tentCol - treeCol) === 1
       ).length !== 1)) continue;
 
@@ -195,14 +197,9 @@
         puzzle.unique = true;
         return puzzle;
       }
-      if (!fallback && solutions.length) {
-        puzzle.solutionTents = solutions[0];
-        fallback = puzzle;
-      }
     }
 
-    if (fallback) return fallback;
-    throw new Error("Could not generate a valid Tents and Trees puzzle.");
+    throw new Error("Could not generate a unique Tents and Trees puzzle.");
   }
 
   function validateTents(puzzle, tentKeys) {
@@ -250,23 +247,10 @@
 
   // Hashi -----------------------------------------------------------------
 
-  // ponytail: fixed grid-shaped solution families keep the first version fast and predictable.
-  const HASHI_BLUEPRINTS = {
-    easy: {
-      size: 7,
-      islands: [[1, 1], [1, 5], [3, 1], [3, 5], [5, 1], [5, 5]],
-      edges: [[0, 1, 1], [0, 2, 1], [1, 3, 1], [2, 3, 2], [2, 4, 1], [3, 5, 1], [4, 5, 1]]
-    },
-    medium: {
-      size: 9,
-      islands: [[1, 1], [1, 4], [1, 7], [4, 1], [4, 4], [4, 7], [7, 1], [7, 4], [7, 7]],
-      edges: [[0, 1, 1], [1, 2, 1], [3, 4, 2], [4, 5, 1], [6, 7, 1], [7, 8, 2], [0, 3, 1], [3, 6, 1], [1, 4, 1], [4, 7, 1], [2, 5, 1], [5, 8, 1]]
-    },
-    hard: {
-      size: 11,
-      islands: [[1, 1], [1, 4], [1, 7], [1, 10], [5, 1], [5, 4], [5, 7], [5, 10], [9, 1], [9, 4], [9, 7], [9, 10]],
-      edges: [[0, 1, 1], [1, 2, 2], [2, 3, 1], [4, 5, 1], [5, 6, 1], [6, 7, 2], [8, 9, 2], [9, 10, 1], [10, 11, 1], [0, 4, 1], [4, 8, 1], [1, 5, 1], [5, 9, 2], [2, 6, 1], [6, 10, 1], [3, 7, 1], [7, 11, 1]]
-    }
+  const HASHI_PROFILES = {
+    easy: { size: 7, axes: 3, islands: 7, extraChance: 0.08, doubleChance: 0.12 },
+    medium: { size: 9, axes: 4, islands: 10, extraChance: 0.16, doubleChance: 0.24 },
+    hard: { size: 11, axes: 5, islands: 13, extraChance: 0.24, doubleChance: 0.34 }
   };
 
   function hashiEdgeKey(first, second) {
@@ -292,29 +276,148 @@
     return edges;
   }
 
+  function solveHashi(puzzle, limit = 2) {
+    const edges = puzzle.edges;
+    const incident = Array.from({ length: puzzle.islands.length }, () => []);
+    edges.forEach((edge, index) => {
+      incident[edge.a].push(index);
+      incident[edge.b].push(index);
+    });
+    const crossings = edges.map(() => []);
+    edges.forEach((first, index) => edges.slice(index + 1).forEach((second, offset) => {
+      const secondIndex = index + 1 + offset;
+      if (hashEdgesCross(puzzle, first, second)) {
+        crossings[index].push(secondIndex);
+        crossings[secondIndex].push(index);
+      }
+    }));
+    const values = new Int8Array(edges.length).fill(-1);
+    const degrees = new Int8Array(puzzle.islands.length);
+    const solutions = [];
+
+    function feasible() {
+      for (let island = 0; island < incident.length; island += 1) {
+        let capacity = degrees[island];
+        for (const edgeIndex of incident[island]) if (values[edgeIndex] < 0) capacity += 2;
+        if (degrees[island] > puzzle.clues[island] || capacity < puzzle.clues[island]) return false;
+      }
+      return true;
+    }
+
+    function legalValues(index) {
+      const edge = edges[index];
+      const blocked = crossings[index].some((other) => values[other] > 0);
+      const max = blocked ? 0 : Math.min(2, puzzle.clues[edge.a] - degrees[edge.a], puzzle.clues[edge.b] - degrees[edge.b]);
+      const result = [];
+      for (let value = 0; value <= max; value += 1) result.push(value);
+      return result;
+    }
+
+    function connected() {
+      const seen = new Set([0]);
+      const queue = [0];
+      while (queue.length) {
+        const current = queue.shift();
+        incident[current].forEach((edgeIndex) => {
+          if (values[edgeIndex] <= 0) return;
+          const edge = edges[edgeIndex];
+          const next = edge.a === current ? edge.b : edge.a;
+          if (!seen.has(next)) { seen.add(next); queue.push(next); }
+        });
+      }
+      return seen.size === puzzle.islands.length;
+    }
+
+    function walk(remaining) {
+      if (solutions.length >= limit || !feasible()) return;
+      if (!remaining) {
+        if (!degrees.every((degree, island) => degree === puzzle.clues[island]) || !connected()) return;
+        const solution = new Map();
+        edges.forEach((edge, index) => { if (values[index] > 0) solution.set(edge.key, values[index]); });
+        solutions.push(solution);
+        return;
+      }
+      let chosen = -1;
+      let choices = null;
+      for (let index = 0; index < edges.length; index += 1) {
+        if (values[index] >= 0) continue;
+        const nextChoices = legalValues(index);
+        if (!nextChoices.length) return;
+        if (!choices || nextChoices.length < choices.length) {
+          chosen = index;
+          choices = nextChoices;
+          if (choices.length === 1) break;
+        }
+      }
+      const edge = edges[chosen];
+      for (const value of choices) {
+        values[chosen] = value;
+        degrees[edge.a] += value;
+        degrees[edge.b] += value;
+        walk(remaining - 1);
+        degrees[edge.b] -= value;
+        degrees[edge.a] -= value;
+        values[chosen] = -1;
+        if (solutions.length >= limit) return;
+      }
+    }
+
+    walk(edges.length);
+    return solutions;
+  }
+
   function generateHashi(seed, difficulty) {
-    const blueprint = HASHI_BLUEPRINTS[difficulty] || HASHI_BLUEPRINTS.medium;
+    const profile = HASHI_PROFILES[difficulty] || HASHI_PROFILES.medium;
     const rng = createRng(seed);
-    const solution = new Map();
-    blueprint.edges.forEach(([a, b, count]) => {
-      const extra = rng() > 0.72 && count === 1 ? 1 : 0;
-      solution.set(hashiEdgeKey(a, b), Math.min(2, count + extra));
-    });
-    const clues = Array(blueprint.islands.length).fill(0);
-    solution.forEach((count, key) => {
-      const [a, b] = key.split("-").map(Number);
-      clues[a] += count;
-      clues[b] += count;
-    });
-    return {
-      type: "hashi",
-      size: blueprint.size,
-      islands: blueprint.islands,
-      clues,
-      edges: getVisibleHashiEdges(blueprint.islands),
-      solution,
-      unique: false
-    };
+    const coordinates = Array.from({ length: profile.size - 2 }, (_, index) => index + 1);
+
+    for (let attempt = 0; attempt < 240; attempt += 1) {
+      const rows = shuffle(coordinates, rng).slice(0, profile.axes).sort((a, b) => a - b);
+      const cols = shuffle(coordinates, rng).slice(0, profile.axes).sort((a, b) => a - b);
+      const candidates = rows.flatMap((row) => cols.map((col) => [row, col]));
+      const selected = [candidates[randomInt(rng, candidates.length)]];
+      const selectedKeys = new Set([cellKey(...selected[0])]);
+      while (selected.length < profile.islands) {
+        const frontier = candidates.filter(([row, col]) => !selectedKeys.has(cellKey(row, col)) && selected.some(([otherRow, otherCol]) =>
+          (row === otherRow && Math.abs(cols.indexOf(col) - cols.indexOf(otherCol)) === 1) ||
+          (col === otherCol && Math.abs(rows.indexOf(row) - rows.indexOf(otherRow)) === 1)
+        ));
+        if (!frontier.length) break;
+        const next = frontier[randomInt(rng, frontier.length)];
+        selected.push(next);
+        selectedKeys.add(cellKey(...next));
+      }
+      if (selected.length !== profile.islands) continue;
+      selected.sort(([firstRow, firstCol], [secondRow, secondCol]) => firstRow - secondRow || firstCol - secondCol);
+      const puzzle = { type: "hashi", size: profile.size, islands: selected };
+      puzzle.edges = getVisibleHashiEdges(selected);
+      const parent = Array.from({ length: selected.length }, (_, index) => index);
+      const find = (value) => parent[value] === value ? value : (parent[value] = find(parent[value]));
+      const chosen = [];
+      for (const edge of shuffle(puzzle.edges, rng)) {
+        if (find(edge.a) === find(edge.b) || chosen.some((other) => hashEdgesCross(puzzle, edge, other))) continue;
+        parent[find(edge.a)] = find(edge.b);
+        chosen.push(edge);
+      }
+      if (new Set(parent.map((_, index) => find(index))).size !== 1) continue;
+      for (const edge of shuffle(puzzle.edges, rng)) {
+        if (chosen.includes(edge) || rng() >= profile.extraChance || chosen.some((other) => hashEdgesCross(puzzle, edge, other))) continue;
+        chosen.push(edge);
+      }
+      const solution = new Map(chosen.map((edge) => [edge.key, rng() < profile.doubleChance ? 2 : 1]));
+      puzzle.clues = Array(selected.length).fill(0);
+      solution.forEach((count, key) => {
+        const [a, b] = key.split("-").map(Number);
+        puzzle.clues[a] += count;
+        puzzle.clues[b] += count;
+      });
+      const solutions = solveHashi(puzzle, 2);
+      if (solutions.length !== 1) continue;
+      puzzle.solution = solutions[0];
+      puzzle.unique = true;
+      return puzzle;
+    }
+    throw new Error("Could not generate a unique Hashi puzzle.");
   }
 
   function hashEdgeDescriptor(puzzle, edge) {
@@ -345,6 +448,10 @@
     const active = [];
     puzzle.edges.forEach((edge) => {
       const count = Number(bridges.get(edge.key) || 0);
+      if (!Number.isInteger(count) || count < 0 || count > 2) {
+        errors.add(edge.key);
+        return;
+      }
       degrees[edge.a] += count;
       degrees[edge.b] += count;
       if (count) active.push({ ...edge, count });
@@ -387,17 +494,43 @@
     return `${type}:${row}:${col}`;
   }
 
-  function makeRectangleLoop(size, top, left, bottom, right) {
-    const solution = new Set();
-    for (let col = left; col < right; col += 1) {
-      solution.add(slitherEdgeKey("h", top, col));
-      solution.add(slitherEdgeKey("h", bottom, col));
+  const SLITHER_PROFILES = {
+    easy: { size: 5, area: 9, hidden: 0.1 },
+    medium: { size: 7, area: 19, hidden: 0.24 },
+    hard: { size: 8, area: 25, hidden: 0.32 }
+  };
+
+  function polyominoLoop(size, targetArea, rng) {
+    const cells = new Set([cellKey(randomInt(rng, size), randomInt(rng, size))]);
+    while (cells.size < targetArea) {
+      const frontier = new Set();
+      cells.forEach((key) => {
+        const [row, col] = parseCellKey(key);
+        orthogonalNeighbors(row, col, size).forEach(([nextRow, nextCol]) => {
+          const nextKey = cellKey(nextRow, nextCol);
+          if (!cells.has(nextKey)) frontier.add(nextKey);
+        });
+      });
+      if (!frontier.size) break;
+      const options = shuffle([...frontier], rng).sort((first, second) => {
+        const count = (key) => {
+          const [row, col] = parseCellKey(key);
+          return orthogonalNeighbors(row, col, size).filter(([nextRow, nextCol]) => cells.has(cellKey(nextRow, nextCol))).length;
+        };
+        return count(first) - count(second);
+      });
+      cells.add(options[Math.min(randomInt(rng, Math.min(4, options.length)), options.length - 1)]);
     }
-    for (let row = top; row < bottom; row += 1) {
-      solution.add(slitherEdgeKey("v", row, left));
-      solution.add(slitherEdgeKey("v", row, right));
-    }
-    return solution;
+    const boundary = new Set();
+    const toggle = (key) => boundary.has(key) ? boundary.delete(key) : boundary.add(key);
+    cells.forEach((key) => {
+      const [row, col] = parseCellKey(key);
+      toggle(slitherEdgeKey("h", row, col));
+      toggle(slitherEdgeKey("h", row + 1, col));
+      toggle(slitherEdgeKey("v", row, col));
+      toggle(slitherEdgeKey("v", row, col + 1));
+    });
+    return boundary;
   }
 
   function slitherClues(size, solution) {
@@ -417,23 +550,107 @@
     return clues;
   }
 
+  function solveSlitherlink(puzzle, limit = 2) {
+    const edges = slitherEdges(puzzle.size);
+    const edgeIndexes = new Map(edges.map((key, index) => [key, index]));
+    const clueGroups = [];
+    for (let row = 0; row < puzzle.size; row += 1) for (let col = 0; col < puzzle.size; col += 1) {
+      if (puzzle.clues[row][col] == null) continue;
+      clueGroups.push({ target: puzzle.clues[row][col], indexes: [
+        edgeIndexes.get(slitherEdgeKey("h", row, col)), edgeIndexes.get(slitherEdgeKey("h", row + 1, col)),
+        edgeIndexes.get(slitherEdgeKey("v", row, col)), edgeIndexes.get(slitherEdgeKey("v", row, col + 1))
+      ] });
+    }
+    const vertexGroups = new Map();
+    edges.forEach((key, index) => slitherVertices(key).forEach(([row, col]) => {
+      const vertex = cellKey(row, col);
+      if (!vertexGroups.has(vertex)) vertexGroups.set(vertex, []);
+      vertexGroups.get(vertex).push(index);
+    }));
+    const solutions = [];
+
+    function assign(state, index, value) {
+      if (state[index] >= 0) return state[index] === value;
+      state[index] = value;
+      return true;
+    }
+
+    function propagate(state) {
+      let changed = true;
+      while (changed) {
+        changed = false;
+        for (const group of clueGroups) {
+          const lines = group.indexes.filter((index) => state[index] === 1).length;
+          const unknown = group.indexes.filter((index) => state[index] < 0);
+          if (lines > group.target || lines + unknown.length < group.target) return false;
+          if (lines === group.target || lines + unknown.length === group.target) {
+            const value = lines === group.target ? 0 : 1;
+            for (const index of unknown) { if (!assign(state, index, value)) return false; changed = true; }
+          }
+        }
+        for (const indexes of vertexGroups.values()) {
+          const lines = indexes.filter((index) => state[index] === 1).length;
+          const unknown = indexes.filter((index) => state[index] < 0);
+          if (lines > 2 || (lines === 1 && !unknown.length)) return false;
+          let value = null;
+          if (lines === 2) value = 0;
+          else if (lines === 1 && unknown.length === 1) value = 1;
+          else if (lines === 0 && unknown.length === 1) value = 0;
+          if (value != null) for (const index of unknown) { if (!assign(state, index, value)) return false; changed = true; }
+        }
+        const lines = new Set(edges.filter((_, index) => state[index] === 1));
+        if (singleSlitherLoop(lines) && state.some((value) => value < 0)) {
+          for (let index = 0; index < state.length; index += 1) if (state[index] < 0) { state[index] = 0; changed = true; }
+        }
+      }
+      return true;
+    }
+
+    function walk(state) {
+      if (solutions.length >= limit || !propagate(state)) return;
+      const next = state.indexOf(-1);
+      if (next < 0) {
+        const lines = new Set(edges.filter((_, index) => state[index] === 1));
+        if (singleSlitherLoop(lines)) solutions.push(lines);
+        return;
+      }
+      for (const value of [1, 0]) {
+        const copy = state.slice();
+        copy[next] = value;
+        walk(copy);
+        if (solutions.length >= limit) return;
+      }
+    }
+
+    walk(new Int8Array(edges.length).fill(-1));
+    return solutions;
+  }
+
   function generateSlitherlink(seed, difficulty) {
-    const size = difficulty === "easy" ? 5 : difficulty === "hard" ? 8 : 6;
+    const profile = SLITHER_PROFILES[difficulty] || SLITHER_PROFILES.medium;
     const rng = createRng(seed);
-    const maxInset = Math.max(1, Math.floor(size / 3));
-    const inset = randomInt(rng, maxInset + 1);
-    const top = inset;
-    const left = inset;
-    const bottom = size - inset;
-    const right = size - inset;
-    const solution = makeRectangleLoop(size, top, left, bottom, right);
-    return {
-      type: "slitherlink",
-      size,
-      clues: slitherClues(size, solution),
-      solution,
-      unique: false
-    };
+    for (let attempt = 0; attempt < 600; attempt += 1) {
+      const area = profile.area + randomInt(rng, 5) - 2;
+      const solution = polyominoLoop(profile.size, area, rng);
+      if (!singleSlitherLoop(solution)) continue;
+      const fullClues = slitherClues(profile.size, solution);
+      const fullPuzzle = { type: "slitherlink", size: profile.size, clues: fullClues, solution };
+      if (solveSlitherlink(fullPuzzle, 2).length !== 1) continue;
+      const cells = shuffle(Array.from({ length: profile.size * profile.size }, (_, index) => index), rng);
+      for (let pass = 0; pass < 4; pass += 1) {
+        const hiddenCount = Math.floor(cells.length * profile.hidden * (1 - pass * 0.22));
+        const hidden = new Set(cells.slice(0, hiddenCount));
+        const clues = fullClues.map((row, rowIndex) => row.map((value, colIndex) => hidden.has(rowIndex * profile.size + colIndex) ? null : value));
+        const puzzle = { type: "slitherlink", size: profile.size, clues, solution };
+        const solutions = solveSlitherlink(puzzle, 2);
+        if (solutions.length === 1) {
+          puzzle.solution = solutions[0];
+          puzzle.unique = true;
+          return puzzle;
+        }
+      }
+    }
+    throw new Error("Could not generate a unique Slitherlink puzzle.");
   }
 
   function slitherEdges(size) {
@@ -500,6 +717,7 @@
     const errors = new Set();
     for (let row = 0; row < puzzle.size; row += 1) {
       for (let col = 0; col < puzzle.size; col += 1) {
+        if (puzzle.clues[row][col] == null) continue;
         const surrounding = [
           slitherEdgeKey("h", row, col),
           slitherEdgeKey("h", row + 1, col),
@@ -515,41 +733,138 @@
     }
     const invalidEdges = slitherLoopIssues(lines);
     invalidEdges.forEach((key) => errors.add(`edge:${key}`));
-    const completed = !errors.size && singleSlitherLoop(lines) &&
-      lines.size === puzzle.solution.size && [...lines].every((key) => puzzle.solution.has(key));
+    const cluesMatch = puzzle.clues.every((row, rowIndex) => row.every((target, colIndex) => target == null || [
+      slitherEdgeKey("h", rowIndex, colIndex), slitherEdgeKey("h", rowIndex + 1, colIndex),
+      slitherEdgeKey("v", rowIndex, colIndex), slitherEdgeKey("v", rowIndex, colIndex + 1)
+    ].filter((key) => lines.has(key)).length === target));
+    const completed = !errors.size && cluesMatch && singleSlitherLoop(lines);
     return { errors, invalidEdges, completed, lines };
   }
 
   // Nonogram --------------------------------------------------------------
 
-  function generateNonogram(seed, difficulty) {
-    const size = difficulty === "easy" ? 5 : difficulty === "hard" ? 10 : 7;
-    const rng = createRng(seed);
-    const style = randomInt(rng, 4);
-    const offset = randomInt(rng, size);
-    const center = (size - 1) / 2;
-    const solution = Array.from({ length: size }, (_, row) => Array.from({ length: size }, (_, col) => {
-      const distance = Math.abs(row - center) + Math.abs(col - center);
-      if (style === 0) return distance <= Math.ceil(size * 0.7) && (row + col + offset) % 4 !== 0;
-      if (style === 1) return Math.abs(col - center) <= Math.max(1, Math.floor((size - row) / 3)) || row === col;
-      if (style === 2) return (row === col || row + col === size - 1) || (row > center - 1 && row < center + 2 && col > center - 1 && col < center + 2);
-      return ((row * 5 + col * 3 + offset) % 7) < 3 || distance < size * 0.35;
-    }));
+  const NONOGRAM_PROFILES = {
+    easy: { size: 5, filled: 10, clusters: 1 },
+    medium: { size: 7, filled: 22, clusters: 2 },
+    hard: { size: 10, filled: 42, clusters: 3 }
+  };
 
-    for (let row = 0; row < size; row += 1) {
-      if (!solution[row].some(Boolean)) solution[row][row % size] = true;
+  function nonogramLinePatterns(length, runs) {
+    if (!runs.length) return [0];
+    const results = [];
+    function place(runIndex, start, mask) {
+      if (runIndex === runs.length) { results.push(mask); return; }
+      const remaining = runs.slice(runIndex + 1).reduce((sum, run) => sum + run, 0) + Math.max(0, runs.length - runIndex - 1);
+      for (let position = start; position + runs[runIndex] + remaining <= length; position += 1) {
+        let nextMask = mask;
+        for (let offset = 0; offset < runs[runIndex]; offset += 1) nextMask |= 1 << (position + offset);
+        place(runIndex + 1, position + runs[runIndex] + 1, nextMask);
+      }
     }
-    for (let col = 0; col < size; col += 1) {
-      if (!solution.some((row) => row[col])) solution[col % size][col] = true;
+    place(0, 0, 0);
+    return results;
+  }
+
+  function solveNonogram(puzzle, limit = 2) {
+    const rowOptions = puzzle.rowClues.map((runs) => nonogramLinePatterns(puzzle.size, runs));
+    const initialColumns = puzzle.colClues.map((runs) => nonogramLinePatterns(puzzle.size, runs));
+    const order = Array.from({ length: puzzle.size }, (_, index) => index).sort((a, b) => rowOptions[a].length - rowOptions[b].length);
+    const chosen = Array(puzzle.size).fill(0);
+    const solutions = [];
+
+    function walk(index, columns) {
+      if (solutions.length >= limit) return;
+      if (index === order.length) {
+        solutions.push(chosen.map((mask) => Array.from({ length: puzzle.size }, (_, col) => Boolean(mask & (1 << col)))));
+        return;
+      }
+      const row = order[index];
+      for (const mask of rowOptions[row]) {
+        const nextColumns = columns.map((options, col) => options.filter((columnMask) => Boolean(columnMask & (1 << row)) === Boolean(mask & (1 << col))));
+        if (nextColumns.some((options) => !options.length)) continue;
+        chosen[row] = mask;
+        walk(index + 1, nextColumns);
+        if (solutions.length >= limit) return;
+      }
     }
-    return {
-      type: "nonogram",
-      size,
-      solution,
-      rowClues: solution.map(countRuns),
-      colClues: Array.from({ length: size }, (_, col) => countRuns(solution.map((row) => row[col]))),
-      unique: false
+
+    walk(0, initialColumns);
+    return solutions;
+  }
+
+  function proceduralNonogramShape(profile, rng) {
+    const cells = new Set();
+    const add = (row, col) => { if (inside(row, col, profile.size)) cells.add(cellKey(row, col)); };
+    const grow = (start, count) => {
+      add(...start);
+      for (let step = 1; step < count; step += 1) {
+        const frontier = new Set();
+        cells.forEach((key) => {
+          const [row, col] = parseCellKey(key);
+          orthogonalNeighbors(row, col, profile.size).forEach(([nextRow, nextCol]) => {
+            const nextKey = cellKey(nextRow, nextCol);
+            if (!cells.has(nextKey)) frontier.add(nextKey);
+          });
+        });
+        if (!frontier.size) break;
+        cells.add(shuffle([...frontier], rng)[0]);
+      }
     };
+    const style = randomInt(rng, 5);
+    if (style <= 1) {
+      grow([randomInt(rng, profile.size), randomInt(rng, profile.size)], profile.filled);
+      if (style === 1) [...cells].forEach((key) => {
+        const [row, col] = parseCellKey(key);
+        add(row, profile.size - 1 - col);
+      });
+    } else if (style === 2) {
+      const strokes = 3 + randomInt(rng, profile.clusters + 2);
+      for (let stroke = 0; stroke < strokes; stroke += 1) {
+        const horizontal = rng() < 0.5;
+        const fixed = randomInt(rng, profile.size);
+        const start = randomInt(rng, Math.max(1, profile.size - 3));
+        const length = 3 + randomInt(rng, Math.max(1, profile.size - start - 2));
+        for (let offset = 0; offset < length; offset += 1) add(horizontal ? fixed : start + offset, horizontal ? start + offset : fixed);
+      }
+    } else if (style === 3) {
+      const center = (profile.size - 1) / 2;
+      const radius = Math.max(2, Math.floor(profile.size / 2));
+      for (let row = 0; row < profile.size; row += 1) for (let col = 0; col < profile.size; col += 1) {
+        const distance = Math.abs(row - center) + Math.abs(col - center);
+        if (distance === radius || distance === radius - 1) add(row, col);
+      }
+      if (rng() < 0.5) for (let index = 1; index < profile.size - 1; index += 1) add(index, Math.floor(center));
+    } else {
+      for (let cluster = 0; cluster < profile.clusters; cluster += 1) {
+        grow([randomInt(rng, profile.size), randomInt(rng, profile.size)], Math.ceil(profile.filled / profile.clusters));
+      }
+    }
+    [...cells].forEach((key) => {
+      const [row, col] = parseCellKey(key);
+      if (!orthogonalNeighbors(row, col, profile.size).some(([nextRow, nextCol]) => cells.has(cellKey(nextRow, nextCol)))) cells.delete(key);
+    });
+    return Array.from({ length: profile.size }, (_, row) => Array.from({ length: profile.size }, (_, col) => cells.has(cellKey(row, col))));
+  }
+
+  function generateNonogram(seed, difficulty) {
+    const profile = NONOGRAM_PROFILES[difficulty] || NONOGRAM_PROFILES.medium;
+    const rng = createRng(seed);
+    for (let attempt = 0; attempt < 180; attempt += 1) {
+      const solution = proceduralNonogramShape(profile, rng);
+      const filled = solution.flat().filter(Boolean).length;
+      if (filled < profile.size || filled > profile.size * profile.size * 0.72) continue;
+      const puzzle = {
+        type: "nonogram", size: profile.size, solution,
+        rowClues: solution.map(countRuns),
+        colClues: Array.from({ length: profile.size }, (_, col) => countRuns(solution.map((row) => row[col])))
+      };
+      const solutions = solveNonogram(puzzle, 2);
+      if (solutions.length !== 1) continue;
+      puzzle.solution = solutions[0];
+      puzzle.unique = true;
+      return puzzle;
+    }
+    throw new Error("Could not generate a unique Nonogram puzzle.");
   }
 
   function validateNonogram(puzzle, marks) {
@@ -588,16 +903,19 @@
     solveTents,
     validateTents,
     generateHashi,
+    solveHashi,
     hashiEdgeKey,
     getVisibleHashiEdges,
     hashEdgesCross,
     validateHashi,
     generateSlitherlink,
+    solveSlitherlink,
     slitherEdgeKey,
     slitherEdges,
     validateSlitherlink,
     singleSlitherLoop,
     generateNonogram,
+    solveNonogram,
     countRuns,
     validateNonogram
   };

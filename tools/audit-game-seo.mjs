@@ -39,7 +39,7 @@ for (const [prefix, language] of locales) {
     for (const tag of ["og:title", "og:description", "og:image", "og:image:alt", "twitter:title", "twitter:description", "twitter:image", "twitter:image:alt"]) {
       if (!html.includes(`"${tag}"`)) failures.push(`${relative}: missing ${tag}`);
     }
-    if (!schema?.["@graph"]?.some((node) => node["@type"] === "WebApplication" && node.inLanguage === language)) failures.push(`${relative}: WebApplication schema mismatch`);
+    if (!schema?.["@graph"]?.some((node) => node["@type"] === "WebApplication" && node.inLanguage === language && node.dateModified === "2026-08-11")) failures.push(`${relative}: WebApplication schema mismatch`);
     if (!schema?.["@graph"]?.some((node) => node["@type"] === "FAQPage" && node.inLanguage === language)) failures.push(`${relative}: FAQ schema mismatch`);
     if ((html.match(/class="game-card compact-game-card"/g) || []).length !== 4) failures.push(`${relative}: expected 4 related-game cards`);
     if ((html.match(/class="mini-preview /g) || []).length !== 4) failures.push(`${relative}: expected 4 game previews`);
@@ -47,7 +47,8 @@ for (const [prefix, language] of locales) {
     if (!sitemap.includes(`<loc>${canonical}</loc>`)) failures.push(`${relative}: missing from sitemap`);
     for (const mode of ["daily", "practice"]) {
       const wrapper = path.join(root, relative, mode, "index.html");
-      if (!fs.existsSync(wrapper) || !fs.readFileSync(wrapper, "utf8").includes('name="robots" content="noindex, follow"')) failures.push(`${relative}${mode}/: wrapper missing or indexable`);
+      const wrapperHtml = fs.existsSync(wrapper) ? fs.readFileSync(wrapper, "utf8") : "";
+      if (!wrapperHtml.includes('name="robots" content="noindex, follow"') || !wrapperHtml.includes(`<link rel="canonical" href="${canonical}">`)) failures.push(`${relative}${mode}/: wrapper signals mismatch`);
     }
   }
 }
