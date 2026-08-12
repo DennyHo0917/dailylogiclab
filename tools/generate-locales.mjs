@@ -2554,8 +2554,7 @@ function page(language) {
     <meta name="twitter:description" content="${escapeHtml(language.meta.ogDescription)}">
     <meta name="twitter:image" content="${SITE}/og-image.png">
     <meta name="twitter:image:alt" content="${escapeHtml(language.meta.imageAlt)}">
-    <link rel="preload" href="${asset("styles.css")}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="${asset("styles.css")}"></noscript>
+    <link rel="stylesheet" href="${asset("styles.css")}">
     <script type="application/ld+json">
       ${jsonLd(language)}
     </script>
@@ -2915,8 +2914,7 @@ function longtailArticlePage(article, language) {
     <meta name="twitter:title" content="${escapeHtml(content.ogTitle)}">
     <meta name="twitter:description" content="${escapeHtml(content.ogDescription)}">
     <meta name="twitter:image" content="${SITE}/og-image.png">
-    <link rel="preload" href="${asset}${versionedAsset("styles.css")}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="${asset}${versionedAsset("styles.css")}"></noscript>
+    <link rel="stylesheet" href="${asset}${versionedAsset("styles.css")}">
     <script type="application/ld+json">
       ${longtailArticleJsonLd(article, language, content)}
     </script>
@@ -3028,8 +3026,7 @@ function supportPage(language, pageKey) {
     <meta name="twitter:title" content="${escapeHtml(content.h1)}">
     <meta name="twitter:description" content="${escapeHtml(content.description)}">
     <meta name="twitter:image" content="${SITE}/og-image.png">
-    <link rel="preload" href="${asset}${versionedAsset("styles.css")}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="${asset}${versionedAsset("styles.css")}"></noscript>
+    <link rel="stylesheet" href="${asset}${versionedAsset("styles.css")}">
     <script type="application/ld+json">
       ${supportJsonLd(language, pageKey, content)}
     </script>

@@ -38,10 +38,7 @@ for (const file of htmlFiles) {
     if (!html.includes(asset)) continue;
     assert.ok(html.includes(`${asset}?v=${assetVersions[asset]}`), `${relative}: stale ${asset} version`);
     if (asset.endsWith(".js")) assert.match(html, new RegExp(`<script defer src="[^"]*${asset.replaceAll(".", "\\.")}\\?v=`), `${relative}: ${asset} must be deferred`);
-    if (asset === "styles.css") {
-      assert.match(html, /<link rel="preload" href="[^"]*styles\.css\?v=[^"]+" as="style" onload="this\.onload=null;this\.rel='stylesheet'">/, `${relative}: styles.css must be preloaded without blocking rendering`);
-      assert.match(html, /<noscript><link rel="stylesheet" href="[^"]*styles\.css\?v=[^"]+"><\/noscript>/, `${relative}: styles.css needs a no-script fallback`);
-    }
+    if (asset === "styles.css") assert.match(html, /<link rel="stylesheet" href="[^"]*styles\.css\?v=[^"]+">/, `${relative}: styles.css must load before first paint`);
   }
 }
 

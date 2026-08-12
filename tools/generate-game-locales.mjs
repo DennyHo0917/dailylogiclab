@@ -176,7 +176,7 @@ function page(localeKey, gameKey) {
     <link rel="canonical" href="${SITE}${canonicalPath}">
 ${hreflangs(gameKey)}
     <meta property="og:type" content="website"><meta property="og:site_name" content="Daily Logic Lab"><meta property="og:title" content="${esc(game.seo)}"><meta property="og:description" content="${esc(game.desc)}"><meta property="og:url" content="${SITE}${canonicalPath}"><meta property="og:image" content="${SITE}/og-image.png"><meta property="og:image:alt" content="${esc(game.name)}"><meta property="og:locale" content="${locale.lang.replace("-", "_")}">${ogAlternates}
-    <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(game.seo)}"><meta name="twitter:description" content="${esc(game.desc)}"><meta name="twitter:image" content="${SITE}/og-image.png"><meta name="twitter:image:alt" content="${esc(game.name)}"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="preload" href="${versionedAsset("styles.css")}" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="${versionedAsset("styles.css")}"></noscript>
+    <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(game.seo)}"><meta name="twitter:description" content="${esc(game.desc)}"><meta name="twitter:image" content="${SITE}/og-image.png"><meta name="twitter:image:alt" content="${esc(game.name)}"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="stylesheet" href="${versionedAsset("styles.css")}">
     <script type="application/ld+json">${JSON.stringify(schema)}</script>
   </head>
   <body data-game="${gameKey}" data-base-path="${canonicalPath}">

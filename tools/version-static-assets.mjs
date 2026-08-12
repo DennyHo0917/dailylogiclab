@@ -25,7 +25,7 @@ let changed = 0;
 for (const file of htmlFiles) {
   const original = fs.readFileSync(file, "utf8");
   let html = original.replace(
-    /(<link\b[^>]*\bhref="[^"]*styles\.css)(?:\?v=[^"]*)?(")/g,
+    /(<link rel="stylesheet" href="[^"]*styles\.css)(?:\?v=[^"]*)?("\s*\/?>)/g,
     `$1?v=${versions["styles.css"]}$2`
   );
   for (const asset of assets.filter((name) => name.endsWith(".js"))) {
