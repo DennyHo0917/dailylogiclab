@@ -852,6 +852,9 @@ function hashString(value) {
 function renderBoard() {
   els.board.innerHTML = "";
   for (let row = 0; row < SIZE; row += 1) {
+    const boardRow = document.createElement("div");
+    boardRow.className = "board-row";
+    boardRow.setAttribute("role", "row");
     for (let col = 0; col < SIZE; col += 1) {
       const cell = document.createElement("button");
       const key = getKey(row, col);
@@ -878,8 +881,9 @@ function renderBoard() {
       if (state.errors.has(key)) {
         cell.classList.add("error");
       }
-      els.board.appendChild(cell);
+      boardRow.appendChild(cell);
     }
+    els.board.appendChild(boardRow);
   }
 }
 

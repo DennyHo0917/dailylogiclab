@@ -359,6 +359,10 @@ h2 {
   touch-action: manipulation;
 }
 
+.board-row {
+  display: contents;
+}
+
 .cell {
   position: relative;
   display: grid;
