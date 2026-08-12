@@ -31,16 +31,23 @@ for (const file of htmlFiles) {
   assert.match(html, /<html[\s>]/i, `${relative}: missing html element`);
   assert.match(html, /<\/html>\s*$/i, `${relative}: missing closing html element`);
   assert.match(html, /<title>[^<]+<\/title>/i, `${relative}: missing title`);
+  assert.ok(!html.includes("pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"), `${relative}: AdSense loader must not be present`);
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((match) => match[1]);
   assert.equal(new Set(ids).size, ids.length, `${relative}: duplicate id`);
   for (const asset of versionedAssets) {
     if (!html.includes(asset)) continue;
     assert.ok(html.includes(`${asset}?v=${assetVersions[asset]}`), `${relative}: stale ${asset} version`);
     if (asset.endsWith(".js")) assert.match(html, new RegExp(`<script defer src="[^"]*${asset.replaceAll(".", "\\.")}\\?v=`), `${relative}: ${asset} must be deferred`);
+    if (asset === "styles.css") {
+      assert.match(html, /<link rel="preload" href="[^"]*styles\.css\?v=[^"]+" as="style" onload="this\.onload=null;this\.rel='stylesheet'">/, `${relative}: styles.css must be preloaded without blocking rendering`);
+      assert.match(html, /<noscript><link rel="stylesheet" href="[^"]*styles\.css\?v=[^"]+"><\/noscript>/, `${relative}: styles.css needs a no-script fallback`);
+    }
   }
 }
 
 const headers = fs.readFileSync(path.join(root, "_headers"), "utf8");
+assert.ok(headers.includes("Content-Security-Policy:"), "_headers: missing content security policy");
+assert.ok(!headers.includes("static.cloudflareinsights.com"), "_headers: Cloudflare browser beacon must remain blocked");
 for (const asset of versionedAssets) {
   assert.ok(headers.includes(`/${asset}`), `_headers: missing ${asset}`);
 }
