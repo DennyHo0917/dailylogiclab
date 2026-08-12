@@ -1,0 +1,14 @@
+/app.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/language-redirect.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/logic-games-core.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/logic-games.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/styles.css
+  Cache-Control: public, max-age=31536000, immutable

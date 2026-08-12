@@ -58,3 +58,9 @@ node tools/audit-game-seo.mjs
 node tools/check-site.mjs
 node tools/audit-routes.mjs
 ```
+
+After changing shared CSS or JavaScript, refresh the content-hashed asset URLs with:
+
+```text
+node tools/version-static-assets.mjs
+```

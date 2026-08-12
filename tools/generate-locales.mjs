@@ -1,6 +1,10 @@
+import { readFileSync } from "node:fs";
 import { mkdir, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = "https://dailylogiclab.com";
 const ADSENSE_CLIENT = "ca-pub-9244949928133071";
 const SITEMAP_LASTMOD = "2026-08-11";
@@ -8,6 +12,8 @@ const DATE_PUBLISHED = "2026-06-18";
 const DATE_MODIFIED = "2026-08-11";
 const OG_IMAGE = `${SITE}/og-image.png`;
 const GITHUB_URL = "https://github.com/DennyHo0917/dailylogiclab";
+const assetVersion = (file) => createHash("sha256").update(readFileSync(path.join(ROOT, file))).digest("hex").slice(0, 10);
+const versionedAsset = (file) => `${file}?v=${assetVersion(file)}`;
 
 const geoFacts = {
   home: {
@@ -2487,7 +2493,7 @@ function moreGamesSection(language) {
 function page(language) {
   const profile = seo(language);
   const canonical = `${SITE}${language.path}`;
-  const asset = (file) => `${language.assets}${file}`;
+  const asset = (file) => `${language.assets}${versionedAsset(file)}`;
   const guideArticles = language.guide
     .map((article, index) => {
       const seoNote = index === 0 && profile.note ? `\n            <p>${escapeHtml(profile.note)}</p>` : "";
@@ -2535,7 +2541,7 @@ function page(language) {
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <script src="${asset("language-redirect.js")}"></script>
+    <script defer src="${asset("language-redirect.js")}"></script>
     <link rel="canonical" href="${canonical}">
     ${languageLinks}
     <link rel="alternate" hreflang="x-default" href="${SITE}/">
@@ -2753,7 +2759,7 @@ ${language.key === "en" ? `      ${geoFactsSection(geoFacts.home)}\n\n` : ""}   
       </div>
     </footer>
 
-    <script src="${asset("app.js")}"></script>
+    <script defer src="${asset("app.js")}"></script>
   </body>
 </html>
 `;
@@ -2900,7 +2906,7 @@ function longtailArticlePage(article, language) {
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <script src="${asset}language-redirect.js"></script>
+    <script defer src="${asset}${versionedAsset("language-redirect.js")}"></script>
     <link rel="canonical" href="${canonical}">
     ${longtailAlternateLinks(article.paths)}
     <meta property="og:type" content="article">
@@ -2916,7 +2922,7 @@ function longtailArticlePage(article, language) {
     <meta name="twitter:title" content="${escapeHtml(content.ogTitle)}">
     <meta name="twitter:description" content="${escapeHtml(content.ogDescription)}">
     <meta name="twitter:image" content="${SITE}/og-image.png">
-    <link rel="stylesheet" href="${asset}styles.css">
+    <link rel="stylesheet" href="${asset}${versionedAsset("styles.css")}">
     <script type="application/ld+json">
       ${longtailArticleJsonLd(article, language, content)}
     </script>
@@ -3013,7 +3019,7 @@ function supportPage(language, pageKey) {
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <script src="${asset}language-redirect.js"></script>
+    <script defer src="${asset}${versionedAsset("language-redirect.js")}"></script>
     <link rel="canonical" href="${canonical}">
     ${supportAlternateLinks(pageKey)}
     <link rel="alternate" hreflang="x-default" href="${SITE}/${supportSlugs[pageKey]}">
@@ -3029,7 +3035,7 @@ function supportPage(language, pageKey) {
     <meta name="twitter:title" content="${escapeHtml(content.h1)}">
     <meta name="twitter:description" content="${escapeHtml(content.description)}">
     <meta name="twitter:image" content="${SITE}/og-image.png">
-    <link rel="stylesheet" href="${asset}styles.css">
+    <link rel="stylesheet" href="${asset}${versionedAsset("styles.css")}">
     <script type="application/ld+json">
       ${supportJsonLd(language, pageKey, content)}
     </script>
