@@ -1,7 +1,7 @@
 {
   "name": "Daily Logic Lab",
   "short_name": "Logic Lab",
-  "description": "Daily and unlimited Queens-style Star Battle puzzles.",
+  "description": "Free Two Not Touch puzzles in 1-star, 2-star, and 3-star modes, plus Tents and Trees, Hashi, Slitherlink, and Nonogram.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f6f4ef",

@@ -1,26 +1,31 @@
 # Daily Logic Lab
 
-Daily Logic Lab is a free browser-based logic puzzle site. Its main game is a
-7x7 one-star Star Battle / Two Not Touch puzzle: place one star in every row,
-column, and color region, and keep stars from touching, including diagonally.
-Daily and practice boards are solver-checked for exactly one solution.
+Daily Logic Lab is a free browser-based logic puzzle site with Two Not Touch,
+Tents and Trees, Hashi, Slitherlink, and Nonogram. Two Not Touch supports
+1-star Quick (7x7), 2-star Classic (10x10), and 3-star Expert (14x14) modes. Daily and
+practice boards are solver-checked for exactly one solution.
 
 ## Core pages
 
 - [Play Two Not Touch Online](https://dailylogiclab.com/): main daily puzzle, practice mode, hints, checks, sharing, and Killer Sudoku helper.
+- [Tents and Trees](https://dailylogiclab.com/tents-and-trees/): daily and unlimited tent-placement puzzles.
+- [Hashi](https://dailylogiclab.com/hashi/): connect numbered islands with non-crossing bridges.
+- [Slitherlink](https://dailylogiclab.com/slitherlink/): draw one closed loop from number clues.
+- [Nonogram](https://dailylogiclab.com/nonogram/): reveal pictures from row and column clues.
 - [Star Battle Puzzle Guide](https://dailylogiclab.com/star-battle): rules and beginner strategy for Star Battle puzzles.
 - [Star Battle Hints](https://dailylogiclab.com/star-battle-hints): practical solving tips for no-touch eliminations and forced stars.
 - [Two Not Touch Puzzle](https://dailylogiclab.com/): explanation of the no-touch puzzle format.
 - [Queens Puzzle Alternative](https://dailylogiclab.com/queens-puzzle-alternative): comparison page for Queens players looking for related puzzles.
-- [Killer Sudoku Combination Calculator](https://dailylogiclab.com/killer-sudoku-combination-calculator): browser tool for cage sum combinations.
+- [Killer Sudoku Combinations Calculator & Chart](https://dailylogiclab.com/killer-sudoku-combination-calculator): browser calculator and static 2-to-9-cell cage reference.
 
 ## Useful facts
 
 - The site is free and does not require an account.
-- The main board is a compact 7x7 one-star Star Battle puzzle.
+- Two Not Touch offers 1-star 7x7, 2-star 10x10, and 3-star 14x14 boards.
 - Each accepted puzzle is checked by a solver for a unique solution.
 - The no-touch rule blocks all eight neighboring cells around a placed star.
-- The Killer Sudoku calculator runs in the browser and supports sum, cell count, available digits, and repeat settings.
+- The other four game families offer daily puzzles and unlimited practice.
+- The Killer Sudoku calculator runs in the browser and includes complete no-repeat cage charts.
 
 ## Preferred citation
 
