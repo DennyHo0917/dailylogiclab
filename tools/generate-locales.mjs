@@ -6,9 +6,9 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = "https://dailylogiclab.com";
-const SITEMAP_LASTMOD = "2026-08-11";
+const SITEMAP_LASTMOD = "2026-08-14";
 const DATE_PUBLISHED = "2026-06-18";
-const DATE_MODIFIED = "2026-08-11";
+const DATE_MODIFIED = "2026-08-14";
 const OG_IMAGE = `${SITE}/og-image.png`;
 const GITHUB_URL = "https://github.com/DennyHo0917/dailylogiclab";
 const assetVersion = (file) => createHash("sha256").update(readFileSync(path.join(ROOT, file))).digest("hex").slice(0, 10);
@@ -20,8 +20,8 @@ const geoFacts = {
     title: "Daily Logic Lab facts",
     items: [
       ["What it is", "Daily Logic Lab is a free browser-based logic puzzle site."],
-      ["Main puzzle", "The main game is a 7x7 one-star Star Battle / Two Not Touch puzzle."],
-      ["Rules", "Place one star in every row, column, and color region; stars cannot touch, including diagonally."],
+      ["Main puzzle", "The main game offers 1-star Quick (7x7), 2-star Classic (10x10), and 3-star Expert (14x14) Two Not Touch puzzles."],
+      ["Rules", "Place the selected number of stars in every row, column, and color region; stars cannot touch, including diagonally."],
       ["Access", "The puzzle, practice boards, hints, checks, sharing, and calculator work without an account."],
       ["Verification", "Generated boards are checked by a solver and shown only when they have exactly one solution."]
     ]
@@ -42,7 +42,7 @@ const geoFacts = {
     items: [
       ["Meaning", "Two Not Touch means placed pieces cannot touch by an edge or corner."],
       ["Daily Logic Lab version", "Daily Logic Lab plays this rule as a Star Battle board with stars."],
-      ["Goal", "Put one star in each row, column, and color region while keeping stars separated."],
+      ["Goal", "Match the selected star count in each row, column, and color region while keeping stars separated."],
       ["Cost", "The daily puzzle and practice boards are free in the browser."]
     ]
   },
@@ -908,6 +908,159 @@ const languages = [
   }
 ];
 
+const homeUpgrades = {
+  en: {
+    meta: {
+      title: "Two Not Touch Online – Unlimited Free Puzzles",
+      description: "Play Two Not Touch online free with unlimited practice puzzles. Choose 1-star, classic 2-star, or expert 3-star puzzles. No account required.",
+      ogTitle: "Two Not Touch Online – Unlimited Free Puzzles",
+      ogDescription: "Play unlimited free Two Not Touch puzzles in 1-star, classic 2-star, and expert 3-star modes."
+    },
+    hero: {
+      intro: "Play Two Not Touch online free in 1-star Quick, 2-star Classic, or 3-star Expert mode. Stars cannot touch, even diagonally.",
+      proofs: ["Unlimited free practice", "1★ / 2★ / 3★ modes", "Unique solutions", "No account required"]
+    },
+    rules: {
+      lede: "Choose a mode, then place its exact number of stars in every row, column, and color region. Stars cannot touch, including diagonally.",
+      items: ["Match the selected star count in every row.", "Match it in every column.", "Match it in every color region.", "Stars may not touch, including diagonally."]
+    },
+    faqGoal: "Choose 1-star Quick, 2-star Classic, or 3-star Expert, then place exactly that many stars in each row, column, and color region. No two stars may touch, including diagonally.",
+    share: "Two Not Touch Online\nUnlimited free practice. 1★, 2★ and 3★ modes. No account."
+  },
+  de: {
+    meta: {
+      title: "Two Not Touch Online – Unbegrenzt kostenlos spielen",
+      description: "Spiele Two Not Touch kostenlos und ohne Tageslimit. Wähle 1-Stern Schnell, 2-Sterne Klassisch oder 3-Sterne Experte – ohne Anmeldung.",
+      ogTitle: "Two Not Touch – Kostenlos ohne Tageslimit",
+      ogDescription: "Unbegrenzt kostenlose Two-Not-Touch-Rätsel mit 1, 2 oder 3 Sternen pro Gruppe."
+    },
+    hero: {
+      intro: "Spiele Two Not Touch kostenlos ohne Tageslimit: 1-Stern Schnell, 2-Sterne Klassisch oder 3-Sterne Experte. Sterne dürfen sich auch diagonal nicht berühren.",
+      proofs: ["Unbegrenzt kostenlos", "1★ / 2★ / 3★", "Eindeutige Lösungen", "Ohne Anmeldung"]
+    },
+    rules: {
+      lede: "Wähle einen Modus und setze die vorgegebene Sternzahl in jede Zeile, Spalte und Farbfläche. Sterne dürfen sich nicht berühren.",
+      items: ["Erfülle die Sternzahl in jeder Zeile.", "Erfülle sie in jeder Spalte.", "Erfülle sie in jeder Farbfläche.", "Sterne dürfen sich auch diagonal nicht berühren."]
+    },
+    faqGoal: "Wähle 1-Stern Schnell, 2-Sterne Klassisch oder 3-Sterne Experte. In jede Zeile, Spalte und Farbfläche kommt genau die gewählte Zahl; Sterne dürfen sich nicht berühren.",
+    share: "Two Not Touch Online\nUnbegrenzt kostenlos. Modi mit 1, 2 oder 3 Sternen. Ohne Anmeldung."
+  },
+  es: {
+    meta: {
+      title: "Two Not Touch Online – Puzzles gratis ilimitados",
+      description: "Juega Two Not Touch online gratis y sin límite diario. Elige 1 estrella Rápido, 2 estrellas Clásico o 3 estrellas Experto, sin registro.",
+      ogTitle: "Two Not Touch Online – Puzzles gratis ilimitados",
+      ogDescription: "Práctica ilimitada de Two Not Touch con modos de 1, 2 y 3 estrellas."
+    },
+    hero: {
+      intro: "Juega Two Not Touch online gratis y sin límite: 1 estrella Rápido, 2 estrellas Clásico o 3 estrellas Experto. Ninguna estrella puede tocar otra.",
+      proofs: ["Práctica gratis ilimitada", "Modos 1★ / 2★ / 3★", "Soluciones únicas", "Sin registro"]
+    },
+    rules: {
+      lede: "Elige un modo y coloca el número indicado de estrellas en cada fila, columna y región. Las estrellas no pueden tocarse.",
+      items: ["Completa la cantidad de estrellas de cada fila.", "Haz lo mismo en cada columna.", "Haz lo mismo en cada región de color.", "Las estrellas no pueden tocarse, ni en diagonal."]
+    },
+    faqGoal: "Elige Rápido de 1 estrella, Clásico de 2 o Experto de 3. Cada fila, columna y región necesita exactamente esa cantidad, sin estrellas que se toquen.",
+    share: "Two Not Touch Online\nPráctica gratis ilimitada. Modos de 1, 2 y 3 estrellas. Sin registro."
+  },
+  fr: {
+    meta: {
+      title: "Two Not Touch en ligne – Puzzles gratuits illimités",
+      description: "Jouez gratuitement à Two Not Touch sans limite quotidienne. Choisissez 1 étoile Rapide, 2 étoiles Classique ou 3 étoiles Expert, sans compte.",
+      ogTitle: "Two Not Touch – Puzzles gratuits illimités",
+      ogDescription: "Entraînement illimité avec des grilles Two Not Touch à 1, 2 ou 3 étoiles."
+    },
+    hero: {
+      intro: "Jouez gratuitement à Two Not Touch sans limite : 1 étoile Rapide, 2 étoiles Classique ou 3 étoiles Expert. Les étoiles ne doivent jamais se toucher.",
+      proofs: ["Entraînement gratuit illimité", "Modes 1★ / 2★ / 3★", "Solutions uniques", "Sans compte"]
+    },
+    rules: {
+      lede: "Choisissez un mode, puis placez le nombre demandé d'étoiles dans chaque ligne, colonne et région. Aucune étoile ne peut en toucher une autre.",
+      items: ["Respectez le nombre d'étoiles de chaque ligne.", "Faites de même dans chaque colonne.", "Faites de même dans chaque région colorée.", "Les étoiles ne se touchent pas, même en diagonale."]
+    },
+    faqGoal: "Choisissez Rapide à 1 étoile, Classique à 2 étoiles ou Expert à 3 étoiles. Chaque ligne, colonne et région doit contenir exactement ce nombre, sans contact entre les étoiles.",
+    share: "Two Not Touch en ligne\nEntraînement gratuit illimité. Modes à 1, 2 et 3 étoiles. Sans compte."
+  },
+  ja: {
+    meta: {
+      title: "Two Not Touch オンライン – 無料で何度でも遊べる",
+      description: "Two Not Touchを無料で何度でもプレイ。1スターのクイック、2スターのクラシック、3スターのエキスパートを登録なしで楽しめます。",
+      ogTitle: "Two Not Touch – 無料で無制限にプレイ",
+      ogDescription: "1・2・3スターの3モードを、登録なしで何度でも遊べます。"
+    },
+    hero: {
+      intro: "Two Not Touchを無料で何度でも遊べます。1スターのクイック、2スターのクラシック、3スターのエキスパートから選べます。星は斜めにも接触できません。",
+      proofs: ["無料で回数制限なし", "1★・2★・3★モード", "解は一つだけ", "登録不要"]
+    },
+    rules: {
+      lede: "モードを選び、各行・各列・各色エリアに指定数の星を置きます。星同士は斜めを含めて接触できません。",
+      items: ["各行を指定された星の数にします。", "各列も同じ数にします。", "各色エリアも同じ数にします。", "星同士は斜めにも接触できません。"]
+    },
+    faqGoal: "1スターのクイック、2スターのクラシック、3スターのエキスパートから選び、各行・各列・各色エリアに同じ数の星を置きます。星同士は接触できません。",
+    share: "Two Not Touch オンライン\n無料で何度でも練習。1・2・3スターモード。登録不要。"
+  },
+  pt: {
+    meta: {
+      title: "Two Not Touch Online – Puzzles grátis ilimitados",
+      description: "Jogue Two Not Touch grátis e sem limite diário. Escolha 1 estrela Rápido, 2 estrelas Clássico ou 3 estrelas Avançado, sem criar conta.",
+      ogTitle: "Two Not Touch – Puzzles grátis ilimitados",
+      ogDescription: "Treino ilimitado de Two Not Touch nos modos de 1, 2 e 3 estrelas."
+    },
+    hero: {
+      intro: "Jogue Two Not Touch grátis e sem limite: 1 estrela Rápido, 2 estrelas Clássico ou 3 estrelas Avançado. Nenhuma estrela pode encostar em outra.",
+      proofs: ["Treino grátis ilimitado", "Modos 1★ / 2★ / 3★", "Soluções únicas", "Sem conta"]
+    },
+    rules: {
+      lede: "Escolha um modo e coloque a quantidade indicada de estrelas em cada linha, coluna e região. As estrelas não podem se encostar.",
+      items: ["Complete a quantidade de estrelas em cada linha.", "Faça o mesmo em cada coluna.", "Faça o mesmo em cada região colorida.", "As estrelas não podem se encostar, nem na diagonal."]
+    },
+    faqGoal: "Escolha Rápido com 1 estrela, Clássico com 2 ou Avançado com 3. Cada linha, coluna e região deve ter exatamente essa quantidade, sem estrelas encostadas.",
+    share: "Two Not Touch Online\nTreino grátis ilimitado. Modos de 1, 2 e 3 estrelas. Sem conta."
+  },
+  zh: {
+    meta: {
+      title: "Two Not Touch 在线玩 – 免费无限练习",
+      description: "免费在线玩 Two Not Touch，每日题之外还能无限练习。可选 1 星快速、2 星经典和 3 星专家模式，无需注册。",
+      ogTitle: "Two Not Touch 在线玩 – 免费无限练习",
+      ogDescription: "1 星、2 星、3 星三种模式，免费无限练习，无需账号。"
+    },
+    hero: {
+      intro: "免费在线玩 Two Not Touch，不限练习次数。可选 1 星快速、2 星经典或 3 星专家模式，星星横向、纵向和斜向都不能相邻。",
+      proofs: ["免费无限练习", "1★ / 2★ / 3★ 模式", "唯一解题目", "无需账号"]
+    },
+    rules: {
+      lede: "选择模式后，让每一行、每一列和每个颜色区域都放入指定数量的星星；任何两颗星都不能相邻。",
+      items: ["每一行达到当前模式的星数。", "每一列达到相同星数。", "每个颜色区域达到相同星数。", "星星横向、纵向和斜向都不能相邻。"]
+    },
+    faqGoal: "可选 1 星快速、2 星经典或 3 星专家模式。每行、每列、每个颜色区域都要放入对应数量的星星，且星星不能相邻。",
+    share: "Two Not Touch 在线玩\n免费无限练习，支持 1 星、2 星和 3 星模式，无需账号。"
+  }
+};
+
+const starModes = {
+  en: { label: "Choose a star mode", confirm: "Choose this mode again to discard the current board.", quick: ["1★ Quick", "7×7 · One star per row, column and region", "Place exactly one star in every row, column, and region.", "One star in every row.", "One star in every column.", "One star in every color region."], classic: ["2★ Classic", "10×10 · Two stars per row, column and region", "Place exactly two stars in every row, column, and region.", "Two stars in every row.", "Two stars in every column.", "Two stars in every color region."], expert: ["3★ Expert", "14×14 · Three stars per row, column and region", "Place exactly three stars in every row, column, and region.", "Three stars in every row.", "Three stars in every column.", "Three stars in every color region."] },
+  de: { label: "Sternmodus wählen", confirm: "Wähle diesen Modus erneut, um das aktuelle Feld zu verwerfen.", quick: ["1★ Schnell", "7×7 · Ein Stern je Zeile, Spalte und Farbfläche", "Setze genau einen Stern in jede Zeile, Spalte und Farbfläche.", "Ein Stern in jeder Zeile.", "Ein Stern in jeder Spalte.", "Ein Stern in jeder Farbfläche."], classic: ["2★ Klassisch", "10×10 · Zwei Sterne je Zeile, Spalte und Farbfläche", "Setze genau zwei Sterne in jede Zeile, Spalte und Farbfläche.", "Zwei Sterne in jeder Zeile.", "Zwei Sterne in jeder Spalte.", "Zwei Sterne in jeder Farbfläche."], expert: ["3★ Experte", "14×14 · Drei Sterne je Zeile, Spalte und Farbfläche", "Setze genau drei Sterne in jede Zeile, Spalte und Farbfläche.", "Drei Sterne in jeder Zeile.", "Drei Sterne in jeder Spalte.", "Drei Sterne in jeder Farbfläche."] },
+  es: { label: "Elegir modo de estrellas", confirm: "Vuelve a elegir este modo para descartar el tablero actual.", quick: ["1★ Rápido", "7×7 · Una estrella por fila, columna y región", "Coloca exactamente una estrella en cada fila, columna y región.", "Una estrella en cada fila.", "Una estrella en cada columna.", "Una estrella en cada región de color."], classic: ["2★ Clásico", "10×10 · Dos estrellas por fila, columna y región", "Coloca exactamente dos estrellas en cada fila, columna y región.", "Dos estrellas en cada fila.", "Dos estrellas en cada columna.", "Dos estrellas en cada región de color."], expert: ["3★ Experto", "14×14 · Tres estrellas por fila, columna y región", "Coloca exactamente tres estrellas en cada fila, columna y región.", "Tres estrellas en cada fila.", "Tres estrellas en cada columna.", "Tres estrellas en cada región de color."] },
+  fr: { label: "Choisir le mode d'étoiles", confirm: "Choisissez encore ce mode pour abandonner la grille en cours.", quick: ["1★ Rapide", "7×7 · Une étoile par ligne, colonne et région", "Placez exactement une étoile dans chaque ligne, colonne et région.", "Une étoile dans chaque ligne.", "Une étoile dans chaque colonne.", "Une étoile dans chaque région colorée."], classic: ["2★ Classique", "10×10 · Deux étoiles par ligne, colonne et région", "Placez exactement deux étoiles dans chaque ligne, colonne et région.", "Deux étoiles dans chaque ligne.", "Deux étoiles dans chaque colonne.", "Deux étoiles dans chaque région colorée."], expert: ["3★ Expert", "14×14 · Trois étoiles par ligne, colonne et région", "Placez exactement trois étoiles dans chaque ligne, colonne et région.", "Trois étoiles dans chaque ligne.", "Trois étoiles dans chaque colonne.", "Trois étoiles dans chaque région colorée."] },
+  ja: { label: "スターモードを選ぶ", confirm: "もう一度このモードを選ぶと、現在の盤面を破棄します。", quick: ["1★ クイック", "7×7・各行、各列、各色エリアに星1個", "各行、各列、各色エリアに星を1個ずつ置きます。", "各行に星を1個。", "各列に星を1個。", "各色エリアに星を1個。"], classic: ["2★ クラシック", "10×10・各行、各列、各色エリアに星2個", "各行、各列、各色エリアに星を2個ずつ置きます。", "各行に星を2個。", "各列に星を2個。", "各色エリアに星を2個。"], expert: ["3★ エキスパート", "14×14・各行、各列、各色エリアに星3個", "各行、各列、各色エリアに星を3個ずつ置きます。", "各行に星を3個。", "各列に星を3個。", "各色エリアに星を3個。"] },
+  pt: { label: "Escolher modo de estrelas", confirm: "Escolha este modo novamente para descartar o tabuleiro atual.", quick: ["1★ Rápido", "7×7 · Uma estrela por linha, coluna e região", "Coloque exatamente uma estrela em cada linha, coluna e região.", "Uma estrela em cada linha.", "Uma estrela em cada coluna.", "Uma estrela em cada região colorida."], classic: ["2★ Clássico", "10×10 · Duas estrelas por linha, coluna e região", "Coloque exatamente duas estrelas em cada linha, coluna e região.", "Duas estrelas em cada linha.", "Duas estrelas em cada coluna.", "Duas estrelas em cada região colorida."], expert: ["3★ Avançado", "14×14 · Três estrelas por linha, coluna e região", "Coloque exatamente três estrelas em cada linha, coluna e região.", "Três estrelas em cada linha.", "Três estrelas em cada coluna.", "Três estrelas em cada região colorida."] },
+  zh: { label: "选择星数模式", confirm: "再次选择这个模式会放弃当前盘面。", quick: ["1★ 快速", "7×7 · 每行、每列、每个区域 1 颗星", "每一行、每一列和每个颜色区域都放入 1 颗星。", "每一行 1 颗星。", "每一列 1 颗星。", "每个颜色区域 1 颗星。"], classic: ["2★ 经典", "10×10 · 每行、每列、每个区域 2 颗星", "每一行、每一列和每个颜色区域都放入 2 颗星。", "每一行 2 颗星。", "每一列 2 颗星。", "每个颜色区域 2 颗星。"], expert: ["3★ 专家", "14×14 · 每行、每列、每个区域 3 颗星", "每一行、每一列和每个颜色区域都放入 3 颗星。", "每一行 3 颗星。", "每一列 3 颗星。", "每个颜色区域 3 颗星。"] }
+};
+
+for (const language of languages) {
+  const upgrade = homeUpgrades[language.key];
+  language.meta = { ...language.meta, ...upgrade.meta };
+  language.hero = { ...language.hero, ...upgrade.hero };
+  language.rules = { ...language.rules, ...upgrade.rules };
+  language.side.share = upgrade.share;
+  language.faq[0][1] = upgrade.faqGoal;
+  language.modes = starModes[language.key];
+}
+
+languages.find((language) => language.key === "en").explore.links.at(-1)[0] = "Killer Sudoku Combinations Calculator & Chart";
+languages.find((language) => language.key === "de").explore.links.at(-1)[0] = "Killer Sudoku Kombinationen Rechner & Tabelle";
+languages.find((language) => language.key === "es").explore.links.at(-1)[0] = "Calculadora y tabla de combinaciones Sudoku Killer";
+
 const gameCatalog = {
   en: {
     nav: "Games",
@@ -1263,7 +1416,7 @@ const localizedLongtailArticles = [
           {
             paragraphs: [
               "Gute Star-Battle-Hinweise zeigen nicht einfach eine Antwort, sondern den nächsten sicheren Schritt. Prüfe immer, welche Felder nach Zeile, Spalte, Region und Nicht-Berühren-Regel noch legal sind.",
-              "Diese Anleitung passt zur 7x7-Version von Daily Logic Lab, funktioniert aber auch für viele andere Star-Battle- und Two-Not-Touch-Rätsel."
+              "Daily Logic Lab bietet 7x7 mit 1 Stern, 10x10 mit 2 Sternen und 14x14 mit 3 Sternen; die Methode funktioniert in allen drei Modi."
             ]
           },
           {
@@ -1309,7 +1462,7 @@ const localizedLongtailArticles = [
           {
             paragraphs: [
               "Una buena pista de Star Battle no debería ser una apuesta. Debe mostrarte qué fila, columna o región ya tiene una única casilla legal para colocar una estrella.",
-              "Esta guía usa la versión 7x7 de Daily Logic Lab, pero las mismas ideas sirven para muchos puzzles tipo Two Not Touch y Queens."
+              "Daily Logic Lab ofrece 7x7 con 1 estrella, 10x10 con 2 y 14x14 con 3; estas ideas sirven en los tres modos."
             ]
           },
           {
@@ -1355,7 +1508,7 @@ const localizedLongtailArticles = [
           {
             paragraphs: [
               "Un bon indice Star Battle ne remplace pas la logique : il pointe vers le prochain groupe vraiment contraint. Cherche les cases encore légales après les règles de ligne, colonne, région et non-contact.",
-              "La version Daily Logic Lab est en 7x7, mais la méthode s'applique aussi aux grilles Star Battle et Two Not Touch plus grandes."
+              "Daily Logic Lab propose du 7x7 à 1 étoile, du 10x10 à 2 étoiles et du 14x14 à 3 étoiles ; la méthode vaut pour les trois modes."
             ]
           },
           {
@@ -1401,7 +1554,7 @@ const localizedLongtailArticles = [
           {
             paragraphs: [
               "好的 Star Battle 提示不应该只是告诉你答案，而是帮你看清哪一行、哪一列或哪个区域已经只剩一个合法位置。",
-              "Daily Logic Lab 的棋盘是 7x7，但这套检查方法也适合很多 Star Battle、Two Not Touch 和 Queens 风格的摆放类谜题。"
+              "Daily Logic Lab 提供 7x7 的 1 星、10x10 的 2 星和 14x14 的 3 星模式，这套检查方法适用于三种难度。"
             ]
           },
           {
@@ -2509,6 +2662,10 @@ function page(language) {
   const internalLinks = language.explore.links
     .map(([label, href]) => `<a href="${href}">${escapeHtml(label)}</a>`)
     .join("\n            ");
+  const modeButtons = ["quick", "classic", "expert"].map((key) => {
+    const [label, description, start, rowRule, colRule, regionRule] = language.modes[key];
+    return `<button type="button" data-star-mode="${key}" data-description="${escapeHtml(description)}" data-start="${escapeHtml(start)}" data-rule-row="${escapeHtml(rowRule)}" data-rule-col="${escapeHtml(colRule)}" data-rule-region="${escapeHtml(regionRule)}" data-confirm="${escapeHtml(language.modes.confirm)}" aria-pressed="${key === "quick" ? "true" : "false"}">${escapeHtml(label)}</button>`;
+  }).join("\n                ");
 
   return `<!doctype html>
 <html lang="${language.htmlLang}">
@@ -2603,6 +2760,13 @@ function page(language) {
               </div>
             </div>
 
+            <div class="star-mode-picker" aria-label="${escapeHtml(language.modes.label)}">
+              <div class="star-mode-buttons">
+                ${modeButtons}
+              </div>
+              <p id="starModeDescription">${escapeHtml(language.modes.quick[1])}</p>
+            </div>
+
             <div class="board-wrap" aria-live="polite">
               <div class="board-stage">
                 <div id="board" class="board" role="grid" aria-label="${escapeHtml(language.hero.boardLabel)}"></div>
@@ -2610,7 +2774,7 @@ function page(language) {
                   <div class="start-card">
                     <p class="eyebrow" id="startLabel">${escapeHtml(language.hero.startMode)}</p>
                     <h2>${escapeHtml(language.hero.startTitle)}</h2>
-                    <p>${escapeHtml(language.hero.startBody)}</p>
+                    <p id="startInstructions">${escapeHtml(language.modes.quick[2])}</p>
                     <button id="startBtn" type="button" class="primary">${escapeHtml(language.hero.startButton)}</button>
                   </div>
                 </div>
@@ -2635,7 +2799,7 @@ function page(language) {
                 <span>${escapeHtml(language.side.puzzle)}</span>
               </div>
               <div>
-                <strong>7x7</strong>
+                <strong id="gridMetric">7×7</strong>
                 <span>${escapeHtml(language.side.grid)}</span>
               </div>
               <div>
@@ -2651,7 +2815,10 @@ function page(language) {
             <div class="quick-rules" aria-label="${escapeHtml(aria(language, "quickRules"))}">
               <h2>${escapeHtml(language.side.goal)}</h2>
               <ul>
-                ${list(language.side.rules)}
+                <li id="ruleRow">${escapeHtml(language.modes.quick[3])}</li>
+                <li id="ruleCol">${escapeHtml(language.modes.quick[4])}</li>
+                <li id="ruleRegion">${escapeHtml(language.modes.quick[5])}</li>
+                <li>${escapeHtml(language.side.rules[3])}</li>
               </ul>
               <p>${escapeHtml(language.side.tip)}</p>
             </div>
@@ -2752,6 +2919,8 @@ ${language.key === "en" ? `      ${geoFactsSection(geoFacts.home)}\n\n` : ""}   
       </div>
     </footer>
 
+    <script defer src="${asset("two-not-touch-core.js")}"></script>
+    <script defer src="${asset("two-not-touch-catalog.js")}"></script>
     <script defer src="${asset("app.js")}"></script>
   </body>
 </html>

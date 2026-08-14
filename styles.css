@@ -337,7 +337,6 @@ h2 {
   width: 100%;
   max-width: 100%;
   place-items: center;
-  overflow: hidden;
 }
 
 .board-stage {
@@ -352,10 +351,10 @@ h2 {
   width: 100%;
   max-width: none;
   aspect-ratio: 1;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--board-size, 7), minmax(0, 1fr));
   border: 3px solid #2f3336;
   background: #2f3336;
-  gap: 2px;
+  gap: 0;
   touch-action: manipulation;
 }
 
@@ -369,13 +368,55 @@ h2 {
   min-width: 0;
   min-height: 0;
   place-items: center;
-  border: 0;
+  border: 1px solid rgba(47, 51, 54, 0.14);
   border-radius: 0;
   color: #1e2527;
   font-size: clamp(1.3rem, 5.5vw, 2.4rem);
   font-weight: 900;
   line-height: 1;
   padding: 0;
+}
+
+.cell.region-top { border-top: 2px solid #2f3336; }
+.cell.region-right { border-right: 2px solid #2f3336; }
+.cell.region-bottom { border-bottom: 2px solid #2f3336; }
+.cell.region-left { border-left: 2px solid #2f3336; }
+
+.board[data-profile="classic"] .cell {
+  font-size: clamp(1rem, 4vw, 1.9rem);
+}
+
+.board[data-profile="expert"] .cell {
+  font-size: clamp(0.82rem, 3.2vw, 1.45rem);
+}
+
+.star-mode-picker {
+  margin: 0 0 16px;
+}
+
+.star-mode-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.star-mode-buttons button {
+  min-width: 0;
+  padding: 9px 6px;
+  font-size: 0.9rem;
+}
+
+.star-mode-buttons button.active {
+  border-color: var(--accent);
+  background: rgba(36, 92, 83, 0.12);
+  color: var(--accent);
+  font-weight: 850;
+}
+
+.star-mode-picker p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
 }
 
 .cell:disabled {
@@ -855,6 +896,73 @@ h2 {
 .example-table th {
   background: #eef3f0;
   color: var(--ink);
+}
+
+.combination-chart-section {
+  margin-top: 32px;
+  border-top: 1px solid var(--line);
+  padding-top: 28px;
+}
+
+.chart-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 26px;
+}
+
+.chart-index a {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #eef3f0;
+  padding: 7px 10px;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.cage-chart {
+  margin-top: 28px;
+  scroll-margin-top: 20px;
+}
+
+.cage-chart h3,
+.combination-chart-section h3 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+}
+
+.combination-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.combination-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.combination-table th,
+.combination-table td {
+  border: 1px solid var(--line);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.combination-table thead th {
+  background: #eef3f0;
+  color: var(--ink);
+}
+
+.combination-table tbody th {
+  width: 72px;
+  background: #fbfaf7;
+}
+
+.cage-range-table {
+  margin-bottom: 24px;
 }
 
 /* Shared shell for the four new puzzle routes. */
@@ -1500,6 +1608,11 @@ body[data-game] .logic-play-section {
     flex-direction: column;
   }
 
+  .star-mode-buttons button {
+    min-height: 40px;
+    font-size: 0.78rem;
+  }
+
   .stats {
     width: 100%;
   }
@@ -1566,7 +1679,7 @@ body[data-game] .logic-play-section {
   }
 
   .game-column {
-    padding: 10px;
+    padding: 6px;
   }
 
   .game-head {

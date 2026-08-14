@@ -11,8 +11,8 @@
       gtag('js', new Date());
       gtag('config', 'G-6NY29HPM34');
     </script>
-    <title>Calculadora de combinaciones Sudoku Killer - Sumas de jaula</title>
-    <meta name="description" content="Calculadora gratis de combinaciones para Sudoku Killer: encuentra dígitos posibles por suma, número de celdas, repeticiones y dígitos disponibles.">
+    <title>Calculadora de combinaciones Sudoku Killer y tabla de sumas</title>
+    <meta name="description" content="Calcula combinaciones de jaulas de Sudoku Killer y consulta la tabla completa sin repeticiones para jaulas de 2 a 9 celdas.">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="theme-color" content="#245c53">
     <link rel="icon" href="/favicon.ico" sizes="any">
@@ -24,29 +24,29 @@
     <link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/killer-sudoku-kombinationen-rechner">
     <link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/calculadora-combinaciones-sudoku-killer">
     <link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/killer-sudoku-combination-calculator">
-    <meta property="og:title" content="Calculadora de combinaciones Sudoku Killer">
-    <meta property="og:description" content="Encuentra combinaciones de jaula por suma, celdas y dígitos disponibles.">
+    <meta property="og:title" content="Calculadora y tabla de combinaciones Sudoku Killer">
+    <meta property="og:description" content="Calcula combinaciones y consulta la tabla completa de jaulas de 2 a 9 celdas.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dailylogiclab.com/es/calculadora-combinaciones-sudoku-killer">
     <meta property="og:image" content="https://dailylogiclab.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Calculadora de combinaciones Sudoku Killer">
-    <meta name="twitter:description" content="Encuentra combinaciones de jaula por suma, celdas y dígitos disponibles.">
+    <meta name="twitter:title" content="Calculadora y tabla de combinaciones Sudoku Killer">
+    <meta name="twitter:description" content="Calcula combinaciones y consulta la tabla completa de jaulas de 2 a 9 celdas.">
     <meta name="twitter:image" content="https://dailylogiclab.com/og-image.png">
-    <link rel="stylesheet" href="../styles.css?v=cced8a9f22">
+    <link rel="stylesheet" href="../styles.css?v=372896aaa1">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@graph": [
           {
             "@type": "SoftwareApplication",
-            "name": "Calculadora de combinaciones Sudoku Killer",
+            "name": "Calculadora y tabla de combinaciones Sudoku Killer",
             "applicationCategory": "UtilitiesApplication",
             "operatingSystem": "Any",
             "isAccessibleForFree": true,
             "inLanguage": "es",
             "url": "https://dailylogiclab.com/es/calculadora-combinaciones-sudoku-killer",
-            "description": "Calculadora en navegador para combinaciones de jaulas de Sudoku Killer por suma, celdas y dígitos disponibles."
+            "description": "Calculadora de combinaciones de jaulas de Sudoku Killer con tabla completa de sumas para 2 a 9 celdas."
           },
           {
             "@type": "FAQPage",
@@ -90,7 +90,7 @@
     <main class="content-page">
       <article class="section-shell content-card">
         <p class="eyebrow">Ayuda para Sudoku Killer</p>
-        <h1>Calculadora de combinaciones para Sudoku Killer</h1>
+        <h1>Calculadora y tabla de combinaciones para Sudoku Killer</h1>
         <p>
           Esta calculadora muestra combinaciones posibles para una jaula de Sudoku Killer. Escribe
           la suma objetivo, el número de celdas, elimina dígitos imposibles y compara los resultados
@@ -133,6 +133,225 @@
             <div id="localComboResults" class="combo-results" aria-live="polite"></div>
           </div>
         </section>
+
+<!-- KILLER_CHART_START -->
+        <section class="combination-chart-section" aria-labelledby="killer-sudoku-combination-chart">
+          <h2 id="killer-sudoku-combination-chart">Tabla de combinaciones de Sudoku Killer</h2>
+          <p>Esta tabla completa usa la regla estándar de Sudoku Killer sin dígitos repetidos dentro de una jaula. Elige el tamaño y busca la suma y sus combinaciones posibles.</p>
+          <nav class="chart-index" aria-label="Tabla de combinaciones de Sudoku Killer">
+            <a href="#cage-2-cells">Jaulas de 2 celdas</a>
+            <a href="#cage-3-cells">Jaulas de 3 celdas</a>
+            <a href="#cage-4-cells">Jaulas de 4 celdas</a>
+            <a href="#cage-5-cells">Jaulas de 5 celdas</a>
+            <a href="#cage-6-cells">Jaulas de 6 celdas</a>
+            <a href="#cage-7-cells">Jaulas de 7 celdas</a>
+            <a href="#cage-8-cells">Jaulas de 8 celdas</a>
+            <a href="#cage-9-cells">Jaulas de 9 celdas</a>
+          </nav>
+          <section class="cage-chart" aria-labelledby="cage-2-cells">
+            <h3 id="cage-2-cells">Jaulas de 2 celdas</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">Suma</th><th scope="col">Combinaciones posibles</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">3</th><td>1+2</td></tr>
+                <tr><th scope="row">4</th><td>1+3</td></tr>
+                <tr><th scope="row">5</th><td>1+4, 2+3</td></tr>
+                <tr><th scope="row">6</th><td>1+5, 2+4</td></tr>
+                <tr><th scope="row">7</th><td>1+6, 2+5, 3+4</td></tr>
+                <tr><th scope="row">8</th><td>1+7, 2+6, 3+5</td></tr>
+                <tr><th scope="row">9</th><td>1+8, 2+7, 3+6, 4+5</td></tr>
+                <tr><th scope="row">10</th><td>1+9, 2+8, 3+7, 4+6</td></tr>
+                <tr><th scope="row">11</th><td>2+9, 3+8, 4+7, 5+6</td></tr>
+                <tr><th scope="row">12</th><td>3+9, 4+8, 5+7</td></tr>
+                <tr><th scope="row">13</th><td>4+9, 5+8, 6+7</td></tr>
+                <tr><th scope="row">14</th><td>5+9, 6+8</td></tr>
+                <tr><th scope="row">15</th><td>6+9, 7+8</td></tr>
+                <tr><th scope="row">16</th><td>7+9</td></tr>
+                <tr><th scope="row">17</th><td>8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-3-cells">
+            <h3 id="cage-3-cells">Jaulas de 3 celdas</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">Suma</th><th scope="col">Combinaciones posibles</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">6</th><td>1+2+3</td></tr>
+                <tr><th scope="row">7</th><td>1+2+4</td></tr>
+                <tr><th scope="row">8</th><td>1+2+5, 1+3+4</td></tr>
+                <tr><th scope="row">9</th><td>1+2+6, 1+3+5, 2+3+4</td></tr>
+                <tr><th scope="row">10</th><td>1+2+7, 1+3+6, 1+4+5, 2+3+5</td></tr>
+                <tr><th scope="row">11</th><td>1+2+8, 1+3+7, 1+4+6, 2+3+6, 2+4+5</td></tr>
+                <tr><th scope="row">12</th><td>1+2+9, 1+3+8, 1+4+7, 1+5+6, 2+3+7, 2+4+6, 3+4+5</td></tr>
+                <tr><th scope="row">13</th><td>1+3+9, 1+4+8, 1+5+7, 2+3+8, 2+4+7, 2+5+6, 3+4+6</td></tr>
+                <tr><th scope="row">14</th><td>1+4+9, 1+5+8, 1+6+7, 2+3+9, 2+4+8, 2+5+7, 3+4+7, 3+5+6</td></tr>
+                <tr><th scope="row">15</th><td>1+5+9, 1+6+8, 2+4+9, 2+5+8, 2+6+7, 3+4+8, 3+5+7, 4+5+6</td></tr>
+                <tr><th scope="row">16</th><td>1+6+9, 1+7+8, 2+5+9, 2+6+8, 3+4+9, 3+5+8, 3+6+7, 4+5+7</td></tr>
+                <tr><th scope="row">17</th><td>1+7+9, 2+6+9, 2+7+8, 3+5+9, 3+6+8, 4+5+8, 4+6+7</td></tr>
+                <tr><th scope="row">18</th><td>1+8+9, 2+7+9, 3+6+9, 3+7+8, 4+5+9, 4+6+8, 5+6+7</td></tr>
+                <tr><th scope="row">19</th><td>2+8+9, 3+7+9, 4+6+9, 4+7+8, 5+6+8</td></tr>
+                <tr><th scope="row">20</th><td>3+8+9, 4+7+9, 5+6+9, 5+7+8</td></tr>
+                <tr><th scope="row">21</th><td>4+8+9, 5+7+9, 6+7+8</td></tr>
+                <tr><th scope="row">22</th><td>5+8+9, 6+7+9</td></tr>
+                <tr><th scope="row">23</th><td>6+8+9</td></tr>
+                <tr><th scope="row">24</th><td>7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-4-cells">
+            <h3 id="cage-4-cells">Jaulas de 4 celdas</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">Suma</th><th scope="col">Combinaciones posibles</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">10</th><td>1+2+3+4</td></tr>
+                <tr><th scope="row">11</th><td>1+2+3+5</td></tr>
+                <tr><th scope="row">12</th><td>1+2+3+6, 1+2+4+5</td></tr>
+                <tr><th scope="row">13</th><td>1+2+3+7, 1+2+4+6, 1+3+4+5</td></tr>
+                <tr><th scope="row">14</th><td>1+2+3+8, 1+2+4+7, 1+2+5+6, 1+3+4+6, 2+3+4+5</td></tr>
+                <tr><th scope="row">15</th><td>1+2+3+9, 1+2+4+8, 1+2+5+7, 1+3+4+7, 1+3+5+6, 2+3+4+6</td></tr>
+                <tr><th scope="row">16</th><td>1+2+4+9, 1+2+5+8, 1+2+6+7, 1+3+4+8, 1+3+5+7, 1+4+5+6, 2+3+4+7, 2+3+5+6</td></tr>
+                <tr><th scope="row">17</th><td>1+2+5+9, 1+2+6+8, 1+3+4+9, 1+3+5+8, 1+3+6+7, 1+4+5+7, 2+3+4+8, 2+3+5+7, 2+4+5+6</td></tr>
+                <tr><th scope="row">18</th><td>1+2+6+9, 1+2+7+8, 1+3+5+9, 1+3+6+8, 1+4+5+8, 1+4+6+7, 2+3+4+9, 2+3+5+8, 2+3+6+7, 2+4+5+7, 3+4+5+6</td></tr>
+                <tr><th scope="row">19</th><td>1+2+7+9, 1+3+6+9, 1+3+7+8, 1+4+5+9, 1+4+6+8, 1+5+6+7, 2+3+5+9, 2+3+6+8, 2+4+5+8, 2+4+6+7, 3+4+5+7</td></tr>
+                <tr><th scope="row">20</th><td>1+2+8+9, 1+3+7+9, 1+4+6+9, 1+4+7+8, 1+5+6+8, 2+3+6+9, 2+3+7+8, 2+4+5+9, 2+4+6+8, 2+5+6+7, 3+4+5+8, 3+4+6+7</td></tr>
+                <tr><th scope="row">21</th><td>1+3+8+9, 1+4+7+9, 1+5+6+9, 1+5+7+8, 2+3+7+9, 2+4+6+9, 2+4+7+8, 2+5+6+8, 3+4+5+9, 3+4+6+8, 3+5+6+7</td></tr>
+                <tr><th scope="row">22</th><td>1+4+8+9, 1+5+7+9, 1+6+7+8, 2+3+8+9, 2+4+7+9, 2+5+6+9, 2+5+7+8, 3+4+6+9, 3+4+7+8, 3+5+6+8, 4+5+6+7</td></tr>
+                <tr><th scope="row">23</th><td>1+5+8+9, 1+6+7+9, 2+4+8+9, 2+5+7+9, 2+6+7+8, 3+4+7+9, 3+5+6+9, 3+5+7+8, 4+5+6+8</td></tr>
+                <tr><th scope="row">24</th><td>1+6+8+9, 2+5+8+9, 2+6+7+9, 3+4+8+9, 3+5+7+9, 3+6+7+8, 4+5+6+9, 4+5+7+8</td></tr>
+                <tr><th scope="row">25</th><td>1+7+8+9, 2+6+8+9, 3+5+8+9, 3+6+7+9, 4+5+7+9, 4+6+7+8</td></tr>
+                <tr><th scope="row">26</th><td>2+7+8+9, 3+6+8+9, 4+5+8+9, 4+6+7+9, 5+6+7+8</td></tr>
+                <tr><th scope="row">27</th><td>3+7+8+9, 4+6+8+9, 5+6+7+9</td></tr>
+                <tr><th scope="row">28</th><td>4+7+8+9, 5+6+8+9</td></tr>
+                <tr><th scope="row">29</th><td>5+7+8+9</td></tr>
+                <tr><th scope="row">30</th><td>6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-5-cells">
+            <h3 id="cage-5-cells">Jaulas de 5 celdas</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">Suma</th><th scope="col">Combinaciones posibles</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">15</th><td>1+2+3+4+5</td></tr>
+                <tr><th scope="row">16</th><td>1+2+3+4+6</td></tr>
+                <tr><th scope="row">17</th><td>1+2+3+4+7, 1+2+3+5+6</td></tr>
+                <tr><th scope="row">18</th><td>1+2+3+4+8, 1+2+3+5+7, 1+2+4+5+6</td></tr>
+                <tr><th scope="row">19</th><td>1+2+3+4+9, 1+2+3+5+8, 1+2+3+6+7, 1+2+4+5+7, 1+3+4+5+6</td></tr>
+                <tr><th scope="row">20</th><td>1+2+3+5+9, 1+2+3+6+8, 1+2+4+5+8, 1+2+4+6+7, 1+3+4+5+7, 2+3+4+5+6</td></tr>
+                <tr><th scope="row">21</th><td>1+2+3+6+9, 1+2+3+7+8, 1+2+4+5+9, 1+2+4+6+8, 1+2+5+6+7, 1+3+4+5+8, 1+3+4+6+7, 2+3+4+5+7</td></tr>
+                <tr><th scope="row">22</th><td>1+2+3+7+9, 1+2+4+6+9, 1+2+4+7+8, 1+2+5+6+8, 1+3+4+5+9, 1+3+4+6+8, 1+3+5+6+7, 2+3+4+5+8, 2+3+4+6+7</td></tr>
+                <tr><th scope="row">23</th><td>1+2+3+8+9, 1+2+4+7+9, 1+2+5+6+9, 1+2+5+7+8, 1+3+4+6+9, 1+3+4+7+8, 1+3+5+6+8, 1+4+5+6+7, 2+3+4+5+9, 2+3+4+6+8, 2+3+5+6+7</td></tr>
+                <tr><th scope="row">24</th><td>1+2+4+8+9, 1+2+5+7+9, 1+2+6+7+8, 1+3+4+7+9, 1+3+5+6+9, 1+3+5+7+8, 1+4+5+6+8, 2+3+4+6+9, 2+3+4+7+8, 2+3+5+6+8, 2+4+5+6+7</td></tr>
+                <tr><th scope="row">25</th><td>1+2+5+8+9, 1+2+6+7+9, 1+3+4+8+9, 1+3+5+7+9, 1+3+6+7+8, 1+4+5+6+9, 1+4+5+7+8, 2+3+4+7+9, 2+3+5+6+9, 2+3+5+7+8, 2+4+5+6+8, 3+4+5+6+7</td></tr>
+                <tr><th scope="row">26</th><td>1+2+6+8+9, 1+3+5+8+9, 1+3+6+7+9, 1+4+5+7+9, 1+4+6+7+8, 2+3+4+8+9, 2+3+5+7+9, 2+3+6+7+8, 2+4+5+6+9, 2+4+5+7+8, 3+4+5+6+8</td></tr>
+                <tr><th scope="row">27</th><td>1+2+7+8+9, 1+3+6+8+9, 1+4+5+8+9, 1+4+6+7+9, 1+5+6+7+8, 2+3+5+8+9, 2+3+6+7+9, 2+4+5+7+9, 2+4+6+7+8, 3+4+5+6+9, 3+4+5+7+8</td></tr>
+                <tr><th scope="row">28</th><td>1+3+7+8+9, 1+4+6+8+9, 1+5+6+7+9, 2+3+6+8+9, 2+4+5+8+9, 2+4+6+7+9, 2+5+6+7+8, 3+4+5+7+9, 3+4+6+7+8</td></tr>
+                <tr><th scope="row">29</th><td>1+4+7+8+9, 1+5+6+8+9, 2+3+7+8+9, 2+4+6+8+9, 2+5+6+7+9, 3+4+5+8+9, 3+4+6+7+9, 3+5+6+7+8</td></tr>
+                <tr><th scope="row">30</th><td>1+5+7+8+9, 2+4+7+8+9, 2+5+6+8+9, 3+4+6+8+9, 3+5+6+7+9, 4+5+6+7+8</td></tr>
+                <tr><th scope="row">31</th><td>1+6+7+8+9, 2+5+7+8+9, 3+4+7+8+9, 3+5+6+8+9, 4+5+6+7+9</td></tr>
+                <tr><th scope="row">32</th><td>2+6+7+8+9, 3+5+7+8+9, 4+5+6+8+9</td></tr>
+                <tr><th scope="row">33</th><td>3+6+7+8+9, 4+5+7+8+9</td></tr>
+                <tr><th scope="row">34</th><td>4+6+7+8+9</td></tr>
+                <tr><th scope="row">35</th><td>5+6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-6-cells">
+            <h3 id="cage-6-cells">Jaulas de 6 celdas</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">Suma</th><th scope="col">Combinaciones posibles</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">21</th><td>1+2+3+4+5+6</td></tr>
+                <tr><th scope="row">22</th><td>1+2+3+4+5+7</td></tr>
+                <tr><th scope="row">23</th><td>1+2+3+4+5+8, 1+2+3+4+6+7</td></tr>
+                <tr><th scope="row">24</th><td>1+2+3+4+5+9, 1+2+3+4+6+8, 1+2+3+5+6+7</td></tr>
+                <tr><th scope="row">25</th><td>1+2+3+4+6+9, 1+2+3+4+7+8, 1+2+3+5+6+8, 1+2+4+5+6+7</td></tr>
+                <tr><th scope="row">26</th><td>1+2+3+4+7+9, 1+2+3+5+6+9, 1+2+3+5+7+8, 1+2+4+5+6+8, 1+3+4+5+6+7</td></tr>
+                <tr><th scope="row">27</th><td>1+2+3+4+8+9, 1+2+3+5+7+9, 1+2+3+6+7+8, 1+2+4+5+6+9, 1+2+4+5+7+8, 1+3+4+5+6+8, 2+3+4+5+6+7</td></tr>
+                <tr><th scope="row">28</th><td>1+2+3+5+8+9, 1+2+3+6+7+9, 1+2+4+5+7+9, 1+2+4+6+7+8, 1+3+4+5+6+9, 1+3+4+5+7+8, 2+3+4+5+6+8</td></tr>
+                <tr><th scope="row">29</th><td>1+2+3+6+8+9, 1+2+4+5+8+9, 1+2+4+6+7+9, 1+2+5+6+7+8, 1+3+4+5+7+9, 1+3+4+6+7+8, 2+3+4+5+6+9, 2+3+4+5+7+8</td></tr>
+                <tr><th scope="row">30</th><td>1+2+3+7+8+9, 1+2+4+6+8+9, 1+2+5+6+7+9, 1+3+4+5+8+9, 1+3+4+6+7+9, 1+3+5+6+7+8, 2+3+4+5+7+9, 2+3+4+6+7+8</td></tr>
+                <tr><th scope="row">31</th><td>1+2+4+7+8+9, 1+2+5+6+8+9, 1+3+4+6+8+9, 1+3+5+6+7+9, 1+4+5+6+7+8, 2+3+4+5+8+9, 2+3+4+6+7+9, 2+3+5+6+7+8</td></tr>
+                <tr><th scope="row">32</th><td>1+2+5+7+8+9, 1+3+4+7+8+9, 1+3+5+6+8+9, 1+4+5+6+7+9, 2+3+4+6+8+9, 2+3+5+6+7+9, 2+4+5+6+7+8</td></tr>
+                <tr><th scope="row">33</th><td>1+2+6+7+8+9, 1+3+5+7+8+9, 1+4+5+6+8+9, 2+3+4+7+8+9, 2+3+5+6+8+9, 2+4+5+6+7+9, 3+4+5+6+7+8</td></tr>
+                <tr><th scope="row">34</th><td>1+3+6+7+8+9, 1+4+5+7+8+9, 2+3+5+7+8+9, 2+4+5+6+8+9, 3+4+5+6+7+9</td></tr>
+                <tr><th scope="row">35</th><td>1+4+6+7+8+9, 2+3+6+7+8+9, 2+4+5+7+8+9, 3+4+5+6+8+9</td></tr>
+                <tr><th scope="row">36</th><td>1+5+6+7+8+9, 2+4+6+7+8+9, 3+4+5+7+8+9</td></tr>
+                <tr><th scope="row">37</th><td>2+5+6+7+8+9, 3+4+6+7+8+9</td></tr>
+                <tr><th scope="row">38</th><td>3+5+6+7+8+9</td></tr>
+                <tr><th scope="row">39</th><td>4+5+6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-7-cells">
+            <h3 id="cage-7-cells">Jaulas de 7 celdas</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">Suma</th><th scope="col">Combinaciones posibles</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">28</th><td>1+2+3+4+5+6+7</td></tr>
+                <tr><th scope="row">29</th><td>1+2+3+4+5+6+8</td></tr>
+                <tr><th scope="row">30</th><td>1+2+3+4+5+6+9, 1+2+3+4+5+7+8</td></tr>
+                <tr><th scope="row">31</th><td>1+2+3+4+5+7+9, 1+2+3+4+6+7+8</td></tr>
+                <tr><th scope="row">32</th><td>1+2+3+4+5+8+9, 1+2+3+4+6+7+9, 1+2+3+5+6+7+8</td></tr>
+                <tr><th scope="row">33</th><td>1+2+3+4+6+8+9, 1+2+3+5+6+7+9, 1+2+4+5+6+7+8</td></tr>
+                <tr><th scope="row">34</th><td>1+2+3+4+7+8+9, 1+2+3+5+6+8+9, 1+2+4+5+6+7+9, 1+3+4+5+6+7+8</td></tr>
+                <tr><th scope="row">35</th><td>1+2+3+5+7+8+9, 1+2+4+5+6+8+9, 1+3+4+5+6+7+9, 2+3+4+5+6+7+8</td></tr>
+                <tr><th scope="row">36</th><td>1+2+3+6+7+8+9, 1+2+4+5+7+8+9, 1+3+4+5+6+8+9, 2+3+4+5+6+7+9</td></tr>
+                <tr><th scope="row">37</th><td>1+2+4+6+7+8+9, 1+3+4+5+7+8+9, 2+3+4+5+6+8+9</td></tr>
+                <tr><th scope="row">38</th><td>1+2+5+6+7+8+9, 1+3+4+6+7+8+9, 2+3+4+5+7+8+9</td></tr>
+                <tr><th scope="row">39</th><td>1+3+5+6+7+8+9, 2+3+4+6+7+8+9</td></tr>
+                <tr><th scope="row">40</th><td>1+4+5+6+7+8+9, 2+3+5+6+7+8+9</td></tr>
+                <tr><th scope="row">41</th><td>2+4+5+6+7+8+9</td></tr>
+                <tr><th scope="row">42</th><td>3+4+5+6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-8-cells">
+            <h3 id="cage-8-cells">Jaulas de 8 celdas</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">Suma</th><th scope="col">Combinaciones posibles</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">36</th><td>1+2+3+4+5+6+7+8</td></tr>
+                <tr><th scope="row">37</th><td>1+2+3+4+5+6+7+9</td></tr>
+                <tr><th scope="row">38</th><td>1+2+3+4+5+6+8+9</td></tr>
+                <tr><th scope="row">39</th><td>1+2+3+4+5+7+8+9</td></tr>
+                <tr><th scope="row">40</th><td>1+2+3+4+6+7+8+9</td></tr>
+                <tr><th scope="row">41</th><td>1+2+3+5+6+7+8+9</td></tr>
+                <tr><th scope="row">42</th><td>1+2+4+5+6+7+8+9</td></tr>
+                <tr><th scope="row">43</th><td>1+3+4+5+6+7+8+9</td></tr>
+                <tr><th scope="row">44</th><td>2+3+4+5+6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-9-cells">
+            <h3 id="cage-9-cells">Jaulas de 9 celdas</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">Suma</th><th scope="col">Combinaciones posibles</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">45</th><td>1+2+3+4+5+6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <h2>Referencia de sumas de jaula</h2>
+          <div class="combination-table-wrap"><table class="combination-table cage-range-table">
+            <thead><tr><th scope="col">Celdas</th><th scope="col">Mínimo</th><th scope="col">Máximo</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">2</th><td>1 + 2 = 3</td><td>8 + 9 = 17</td></tr>
+              <tr><th scope="row">3</th><td>1 + 2 + 3 = 6</td><td>7 + 8 + 9 = 24</td></tr>
+              <tr><th scope="row">4</th><td>1 + 2 + 3 + 4 = 10</td><td>6 + 7 + 8 + 9 = 30</td></tr>
+              <tr><th scope="row">5</th><td>1 + 2 + 3 + 4 + 5 = 15</td><td>5 + 6 + 7 + 8 + 9 = 35</td></tr>
+              <tr><th scope="row">6</th><td>1 + 2 + 3 + 4 + 5 + 6 = 21</td><td>4 + 5 + 6 + 7 + 8 + 9 = 39</td></tr>
+              <tr><th scope="row">7</th><td>1 + 2 + 3 + 4 + 5 + 6 + 7 = 28</td><td>3 + 4 + 5 + 6 + 7 + 8 + 9 = 42</td></tr>
+              <tr><th scope="row">8</th><td>1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 = 36</td><td>2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 = 44</td></tr>
+              <tr><th scope="row">9</th><td>1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 = 45</td><td>1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 = 45</td></tr>
+            </tbody>
+          </table></div>
+          <h3>Combinaciones forzadas y únicas</h3>
+          <p>Las sumas extremas suelen dejar un solo grupo: 3 en 2 celdas es 1 + 2, 17 en 2 celdas es 8 + 9, 10 en 4 celdas es 1 + 2 + 3 + 4 y 30 en 4 celdas es 6 + 7 + 8 + 9.</p>
+          <h3>La regla del 45</h3>
+          <p>Los dígitos del 1 al 9 suman 45. En una fila, columna o caja de 3×3 completa, las sumas conocidas permiten deducir el total de las celdas restantes.</p>
+        </section>
+<!-- KILLER_CHART_END -->
 
         <h2>Cómo usarla</h2>
         <ol>

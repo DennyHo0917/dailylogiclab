@@ -15,6 +15,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+          cache: npm
+      - name: Install test dependency
+        run: npm ci
+      - name: Two Not Touch modes, solver, validator, performance, and diversity checks
+        run: node tools/test-two-not-touch.mjs
       - name: Generator, solver, validator, performance, and diversity checks
         run: node tools/test-logic-games.mjs
       - name: SEO audit

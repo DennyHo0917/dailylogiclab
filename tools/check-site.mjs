@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const files = [];
-const versionedAssets = ["app.js", "language-redirect.js", "logic-games-core.js", "logic-games.js", "styles.css"];
+const versionedAssets = ["app.js", "language-redirect.js", "logic-games-core.js", "logic-games.js", "two-not-touch-core.js", "two-not-touch-catalog.js", "styles.css"];
 const assetVersions = Object.fromEntries(versionedAssets.map((asset) => [
   asset,
   createHash("sha256").update(fs.readFileSync(path.join(root, asset))).digest("hex").slice(0, 10)
@@ -15,7 +15,7 @@ const assetVersions = Object.fromEntries(versionedAssets.map((asset) => [
 
 function walk(directory) {
   for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
-    if (entry.name === ".git") continue;
+    if (entry.name === ".git" || entry.name === "node_modules") continue;
     const file = path.join(directory, entry.name);
     if (entry.isDirectory()) walk(file);
     else files.push(file);
@@ -40,6 +40,25 @@ for (const file of htmlFiles) {
     if (asset.endsWith(".js")) assert.match(html, new RegExp(`<script defer src="[^"]*${asset.replaceAll(".", "\\.")}\\?v=`), `${relative}: ${asset} must be deferred`);
     if (asset === "styles.css") assert.match(html, /<link rel="stylesheet" href="[^"]*styles\.css\?v=[^"]+">/, `${relative}: styles.css must load before first paint`);
   }
+}
+
+for (const relative of [
+  "killer-sudoku-combination-calculator.html",
+  "de/killer-sudoku-kombinationen-rechner.html",
+  "es/calculadora-combinaciones-sudoku-killer.html"
+]) {
+  const html = fs.readFileSync(path.join(root, relative), "utf8");
+  assert.match(html, /id="killer-sudoku-combination-chart"/, `${relative}: missing static combination chart`);
+  for (let cells = 2; cells <= 9; cells += 1) {
+    assert.match(html, new RegExp(`id="cage-${cells}-cells"`), `${relative}: missing ${cells}-cell cage chart`);
+  }
+  assert.ok((html.match(/<th scope="row">/g) || []).length >= 128, `${relative}: incomplete static combination rows`);
+}
+
+for (const relative of ["two-not-touch/daily/index.html", "two-not-touch/practice/index.html"]) {
+  const html = fs.readFileSync(path.join(root, relative), "utf8");
+  assert.match(html, /<meta name="robots" content="noindex, follow">/, `${relative}: old mode URL must stay noindex`);
+  assert.match(html, /<link rel="canonical" href="https:\/\/dailylogiclab\.com\/">/, `${relative}: old mode URL must canonicalize to the homepage`);
 }
 
 const headers = fs.readFileSync(path.join(root, "_headers"), "utf8");

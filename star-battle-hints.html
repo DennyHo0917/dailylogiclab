@@ -49,7 +49,7 @@
     <meta name="twitter:description" content="A beginner-friendly guide to solving Star Battle puzzles without guessing.">
     <meta name="twitter:image" content="https://dailylogiclab.com/og-image.png">
     <meta name="twitter:image:alt" content="Daily Logic Lab Star Battle puzzle board">
-    <link rel="stylesheet" href="./styles.css?v=cced8a9f22">
+    <link rel="stylesheet" href="./styles.css?v=372896aaa1">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -188,14 +188,14 @@
         <p>
           If every candidate but one is blocked by an existing star, by a row that already has a
           star, or by the no-touch rule, the remaining cell is forced. This is stronger than a
-          hunch: the region must contain one star, and there is only one legal place left.
+          hunch: the region still needs a star, and there is only one legal place left.
         </p>
 
         <h2>Hint 2: Mark Around Every Star</h2>
         <p>
           The no-touch rule is easy to underuse. When a star is placed, the eight surrounding
           squares become impossible, including diagonal neighbors. Then the rest of the star's row,
-          column, and color region become impossible too.
+          column, and color region become impossible once that group reaches its required count.
         </p>
         <p>
           This marking step is where many Star Battle puzzles open up. A cell that looked possible
@@ -206,14 +206,13 @@
 
         <h2>Hint 3: Look for Only-One-Place Groups</h2>
         <p>
-          Rows, columns, and regions all need exactly one star. When one of those groups has only
-          one legal cell left, place the star there. This is the simplest Star Battle strategy, and
-          it is also the most reliable.
+          Rows, columns, and regions all need the selected mode's star count. When a group needs one
+          remaining star and has only one legal cell left, place the star there. This is one of the
+          most reliable Star Battle deductions.
         </p>
         <p>
           The trick is to count legal cells, not empty cells. A square is not legal if it touches a
-          star, sits in a row that already has a star, sits in a column that already has a star, or
-          belongs to a region that already has a star.
+          star, or belongs to a row, column, or region that has already reached its required count.
         </p>
 
         <h2>Hint 4: Use Rows and Columns Together</h2>

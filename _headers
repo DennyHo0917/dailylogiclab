@@ -13,5 +13,11 @@
 /logic-games.js
   Cache-Control: public, max-age=31536000, immutable
 
+/two-not-touch-core.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/two-not-touch-catalog.js
+  Cache-Control: public, max-age=31536000, immutable
+
 /styles.css
   Cache-Control: public, max-age=31536000, immutable

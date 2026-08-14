@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "test": "node tools/test-two-not-touch.mjs && node tools/test-logic-games.mjs && node tools/audit-game-seo.mjs && node tools/check-site.mjs && node tools/audit-routes.mjs"
+  },
+  "devDependencies": {
+    "logic-solver": "2.0.1"
+  }
+}

@@ -165,7 +165,7 @@ function page(localeKey, gameKey) {
   const related = ["two-not-touch", ...games].filter((key) => key !== gameKey).map((key) => relatedGameCard(locale, key)).join("");
   const ogAlternates = order.filter((key) => key !== localeKey).map((key) => `<meta property="og:locale:alternate" content="${locales[key].lang.replace("-", "_")}">`).join("");
   const faqJson = game.faq.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } }));
-  const schema = { "@context": "https://schema.org", "@graph": [{ "@type": "WebApplication", name: game.title, url: `${SITE}${canonicalPath}`, inLanguage: locale.lang, dateModified: "2026-08-11", applicationCategory: "GameApplication", operatingSystem: "Any", isAccessibleForFree: true, description: game.desc }, { "@type": "FAQPage", inLanguage: locale.lang, mainEntity: faqJson }] };
+  const schema = { "@context": "https://schema.org", "@graph": [{ "@type": "WebApplication", name: game.title, url: `${SITE}${canonicalPath}`, inLanguage: locale.lang, dateModified: "2026-08-14", applicationCategory: "GameApplication", operatingSystem: "Any", isAccessibleForFree: true, description: game.desc }, { "@type": "FAQPage", inLanguage: locale.lang, mainEntity: faqJson }] };
   const runtimeCopy = { game: { title: game.title, intro: game.intro, prompt: game.prompt, goal: game.goal, rules: game.rules, how: game.how, tips: game.tips, faq: game.faq }, ui: c.ui };
   return `<!doctype html>
 <html lang="${locale.lang}">
@@ -237,7 +237,7 @@ function sitemapBlock() {
   }).concat(`    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/${gameKey}/" />`).join("\n");
   return games.flatMap((gameKey) => order.map((localeKey) => {
     const locale = locales[localeKey];
-    return `  <url>\n    <loc>${SITE}${route(locale, gameKey)}</loc>\n    <lastmod>2026-08-11</lastmod>\n${alternates(gameKey)}\n    <changefreq>daily</changefreq>\n    <priority>0.9</priority>\n  </url>`;
+    return `  <url>\n    <loc>${SITE}${route(locale, gameKey)}</loc>\n    <lastmod>2026-08-14</lastmod>\n${alternates(gameKey)}\n    <changefreq>daily</changefreq>\n    <priority>0.9</priority>\n  </url>`;
   })).join("\n");
 }
 
@@ -246,7 +246,7 @@ function updateSitemap() {
   let xml = fs.readFileSync(sitemapPath, "utf8");
   for (const localeKey of order) {
     const home = `${SITE}${locales[localeKey].path}`;
-    xml = xml.replace(new RegExp(`(<loc>${home.replaceAll(".", "\\.")}<\\/loc>\\s*<lastmod>)[^<]+`), "$1" + "2026-08-11");
+    xml = xml.replace(new RegExp(`(<loc>${home.replaceAll(".", "\\.")}<\\/loc>\\s*<lastmod>)[^<]+`), "$1" + "2026-08-14");
   }
   const start = xml.search(/\s*<url>\s*<loc>https:\/\/dailylogiclab\.com\/tents-and-trees\/<\/loc>/);
   if (start >= 0) xml = `${xml.slice(0, start)}\n${sitemapBlock()}\n</urlset>\n`;

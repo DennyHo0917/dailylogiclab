@@ -1,13 +1,14 @@
-const SIZE = 7;
 const EMPTY = 0;
 const STAR = 1;
 const BLOCK = 2;
-const REGION_LABELS = "ABCDEFG";
-const MAX_GENERATION_ATTEMPTS = 5000;
+const REGION_LABELS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const SITE_URL = "https://dailylogiclab.com/";
 const DISCARD_CONFIRM_MS = 3500;
 const HINT_PENALTIES = [30, 60, 120];
-const VALID_SOLUTIONS = buildSolutionPermutations();
+const TWO_NOT_TOUCH_CORE = window.DLL_TWO_NOT_TOUCH_CORE;
+const TWONOTTOUCH_PROFILES = TWO_NOT_TOUCH_CORE.profiles;
+const STAR_MODE_TO_PROFILE = Object.fromEntries(Object.values(TWONOTTOUCH_PROFILES).map((profile) => [profile.starMode, profile.key]));
+const MULTI_STAR_CATALOG = window.DLL_TWO_NOT_TOUCH_CATALOG || {};
 const LANGUAGE_KEY = getLanguageKey();
 const UI_TEXT = {
   en: {
@@ -492,17 +493,29 @@ const els = {
   copyCombosBtn: document.querySelector("#copyCombosBtn")
 };
 
+els.starModeButtons = [...document.querySelectorAll("[data-star-mode]")];
+els.starModeDescription = document.querySelector("#starModeDescription");
+els.startInstructions = document.querySelector("#startInstructions");
+els.gridMetric = document.querySelector("#gridMetric");
+els.ruleRow = document.querySelector("#ruleRow");
+els.ruleCol = document.querySelector("#ruleCol");
+els.ruleRegion = document.querySelector("#ruleRegion");
+
 const storage = {
   streak: "dll-streak",
   solvedDate: "dll-solved-date",
   bestDailyPrefix: "dll-best-daily-",
   bestPractice: "dll-best-practice",
-  lastVisit: "dll-last-visit"
+  lastVisit: "dll-last-visit",
+  preferredStarMode: "preferred_star_mode"
 };
 
 const INITIAL_MODE = new URLSearchParams(window.location.search).get("mode") === "practice" ? "practice" : "daily";
+const INITIAL_STAR_MODE = getInitialStarMode();
 let state = createGameState(
-  INITIAL_MODE === "practice" ? generateUniquePuzzle(createPracticeSeed(), "P" + String(Date.now()).slice(-5)) : getDailyPuzzle(),
+  INITIAL_MODE === "practice"
+    ? generateUniquePuzzle(INITIAL_STAR_MODE, createPracticeSeed(), "P" + String(Date.now()).slice(-5))
+    : getDailyPuzzle(INITIAL_STAR_MODE),
   INITIAL_MODE
 );
 let timerId = null;
@@ -533,6 +546,19 @@ function t(key, params = {}) {
   });
 }
 
+function getInitialStarMode() {
+  const saved = localStorage.getItem(storage.preferredStarMode);
+  return STAR_MODE_TO_PROFILE[saved] || "quick";
+}
+
+function getProfile(profileKey = state?.puzzle?.profileKey || INITIAL_STAR_MODE) {
+  return TWONOTTOUCH_PROFILES[profileKey] || TWONOTTOUCH_PROFILES.quick;
+}
+
+function getModeButton(profileKey = getProfile().key) {
+  return els.starModeButtons.find((button) => button.dataset.starMode === profileKey);
+}
+
 function init() {
   renderBoard();
   updateStats();
@@ -549,8 +575,10 @@ function init() {
   trackEvent("site_loaded", {
     path: location.pathname || "/",
     title: document.title,
-    language: LANGUAGE_KEY
+    language: LANGUAGE_KEY,
+    star_mode: getProfile().starMode
   });
+  trackEvent("game_view", getPuzzleEventData());
   trackReturnVisit();
 }
 
@@ -564,6 +592,7 @@ function bindGameEvents() {
   els.dailyBtn.addEventListener("click", loadDailyPuzzle);
   els.shareBtn.addEventListener("click", shareResult);
   els.copyLinkBtn.addEventListener("click", copyPageLink);
+  els.starModeButtons.forEach((button) => button.addEventListener("click", () => changeStarMode(button.dataset.starMode)));
   window.addEventListener("pagehide", () => trackAbandonedPuzzle("pagehide"), { once: true });
 }
 
@@ -573,10 +602,11 @@ function bindCalculatorEvents() {
 }
 
 function createGameState(puzzle, mode) {
+  const { size } = getProfile(puzzle.profileKey);
   return {
     puzzle,
     mode,
-    cells: Array.from({ length: SIZE }, () => Array(SIZE).fill(EMPTY)),
+    cells: Array.from({ length: size }, () => Array(size).fill(EMPTY)),
     hints: new Set(),
     errors: new Set(),
     hintCount: 0,
@@ -601,6 +631,7 @@ function startPuzzle() {
   updateStats();
   setStatus(t("timerStarted"), "success");
   trackEvent("puzzle_start", getPuzzleEventData({ start_method: "button" }));
+  if (state.mode === "daily") trackEvent("daily_puzzle_start", getPuzzleEventData({ start_method: "button" }));
 }
 
 function preparePuzzle(message, tone = "") {
@@ -619,11 +650,11 @@ function preparePuzzle(message, tone = "") {
   updateControls();
 }
 
-function getDailyPuzzle() {
+function getDailyPuzzle(profileKey = getProfile().key) {
   const start = Date.UTC(2026, 0, 1);
   const today = new Date();
   const day = Math.floor((Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()) - start) / 86400000);
-  return generateUniquePuzzle(hashString(`daily-${getTodayKey()}`), day + 1);
+  return generateUniquePuzzle(profileKey, hashString(`daily-two-not-touch-${getTodayKey()}-${getProfile(profileKey).starMode}`), day + 1);
 }
 
 function getTodayKey() {
@@ -634,186 +665,19 @@ function getTodayKey() {
   return `${year}-${month}-${day}`;
 }
 
-function buildSolutionPermutations() {
-  const permutations = [];
-  function walk(cols) {
-    const row = cols.length;
-    if (row === SIZE) {
-      permutations.push([...cols]);
-      return;
-    }
-    for (let col = 0; col < SIZE; col += 1) {
-      if (cols.includes(col)) continue;
-      if (row > 0 && Math.abs(col - cols[row - 1]) <= 1) continue;
-      cols.push(col);
-      walk(cols);
-      cols.pop();
-    }
-  }
-  walk([]);
-  return permutations;
-}
-
-function generateUniquePuzzle(baseSeed, id) {
-  const normalizedSeed = baseSeed >>> 0;
-  for (let attempt = 0; attempt < MAX_GENERATION_ATTEMPTS; attempt += 1) {
-    const rng = createRng((normalizedSeed + attempt * 0x9e3779b9) >>> 0);
-    const solution = VALID_SOLUTIONS[randomInt(rng, VALID_SOLUTIONS.length)];
-    const regions = generateRegions(solution, rng);
-    if (!regions) continue;
-
-    const solutions = solveStarBattle(regions, 2);
-    if (solutions.length === 1) {
-      return {
-        id,
-        seed: normalizedSeed,
-        attempt,
-        solution: solutions[0],
-        regions
-      };
-    }
-  }
-  throw new Error("Could not generate a unique-solution Star Battle puzzle.");
-}
-
-function generateRegions(solution, rng) {
-  const grid = Array.from({ length: SIZE }, () => Array(SIZE).fill(-1));
-  const assigned = [];
-  const unassigned = new Set();
-
-  for (let row = 0; row < SIZE; row += 1) {
-    for (let col = 0; col < SIZE; col += 1) {
-      unassigned.add(getKey(row, col));
-    }
-  }
-
-  solution.forEach((col, row) => {
-    grid[row][col] = row;
-    assigned.push([row, col]);
-    unassigned.delete(getKey(row, col));
-  });
-
-  let guard = 0;
-  while (unassigned.size && guard < 10000) {
-    guard += 1;
-    const [sourceRow, sourceCol] = assigned[randomInt(rng, assigned.length)];
-    const options = orthogonalNeighbors(sourceRow, sourceCol).filter(([row, col]) =>
-      unassigned.has(getKey(row, col))
-    );
-    if (!options.length) continue;
-
-    const [row, col] = options[randomInt(rng, options.length)];
-    grid[row][col] = grid[sourceRow][sourceCol];
-    assigned.push([row, col]);
-    unassigned.delete(getKey(row, col));
-  }
-
-  if (unassigned.size) return null;
-  return grid.map((row) => row.map((region) => REGION_LABELS[region]).join(""));
-}
-
-function solveStarBattle(regions, limit = 2) {
-  const solutions = [];
-  const usedCols = Array(SIZE).fill(false);
-  const usedRegions = Array(SIZE).fill(false);
-
-  function walk(row, cols) {
-    if (solutions.length >= limit) return;
-    if (row === SIZE) {
-      solutions.push([...cols]);
-      return;
-    }
-
-    for (let col = 0; col < SIZE; col += 1) {
-      const region = regionIndexFromRows(regions, row, col);
-      if (usedCols[col] || usedRegions[region]) continue;
-      if (row > 0 && Math.abs(col - cols[row - 1]) <= 1) continue;
-
-      usedCols[col] = true;
-      usedRegions[region] = true;
-      cols.push(col);
-      walk(row + 1, cols);
-      cols.pop();
-      usedRegions[region] = false;
-      usedCols[col] = false;
-    }
-  }
-
-  walk(0, []);
-  return solutions;
+function generateUniquePuzzle(profileKey, baseSeed, id) {
+  return TWO_NOT_TOUCH_CORE.generatePuzzle(profileKey, baseSeed, id, MULTI_STAR_CATALOG);
 }
 
 function countCurrentCompletions(limit = 2) {
-  const currentStars = [];
-  const blocked = new Set();
-  const usedRows = Array(SIZE).fill(false);
-  const usedCols = Array(SIZE).fill(false);
-  const usedRegions = Array(SIZE).fill(false);
-
+  if (limit < 1) return 0;
+  let valid = true;
   forEachCell((row, col) => {
-    if (state.cells[row][col] === BLOCK) blocked.add(getKey(row, col));
-    if (state.cells[row][col] === STAR) currentStars.push([row, col]);
+    const isSolutionStar = state.puzzle.solution[row].includes(col);
+    if (state.cells[row][col] === STAR && !isSolutionStar) valid = false;
+    if (state.cells[row][col] === BLOCK && isSolutionStar) valid = false;
   });
-
-  for (const [row, col] of currentStars) {
-    const region = regionIndex(row, col);
-    if (usedRows[row] || usedCols[col] || usedRegions[region]) return 0;
-    for (const [otherRow, otherCol] of currentStars) {
-      if (row === otherRow && col === otherCol) continue;
-      if (Math.abs(row - otherRow) <= 1 && Math.abs(col - otherCol) <= 1) return 0;
-    }
-    usedRows[row] = true;
-    usedCols[col] = true;
-    usedRegions[region] = true;
-  }
-
-  let count = 0;
-  function walk(row, cols) {
-    if (count >= limit) return;
-    if (row === SIZE) {
-      count += 1;
-      return;
-    }
-
-    const fixed = currentStars.find(([starRow]) => starRow === row);
-    const columns = fixed ? [fixed[1]] : [...Array(SIZE).keys()];
-    for (const col of columns) {
-      const region = regionIndex(row, col);
-      const key = getKey(row, col);
-      const alreadyStar = fixed && fixed[1] === col;
-      if (!alreadyStar && blocked.has(key)) continue;
-      if (!alreadyStar && (usedCols[col] || usedRegions[region])) continue;
-      if (row > 0 && cols[row - 1] !== undefined && Math.abs(col - cols[row - 1]) <= 1) continue;
-
-      if (!alreadyStar) {
-        usedCols[col] = true;
-        usedRegions[region] = true;
-      }
-      cols[row] = col;
-      walk(row + 1, cols);
-      cols[row] = undefined;
-      if (!alreadyStar) {
-        usedRegions[region] = false;
-        usedCols[col] = false;
-      }
-    }
-  }
-
-  walk(0, []);
-  return count;
-}
-
-function orthogonalNeighbors(row, col) {
-  return [
-    [row - 1, col],
-    [row + 1, col],
-    [row, col - 1],
-    [row, col + 1]
-  ].filter(([nextRow, nextCol]) => inside(nextRow, nextCol));
-}
-
-function regionIndexFromRows(regions, row, col) {
-  return regions[row].charCodeAt(col) - 65;
+  return valid ? 1 : 0;
 }
 
 function createPracticeSeed() {
@@ -823,21 +687,6 @@ function createPracticeSeed() {
     return values[0];
   }
   return hashString(`${Date.now()}-${Math.random()}`);
-}
-
-function createRng(seed) {
-  let value = seed >>> 0;
-  return function nextRandom() {
-    value += 0x6d2b79f5;
-    let next = value;
-    next = Math.imul(next ^ (next >>> 15), next | 1);
-    next ^= next + Math.imul(next ^ (next >>> 7), next | 61);
-    return ((next ^ (next >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-function randomInt(rng, max) {
-  return Math.floor(rng() * max);
 }
 
 function hashString(value) {
@@ -850,19 +699,28 @@ function hashString(value) {
 }
 
 function renderBoard() {
+  const { size } = getProfile();
   els.board.innerHTML = "";
-  for (let row = 0; row < SIZE; row += 1) {
+  els.board.style.setProperty("--board-size", String(size));
+  els.board.dataset.profile = getProfile().key;
+  for (let row = 0; row < size; row += 1) {
     const boardRow = document.createElement("div");
     boardRow.className = "board-row";
     boardRow.setAttribute("role", "row");
-    for (let col = 0; col < SIZE; col += 1) {
+    for (let col = 0; col < size; col += 1) {
       const cell = document.createElement("button");
       const key = getKey(row, col);
+      const region = regionIndex(row, col);
       cell.type = "button";
       cell.className = "cell";
       cell.dataset.row = String(row);
       cell.dataset.col = String(col);
-      cell.dataset.region = String(regionIndex(row, col));
+      cell.dataset.region = String(region % 7);
+      cell.dataset.regionId = String(region);
+      if (row === 0 || regionIndex(row - 1, col) !== region) cell.classList.add("region-top");
+      if (col === size - 1 || regionIndex(row, col + 1) !== region) cell.classList.add("region-right");
+      if (row === size - 1 || regionIndex(row + 1, col) !== region) cell.classList.add("region-bottom");
+      if (col === 0 || regionIndex(row, col - 1) !== region) cell.classList.add("region-left");
       cell.setAttribute("role", "gridcell");
       cell.setAttribute("aria-label", getCellLabel(row, col));
       cell.disabled = !state.started || state.solved;
@@ -931,7 +789,8 @@ function handleCellKeydown(event, row, col) {
 
   if (movement) {
     event.preventDefault();
-    focusCell(clamp(row + movement[0], 0, SIZE - 1), clamp(col + movement[1], 0, SIZE - 1));
+    const { size } = getProfile();
+    focusCell(clamp(row + movement[0], 0, size - 1), clamp(col + movement[1], 0, size - 1));
     return;
   }
 
@@ -1009,7 +868,7 @@ function loadDailyPuzzle() {
   requestDestructiveAction("daily", t("dailyConfirm"), () => {
     trackAbandonedPuzzle("daily");
     setStatus(t("generatingDaily"), "");
-    state = createGameState(getDailyPuzzle(), "daily");
+    state = createGameState(getDailyPuzzle(getProfile().key), "daily");
     preparePuzzle(t("dailyReady"), "success");
     trackEvent("daily_puzzle_loaded", getPuzzleEventData());
   });
@@ -1019,10 +878,28 @@ function loadPracticePuzzle() {
   requestDestructiveAction("practice", t("practiceConfirm"), () => {
     trackAbandonedPuzzle("practice");
     setStatus(t("generatingPractice"), "");
-    const next = generateUniquePuzzle(createPracticeSeed(), "P" + String(Date.now()).slice(-5));
+    const next = generateUniquePuzzle(getProfile().key, createPracticeSeed(), "P" + String(Date.now()).slice(-5));
     state = createGameState(next, "practice");
     preparePuzzle(t("practiceReady"), "success");
     trackEvent("new_practice_clicked", getPuzzleEventData());
+    trackEvent("new_puzzle", getPuzzleEventData({ puzzle_type: "practice" }));
+  });
+}
+
+function changeStarMode(profileKey) {
+  const nextProfile = getProfile(profileKey);
+  const previousProfile = getProfile();
+  if (nextProfile.key === previousProfile.key) return;
+  requestDestructiveAction(`star-mode-${profileKey}`, getModeButton(profileKey)?.dataset.confirm || t("practiceConfirm"), () => {
+    trackAbandonedPuzzle("star_mode_change");
+    localStorage.setItem(storage.preferredStarMode, nextProfile.starMode);
+    const nextPuzzle = state.mode === "daily"
+      ? getDailyPuzzle(nextProfile.key)
+      : generateUniquePuzzle(nextProfile.key, createPracticeSeed(), "P" + String(Date.now()).slice(-5));
+    state = createGameState(nextPuzzle, state.mode);
+    preparePuzzle(state.mode === "daily" ? t("dailyReady") : t("practiceReady"), "success");
+    trackEvent("star_mode_change", getPuzzleEventData({ from_mode: previousProfile.starMode, to_mode: nextProfile.starMode }));
+    trackEvent("game_view", getPuzzleEventData());
   });
 }
 
@@ -1124,7 +1001,7 @@ function showHint() {
     }
   }
 
-  const single = groups.find((group) => group.cells.length === 1);
+  const single = groups.find((group) => group.needed === 1 && group.cells.length === 1);
 
   if (single) {
     applyHintPenalty(penalty);
@@ -1163,10 +1040,10 @@ function applyHintPenalty(seconds) {
 }
 
 function getNextSolutionStarKey() {
-  for (let row = 0; row < SIZE; row += 1) {
-    const col = state.puzzle.solution[row];
-    if (state.cells[row][col] !== STAR) {
-      return getKey(row, col);
+  const { size } = getProfile();
+  for (let row = 0; row < size; row += 1) {
+    for (const col of state.puzzle.solution[row]) {
+      if (state.cells[row][col] !== STAR) return getKey(row, col);
     }
   }
   return "";
@@ -1200,6 +1077,8 @@ function markSolved() {
     "success"
   );
   trackEvent("puzzle_solved", getPuzzleEventData({ time_seconds: elapsed, new_best: isBest }));
+  trackEvent("puzzle_complete", getPuzzleEventData({ time_seconds: elapsed, new_best: isBest }));
+  if (state.mode === "daily") trackEvent("daily_puzzle_complete", getPuzzleEventData({ time_seconds: elapsed, new_best: isBest }));
   renderBoard();
   updateStats();
   updateStartOverlay();
@@ -1208,10 +1087,11 @@ function markSolved() {
 }
 
 function isSolved() {
+  const { size, starsPerGroup } = getProfile();
   const errors = new Set();
-  const rowCounts = Array(SIZE).fill(0);
-  const colCounts = Array(SIZE).fill(0);
-  const regionCounts = Array(SIZE).fill(0);
+  const rowCounts = Array(size).fill(0);
+  const colCounts = Array(size).fill(0);
+  const regionCounts = Array(size).fill(0);
   const stars = [];
 
   forEachCell((row, col) => {
@@ -1223,10 +1103,10 @@ function isSolved() {
     }
   });
 
-  for (let i = 0; i < SIZE; i += 1) {
-    if (rowCounts[i] > 1) markGroup("row", i, errors);
-    if (colCounts[i] > 1) markGroup("col", i, errors);
-    if (regionCounts[i] > 1) markGroup("region", i, errors);
+  for (let i = 0; i < size; i += 1) {
+    if (rowCounts[i] > starsPerGroup) markGroup("row", i, errors);
+    if (colCounts[i] > starsPerGroup) markGroup("col", i, errors);
+    if (regionCounts[i] > starsPerGroup) markGroup("region", i, errors);
   }
 
   for (let i = 0; i < stars.length; i += 1) {
@@ -1241,10 +1121,10 @@ function isSolved() {
   }
 
   const complete =
-    stars.length === SIZE &&
-    rowCounts.every((count) => count === 1) &&
-    colCounts.every((count) => count === 1) &&
-    regionCounts.every((count) => count === 1);
+    stars.length === size * starsPerGroup &&
+    rowCounts.every((count) => count === starsPerGroup) &&
+    colCounts.every((count) => count === starsPerGroup) &&
+    regionCounts.every((count) => count === starsPerGroup);
 
   return { ok: complete && errors.size === 0, errors };
 }
@@ -1262,7 +1142,7 @@ function getCandidates() {
   const candidates = new Set();
   forEachCell((row, col) => {
     if (state.cells[row][col] === STAR || state.cells[row][col] === BLOCK) return;
-    if (rowHasStar(row) || colHasStar(col) || regionHasStar(regionIndex(row, col))) return;
+    if (groupHasRequiredStars("row", row) || groupHasRequiredStars("col", col) || groupHasRequiredStars("region", regionIndex(row, col))) return;
     if (touchesStar(row, col)) return;
     candidates.add(getKey(row, col));
   });
@@ -1270,9 +1150,10 @@ function getCandidates() {
 }
 
 function groupHints(type, candidates) {
+  const { size, starsPerGroup } = getProfile();
   const groups = [];
-  for (let i = 0; i < SIZE; i += 1) {
-    let alreadySolved = false;
+  for (let i = 0; i < size; i += 1) {
+    let placed = 0;
     const cells = [];
     forEachCell((row, col) => {
       const key = getKey(row, col);
@@ -1281,10 +1162,10 @@ function groupHints(type, candidates) {
         (type === "col" && col === i) ||
         (type === "region" && regionIndex(row, col) === i);
       if (!inGroup) return;
-      if (state.cells[row][col] === STAR) alreadySolved = true;
+      if (state.cells[row][col] === STAR) placed += 1;
       if (candidates.has(key)) cells.push(key);
     });
-    if (!alreadySolved && cells.length) groups.push({ type, index: i, cells });
+    if (placed < starsPerGroup && cells.length) groups.push({ type, index: i, cells, needed: starsPerGroup - placed });
   }
   return groups;
 }
@@ -1308,38 +1189,33 @@ function touchesStar(row, col) {
   return false;
 }
 
-function rowHasStar(row) {
-  return state.cells[row].includes(STAR);
-}
-
-function colHasStar(col) {
-  return state.cells.some((row) => row[col] === STAR);
-}
-
-function regionHasStar(region) {
-  let found = false;
+function groupHasRequiredStars(type, index) {
+  let count = 0;
   forEachCell((row, col) => {
-    if (regionIndex(row, col) === region && state.cells[row][col] === STAR) {
-      found = true;
-    }
+    if (state.cells[row][col] !== STAR) return;
+    if (type === "row" && row === index) count += 1;
+    if (type === "col" && col === index) count += 1;
+    if (type === "region" && regionIndex(row, col) === index) count += 1;
   });
-  return found;
+  return count >= getProfile().starsPerGroup;
 }
 
 function regionIndex(row, col) {
-  return state.puzzle.regions[row].charCodeAt(col) - 65;
+  return state.puzzle.regions[row][col];
 }
 
 function forEachCell(callback) {
-  for (let row = 0; row < SIZE; row += 1) {
-    for (let col = 0; col < SIZE; col += 1) {
+  const { size } = getProfile();
+  for (let row = 0; row < size; row += 1) {
+    for (let col = 0; col < size; col += 1) {
       callback(row, col);
     }
   }
 }
 
 function inside(row, col) {
-  return row >= 0 && row < SIZE && col >= 0 && col < SIZE;
+  const { size } = getProfile();
+  return row >= 0 && row < size && col >= 0 && col < size;
 }
 
 function getKey(row, col) {
@@ -1365,10 +1241,11 @@ function updateControls() {
 }
 
 function getBestTimeKey() {
+  const starMode = getProfile().starMode;
   if (state.mode === "daily") {
-    return `${storage.bestDailyPrefix}${getTodayKey()}`;
+    return `${storage.bestDailyPrefix}${getTodayKey()}-${starMode}`;
   }
-  return storage.bestPractice;
+  return `${storage.bestPractice}-${starMode}`;
 }
 
 function getBestTime() {
@@ -1385,9 +1262,10 @@ function saveBestTime() {
 }
 
 function updateStats() {
+  const profile = getProfile();
   const starTotal = state.cells.flat().filter((value) => value === STAR).length;
   const best = getBestTime();
-  els.starCount.textContent = `${starTotal}/${SIZE}`;
+  els.starCount.textContent = `${starTotal}/${profile.size * profile.starsPerGroup}`;
   els.streakCount.textContent = localStorage.getItem(storage.streak) || "0";
   els.timer.textContent = formatTime(elapsed);
   els.bestTime.textContent = best ? formatTime(best) : "--:--";
@@ -1395,9 +1273,22 @@ function updateStats() {
 }
 
 function setModeText() {
+  const profile = getProfile();
+  const button = getModeButton(profile.key);
   els.puzzleMode.textContent = state.mode === "daily" ? t("modeDaily") : t("modePractice");
   els.todayLabel.textContent = state.mode === "daily" ? t("todayDaily", { id: state.puzzle.id }) : t("todayPractice", { id: state.puzzle.id });
   els.proofLabel.textContent = t("proofUnique");
+  els.gridMetric.textContent = `${profile.size}×${profile.size}`;
+  els.starModeDescription.textContent = button?.dataset.description || "";
+  els.startInstructions.textContent = button?.dataset.start || "";
+  els.ruleRow.textContent = button?.dataset.ruleRow || "";
+  els.ruleCol.textContent = button?.dataset.ruleCol || "";
+  els.ruleRegion.textContent = button?.dataset.ruleRegion || "";
+  els.starModeButtons.forEach((modeButton) => {
+    const active = modeButton === button;
+    modeButton.classList.toggle("active", active);
+    modeButton.setAttribute("aria-pressed", active ? "true" : "false");
+  });
 }
 
 function startTimer() {
@@ -1431,8 +1322,12 @@ function setStatus(message, tone) {
 }
 
 function getPuzzleEventData(extra = {}) {
+  const profile = getProfile();
   return {
     mode: state.mode,
+    star_mode: profile.starMode,
+    grid_size: profile.size,
+    stars_per_group: profile.starsPerGroup,
     puzzle_id: String(state.puzzle.id),
     proof: "unique_solution",
     language: LANGUAGE_KEY,
@@ -1473,12 +1368,14 @@ function updateSharePreview() {
 }
 
 function buildShareText() {
+  const profile = getProfile();
+  const modeLabel = getModeButton(profile.key)?.textContent.trim() || profile.starMode;
   const title =
     state.mode === "daily" ? t("shareTitleDaily", { id: state.puzzle.id }) : t("shareTitlePractice", { id: state.puzzle.id });
   const solved = state.solved ? t("shareSolved", { time: formatTime(elapsed) }) : t("shareProgress");
-  const stars = t("shareStars", { count: state.cells.flat().filter((value) => value === STAR).length, size: SIZE });
+  const stars = t("shareStars", { count: state.cells.flat().filter((value) => value === STAR).length, size: profile.size * profile.starsPerGroup });
   const hints = t("shareHints", { count: state.hintCount, penalty: state.hintPenalty });
-  return `${title}\n${solved}\n${stars}\n${hints}\n${getShareUrl()}`;
+  return `${title}\n${modeLabel} · ${profile.size}×${profile.size}\n${solved}\n${stars}\n${hints}\n${getShareUrl()}`;
 }
 
 async function shareResult() {
