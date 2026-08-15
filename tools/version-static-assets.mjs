@@ -7,7 +7,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const assets = ["app.js", "language-redirect.js", "logic-games-core.js", "logic-games.js", "two-not-touch-core.js", "two-not-touch-catalog.js", "styles.css"];
 const versions = Object.fromEntries(assets.map((asset) => [
   asset,
-  createHash("sha256").update(fs.readFileSync(path.join(root, asset))).digest("hex").slice(0, 10)
+  createHash("sha256").update(fs.readFileSync(path.join(root, asset), "utf8").replaceAll("\r\n", "\n")).digest("hex").slice(0, 10)
 ]));
 const htmlFiles = [];
 
