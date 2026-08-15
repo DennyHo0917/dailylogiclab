@@ -1274,6 +1274,15 @@ body[data-game] .logic-play-section {
   touch-action: manipulation;
 }
 
+.logic-board-stage .logic-board {
+  width: 100%;
+  margin: 0;
+}
+
+.logic-board-stage.nonogram-stage {
+  max-width: 600px;
+}
+
 .tents-board,
 .nonogram-board {
   display: grid;

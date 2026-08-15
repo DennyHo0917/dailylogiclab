@@ -45,6 +45,8 @@ for (const [prefix, language] of locales) {
     if ((html.match(/class="mini-preview /g) || []).length !== 4) failures.push(`${relative}: expected 4 game previews`);
     if (!html.includes(`${prefix}#play">Two Not Touch</a>`)) failures.push(`${relative}: missing localized Two Not Touch link`);
     if (!html.includes('"generationError":')) failures.push(`${relative}: missing localized generation error`);
+    if (!html.includes('id="startOverlay" class="start-overlay"')) failures.push(`${relative}: missing start overlay`);
+    if ((html.match(/id="startBtn"/g) || []).length !== 1) failures.push(`${relative}: expected one overlay start button`);
     if (!sitemap.includes(`<loc>${canonical}</loc>`)) failures.push(`${relative}: missing from sitemap`);
     for (const mode of ["daily", "practice"]) {
       const wrapper = path.join(root, relative, mode, "index.html");

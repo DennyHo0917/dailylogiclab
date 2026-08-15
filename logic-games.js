@@ -110,6 +110,9 @@
     title: document.querySelector("#gameTitle"),
     intro: document.querySelector("#gameIntro"),
     difficulty: document.querySelector("#difficulty"),
+    startOverlay: document.querySelector("#startOverlay"),
+    startLabel: document.querySelector("#startLabel"),
+    startInstructions: document.querySelector("#startInstructions"),
     startBtn: document.querySelector("#startBtn"),
     resetBtn: document.querySelector("#resetBtn"),
     checkBtn: document.querySelector("#checkBtn"),
@@ -157,6 +160,7 @@
 
   function bindEvents() {
     els.startBtn.addEventListener("click", startPuzzle);
+    els.startOverlay.addEventListener("click", startPuzzle);
     els.resetBtn.addEventListener("click", resetPuzzle);
     els.checkBtn.addEventListener("click", () => checkPuzzle(true));
     els.newPuzzleBtn.addEventListener("click", () => loadPuzzle("practice", els.difficulty.value, "new_puzzle"));
@@ -224,6 +228,7 @@
     els.startNote.textContent = ui.generationError;
     els.gridSize.textContent = "--";
     els.verified.textContent = "--";
+    els.startOverlay.hidden = true;
     els.startBtn.disabled = true;
     els.resetBtn.disabled = true;
     els.checkBtn.disabled = true;
@@ -416,12 +421,16 @@
   }
 
   function renderMeta() {
+    const waitingToStart = !state.started && !state.solved;
     els.gameMode.textContent = state.mode === "daily" ? ui.modeDaily : ui.modePractice;
     els.startNote.textContent = state.started ? text.prompt : ui.timerNote;
+    els.startOverlay.hidden = !waitingToStart;
+    els.startLabel.textContent = state.mode === "daily" ? ui.modeDaily : ui.modePractice;
+    els.startInstructions.textContent = text.prompt;
     els.gridSize.textContent = `${state.puzzle.size}×${state.puzzle.size}`;
     els.verified.textContent = state.puzzle.unique ? ui.unique : ui.valid;
-    els.startBtn.textContent = state.started ? ui.inProgress : state.mode === "daily" ? ui.startDaily : ui.startPractice;
-    els.startBtn.disabled = state.started || state.solved;
+    els.startBtn.textContent = state.mode === "daily" ? ui.startDaily : ui.startPractice;
+    els.startBtn.disabled = !waitingToStart;
     els.resetBtn.disabled = state.solved;
     els.checkBtn.disabled = !state.started || state.solved;
     els.shareBtn.disabled = !state.started && !state.solved;
