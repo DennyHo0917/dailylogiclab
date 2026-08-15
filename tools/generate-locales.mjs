@@ -6,9 +6,12 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = "https://dailylogiclab.com";
-const SITEMAP_LASTMOD = "2026-08-14";
+const HOME_LASTMOD = "2026-08-15";
+const SUPPORT_LASTMOD = "2026-06-22";
+const CONTENT_LASTMOD = "2026-08-15";
 const DATE_PUBLISHED = "2026-06-18";
-const DATE_MODIFIED = "2026-08-14";
+const HOME_DATE_MODIFIED = "2026-08-15";
+const CONTENT_DATE_MODIFIED = "2026-08-15";
 const OG_IMAGE = `${SITE}/og-image.png`;
 const GITHUB_URL = "https://github.com/DennyHo0917/dailylogiclab";
 const assetVersion = (file) => createHash("sha256").update(readFileSync(path.join(ROOT, file))).digest("hex").slice(0, 10);
@@ -655,11 +658,11 @@ const languages = [
       eyebrow: "さらに見る",
       title: "論理パズルガイド",
       links: [
-        ["Star Battle ガイド", "/star-battle"],
-        ["Star Battle ヒント", "/star-battle-hints"],
+        ["Star Battle ガイド", "/ja/star-battle"],
+        ["Star Battle ヒント", "/ja/star-battle-hints"],
         ["Two Not Touch Puzzle", "/ja/"],
-        ["Queens の代替パズル", "/queens-puzzle-alternative"],
-        ["Killer Sudoku 計算機", "/killer-sudoku-combination-calculator"]
+        ["Queens の代替パズル", "/ja/queens-alternative"],
+        ["Killer Sudoku 計算機", "/ja/killer-sudoku-combination-calculator"]
       ]
     },
     footer: { about: "このサイト", contact: "お問い合わせ", privacy: "プライバシー", sitemap: "サイトマップ" }
@@ -776,11 +779,11 @@ const languages = [
       eyebrow: "Explorar",
       title: "Guias de puzzles lógicos",
       links: [
-        ["Guia Star Battle", "/star-battle"],
-        ["Dicas de Star Battle", "/star-battle-hints"],
+        ["Guia Star Battle", "/pt-br/star-battle"],
+        ["Dicas de Star Battle", "/pt-br/dicas-star-battle"],
         ["Two Not Touch Puzzle", "/pt-br/"],
-        ["Alternativa a Queens", "/queens-puzzle-alternative"],
-        ["Calculadora Killer Sudoku", "/killer-sudoku-combination-calculator"]
+        ["Alternativa a Queens", "/pt-br/alternativa-queens"],
+        ["Calculadora Killer Sudoku", "/pt-br/calculadora-combinacoes-killer-sudoku"]
       ]
     },
     footer: { about: "Sobre", contact: "Contato", privacy: "Privacidade", sitemap: "Mapa do site" }
@@ -1392,12 +1395,105 @@ const supportSlugs = {
 
 const localizedLongtailArticles = [
   {
+    key: "starBattleRules",
+    skipSitemap: true,
+    paths: {
+      en: "/star-battle",
+      de: "/de/star-battle",
+      es: "/es/star-battle",
+      fr: "/fr/star-battle",
+      ja: "/ja/star-battle",
+      pt: "/pt-br/star-battle",
+      zh: "/zh-cn/star-battle"
+    },
+    pages: {
+      ja: {
+        title: "Star Battleのルールと遊び方",
+        description: "Star Battleの基本ルールを日本語で解説。行・列・エリアごとの星の数と、斜めを含む隣接禁止を確認できます。",
+        eyebrow: "Star Battle ガイド",
+        h1: "Star Battleのルールと遊び方",
+        ogTitle: "Star Battleの遊び方",
+        ogDescription: "星の数、エリア、隣接禁止を短く確認できる日本語ガイド。",
+        cta: { label: "Star Battleを遊ぶ", href: "/ja/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "Star Battleは、各行・各列・色分けされた各エリアに決められた数の星を置く論理パズルです。星同士は上下左右だけでなく、斜めにも接してはいけません。",
+              "Daily Logic Labでは、7×7の1スター、10×10の2スター、14×14の3スターを選べます。必要な星の数はモードごとに変わりますが、考え方は同じです。"
+            ]
+          },
+          {
+            heading: "基本ルール",
+            list: [
+              "各行に指定数の星を置く。",
+              "各列に指定数の星を置く。",
+              "各色エリアに指定数の星を置く。",
+              "星同士は辺でも角でも接しない。"
+            ]
+          },
+          {
+            heading: "解き始めのコツ",
+            paragraphs: [
+              "候補が少ない行・列・エリアから見ます。星を置いたら周囲8マスを除外し、同じ行・列・エリアの残り候補も更新してください。",
+              "推測する前に、複数のエリアが同じ行や列をどのように使っているかを比べると、次の確定手が見つかりやすくなります。"
+            ]
+          }
+        ],
+        faq: [
+          ["星は斜めに接してもよいですか？", "いいえ。上下左右だけでなく、斜めの隣接も禁止です。"],
+          ["1行に何個の星を置きますか？", "選んだモードに応じて1個、2個、または3個です。列とエリアも同じ数です。"],
+          ["登録は必要ですか？", "必要ありません。毎日問題と練習問題をブラウザですぐ遊べます。"]
+        ]
+      },
+      pt: {
+        title: "Como jogar Star Battle: regras e dicas",
+        description: "Aprenda as regras de Star Battle em português: estrelas por linha, coluna e região, sem encostar nem pela diagonal.",
+        eyebrow: "Guia de Star Battle",
+        h1: "Como jogar Star Battle",
+        ogTitle: "Regras de Star Battle",
+        ogDescription: "Um guia direto sobre regiões, quantidade de estrelas e a regra de não encostar.",
+        cta: { label: "Jogar Star Battle", href: "/pt-br/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "Star Battle é um puzzle de lógica em que cada linha, coluna e região colorida recebe a mesma quantidade de estrelas. Duas estrelas nunca podem se encostar, nem mesmo pela diagonal.",
+              "No Daily Logic Lab você pode escolher 1 estrela em 7×7, 2 estrelas em 10×10 ou 3 estrelas em 14×14. A quantidade muda, mas as quatro restrições continuam valendo juntas."
+            ]
+          },
+          {
+            heading: "Regras básicas",
+            list: [
+              "Coloque a quantidade indicada de estrelas em cada linha.",
+              "Repita a mesma quantidade em cada coluna.",
+              "Complete cada região colorida com essa quantidade.",
+              "Não deixe duas estrelas encostarem por um lado ou canto."
+            ]
+          },
+          {
+            heading: "Por onde começar",
+            paragraphs: [
+              "Procure a linha, coluna ou região com menos casas possíveis. Depois de colocar uma estrela, descarte as oito casas ao redor e atualize os outros grupos.",
+              "Se travar, compare regiões que ocupam as mesmas linhas ou colunas. Essa sobreposição costuma revelar novas exclusões sem precisar chutar."
+            ]
+          }
+        ],
+        faq: [
+          ["As estrelas podem se encostar na diagonal?", "Não. O contato diagonal também é proibido."],
+          ["Quantas estrelas vão em cada linha?", "Depende do modo: uma, duas ou três. Colunas e regiões usam a mesma quantidade."],
+          ["Preciso criar uma conta?", "Não. O desafio diário e os treinos funcionam direto no navegador."]
+        ]
+      }
+    }
+  },
+  {
     key: "starBattleHints",
     paths: {
       en: "/star-battle-hints",
       de: "/de/star-battle-hinweise",
       es: "/es/pistas-star-battle",
       fr: "/fr/indices-star-battle",
+      ja: "/ja/star-battle-hints",
+      pt: "/pt-br/dicas-star-battle",
       zh: "/zh-cn/star-battle-hints"
     },
     changefreq: "weekly",
@@ -1539,6 +1635,82 @@ const localizedLongtailArticles = [
           ["Quel est le meilleur premier indice ?", "Commence par le groupe qui possède le moins de cases légales."],
           ["Les étoiles peuvent-elles se toucher en diagonale ?", "Non. Le contact diagonal est interdit."],
           ["Faut-il deviner ?", "Une grille vérifiée devrait avoir un chemin logique. Cherche d'abord les cases forcées."]
+        ]
+      },
+      ja: {
+        title: "Star Battleのヒント｜推測せずに解くコツ",
+        description: "Star Battleを論理的に進めるヒント。候補マス、隣接禁止、行・列・エリアの重なりから確定する星を見つけます。",
+        eyebrow: "Star Battle ヒント",
+        h1: "Star Battleを推測せずに解くヒント",
+        ogTitle: "Star Battleのヒント",
+        ogDescription: "候補を整理し、次の確定手を見つけるための実践的なコツ。",
+        cta: { label: "Star Battleを遊ぶ", href: "/ja/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "よいヒントは答えを見せるのではなく、次に確定できる場所へ導きます。空きマスの数ではなく、行・列・エリア・隣接禁止をすべて満たす候補だけを数えてください。",
+              "この方法は1スター、2スター、3スターのどのモードでも使えます。"
+            ]
+          },
+          {
+            heading: "確認する順番",
+            list: [
+              "候補が最も少ない行・列・エリアを探す。",
+              "星を置いたら周囲8マスを除外する。",
+              "必要数に達した行・列・エリアの残りを除外する。",
+              "候補が一つに絞れた場所だけ確定する。"
+            ]
+          },
+          {
+            heading: "行き詰まったとき",
+            paragraphs: [
+              "あるエリアの候補が一つの行に集まっているなら、その行の別エリアから候補を消せることがあります。列についても同じです。",
+              "ヒントボタンを使う前にこの重なりを確認すると、表示された手の理由も理解しやすくなります。"
+            ]
+          }
+        ],
+        faq: [
+          ["最初にどこを見ればよいですか？", "候補が最も少ない行・列・エリアから始めます。"],
+          ["星は斜めに接してもよいですか？", "いいえ。斜めも含め、周囲8マスには別の星を置けません。"],
+          ["推測は必要ですか？", "検証済みの問題では、まず確定手と候補の重なりを探してください。"]
+        ]
+      },
+      pt: {
+        title: "Dicas de Star Battle: resolva sem chutar",
+        description: "Dicas práticas de Star Battle em português: conte casas válidas, bloqueie vizinhas e compare linhas, colunas e regiões.",
+        eyebrow: "Dicas de Star Battle",
+        h1: "Dicas de Star Battle para resolver sem chutar",
+        ogTitle: "Dicas de Star Battle",
+        ogDescription: "Encontre jogadas seguras usando candidatos, regiões e a regra de não encostar.",
+        cta: { label: "Jogar Star Battle", href: "/pt-br/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "Uma boa dica mostra a próxima dedução, não uma resposta aleatória. Conte apenas as casas que continuam válidas depois de aplicar linha, coluna, região e a regra de não encostar.",
+              "O mesmo raciocínio funciona nos modos de 1, 2 e 3 estrelas."
+            ]
+          },
+          {
+            heading: "Checklist rápido",
+            list: [
+              "Comece pelo grupo com menos casas válidas.",
+              "Depois de uma estrela, bloqueie as oito casas vizinhas.",
+              "Ao completar uma linha, coluna ou região, descarte as casas restantes.",
+              "Só coloque uma estrela quando a posição estiver forçada."
+            ]
+          },
+          {
+            heading: "Quando o tabuleiro trava",
+            paragraphs: [
+              "Se todos os candidatos de uma região caem na mesma linha, essa linha pode eliminar candidatos de outras regiões. Faça a mesma comparação com colunas.",
+              "Use a dica do jogo depois dessa revisão. Assim ela confirma o padrão que faltou, em vez de substituir seu raciocínio."
+            ]
+          }
+        ],
+        faq: [
+          ["Qual é a melhor primeira dica?", "Comece pela linha, coluna ou região com menos casas válidas."],
+          ["Estrelas podem encostar na diagonal?", "Não. Nenhum dos oito vizinhos pode ter outra estrela."],
+          ["É preciso chutar?", "Em um tabuleiro verificado, procure primeiro jogadas forçadas e sobreposições entre grupos."]
         ]
       },
       zh: {
@@ -1771,6 +1943,8 @@ const localizedLongtailArticles = [
       de: "/de/queens-alternative",
       es: "/es/alternativa-queens",
       fr: "/fr/alternative-queens",
+      ja: "/ja/queens-alternative",
+      pt: "/pt-br/alternativa-queens",
       zh: "/zh-cn/queens-alternative"
     },
     changefreq: "weekly",
@@ -1917,6 +2091,82 @@ const localizedLongtailArticles = [
           ["Faut-il créer un compte ?", "Non. Le jeu fonctionne directement dans le navigateur."]
         ]
       },
+      ja: {
+        title: "Queensの代わりに遊べる論理パズル｜Star Battle",
+        description: "Queensに似たパズルを探している人向けのStar Battleガイド。行・列・エリアに加え、星の隣接禁止を楽しめます。",
+        eyebrow: "Queens の代替パズル",
+        h1: "Queensの次に遊びたいStar Battle",
+        ogTitle: "Queensの代替パズル",
+        ogDescription: "Queensの配置ロジックに、星が接しないルールを加えたパズル。",
+        cta: { label: "Star Battleを遊ぶ", href: "/ja/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "Queensが好きで別の盤面も解きたいなら、Star Battleは相性のよい選択肢です。行・列・色分けされたエリアを見ながら駒を置く考え方は共通しています。",
+              "違いは、星同士が上下左右にも斜めにも接してはいけないことです。一つの星が周囲の候補をまとめて消すため、連続した論理が生まれます。"
+            ]
+          },
+          {
+            heading: "Queensプレイヤーに合う理由",
+            list: [
+              "短時間で遊べる配置型の論理パズル。",
+              "毎日問題と回数制限のない練習問題。",
+              "登録やアプリのインストールは不要。",
+              "表示する盤面は一意解を確認済み。"
+            ]
+          },
+          {
+            heading: "考え方の切り替え",
+            paragraphs: [
+              "行・列・エリアを走査する習慣はそのまま使えます。星を置くたびに、その周囲8マスも候補から外すことだけを追加してください。",
+              "毎日問題を終えた後も練習モードで続けられるので、翌日を待たずに同じタイプの推理を反復できます。"
+            ]
+          }
+        ],
+        faq: [
+          ["Queensに似たパズルですか？", "はい。行・列・エリアの配置ロジックに、隣接禁止が加わります。"],
+          ["何問でも遊べますか？", "はい。毎日問題のほかに、回数制限のない練習問題があります。"],
+          ["アカウントは必要ですか？", "必要ありません。ブラウザですぐ始められます。"]
+        ]
+      },
+      pt: {
+        title: "Alternativa ao Queens: jogue Star Battle",
+        description: "Procura uma alternativa ao Queens? Star Battle combina linhas, colunas e regiões com a regra extra de estrelas que não encostam.",
+        eyebrow: "Alternativa ao Queens",
+        h1: "Uma alternativa ao Queens: Star Battle",
+        ogTitle: "Alternativa ao Queens",
+        ogDescription: "Um puzzle de colocação parecido com Queens, com estrelas que não podem encostar.",
+        cta: { label: "Jogar Star Battle", href: "/pt-br/#play" },
+        sections: [
+          {
+            paragraphs: [
+              "Se você gosta de Queens e quer mais tabuleiros, Star Battle é uma continuação natural. O raciocínio ainda passa por linhas, colunas e regiões, mas as peças são estrelas.",
+              "A diferença principal é que duas estrelas não podem se encostar, nem pela diagonal. Por isso, cada colocação elimina várias casas ao redor."
+            ]
+          },
+          {
+            heading: "Por que funciona para quem joga Queens",
+            list: [
+              "Partidas curtas direto no navegador.",
+              "Desafio diário e treino ilimitado.",
+              "Sem cadastro ou instalação.",
+              "Tabuleiros verificados com solução única."
+            ]
+          },
+          {
+            heading: "Como adaptar o raciocínio",
+            paragraphs: [
+              "Continue examinando linhas, colunas e regiões. Depois de cada estrela, acrescente uma etapa: marque como impossíveis as oito casas vizinhas.",
+              "O treino gera novos tabuleiros depois do desafio diário, então você pode praticar a mesma família de lógica sem esperar até amanhã."
+            ]
+          }
+        ],
+        faq: [
+          ["Star Battle é parecido com Queens?", "Sim. Os dois usam lógica de colocação por linha, coluna e região; Star Battle acrescenta a regra de não encostar."],
+          ["O treino é ilimitado?", "Sim. Você pode jogar o desafio diário e gerar novos tabuleiros de treino."],
+          ["Preciso criar uma conta?", "Não. Tudo funciona direto no navegador."]
+        ]
+      },
       zh: {
         title: "Queens 替代谜题 - 在线玩 Star Battle",
         description: "想找 Queens 替代谜题？试试 Star Battle：行、列、区域和不相邻规则，免费在线玩，无需登录。",
@@ -1977,6 +2227,8 @@ const localizedLongtailGroups = [
       de: "/de/star-battle",
       es: "/es/star-battle",
       fr: "/fr/star-battle",
+      ja: "/ja/star-battle",
+      pt: "/pt-br/star-battle",
       zh: "/zh-cn/star-battle"
     },
     changefreq: "weekly",
@@ -1986,12 +2238,16 @@ const localizedLongtailGroups = [
     paths: {
       en: "/killer-sudoku-combination-calculator",
       de: "/de/killer-sudoku-kombinationen-rechner",
-      es: "/es/calculadora-combinaciones-sudoku-killer"
+      es: "/es/calculadora-combinaciones-sudoku-killer",
+      fr: "/fr/calculateur-combinaisons-killer-sudoku",
+      ja: "/ja/killer-sudoku-combination-calculator",
+      pt: "/pt-br/calculadora-combinacoes-killer-sudoku",
+      zh: "/zh-cn/killer-sudoku-combination-calculator"
     },
     changefreq: "monthly",
     priority: "0.8"
   },
-  ...activeLocalizedLongtailArticles.map(({ paths, changefreq, priority }) => ({ paths, changefreq, priority }))
+  ...activeLocalizedLongtailArticles.filter((article) => !article.skipSitemap).map(({ paths, changefreq, priority }) => ({ paths, changefreq, priority }))
 ];
 
 function seo(language) {
@@ -2519,6 +2775,8 @@ function aria(language, key) {
 
 function jsonLd(language) {
   const profile = seo(language);
+  const gameKeywords = profile.keywords.filter((keyword) => !/killer|杀手数独/i.test(keyword));
+  const gameAlternateNames = profile.alternateNames.filter((name) => !/killer|杀手数独/i.test(name));
   const graph = [
     organizationSchema(),
     {
@@ -2528,9 +2786,9 @@ function jsonLd(language) {
       url: `${SITE}${language.path}`,
       inLanguage: language.htmlLang,
       publisher: { "@id": `${SITE}/#organization` },
-      dateModified: DATE_MODIFIED,
+      dateModified: HOME_DATE_MODIFIED,
       description: language.meta.description,
-      keywords: profile.keywords.join(", "),
+      keywords: gameKeywords.join(", "),
       availableLanguage: allAvailableLanguages
     },
     {
@@ -2543,25 +2801,26 @@ function jsonLd(language) {
       isPartOf: { "@id": `${SITE}${language.path}#website` },
       publisher: { "@id": `${SITE}/#organization` },
       description: language.meta.description,
-      keywords: profile.keywords.join(", "),
-      alternateName: profile.alternateNames
+      keywords: gameKeywords.join(", "),
+      alternateName: gameAlternateNames
     },
     {
       "@type": "WebApplication",
       "@id": `${SITE}${language.path}#app`,
       name: language.hero.h1,
-      alternateName: profile.alternateNames,
+      alternateName: gameAlternateNames,
       url: `${SITE}${language.path}`,
       inLanguage: language.htmlLang,
       applicationCategory: "GameApplication",
       operatingSystem: "Any",
       isAccessibleForFree: true,
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
       author: { "@id": `${SITE}/#organization` },
       publisher: { "@id": `${SITE}/#organization` },
       datePublished: DATE_PUBLISHED,
-      dateModified: DATE_MODIFIED,
+      dateModified: HOME_DATE_MODIFIED,
       description: language.meta.description,
-      keywords: profile.keywords.join(", "),
+      keywords: gameKeywords.join(", "),
       availableLanguage: allAvailableLanguages,
       audience: {
         "@type": "Audience",
@@ -2641,7 +2900,7 @@ function page(language) {
   const profile = seo(language);
   const canonical = `${SITE}${language.path}`;
   const asset = (file) => `${language.assets}${versionedAsset(file)}`;
-  const guideArticles = language.guide
+  const guideArticles = language.guide.slice(0, 1)
     .map((article, index) => {
       const seoNote = index === 0 && profile.note ? `\n            <p>${escapeHtml(profile.note)}</p>` : "";
       return `<article>
@@ -2651,7 +2910,7 @@ function page(language) {
           </article>`;
     })
     .join("\n\n          ");
-  const faqItems = language.faq
+  const faqItems = language.faq.filter((_, index) => index !== 2)
     .map(
       ([question, answer]) => `<details>
               <summary>${escapeHtml(question)}</summary>
@@ -2682,7 +2941,6 @@ function page(language) {
     </script>
     <title>${escapeHtml(language.meta.title)}</title>
     <meta name="description" content="${escapeHtml(language.meta.description)}">
-    <meta name="keywords" content="${escapeHtml(profile.keywords.join(", "))}">
     <meta name="language" content="${escapeHtml(profile.languageName)}">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="author" content="Daily Logic Lab">
@@ -2691,7 +2949,6 @@ function page(language) {
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <script defer src="${asset("language-redirect.js")}"></script>
     <link rel="canonical" href="${canonical}">
     ${languageLinks}
     <link rel="alternate" hreflang="x-default" href="${SITE}/">
@@ -2974,6 +3231,23 @@ function longtailOutPath(url) {
   return `${url.replace(/^\//, "")}.html`;
 }
 
+async function synchronizeExistingLongtailLinks(files, paths) {
+  for (const [languageKey, file] of Object.entries(files)) {
+    const language = languages.find((item) => item.key === languageKey);
+    let html = readFileSync(file, "utf8");
+    html = html.replace(
+      /    <link rel="alternate" hreflang="en"[\s\S]*?    <link rel="alternate" hreflang="x-default"[^\n]*\n/,
+      `    ${longtailAlternateLinks(paths)}\n`
+    );
+    html = html.replace(
+      /      <details class="language-switcher">[\s\S]*?      <\/details>/,
+      `      ${longtailLanguageSwitcher(language, paths)}`
+    );
+    html = html.replaceAll('content="2026-08-14"', 'content="2026-08-15"').replaceAll('"dateModified": "2026-08-14"', '"dateModified": "2026-08-15"');
+    await writeFile(file, html, "utf8");
+  }
+}
+
 function longtailSections(sections) {
   return sections
     .map((section) => {
@@ -3001,7 +3275,7 @@ function longtailArticleJsonLd(article, language, content) {
           author: { "@id": `${SITE}/#organization` },
           publisher: { "@id": `${SITE}/#organization` },
           datePublished: DATE_PUBLISHED,
-          dateModified: DATE_MODIFIED,
+          dateModified: CONTENT_DATE_MODIFIED,
           mainEntityOfPage: {
             "@type": "WebPage",
             "@id": `${SITE}${article.paths[language.key]}`
@@ -3059,7 +3333,6 @@ function longtailArticlePage(article, language) {
     </script>
     <title>${escapeHtml(content.title)}</title>
     <meta name="description" content="${escapeHtml(content.description)}">
-    <meta name="keywords" content="${escapeHtml(content.keywords)}">
     <meta name="language" content="${escapeHtml(profile.languageName)}">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="theme-color" content="#245c53">
@@ -3067,7 +3340,6 @@ function longtailArticlePage(article, language) {
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <script defer src="${asset}${versionedAsset("language-redirect.js")}"></script>
     <link rel="canonical" href="${canonical}">
     ${longtailAlternateLinks(article.paths)}
     <meta property="og:type" content="article">
@@ -3078,7 +3350,7 @@ function longtailArticlePage(article, language) {
     <meta property="og:url" content="${canonical}">
     <meta property="og:image" content="${SITE}/og-image.png">
     <meta property="article:published_time" content="${DATE_PUBLISHED}">
-    <meta property="article:modified_time" content="${DATE_MODIFIED}">
+    <meta property="article:modified_time" content="${CONTENT_DATE_MODIFIED}">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="${escapeHtml(content.ogTitle)}">
     <meta name="twitter:description" content="${escapeHtml(content.ogDescription)}">
@@ -3106,7 +3378,7 @@ function longtailArticlePage(article, language) {
       <article class="section-shell content-card">
         <p class="eyebrow">${escapeHtml(content.eyebrow)}</p>
         <h1>${escapeHtml(content.h1)}</h1>
-${facts}        ${longtailSections(content.sections)}${cta}
+${facts}${longtailSections(content.sections)}${cta}
 
         <h2>FAQ</h2>
         <div class="faq-list">
@@ -3179,7 +3451,6 @@ function supportPage(language, pageKey) {
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
-    <script defer src="${asset}${versionedAsset("language-redirect.js")}"></script>
     <link rel="canonical" href="${canonical}">
     ${supportAlternateLinks(pageKey)}
     <link rel="alternate" hreflang="x-default" href="${SITE}/${supportSlugs[pageKey]}">
@@ -3247,7 +3518,7 @@ function sitemap() {
     .map(
       (language) => `  <url>
     <loc>${SITE}${language.path}</loc>
-    <lastmod>${SITEMAP_LASTMOD}</lastmod>
+    <lastmod>${HOME_LASTMOD}</lastmod>
 ${alternateBlock}
     <changefreq>daily</changefreq>
     <priority>${language.key === "en" ? "1.0" : "0.9"}</priority>
@@ -3263,7 +3534,7 @@ ${alternateBlock}
       return languages.map(
         (language) => `  <url>
     <loc>${SITE}${supportPath(language, pageKey)}</loc>
-    <lastmod>${SITEMAP_LASTMOD}</lastmod>
+    <lastmod>${SUPPORT_LASTMOD}</lastmod>
 ${supportAlternateBlock}
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
@@ -3277,7 +3548,7 @@ ${supportAlternateBlock}
       return Object.values(group.paths).map(
         (url) => `  <url>
     <loc>${SITE}${url}</loc>
-    <lastmod>${SITEMAP_LASTMOD}</lastmod>
+    <lastmod>${CONTENT_LASTMOD}</lastmod>
 ${alternateBlock}
     <changefreq>${group.changefreq}</changefreq>
     <priority>${group.priority}</priority>
@@ -3323,6 +3594,25 @@ if (!homeOnly) {
       await writeFile(articleOut, longtailArticlePage(article, language), "utf8");
     }
   }
+
+  await synchronizeExistingLongtailLinks(
+    {
+      en: "star-battle.html",
+      de: "de/star-battle.html",
+      es: "es/star-battle.html",
+      fr: "fr/star-battle.html",
+      zh: "zh-cn/star-battle.html"
+    },
+    localizedLongtailGroups[0].paths
+  );
+  await synchronizeExistingLongtailLinks(
+    { en: "star-battle-hints.html" },
+    activeLocalizedLongtailArticles.find((article) => article.key === "starBattleHints").paths
+  );
+  await synchronizeExistingLongtailLinks(
+    { en: "queens-puzzle-alternative.html" },
+    activeLocalizedLongtailArticles.find((article) => article.key === "queensAlternative").paths
+  );
 
   await writeFile("sitemap.xml", sitemap(), "utf8");
 }

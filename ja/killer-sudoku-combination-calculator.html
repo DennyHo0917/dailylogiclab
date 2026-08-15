@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NY29HPM34"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-6NY29HPM34');</script>
+    <title>キラー数独の組み合わせ計算機・ケージ合計表</title><meta name="description" content="キラー数独のケージ合計とマス数から数字の組み合わせを計算。2～9マスの重複なし組み合わせ表も確認できます。"><meta name="robots" content="index, follow, max-image-preview:large"><meta name="theme-color" content="#245c53">
+    <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+    <link rel="canonical" href="https://dailylogiclab.com/ja/killer-sudoku-combination-calculator">
+    <link rel="alternate" hreflang="en" href="https://dailylogiclab.com/killer-sudoku-combination-calculator">
+    <link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/killer-sudoku-kombinationen-rechner">
+    <link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/calculadora-combinaciones-sudoku-killer">
+    <link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/calculateur-combinaisons-killer-sudoku">
+    <link rel="alternate" hreflang="ja" href="https://dailylogiclab.com/ja/killer-sudoku-combination-calculator">
+    <link rel="alternate" hreflang="pt-BR" href="https://dailylogiclab.com/pt-br/calculadora-combinacoes-killer-sudoku">
+    <link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/killer-sudoku-combination-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/killer-sudoku-combination-calculator">
+    <meta property="og:title" content="キラー数独 組み合わせ計算機"><meta property="og:description" content="ケージの合計とマス数から候補数字を絞り込める無料ツール。"><meta property="og:type" content="website"><meta property="og:url" content="https://dailylogiclab.com/ja/killer-sudoku-combination-calculator"><meta property="og:image" content="https://dailylogiclab.com/og-killer-sudoku.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="キラー数独のケージと組み合わせ計算機">
+    <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="キラー数独 組み合わせ計算機"><meta name="twitter:description" content="ケージの合計とマス数から候補数字を絞り込める無料ツール。"><meta name="twitter:image" content="https://dailylogiclab.com/og-killer-sudoku.png"><meta name="twitter:image:alt" content="キラー数独のケージと組み合わせ計算機">
+    <link rel="stylesheet" href="../styles.css?v=e1eb88c1d9"><script type="application/ld+json">{
+        "@context": "https://schema.org",
+        "@graph": [
+                {
+                        "@type": "Organization",
+                        "@id": "https://dailylogiclab.com/#organization",
+                        "name": "Daily Logic Lab",
+                        "url": "https://dailylogiclab.com",
+                        "logo": "https://dailylogiclab.com/icon-512.png",
+                        "sameAs": [
+                                "https://github.com/DennyHo0917/dailylogiclab"
+                        ]
+                },
+                {
+                        "@type": "SoftwareApplication",
+                        "name": "キラー数独の組み合わせ計算機",
+                        "applicationCategory": "UtilitiesApplication",
+                        "operatingSystem": "Any",
+                        "isAccessibleForFree": true,
+                        "inLanguage": "ja",
+                        "author": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "publisher": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "image": "https://dailylogiclab.com/og-killer-sudoku.png",
+                        "url": "https://dailylogiclab.com/ja/killer-sudoku-combination-calculator",
+                        "description": "キラー数独のケージ合計とマス数から数字の組み合わせを計算。2～9マスの重複なし組み合わせ表も確認できます。",
+                        "datePublished": "2026-06-18",
+                        "dateModified": "2026-08-15",
+                        "offers": {
+                                "@type": "Offer",
+                                "price": "0",
+                                "priceCurrency": "USD"
+                        }
+                },
+                {
+                        "@type": "FAQPage",
+                        "inLanguage": "ja",
+                        "mainEntity": [
+                                {
+                                        "@type": "Question",
+                                        "name": "組み合わせ計算機は何をするものですか？",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "合計とマス数に合う数字の組を表示し、使用できない数字を除外できます。"
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "数字の重複を許可しますか？",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "通常のキラー数独では許可しません。重複可と明記された別ルールの問題だけオンにします。"
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "最大合計が45を超えるのはなぜですか？",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "重複を許可する変則ルールに対応するためです。重複なしなら1～9の合計は45です。"
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "盤面全体を解けますか？",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "いいえ。ケージ候補を計算する道具なので、行・列・ブロックの数独ロジックは自分で適用します。"
+                                        }
+                                }
+                        ]
+                }
+        ]
+}</script>
+  </head>
+  <body>
+    <header class="topbar"><a class="brand" href="/ja/#play"><span class="brand-mark">DL</span><span>Daily Logic Lab</span></a>
+      <nav class="nav" aria-label="メインナビゲーション"><a href="#calculator">計算機を使う</a><a href="/ja/#play">遊ぶ</a><a href="/ja/star-battle">Star Battle</a></nav>
+      <details class="language-switcher"><summary aria-label="言語を切り替える">日本語</summary><div class="language-menu">
+          <a href="/killer-sudoku-combination-calculator" lang="en" hreflang="en">English</a>
+          <a href="/de/killer-sudoku-kombinationen-rechner" lang="de" hreflang="de">Deutsch</a>
+          <a href="/es/calculadora-combinaciones-sudoku-killer" lang="es" hreflang="es">Español</a>
+          <a href="/fr/calculateur-combinaisons-killer-sudoku" lang="fr" hreflang="fr">Français</a>
+          <a href="/ja/killer-sudoku-combination-calculator" lang="ja" hreflang="ja" aria-current="page">日本語</a>
+          <a href="/pt-br/calculadora-combinacoes-killer-sudoku" lang="pt-BR" hreflang="pt-BR">Português</a>
+          <a href="/zh-cn/killer-sudoku-combination-calculator" lang="zh-CN" hreflang="zh-CN">简体中文</a>
+        </div></details>
+    </header>
+    <main class="content-page"><article class="section-shell content-card">
+      <p class="eyebrow">キラー数独 補助ツール</p><h1>キラー数独の組み合わせ計算機</h1>
+      <section class="answer-summary"><p class="eyebrow">要点</p><h2>この計算機でできること</h2><dl class="facts-list"><div><dt>目的</dt><dd>ケージの合計とマス数に合う数字の組み合わせを一覧表示します。</dd></div>
+            <div><dt>入力</dt><dd>合計、マス数、使用可能な数字、重複の可否を指定できます。</dd></div>
+            <div><dt>通常のルール</dt><dd>一般的なキラー数独では数字の重複をオフにします。</dd></div>
+            <div><dt>利用方法</dt><dd>登録不要で、ブラウザ上ですべて無料で使えます。</dd></div></dl></section>
+      <p>ケージの合計とマス数を入力すると、条件に合う数字の組み合わせを一覧できます。同じ行・列・ブロックですでに使えない数字を外すと、候補をさらに絞れます。</p>
+      <p>通常のキラー数独ではケージ内の数字は重複しません。重複を許可する設定は、Kakuro、KenKen、独自ルールの合計パズル向けです。</p>
+      <section id="calculator" class="tool-layout content-tool" aria-label="キラー数独の組み合わせ計算機"><div><h2>ケージの候補を探す</h2><p>まずケージの合計とマス数を入れ、盤面で使えない数字をボタンから外してください。</p><ul><li>通常のキラー数独では重複を許可しません。</li>
+              <li>問題のルールに明記されている場合だけ重複をオンにします。</li>
+              <li>候補をメモに移したいときはコピーできます。</li></ul></div>
+        <div class="calculator-panel"><form id="pageComboForm" class="combo-form"><label><span>合計</span><input id="pageSumInput" type="number" min="1" max="90" value="17" inputmode="numeric"></label><label><span>マス数</span><input id="pageCellsInput" type="number" min="1" max="9" value="3" inputmode="numeric"></label><label class="check-label"><input id="pageRepeatInput" type="checkbox"><span>数字の重複を許可</span></label></form>
+          <div class="digits" id="pageDigits" aria-label="使用可能な数字"></div><div class="result-head"><strong id="pageComboCount">0 通り</strong><button id="pageCopyCombosBtn" type="button">コピー</button></div><div id="pageComboResults" class="combo-results" aria-live="polite"></div></div>
+      </section>
+
+        <section class="combination-chart-section" aria-labelledby="killer-sudoku-combination-chart">
+          <h2 id="killer-sudoku-combination-chart">キラー数独 組み合わせ表</h2>
+          <p>通常ルール向けの重複なし一覧です。ケージのマス数を選び、合計から候補を確認してください。</p>
+          <nav class="chart-index" aria-label="キラー数独 組み合わせ表">
+            <a href="#cage-2-cells">2マスのケージ</a>
+            <a href="#cage-3-cells">3マスのケージ</a>
+            <a href="#cage-4-cells">4マスのケージ</a>
+            <a href="#cage-5-cells">5マスのケージ</a>
+            <a href="#cage-6-cells">6マスのケージ</a>
+            <a href="#cage-7-cells">7マスのケージ</a>
+            <a href="#cage-8-cells">8マスのケージ</a>
+            <a href="#cage-9-cells">9マスのケージ</a>
+          </nav>
+          <section class="cage-chart" aria-labelledby="cage-2-cells">
+            <h3 id="cage-2-cells">2マスのケージ</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">合計</th><th scope="col">組み合わせ</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">3</th><td>1+2</td></tr>
+                <tr><th scope="row">4</th><td>1+3</td></tr>
+                <tr><th scope="row">5</th><td>1+4, 2+3</td></tr>
+                <tr><th scope="row">6</th><td>1+5, 2+4</td></tr>
+                <tr><th scope="row">7</th><td>1+6, 2+5, 3+4</td></tr>
+                <tr><th scope="row">8</th><td>1+7, 2+6, 3+5</td></tr>
+                <tr><th scope="row">9</th><td>1+8, 2+7, 3+6, 4+5</td></tr>
+                <tr><th scope="row">10</th><td>1+9, 2+8, 3+7, 4+6</td></tr>
+                <tr><th scope="row">11</th><td>2+9, 3+8, 4+7, 5+6</td></tr>
+                <tr><th scope="row">12</th><td>3+9, 4+8, 5+7</td></tr>
+                <tr><th scope="row">13</th><td>4+9, 5+8, 6+7</td></tr>
+                <tr><th scope="row">14</th><td>5+9, 6+8</td></tr>
+                <tr><th scope="row">15</th><td>6+9, 7+8</td></tr>
+                <tr><th scope="row">16</th><td>7+9</td></tr>
+                <tr><th scope="row">17</th><td>8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-3-cells">
+            <h3 id="cage-3-cells">3マスのケージ</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">合計</th><th scope="col">組み合わせ</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">6</th><td>1+2+3</td></tr>
+                <tr><th scope="row">7</th><td>1+2+4</td></tr>
+                <tr><th scope="row">8</th><td>1+2+5, 1+3+4</td></tr>
+                <tr><th scope="row">9</th><td>1+2+6, 1+3+5, 2+3+4</td></tr>
+                <tr><th scope="row">10</th><td>1+2+7, 1+3+6, 1+4+5, 2+3+5</td></tr>
+                <tr><th scope="row">11</th><td>1+2+8, 1+3+7, 1+4+6, 2+3+6, 2+4+5</td></tr>
+                <tr><th scope="row">12</th><td>1+2+9, 1+3+8, 1+4+7, 1+5+6, 2+3+7, 2+4+6, 3+4+5</td></tr>
+                <tr><th scope="row">13</th><td>1+3+9, 1+4+8, 1+5+7, 2+3+8, 2+4+7, 2+5+6, 3+4+6</td></tr>
+                <tr><th scope="row">14</th><td>1+4+9, 1+5+8, 1+6+7, 2+3+9, 2+4+8, 2+5+7, 3+4+7, 3+5+6</td></tr>
+                <tr><th scope="row">15</th><td>1+5+9, 1+6+8, 2+4+9, 2+5+8, 2+6+7, 3+4+8, 3+5+7, 4+5+6</td></tr>
+                <tr><th scope="row">16</th><td>1+6+9, 1+7+8, 2+5+9, 2+6+8, 3+4+9, 3+5+8, 3+6+7, 4+5+7</td></tr>
+                <tr><th scope="row">17</th><td>1+7+9, 2+6+9, 2+7+8, 3+5+9, 3+6+8, 4+5+8, 4+6+7</td></tr>
+                <tr><th scope="row">18</th><td>1+8+9, 2+7+9, 3+6+9, 3+7+8, 4+5+9, 4+6+8, 5+6+7</td></tr>
+                <tr><th scope="row">19</th><td>2+8+9, 3+7+9, 4+6+9, 4+7+8, 5+6+8</td></tr>
+                <tr><th scope="row">20</th><td>3+8+9, 4+7+9, 5+6+9, 5+7+8</td></tr>
+                <tr><th scope="row">21</th><td>4+8+9, 5+7+9, 6+7+8</td></tr>
+                <tr><th scope="row">22</th><td>5+8+9, 6+7+9</td></tr>
+                <tr><th scope="row">23</th><td>6+8+9</td></tr>
+                <tr><th scope="row">24</th><td>7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-4-cells">
+            <h3 id="cage-4-cells">4マスのケージ</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">合計</th><th scope="col">組み合わせ</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">10</th><td>1+2+3+4</td></tr>
+                <tr><th scope="row">11</th><td>1+2+3+5</td></tr>
+                <tr><th scope="row">12</th><td>1+2+3+6, 1+2+4+5</td></tr>
+                <tr><th scope="row">13</th><td>1+2+3+7, 1+2+4+6, 1+3+4+5</td></tr>
+                <tr><th scope="row">14</th><td>1+2+3+8, 1+2+4+7, 1+2+5+6, 1+3+4+6, 2+3+4+5</td></tr>
+                <tr><th scope="row">15</th><td>1+2+3+9, 1+2+4+8, 1+2+5+7, 1+3+4+7, 1+3+5+6, 2+3+4+6</td></tr>
+                <tr><th scope="row">16</th><td>1+2+4+9, 1+2+5+8, 1+2+6+7, 1+3+4+8, 1+3+5+7, 1+4+5+6, 2+3+4+7, 2+3+5+6</td></tr>
+                <tr><th scope="row">17</th><td>1+2+5+9, 1+2+6+8, 1+3+4+9, 1+3+5+8, 1+3+6+7, 1+4+5+7, 2+3+4+8, 2+3+5+7, 2+4+5+6</td></tr>
+                <tr><th scope="row">18</th><td>1+2+6+9, 1+2+7+8, 1+3+5+9, 1+3+6+8, 1+4+5+8, 1+4+6+7, 2+3+4+9, 2+3+5+8, 2+3+6+7, 2+4+5+7, 3+4+5+6</td></tr>
+                <tr><th scope="row">19</th><td>1+2+7+9, 1+3+6+9, 1+3+7+8, 1+4+5+9, 1+4+6+8, 1+5+6+7, 2+3+5+9, 2+3+6+8, 2+4+5+8, 2+4+6+7, 3+4+5+7</td></tr>
+                <tr><th scope="row">20</th><td>1+2+8+9, 1+3+7+9, 1+4+6+9, 1+4+7+8, 1+5+6+8, 2+3+6+9, 2+3+7+8, 2+4+5+9, 2+4+6+8, 2+5+6+7, 3+4+5+8, 3+4+6+7</td></tr>
+                <tr><th scope="row">21</th><td>1+3+8+9, 1+4+7+9, 1+5+6+9, 1+5+7+8, 2+3+7+9, 2+4+6+9, 2+4+7+8, 2+5+6+8, 3+4+5+9, 3+4+6+8, 3+5+6+7</td></tr>
+                <tr><th scope="row">22</th><td>1+4+8+9, 1+5+7+9, 1+6+7+8, 2+3+8+9, 2+4+7+9, 2+5+6+9, 2+5+7+8, 3+4+6+9, 3+4+7+8, 3+5+6+8, 4+5+6+7</td></tr>
+                <tr><th scope="row">23</th><td>1+5+8+9, 1+6+7+9, 2+4+8+9, 2+5+7+9, 2+6+7+8, 3+4+7+9, 3+5+6+9, 3+5+7+8, 4+5+6+8</td></tr>
+                <tr><th scope="row">24</th><td>1+6+8+9, 2+5+8+9, 2+6+7+9, 3+4+8+9, 3+5+7+9, 3+6+7+8, 4+5+6+9, 4+5+7+8</td></tr>
+                <tr><th scope="row">25</th><td>1+7+8+9, 2+6+8+9, 3+5+8+9, 3+6+7+9, 4+5+7+9, 4+6+7+8</td></tr>
+                <tr><th scope="row">26</th><td>2+7+8+9, 3+6+8+9, 4+5+8+9, 4+6+7+9, 5+6+7+8</td></tr>
+                <tr><th scope="row">27</th><td>3+7+8+9, 4+6+8+9, 5+6+7+9</td></tr>
+                <tr><th scope="row">28</th><td>4+7+8+9, 5+6+8+9</td></tr>
+                <tr><th scope="row">29</th><td>5+7+8+9</td></tr>
+                <tr><th scope="row">30</th><td>6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-5-cells">
+            <h3 id="cage-5-cells">5マスのケージ</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">合計</th><th scope="col">組み合わせ</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">15</th><td>1+2+3+4+5</td></tr>
+                <tr><th scope="row">16</th><td>1+2+3+4+6</td></tr>
+                <tr><th scope="row">17</th><td>1+2+3+4+7, 1+2+3+5+6</td></tr>
+                <tr><th scope="row">18</th><td>1+2+3+4+8, 1+2+3+5+7, 1+2+4+5+6</td></tr>
+                <tr><th scope="row">19</th><td>1+2+3+4+9, 1+2+3+5+8, 1+2+3+6+7, 1+2+4+5+7, 1+3+4+5+6</td></tr>
+                <tr><th scope="row">20</th><td>1+2+3+5+9, 1+2+3+6+8, 1+2+4+5+8, 1+2+4+6+7, 1+3+4+5+7, 2+3+4+5+6</td></tr>
+                <tr><th scope="row">21</th><td>1+2+3+6+9, 1+2+3+7+8, 1+2+4+5+9, 1+2+4+6+8, 1+2+5+6+7, 1+3+4+5+8, 1+3+4+6+7, 2+3+4+5+7</td></tr>
+                <tr><th scope="row">22</th><td>1+2+3+7+9, 1+2+4+6+9, 1+2+4+7+8, 1+2+5+6+8, 1+3+4+5+9, 1+3+4+6+8, 1+3+5+6+7, 2+3+4+5+8, 2+3+4+6+7</td></tr>
+                <tr><th scope="row">23</th><td>1+2+3+8+9, 1+2+4+7+9, 1+2+5+6+9, 1+2+5+7+8, 1+3+4+6+9, 1+3+4+7+8, 1+3+5+6+8, 1+4+5+6+7, 2+3+4+5+9, 2+3+4+6+8, 2+3+5+6+7</td></tr>
+                <tr><th scope="row">24</th><td>1+2+4+8+9, 1+2+5+7+9, 1+2+6+7+8, 1+3+4+7+9, 1+3+5+6+9, 1+3+5+7+8, 1+4+5+6+8, 2+3+4+6+9, 2+3+4+7+8, 2+3+5+6+8, 2+4+5+6+7</td></tr>
+                <tr><th scope="row">25</th><td>1+2+5+8+9, 1+2+6+7+9, 1+3+4+8+9, 1+3+5+7+9, 1+3+6+7+8, 1+4+5+6+9, 1+4+5+7+8, 2+3+4+7+9, 2+3+5+6+9, 2+3+5+7+8, 2+4+5+6+8, 3+4+5+6+7</td></tr>
+                <tr><th scope="row">26</th><td>1+2+6+8+9, 1+3+5+8+9, 1+3+6+7+9, 1+4+5+7+9, 1+4+6+7+8, 2+3+4+8+9, 2+3+5+7+9, 2+3+6+7+8, 2+4+5+6+9, 2+4+5+7+8, 3+4+5+6+8</td></tr>
+                <tr><th scope="row">27</th><td>1+2+7+8+9, 1+3+6+8+9, 1+4+5+8+9, 1+4+6+7+9, 1+5+6+7+8, 2+3+5+8+9, 2+3+6+7+9, 2+4+5+7+9, 2+4+6+7+8, 3+4+5+6+9, 3+4+5+7+8</td></tr>
+                <tr><th scope="row">28</th><td>1+3+7+8+9, 1+4+6+8+9, 1+5+6+7+9, 2+3+6+8+9, 2+4+5+8+9, 2+4+6+7+9, 2+5+6+7+8, 3+4+5+7+9, 3+4+6+7+8</td></tr>
+                <tr><th scope="row">29</th><td>1+4+7+8+9, 1+5+6+8+9, 2+3+7+8+9, 2+4+6+8+9, 2+5+6+7+9, 3+4+5+8+9, 3+4+6+7+9, 3+5+6+7+8</td></tr>
+                <tr><th scope="row">30</th><td>1+5+7+8+9, 2+4+7+8+9, 2+5+6+8+9, 3+4+6+8+9, 3+5+6+7+9, 4+5+6+7+8</td></tr>
+                <tr><th scope="row">31</th><td>1+6+7+8+9, 2+5+7+8+9, 3+4+7+8+9, 3+5+6+8+9, 4+5+6+7+9</td></tr>
+                <tr><th scope="row">32</th><td>2+6+7+8+9, 3+5+7+8+9, 4+5+6+8+9</td></tr>
+                <tr><th scope="row">33</th><td>3+6+7+8+9, 4+5+7+8+9</td></tr>
+                <tr><th scope="row">34</th><td>4+6+7+8+9</td></tr>
+                <tr><th scope="row">35</th><td>5+6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-6-cells">
+            <h3 id="cage-6-cells">6マスのケージ</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">合計</th><th scope="col">組み合わせ</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">21</th><td>1+2+3+4+5+6</td></tr>
+                <tr><th scope="row">22</th><td>1+2+3+4+5+7</td></tr>
+                <tr><th scope="row">23</th><td>1+2+3+4+5+8, 1+2+3+4+6+7</td></tr>
+                <tr><th scope="row">24</th><td>1+2+3+4+5+9, 1+2+3+4+6+8, 1+2+3+5+6+7</td></tr>
+                <tr><th scope="row">25</th><td>1+2+3+4+6+9, 1+2+3+4+7+8, 1+2+3+5+6+8, 1+2+4+5+6+7</td></tr>
+                <tr><th scope="row">26</th><td>1+2+3+4+7+9, 1+2+3+5+6+9, 1+2+3+5+7+8, 1+2+4+5+6+8, 1+3+4+5+6+7</td></tr>
+                <tr><th scope="row">27</th><td>1+2+3+4+8+9, 1+2+3+5+7+9, 1+2+3+6+7+8, 1+2+4+5+6+9, 1+2+4+5+7+8, 1+3+4+5+6+8, 2+3+4+5+6+7</td></tr>
+                <tr><th scope="row">28</th><td>1+2+3+5+8+9, 1+2+3+6+7+9, 1+2+4+5+7+9, 1+2+4+6+7+8, 1+3+4+5+6+9, 1+3+4+5+7+8, 2+3+4+5+6+8</td></tr>
+                <tr><th scope="row">29</th><td>1+2+3+6+8+9, 1+2+4+5+8+9, 1+2+4+6+7+9, 1+2+5+6+7+8, 1+3+4+5+7+9, 1+3+4+6+7+8, 2+3+4+5+6+9, 2+3+4+5+7+8</td></tr>
+                <tr><th scope="row">30</th><td>1+2+3+7+8+9, 1+2+4+6+8+9, 1+2+5+6+7+9, 1+3+4+5+8+9, 1+3+4+6+7+9, 1+3+5+6+7+8, 2+3+4+5+7+9, 2+3+4+6+7+8</td></tr>
+                <tr><th scope="row">31</th><td>1+2+4+7+8+9, 1+2+5+6+8+9, 1+3+4+6+8+9, 1+3+5+6+7+9, 1+4+5+6+7+8, 2+3+4+5+8+9, 2+3+4+6+7+9, 2+3+5+6+7+8</td></tr>
+                <tr><th scope="row">32</th><td>1+2+5+7+8+9, 1+3+4+7+8+9, 1+3+5+6+8+9, 1+4+5+6+7+9, 2+3+4+6+8+9, 2+3+5+6+7+9, 2+4+5+6+7+8</td></tr>
+                <tr><th scope="row">33</th><td>1+2+6+7+8+9, 1+3+5+7+8+9, 1+4+5+6+8+9, 2+3+4+7+8+9, 2+3+5+6+8+9, 2+4+5+6+7+9, 3+4+5+6+7+8</td></tr>
+                <tr><th scope="row">34</th><td>1+3+6+7+8+9, 1+4+5+7+8+9, 2+3+5+7+8+9, 2+4+5+6+8+9, 3+4+5+6+7+9</td></tr>
+                <tr><th scope="row">35</th><td>1+4+6+7+8+9, 2+3+6+7+8+9, 2+4+5+7+8+9, 3+4+5+6+8+9</td></tr>
+                <tr><th scope="row">36</th><td>1+5+6+7+8+9, 2+4+6+7+8+9, 3+4+5+7+8+9</td></tr>
+                <tr><th scope="row">37</th><td>2+5+6+7+8+9, 3+4+6+7+8+9</td></tr>
+                <tr><th scope="row">38</th><td>3+5+6+7+8+9</td></tr>
+                <tr><th scope="row">39</th><td>4+5+6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-7-cells">
+            <h3 id="cage-7-cells">7マスのケージ</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">合計</th><th scope="col">組み合わせ</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">28</th><td>1+2+3+4+5+6+7</td></tr>
+                <tr><th scope="row">29</th><td>1+2+3+4+5+6+8</td></tr>
+                <tr><th scope="row">30</th><td>1+2+3+4+5+6+9, 1+2+3+4+5+7+8</td></tr>
+                <tr><th scope="row">31</th><td>1+2+3+4+5+7+9, 1+2+3+4+6+7+8</td></tr>
+                <tr><th scope="row">32</th><td>1+2+3+4+5+8+9, 1+2+3+4+6+7+9, 1+2+3+5+6+7+8</td></tr>
+                <tr><th scope="row">33</th><td>1+2+3+4+6+8+9, 1+2+3+5+6+7+9, 1+2+4+5+6+7+8</td></tr>
+                <tr><th scope="row">34</th><td>1+2+3+4+7+8+9, 1+2+3+5+6+8+9, 1+2+4+5+6+7+9, 1+3+4+5+6+7+8</td></tr>
+                <tr><th scope="row">35</th><td>1+2+3+5+7+8+9, 1+2+4+5+6+8+9, 1+3+4+5+6+7+9, 2+3+4+5+6+7+8</td></tr>
+                <tr><th scope="row">36</th><td>1+2+3+6+7+8+9, 1+2+4+5+7+8+9, 1+3+4+5+6+8+9, 2+3+4+5+6+7+9</td></tr>
+                <tr><th scope="row">37</th><td>1+2+4+6+7+8+9, 1+3+4+5+7+8+9, 2+3+4+5+6+8+9</td></tr>
+                <tr><th scope="row">38</th><td>1+2+5+6+7+8+9, 1+3+4+6+7+8+9, 2+3+4+5+7+8+9</td></tr>
+                <tr><th scope="row">39</th><td>1+3+5+6+7+8+9, 2+3+4+6+7+8+9</td></tr>
+                <tr><th scope="row">40</th><td>1+4+5+6+7+8+9, 2+3+5+6+7+8+9</td></tr>
+                <tr><th scope="row">41</th><td>2+4+5+6+7+8+9</td></tr>
+                <tr><th scope="row">42</th><td>3+4+5+6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-8-cells">
+            <h3 id="cage-8-cells">8マスのケージ</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">合計</th><th scope="col">組み合わせ</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">36</th><td>1+2+3+4+5+6+7+8</td></tr>
+                <tr><th scope="row">37</th><td>1+2+3+4+5+6+7+9</td></tr>
+                <tr><th scope="row">38</th><td>1+2+3+4+5+6+8+9</td></tr>
+                <tr><th scope="row">39</th><td>1+2+3+4+5+7+8+9</td></tr>
+                <tr><th scope="row">40</th><td>1+2+3+4+6+7+8+9</td></tr>
+                <tr><th scope="row">41</th><td>1+2+3+5+6+7+8+9</td></tr>
+                <tr><th scope="row">42</th><td>1+2+4+5+6+7+8+9</td></tr>
+                <tr><th scope="row">43</th><td>1+3+4+5+6+7+8+9</td></tr>
+                <tr><th scope="row">44</th><td>2+3+4+5+6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-9-cells">
+            <h3 id="cage-9-cells">9マスのケージ</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">合計</th><th scope="col">組み合わせ</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">45</th><td>1+2+3+4+5+6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <h2>ケージ合計の範囲</h2>
+          <div class="combination-table-wrap"><table class="combination-table cage-range-table">
+            <thead><tr><th scope="col">マス数</th><th scope="col">最小</th><th scope="col">最大</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">2</th><td>1 + 2 = 3</td><td>8 + 9 = 17</td></tr>
+              <tr><th scope="row">3</th><td>1 + 2 + 3 = 6</td><td>7 + 8 + 9 = 24</td></tr>
+              <tr><th scope="row">4</th><td>1 + 2 + 3 + 4 = 10</td><td>6 + 7 + 8 + 9 = 30</td></tr>
+              <tr><th scope="row">5</th><td>1 + 2 + 3 + 4 + 5 = 15</td><td>5 + 6 + 7 + 8 + 9 = 35</td></tr>
+              <tr><th scope="row">6</th><td>1 + 2 + 3 + 4 + 5 + 6 = 21</td><td>4 + 5 + 6 + 7 + 8 + 9 = 39</td></tr>
+              <tr><th scope="row">7</th><td>1 + 2 + 3 + 4 + 5 + 6 + 7 = 28</td><td>3 + 4 + 5 + 6 + 7 + 8 + 9 = 42</td></tr>
+              <tr><th scope="row">8</th><td>1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 = 36</td><td>2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 = 44</td></tr>
+              <tr><th scope="row">9</th><td>1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 = 45</td><td>1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 = 45</td></tr>
+            </tbody>
+          </table></div>
+          <h3>一意に決まるケージ</h3>
+          <p>端の合計は数字の組が一つに決まることがあります。2マスの3は1 + 2、17は8 + 9、4マスの10は1 + 2 + 3 + 4、30は6 + 7 + 8 + 9です。</p>
+          <h3>45の法則</h3>
+          <p>1から9までの合計は45です。行・列・3×3ブロック内のケージ合計が分かれば、残りのマスの合計を逆算できます。</p>
+        </section>
+
+      <h2>計算機の使い方</h2><ol><li>ケージに書かれた合計を入力します。</li>
+          <li>ケージのマス数を入力します。</li>
+          <li>通常のキラー数独では重複をオフにします。</li>
+          <li>行・列・ブロックですでに除外できる数字を外します。</li>
+          <li>残った組み合わせを盤面の候補と照合します。</li></ol>
+      <h2>例：3マスで合計17</h2><p>3マスで合計17、重複なしの場合、基本の組み合わせは7通りです：1 + 7 + 9、2 + 6 + 9、2 + 7 + 8、3 + 5 + 9、3 + 6 + 8、4 + 5 + 8、4 + 6 + 7。</p>
+      <p>計算機は足し算を整理する道具です。実際に置ける組み合わせは、行・列・ブロックとケージの位置関係から判断します。</p>
+      <h2>よく使うケージ</h2><table class="example-table"><thead><tr><th>条件</th><th>重複なしの候補</th><th>使いどころ</th></tr></thead><tbody><tr><td>2マスで合計3</td><td>1 + 2</td><td>1と2の組が確定します。</td></tr>
+            <tr><td>2マスで合計17</td><td>8 + 9</td><td>8と9の高い数字の組です。</td></tr>
+            <tr><td>4マスで合計10</td><td>1 + 2 + 3 + 4</td><td>大きい数字を除外できる低い4マスケージです。</td></tr>
+            <tr><td>4マスで合計30</td><td>6 + 7 + 8 + 9</td><td>小さい数字を除外できる高い4マスケージです。</td></tr></tbody></table>
+      <h2>キラー数独・Kakuro・KenKen</h2><p>キラー数独は数独の配置ルールとケージ合計を組み合わせ、通常はケージ内で同じ数字を使いません。KakuroやKenKenは似た計算を使いますが、重複の扱いは問題ごとに異なるため、必ずルールを確認してください。</p>
+      <h2>よくある質問</h2><div class="faq-list"><details><summary>組み合わせ計算機は何をするものですか？</summary><p>合計とマス数に合う数字の組を表示し、使用できない数字を除外できます。</p></details>
+          <details><summary>数字の重複を許可しますか？</summary><p>通常のキラー数独では許可しません。重複可と明記された別ルールの問題だけオンにします。</p></details>
+          <details><summary>最大合計が45を超えるのはなぜですか？</summary><p>重複を許可する変則ルールに対応するためです。重複なしなら1～9の合計は45です。</p></details>
+          <details><summary>盤面全体を解けますか？</summary><p>いいえ。ケージ候補を計算する道具なので、行・列・ブロックの数独ロジックは自分で適用します。</p></details></div>
+      <h2>関連する論理パズル</h2><p>Daily Logic LabではStar Battleの毎日問題と練習問題も遊べます。ルールガイドも日本語で確認できます。 <a href="/ja/#play">Star Battle</a> · <a href="/ja/star-battle">Star Battle</a></p>
+    </article></main>
+    <footer class="site-footer"><div class="section-shell"><span>Daily Logic Lab</span><nav class="footer-links" aria-label="フッターナビゲーション"><a href="/ja/about">このサイト</a><a href="/ja/contact">お問い合わせ</a><a href="/ja/privacy-policy">プライバシー</a><a href="/sitemap.xml">サイトマップ</a></nav></div></footer>
+    <script>(()=>{const activeDigits=new Set([1,2,3,4,5,6,7,8,9]),sumInput=document.querySelector('#pageSumInput'),cellsInput=document.querySelector('#pageCellsInput'),repeatInput=document.querySelector('#pageRepeatInput'),digits=document.querySelector('#pageDigits'),comboCount=document.querySelector('#pageComboCount'),comboResults=document.querySelector('#pageComboResults'),copyButton=document.querySelector('#pageCopyCombosBtn');for(let digit=1;digit<=9;digit+=1){const button=document.createElement('button');button.type='button';button.className='digit-toggle active';button.textContent=String(digit);button.setAttribute('aria-pressed','true');button.addEventListener('click',()=>{activeDigits.has(digit)?activeDigits.delete(digit):activeDigits.add(digit);button.classList.toggle('active',activeDigits.has(digit));button.setAttribute('aria-pressed',activeDigits.has(digit)?'true':'false');updateCombinations()});digits.appendChild(button)}document.querySelector('#pageComboForm').addEventListener('input',updateCombinations);copyButton.addEventListener('click',async()=>{const text=[...comboResults.querySelectorAll('.combo-pill')].map(node=>node.textContent).join('\n');if(navigator.clipboard){await navigator.clipboard.writeText(text);comboCount.textContent="コピーしました";window.setTimeout(updateCombinations,900)}});updateCombinations();function updateCombinations(){const sum=clamp(Number(sumInput.value||0),1,90),count=clamp(Number(cellsInput.value||0),1,9),combos=findCombos(sum,count,[...activeDigits].sort((a,b)=>a-b),repeatInput.checked);comboCount.textContent=combos.length+' '+(combos.length===1?"通り":"通り");comboResults.innerHTML='';if(!combos.length){appendPill("該当なし");return}combos.forEach(combo=>appendPill(combo.join(' + ')))}function appendPill(text){const pill=document.createElement('span');pill.className='combo-pill';pill.textContent=text;comboResults.appendChild(pill)}function findCombos(target,length,digitList,allowRepeats){const results=[];function walk(startIndex,combo,total){if(combo.length===length){if(total===target)results.push([...combo]);return}if(total>=target)return;for(let i=startIndex;i<digitList.length;i+=1){const digit=digitList[i];combo.push(digit);walk(allowRepeats?i:i+1,combo,total+digit);combo.pop()}}walk(0,[],0);return results}function clamp(value,min,max){return Math.min(max,Math.max(min,value))}})();</script>
+  </body>
+</html>

@@ -15,6 +15,42 @@
     return hash >>> 0;
   }
 
+  function dateNumber(value) {
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value || ""));
+    if (!match) return null;
+    const year = Number(match[1]);
+    const month = Number(match[2]);
+    const day = Number(match[3]);
+    const date = new Date(Date.UTC(year, month - 1, day));
+    if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) return null;
+    return Math.floor(date.getTime() / 86400000);
+  }
+
+  function nextDailyStreak(previousDate, currentStreak, today) {
+    const todayNumber = dateNumber(today);
+    const previousNumber = dateNumber(previousDate);
+    const streak = Number.isInteger(Number(currentStreak)) && Number(currentStreak) > 0 ? Number(currentStreak) : 0;
+    if (todayNumber === null) return 1;
+    if (previousNumber === todayNumber) return streak || 1;
+    if (previousNumber === todayNumber - 1) return streak + 1;
+    return 1;
+  }
+
+  function normalizeProgress(saved, expectedMode, today, size) {
+    if (!saved || saved.version !== 1 || saved.mode !== expectedMode || !profiles[saved.profileKey]) return null;
+    if (saved.mode === "daily" && saved.date !== today) return null;
+    if (!Array.isArray(saved.cells) || saved.cells.length !== size ||
+        saved.cells.some((row) => !Array.isArray(row) || row.length !== size || row.some((value) => ![0, 1, 2].includes(value)))) return null;
+    return {
+      ...saved,
+      cells: saved.cells.map((row) => [...row]),
+      elapsed: Math.max(0, Math.floor(Number(saved.elapsed) || 0)),
+      hintCount: Math.max(0, Math.floor(Number(saved.hintCount) || 0)),
+      hintPenalty: Math.max(0, Math.floor(Number(saved.hintPenalty) || 0)),
+      started: Boolean(saved.started)
+    };
+  }
+
   function createRng(seed) {
     let value = seed >>> 0;
     return () => {
@@ -102,6 +138,101 @@
     return solutions;
   }
 
+  function countSolutions(puzzle, cells, limit = 2) {
+    const profile = profiles[puzzle.profileKey];
+    if (!profile || limit < 1) return 0;
+    const { size, starsPerGroup } = profile;
+    const index = (row, col) => row * size + col;
+    const groups = [];
+    for (let row = 0; row < size; row += 1) groups.push(Array.from({ length: size }, (_, col) => index(row, col)));
+    for (let col = 0; col < size; col += 1) groups.push(Array.from({ length: size }, (_, row) => index(row, col)));
+    for (let region = 0; region < size; region += 1) {
+      const group = [];
+      for (let row = 0; row < size; row += 1) for (let col = 0; col < size; col += 1) {
+        if (puzzle.regions[row][col] === region) group.push(index(row, col));
+      }
+      groups.push(group);
+    }
+    const cellGroups = Array.from({ length: size * size }, () => []);
+    groups.forEach((group, groupIndex) => group.forEach((cell) => cellGroups[cell].push(groupIndex)));
+    const neighbors = Array.from({ length: size * size }, (_, cell) => {
+      const row = Math.floor(cell / size);
+      const col = cell % size;
+      const nearby = [];
+      for (let rowDelta = -1; rowDelta <= 1; rowDelta += 1) for (let colDelta = -1; colDelta <= 1; colDelta += 1) {
+        if (!rowDelta && !colDelta) continue;
+        const nextRow = row + rowDelta;
+        const nextCol = col + colDelta;
+        if (nextRow >= 0 && nextRow < size && nextCol >= 0 && nextCol < size) nearby.push(index(nextRow, nextCol));
+      }
+      return nearby;
+    });
+    const initial = Array.from({ length: size * size }, (_, cell) => {
+      const row = Math.floor(cell / size);
+      const col = cell % size;
+      return [0, 1, 2].includes(cells?.[row]?.[col]) ? cells[row][col] : 0;
+    });
+    let count = 0;
+
+    function assign(board, cell, value) {
+      if (board[cell] && board[cell] !== value) return false;
+      board[cell] = value;
+      return true;
+    }
+
+    function propagate(board) {
+      let changed = true;
+      while (changed) {
+        changed = false;
+        for (let cell = 0; cell < board.length; cell += 1) {
+          if (board[cell] !== 1) continue;
+          for (const neighbor of neighbors[cell]) {
+            if (board[neighbor] === 1) return false;
+            if (board[neighbor] === 0) {
+              board[neighbor] = 2;
+              changed = true;
+            }
+          }
+        }
+        for (const group of groups) {
+          const stars = group.filter((cell) => board[cell] === 1).length;
+          const unknown = group.filter((cell) => board[cell] === 0);
+          if (stars > starsPerGroup || stars + unknown.length < starsPerGroup) return false;
+          if (stars === starsPerGroup || stars + unknown.length === starsPerGroup) {
+            const value = stars === starsPerGroup ? 2 : 1;
+            for (const cell of unknown) {
+              if (!assign(board, cell, value)) return false;
+              changed = true;
+            }
+          }
+        }
+      }
+      return true;
+    }
+
+    function walk(board) {
+      if (count >= limit) return;
+      if (!propagate(board)) return;
+      const unknown = board.flatMap((value, cell) => value === 0 ? [cell] : []);
+      if (!unknown.length) {
+        count += 1;
+        return;
+      }
+      const cell = unknown.sort((first, second) => {
+        const pressure = (candidate) => Math.min(...cellGroups[candidate].map((groupIndex) => groups[groupIndex].filter((item) => board[item] === 0).length));
+        return pressure(first) - pressure(second);
+      })[0];
+      for (const value of [1, 2]) {
+        const next = [...board];
+        next[cell] = value;
+        walk(next);
+        if (count >= limit) return;
+      }
+    }
+    walk(initial);
+    return count;
+  }
+
   function transformGrid(grid, transform) {
     let result = grid.map((row) => [...row]);
     if (transform >= 4) result = result.map((row) => [...row].reverse());
@@ -159,5 +290,5 @@
     return JSON.stringify(puzzle.regions);
   }
 
-  root.DLL_TWO_NOT_TOUCH_CORE = { profiles, hashString, generatePuzzle, validateSolution, fingerprint, solveQuick };
+  root.DLL_TWO_NOT_TOUCH_CORE = { profiles, hashString, nextDailyStreak, normalizeProgress, countSolutions, generatePuzzle, validateSolution, fingerprint, solveQuick };
 })(typeof window === "undefined" ? globalThis : window);

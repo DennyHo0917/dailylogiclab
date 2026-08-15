@@ -7,6 +7,22 @@ const difficulties = ["easy", "medium", "hard"];
 const seedCount = Number(process.env.DLL_SEEDS || 1000);
 const limits = { average: 100, p95: 300, maximum: 1500 };
 
+assert.equal(games.nextDailyStreak("2026-08-15", 3, "2026-08-15"), 3);
+assert.equal(games.nextDailyStreak("2026-08-14", 3, "2026-08-15"), 4);
+assert.equal(games.nextDailyStreak("2026-07-31", 3, "2026-08-01"), 4);
+assert.equal(games.nextDailyStreak("2025-12-31", 3, "2026-01-01"), 4);
+assert.equal(games.nextDailyStreak("2026-08-13", 3, "2026-08-15"), 1);
+assert.equal(games.nextDailyStreak("invalid", "invalid", "2026-08-15"), 1);
+assert.equal(games.nextDailyStreak("2026-08-16", 8, "2026-08-15"), 1);
+const restoredProgress = games.normalizeProgress({
+  version: 1, game: "hashi", mode: "practice", difficulty: "medium", seed: 123,
+  elapsed: 92.8, started: true, bridges: [["0-1", 2]], hintCount: 0
+}, { game: "hashi", mode: "practice", difficulty: "medium", today: "2026-08-15" });
+assert.equal(restoredProgress.elapsed, 92);
+assert.equal(restoredProgress.seed, 123);
+assert.equal(games.normalizeProgress({ ...restoredProgress, mode: "daily", date: "2026-08-14" }, { game: "hashi", mode: "daily", difficulty: "medium", today: "2026-08-15" }), null);
+assert.equal("DIFFICULTIES" in games, false, "unused DIFFICULTIES export must be removed");
+
 function snapshot(puzzle) {
   return JSON.stringify({
     ...puzzle,

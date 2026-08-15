@@ -86,10 +86,17 @@
     startDaily: "Start Daily Puzzle",
     startPractice: "Start Practice",
     treeCell: "Tree, row {row}, column {col}",
-    boardCell: "Row {row}, column {col}",
-    island: "Island {index}, needs {count} bridges",
-    horizontalEdge: "Horizontal edge, row {row}, column {col}",
-    verticalEdge: "Vertical edge, row {row}, column {col}",
+    boardCell: "Row {row}, column {col}, {state}",
+    island: "Island {index}, {current} of {count} bridges",
+    horizontalEdge: "Horizontal edge, row {row}, column {col}, {state}",
+    verticalEdge: "Vertical edge, row {row}, column {col}, {state}",
+    stateEmpty: "Empty",
+    stateTent: "Tent",
+    stateGrass: "Grass",
+    stateFilled: "Filled",
+    stateX: "X",
+    stateLine: "Line",
+    stateUnknown: "Unknown",
     shareComplete: "Puzzle complete in {time}.",
     shareReady: "Result ready to share.",
     shareFallback: "Your result is ready to share from the page URL.",
@@ -133,6 +140,8 @@
 
   const statsKey = "dll-logic-stats";
   const preferenceKey = `dll-difficulty-${game}`;
+  const progressKey = `dll-logic-progress-${game}-v1`;
+  const recentKey = `dll-logic-recent-${game}-v1`;
   const todayKey = getTodayKey();
   let timerId = null;
   let state;
@@ -174,6 +183,8 @@
     });
     els.board.addEventListener("click", handleBoardClick);
     els.board.addEventListener("contextmenu", handleContextMenu);
+    els.board.addEventListener("keydown", handleBoardKeydown);
+    window.addEventListener("pagehide", saveProgress);
   }
 
   function getModeFromLocation() {
@@ -184,9 +195,19 @@
 
   function loadPuzzle(mode, difficulty, cause = "load") {
     stopTimer();
+    if (cause === "initial") {
+      const restored = restoreProgress(mode, difficulty);
+      if (restored) {
+        state = restored;
+        render();
+        setStatus(state.started ? ui.inProgress : mode === "daily" ? ui.todayReady : ui.practiceReady, "");
+        if (state.started) startTimer();
+        return;
+      }
+    }
     const baseSeed = mode === "daily"
       ? core.hashString(`daily-${game}-${todayKey}-${difficulty}`)
-      : createPracticeSeed();
+      : createPracticeSeed(difficulty);
     let generated;
     try {
       generated = core.generatePuzzleWithRetry(game, baseSeed, difficulty, mode);
@@ -213,8 +234,10 @@
       selectedIsland: null,
       marks: new Map()
     };
+    if (mode === "practice") rememberPracticeSeed(difficulty, seed);
     if (cause !== "initial" || new URLSearchParams(window.location.search).has("mode")) syncRoute(mode);
     render();
+    saveProgress();
     setStatus(mode === "daily" ? ui.todayReady : ui.practiceReady, "");
     trackEvent("game_view", { game_name: game, mode, difficulty });
     if (cause === "new_puzzle") trackEvent("new_puzzle", { game_name: game, mode, difficulty });
@@ -255,6 +278,7 @@
     state.startedAt = Date.now();
     startTimer();
     render();
+    saveProgress();
     setStatus(ui.timerStarted, "success");
     const params = { game_name: game, mode: state.mode, difficulty: state.difficulty };
     trackEvent("puzzle_start", params);
@@ -275,12 +299,14 @@
     state.selectedIsland = null;
     state.marks.clear();
     render();
+    saveProgress();
     setStatus(ui.puzzleReset, "");
   }
 
   function handleBoardClick(event) {
     const target = event.target.closest("button");
     if (!target) return;
+    setRovingFocus(target);
     if (!state.started) {
       setStatus(ui.pressStartMove, "");
       return;
@@ -297,6 +323,7 @@
     const target = event.target.closest("button[data-row][data-col]");
     if (!target || !state.started || state.solved) return;
     event.preventDefault();
+    setRovingFocus(target);
     cycleNonogram(target, true);
   }
 
@@ -321,13 +348,15 @@
     if (!Number.isInteger(island)) return;
     if (state.selectedIsland === null) {
       state.selectedIsland = island;
-      renderBoard();
+      updateBoardState();
+      saveProgress();
       setStatus(ui.selectVisibleIsland, "");
       return;
     }
     if (state.selectedIsland === island) {
       state.selectedIsland = null;
-      renderBoard();
+      updateBoardState();
+      saveProgress();
       return;
     }
     const edge = state.puzzle.edges.find((candidate) =>
@@ -336,7 +365,8 @@
     );
     if (!edge) {
       state.selectedIsland = island;
-      renderBoard();
+      updateBoardState();
+      saveProgress();
       setStatus(ui.islandsNotVisible, "error");
       return;
     }
@@ -361,8 +391,9 @@
   function afterMove() {
     const result = evaluate();
     state.errors = result.errors;
-    renderBoard();
+    updateBoardState();
     renderStats();
+    saveProgress();
     if (result.completed) {
       completePuzzle();
     } else if (result.errors.size) {
@@ -379,7 +410,7 @@
     }
     const result = evaluate();
     state.errors = result.errors;
-    renderBoard();
+    updateBoardState();
     if (result.completed) {
       completePuzzle();
     } else if (result.errors.size) {
@@ -401,6 +432,7 @@
     state.solved = true;
     stopTimer();
     saveCompletion();
+    clearProgress();
     render();
     setStatus(ui.complete, "success");
     els.completionPanel.hidden = false;
@@ -450,6 +482,7 @@
     else if (game === "hashi") renderHashi();
     else if (game === "slitherlink") renderSlitherlink();
     else renderNonogram();
+    prepareKeyboardNavigation();
   }
 
   function renderTents() {
@@ -469,7 +502,11 @@
         button.dataset.row = String(row);
         button.dataset.col = String(col);
         button.disabled = !state.started || state.solved || tree;
-        button.setAttribute("aria-label", formatTemplate(tree ? ui.treeCell : ui.boardCell, { row: row + 1, col: col + 1 }));
+        button.setAttribute("aria-label", formatTemplate(tree ? ui.treeCell : ui.boardCell, {
+          row: row + 1,
+          col: col + 1,
+          state: state.tents.has(key) ? ui.stateTent : state.grass.has(key) ? ui.stateGrass : ui.stateEmpty
+        }));
         if (tree) {
           button.classList.add("tree-cell");
           button.textContent = "♣";
@@ -511,11 +548,17 @@
       island.type = "button";
       island.className = "island";
       island.dataset.island = String(index);
+      island.dataset.row = String(row);
+      island.dataset.col = String(col);
       island.style.left = `${(col / (size - 1)) * 100}%`;
       island.style.top = `${(row / (size - 1)) * 100}%`;
       island.disabled = !state.started || state.solved;
       island.textContent = String(state.puzzle.clues[index]);
-      island.setAttribute("aria-label", formatTemplate(ui.island, { index: index + 1, count: state.puzzle.clues[index] }));
+      island.setAttribute("aria-label", formatTemplate(ui.island, {
+        index: index + 1,
+        count: state.puzzle.clues[index],
+        current: getIslandBridgeCount(index)
+      }));
       if (state.selectedIsland === index) island.classList.add("selected");
       if (state.errors.has(`island:${index}`)) island.classList.add("game-error");
       els.board.appendChild(island);
@@ -531,6 +574,8 @@
       for (let col = 0; col < size; col += 1) {
         const clue = document.createElement("span");
         clue.className = "slither-clue";
+        clue.dataset.row = String(row);
+        clue.dataset.col = String(col);
         clue.style.left = `${((col + 0.5) / size) * 100}%`;
         clue.style.top = `${((row + 0.5) / size) * 100}%`;
         clue.textContent = state.puzzle.clues[row][col] == null ? "" : String(state.puzzle.clues[row][col]);
@@ -550,7 +595,11 @@
       if (type === "h") edge.style.width = `${78 / size}%`;
       else edge.style.height = `${78 / size}%`;
       edge.disabled = !state.started || state.solved;
-      edge.setAttribute("aria-label", formatTemplate(type === "h" ? ui.horizontalEdge : ui.verticalEdge, { row: Number(row) + 1, col: Number(col) + 1 }));
+      edge.setAttribute("aria-label", formatTemplate(type === "h" ? ui.horizontalEdge : ui.verticalEdge, {
+        row: Number(row) + 1,
+        col: Number(col) + 1,
+        state: value === 1 ? ui.stateLine : value === 2 ? ui.stateX : ui.stateUnknown
+      }));
       if (state.errors.has(`edge:${key}`)) edge.classList.add("game-error");
       els.board.appendChild(edge);
     });
@@ -583,11 +632,134 @@
         cell.dataset.col = String(col);
         cell.disabled = !state.started || state.solved;
         cell.textContent = value === 2 ? "×" : "";
-        cell.setAttribute("aria-label", formatTemplate(ui.boardCell, { row: row + 1, col: col + 1 }));
+        cell.setAttribute("aria-label", formatTemplate(ui.boardCell, {
+          row: row + 1,
+          col: col + 1,
+          state: value === 1 ? ui.stateFilled : value === 2 ? ui.stateX : ui.stateUnknown
+        }));
         if (state.errors.has(key)) cell.classList.add("game-error");
         els.board.appendChild(cell);
       }
     }
+  }
+
+  function getIslandBridgeCount(index) {
+    return state.puzzle.edges.reduce((total, edge) => edge.a === index || edge.b === index ? total + (state.bridges.get(edge.key) || 0) : total, 0);
+  }
+
+  function updateBoardState() {
+    if (game === "tents-and-trees") {
+      els.board.querySelectorAll("button[data-row][data-col]").forEach((button) => {
+        const row = Number(button.dataset.row);
+        const col = Number(button.dataset.col);
+        const key = core.cellKey(row, col);
+        const tree = state.puzzle.trees.some(([treeRow, treeCol]) => treeRow === row && treeCol === col);
+        button.className = `logic-cell${tree ? " tree-cell" : state.tents.has(key) ? " tent-cell" : state.grass.has(key) ? " grass-cell" : ""}${state.errors.has(key) ? " game-error" : ""}`;
+        button.textContent = tree ? "♣" : state.tents.has(key) ? "▲" : state.grass.has(key) ? "×" : "";
+        button.disabled = !state.started || state.solved || tree;
+        button.setAttribute("aria-label", formatTemplate(tree ? ui.treeCell : ui.boardCell, {
+          row: row + 1, col: col + 1,
+          state: state.tents.has(key) ? ui.stateTent : state.grass.has(key) ? ui.stateGrass : ui.stateEmpty
+        }));
+      });
+      return;
+    }
+    if (game === "hashi") {
+      const layer = els.board.querySelector(".bridge-layer");
+      layer.innerHTML = "";
+      const { size } = state.puzzle;
+      state.puzzle.edges.forEach((edge) => {
+        const count = state.bridges.get(edge.key) || 0;
+        if (!count) return;
+        const [firstRow, firstCol] = state.puzzle.islands[edge.a];
+        const [secondRow, secondCol] = state.puzzle.islands[edge.b];
+        const bridge = document.createElement("span");
+        bridge.className = `bridge ${firstRow === secondRow ? "bridge-horizontal" : "bridge-vertical"}${count === 2 ? " bridge-double" : ""}${state.errors.has(edge.key) ? " game-error" : ""}`;
+        bridge.style.left = `${((firstCol + secondCol) / 2 / (size - 1)) * 100}%`;
+        bridge.style.top = `${((firstRow + secondRow) / 2 / (size - 1)) * 100}%`;
+        bridge.style.width = firstRow === secondRow ? `${(Math.abs(firstCol - secondCol) / (size - 1)) * 100}%` : "8px";
+        bridge.style.height = firstRow === secondRow ? "8px" : `${(Math.abs(firstRow - secondRow) / (size - 1)) * 100}%`;
+        layer.appendChild(bridge);
+      });
+      els.board.querySelectorAll("button[data-island]").forEach((island) => {
+        const index = Number(island.dataset.island);
+        island.className = `island${state.selectedIsland === index ? " selected" : ""}${state.errors.has(`island:${index}`) ? " game-error" : ""}`;
+        island.disabled = !state.started || state.solved;
+        island.setAttribute("aria-label", formatTemplate(ui.island, {
+          index: index + 1, count: state.puzzle.clues[index], current: getIslandBridgeCount(index)
+        }));
+      });
+      return;
+    }
+    if (game === "slitherlink") {
+      els.board.querySelectorAll(".slither-clue").forEach((clue) => {
+        clue.classList.toggle("game-error", state.errors.has(`cell:${clue.dataset.row}:${clue.dataset.col}`));
+      });
+      els.board.querySelectorAll("button[data-edge]").forEach((edge) => {
+        const key = edge.dataset.edge;
+        const [type, row, col] = key.split(":");
+        const value = state.marks.get(key) || 0;
+        edge.className = `slither-edge ${type === "h" ? "edge-horizontal" : "edge-vertical"} ${value === 1 ? "edge-line" : value === 2 ? "edge-cross" : ""}${state.errors.has(`edge:${key}`) ? " game-error" : ""}`;
+        edge.disabled = !state.started || state.solved;
+        edge.setAttribute("aria-label", formatTemplate(type === "h" ? ui.horizontalEdge : ui.verticalEdge, {
+          row: Number(row) + 1, col: Number(col) + 1,
+          state: value === 1 ? ui.stateLine : value === 2 ? ui.stateX : ui.stateUnknown
+        }));
+      });
+      return;
+    }
+    els.board.querySelectorAll("button[data-row][data-col]").forEach((cell) => {
+      const row = Number(cell.dataset.row);
+      const col = Number(cell.dataset.col);
+      const key = core.cellKey(row, col);
+      const value = state.marks.get(key) || 0;
+      cell.className = `logic-cell nonogram-cell${value === 1 ? " filled-cell" : value === 2 ? " cross-cell" : ""}${state.errors.has(key) ? " game-error" : ""}`;
+      cell.textContent = value === 2 ? "×" : "";
+      cell.disabled = !state.started || state.solved;
+      cell.setAttribute("aria-label", formatTemplate(ui.boardCell, {
+        row: row + 1, col: col + 1,
+        state: value === 1 ? ui.stateFilled : value === 2 ? ui.stateX : ui.stateUnknown
+      }));
+    });
+  }
+
+  function prepareKeyboardNavigation() {
+    const buttons = [...els.board.querySelectorAll("button:not(:disabled)")];
+    buttons.forEach((button, index) => { button.tabIndex = index ? -1 : 0; });
+  }
+
+  function setRovingFocus(target) {
+    els.board.querySelectorAll("button").forEach((button) => { button.tabIndex = button === target ? 0 : -1; });
+  }
+
+  function buttonPosition(button) {
+    if (button.dataset.edge) {
+      const [type, row, col] = button.dataset.edge.split(":");
+      return { row: Number(row) + (type === "v" ? 0.5 : 0), col: Number(col) + (type === "h" ? 0.5 : 0) };
+    }
+    return { row: Number(button.dataset.row), col: Number(button.dataset.col) };
+  }
+
+  function handleBoardKeydown(event) {
+    if (!["ArrowUp", "ArrowRight", "ArrowDown", "ArrowLeft"].includes(event.key)) return;
+    const current = event.target.closest("button");
+    if (!current) return;
+    const origin = buttonPosition(current);
+    const vertical = event.key === "ArrowUp" || event.key === "ArrowDown";
+    const direction = event.key === "ArrowUp" || event.key === "ArrowLeft" ? -1 : 1;
+    const candidates = [...els.board.querySelectorAll("button:not(:disabled)")]
+      .filter((button) => button !== current)
+      .map((button) => ({ button, position: buttonPosition(button) }))
+      .filter(({ position }) => direction * ((vertical ? position.row : position.col) - (vertical ? origin.row : origin.col)) > 0)
+      .sort((first, second) => {
+        const score = ({ position }) => Math.abs((vertical ? position.row : position.col) - (vertical ? origin.row : origin.col)) * 10 +
+          Math.abs((vertical ? position.col : position.row) - (vertical ? origin.col : origin.row));
+        return score(first) - score(second);
+      });
+    if (!candidates.length) return;
+    event.preventDefault();
+    setRovingFocus(candidates[0].button);
+    candidates[0].button.focus({ preventScroll: true });
   }
 
   function setStatus(message, tone) {
@@ -604,6 +776,7 @@
     timerId = window.setInterval(() => {
       updateElapsed();
       els.timer.textContent = formatTime(state.elapsed);
+      saveProgress();
     }, 1000);
   }
 
@@ -620,6 +793,69 @@
     const minutes = Math.floor(seconds / 60).toString().padStart(2, "0");
     const remainder = Math.floor(seconds % 60).toString().padStart(2, "0");
     return `${minutes}:${remainder}`;
+  }
+
+  function readJson(key, fallback) {
+    try {
+      return JSON.parse(localStorage.getItem(key) || "") || fallback;
+    } catch {
+      return fallback;
+    }
+  }
+
+  function restoreProgress(mode, difficulty) {
+    const saved = core.normalizeProgress(readJson(progressKey, null), { game, mode, difficulty, today: todayKey });
+    if (!saved) {
+      clearProgress();
+      return null;
+    }
+    try {
+      const puzzle = core.generatePuzzle(game, saved.seed, difficulty);
+      const restored = {
+        puzzle, mode, difficulty, seed: saved.seed,
+        started: saved.started, solved: false, elapsed: saved.elapsed,
+        startedAt: saved.started ? Date.now() - saved.elapsed * 1000 : 0,
+        errors: new Set(),
+        tents: new Set(Array.isArray(saved.tents) ? saved.tents : []),
+        grass: new Set(Array.isArray(saved.grass) ? saved.grass : []),
+        bridges: new Map(Array.isArray(saved.bridges) ? saved.bridges : []),
+        selectedIsland: Number.isInteger(saved.selectedIsland) ? saved.selectedIsland : null,
+        marks: new Map(Array.isArray(saved.marks) ? saved.marks : [])
+      };
+      const result = game === "tents-and-trees" ? core.validateTents(puzzle, restored.tents)
+        : game === "hashi" ? core.validateHashi(puzzle, restored.bridges)
+          : game === "slitherlink" ? core.validateSlitherlink(puzzle, restored.marks)
+            : core.validateNonogram(puzzle, restored.marks);
+      restored.errors = result.errors;
+      return restored;
+    } catch {
+      clearProgress();
+      return null;
+    }
+  }
+
+  function saveProgress() {
+    if (!state?.puzzle || state.solved) return;
+    updateElapsed();
+    try {
+      localStorage.setItem(progressKey, JSON.stringify({
+        version: 1, game, date: state.mode === "daily" ? todayKey : "",
+        mode: state.mode, difficulty: state.difficulty, seed: state.seed,
+        started: state.started, elapsed: state.elapsed, hintCount: 0,
+        tents: [...state.tents], grass: [...state.grass], bridges: [...state.bridges],
+        selectedIsland: state.selectedIsland, marks: [...state.marks]
+      }));
+    } catch {
+      // Storage can be unavailable in private browsing.
+    }
+  }
+
+  function clearProgress() {
+    try {
+      localStorage.removeItem(progressKey);
+    } catch {
+      // Storage can be unavailable in private browsing.
+    }
   }
 
   function readStats() {
@@ -643,9 +879,7 @@
     if (!stats.bestTimes[bestKey] || state.elapsed < stats.bestTimes[bestKey]) stats.bestTimes[bestKey] = state.elapsed;
     if (state.mode === "daily" && stats.dailyCompleted !== todayKey) {
       const previous = stats.dailyCompleted;
-      const yesterday = new Date();
-      yesterday.setDate(yesterday.getDate() - 1);
-      stats.streak = previous === formatDate(yesterday) ? Number(stats.streak || 0) + 1 : 1;
+      stats.streak = core.nextDailyStreak(previous, stats.streak, todayKey);
       stats.dailyCompleted = todayKey;
     }
     saveStats(stats);
@@ -670,13 +904,32 @@
     if (typeof root.gtag === "function") root.gtag("event", name, params);
   }
 
-  function createPracticeSeed() {
-    if (root.crypto?.getRandomValues) {
-      const values = new Uint32Array(1);
-      root.crypto.getRandomValues(values);
-      return values[0];
+  function createPracticeSeed(difficulty) {
+    const recent = readJson(recentKey, {})[difficulty];
+    const used = new Set(Array.isArray(recent) ? recent : []);
+    for (let attempt = 0; attempt < 20; attempt += 1) {
+      let seed;
+      if (root.crypto?.getRandomValues) {
+        const values = new Uint32Array(1);
+        root.crypto.getRandomValues(values);
+        seed = values[0];
+      } else {
+        seed = core.hashString(`${Date.now()}-${Math.random()}-${attempt}`);
+      }
+      if (!used.has(seed)) return seed;
     }
-    return core.hashString(`${Date.now()}-${Math.random()}`);
+    return core.hashString(`${Date.now()}-${difficulty}`);
+  }
+
+  function rememberPracticeSeed(difficulty, seed) {
+    try {
+      const recent = readJson(recentKey, {});
+      const values = Array.isArray(recent[difficulty]) ? recent[difficulty] : [];
+      recent[difficulty] = [seed, ...values.filter((value) => value !== seed)].slice(0, 12);
+      localStorage.setItem(recentKey, JSON.stringify(recent));
+    } catch {
+      // Storage can be unavailable in private browsing.
+    }
   }
 
   function getTodayKey() {

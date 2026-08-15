@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NY29HPM34"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-6NY29HPM34');</script>
+    <title>Calculadora de combinações de Killer Sudoku</title><meta name="description" content="Calcule combinações de gaiolas de Killer Sudoku por soma e quantidade de casas, com tabela completa sem repetição de 2 a 9 casas."><meta name="robots" content="index, follow, max-image-preview:large"><meta name="theme-color" content="#245c53">
+    <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
+    <link rel="canonical" href="https://dailylogiclab.com/pt-br/calculadora-combinacoes-killer-sudoku">
+    <link rel="alternate" hreflang="en" href="https://dailylogiclab.com/killer-sudoku-combination-calculator">
+    <link rel="alternate" hreflang="de" href="https://dailylogiclab.com/de/killer-sudoku-kombinationen-rechner">
+    <link rel="alternate" hreflang="es" href="https://dailylogiclab.com/es/calculadora-combinaciones-sudoku-killer">
+    <link rel="alternate" hreflang="fr" href="https://dailylogiclab.com/fr/calculateur-combinaisons-killer-sudoku">
+    <link rel="alternate" hreflang="ja" href="https://dailylogiclab.com/ja/killer-sudoku-combination-calculator">
+    <link rel="alternate" hreflang="pt-BR" href="https://dailylogiclab.com/pt-br/calculadora-combinacoes-killer-sudoku">
+    <link rel="alternate" hreflang="zh-CN" href="https://dailylogiclab.com/zh-cn/killer-sudoku-combination-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://dailylogiclab.com/killer-sudoku-combination-calculator">
+    <meta property="og:title" content="Calculadora Killer Sudoku e tabela de somas"><meta property="og:description" content="Encontre combinações de gaiolas e filtre os dígitos disponíveis direto no navegador."><meta property="og:type" content="website"><meta property="og:url" content="https://dailylogiclab.com/pt-br/calculadora-combinacoes-killer-sudoku"><meta property="og:image" content="https://dailylogiclab.com/og-killer-sudoku.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Calculadora e gaiola de Killer Sudoku">
+    <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Calculadora Killer Sudoku e tabela de somas"><meta name="twitter:description" content="Encontre combinações de gaiolas e filtre os dígitos disponíveis direto no navegador."><meta name="twitter:image" content="https://dailylogiclab.com/og-killer-sudoku.png"><meta name="twitter:image:alt" content="Calculadora e gaiola de Killer Sudoku">
+    <link rel="stylesheet" href="../styles.css?v=e1eb88c1d9"><script type="application/ld+json">{
+        "@context": "https://schema.org",
+        "@graph": [
+                {
+                        "@type": "Organization",
+                        "@id": "https://dailylogiclab.com/#organization",
+                        "name": "Daily Logic Lab",
+                        "url": "https://dailylogiclab.com",
+                        "logo": "https://dailylogiclab.com/icon-512.png",
+                        "sameAs": [
+                                "https://github.com/DennyHo0917/dailylogiclab"
+                        ]
+                },
+                {
+                        "@type": "SoftwareApplication",
+                        "name": "Calculadora de combinações de Killer Sudoku",
+                        "applicationCategory": "UtilitiesApplication",
+                        "operatingSystem": "Any",
+                        "isAccessibleForFree": true,
+                        "inLanguage": "pt-BR",
+                        "author": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "publisher": {
+                                "@id": "https://dailylogiclab.com/#organization"
+                        },
+                        "image": "https://dailylogiclab.com/og-killer-sudoku.png",
+                        "url": "https://dailylogiclab.com/pt-br/calculadora-combinacoes-killer-sudoku",
+                        "description": "Calcule combinações de gaiolas de Killer Sudoku por soma e quantidade de casas, com tabela completa sem repetição de 2 a 9 casas.",
+                        "datePublished": "2026-06-18",
+                        "dateModified": "2026-08-15",
+                        "offers": {
+                                "@type": "Offer",
+                                "price": "0",
+                                "priceCurrency": "USD"
+                        }
+                },
+                {
+                        "@type": "FAQPage",
+                        "inLanguage": "pt-BR",
+                        "mainEntity": [
+                                {
+                                        "@type": "Question",
+                                        "name": "Para que serve a calculadora?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Ela lista conjuntos de dígitos compatíveis com uma soma e quantidade de casas, permitindo retirar números indisponíveis."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "Devo permitir repetição?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Não no Killer Sudoku padrão. Ative apenas em variantes que autorizem dígitos repetidos."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "Por que a soma máxima pode passar de 45?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Isso atende variantes com repetição. Sem repetição, os dígitos de 1 a 9 somam 45."
+                                        }
+                                },
+                                {
+                                        "@type": "Question",
+                                        "name": "Ela resolve a grade inteira?",
+                                        "acceptedAnswer": {
+                                                "@type": "Answer",
+                                                "text": "Não. A ferramenta calcula as gaiolas; linhas, colunas, blocos e posições ainda exigem lógica de Sudoku."
+                                        }
+                                }
+                        ]
+                }
+        ]
+}</script>
+  </head>
+  <body>
+    <header class="topbar"><a class="brand" href="/pt-br/#play"><span class="brand-mark">DL</span><span>Daily Logic Lab</span></a>
+      <nav class="nav" aria-label="Navegação principal"><a href="#calculator">Usar calculadora</a><a href="/pt-br/#play">Jogar</a><a href="/pt-br/star-battle">Star Battle</a></nav>
+      <details class="language-switcher"><summary aria-label="Trocar idioma">Português</summary><div class="language-menu">
+          <a href="/killer-sudoku-combination-calculator" lang="en" hreflang="en">English</a>
+          <a href="/de/killer-sudoku-kombinationen-rechner" lang="de" hreflang="de">Deutsch</a>
+          <a href="/es/calculadora-combinaciones-sudoku-killer" lang="es" hreflang="es">Español</a>
+          <a href="/fr/calculateur-combinaisons-killer-sudoku" lang="fr" hreflang="fr">Français</a>
+          <a href="/ja/killer-sudoku-combination-calculator" lang="ja" hreflang="ja">日本語</a>
+          <a href="/pt-br/calculadora-combinacoes-killer-sudoku" lang="pt-BR" hreflang="pt-BR" aria-current="page">Português</a>
+          <a href="/zh-cn/killer-sudoku-combination-calculator" lang="zh-CN" hreflang="zh-CN">简体中文</a>
+        </div></details>
+    </header>
+    <main class="content-page"><article class="section-shell content-card">
+      <p class="eyebrow">Ajuda para Killer Sudoku</p><h1>Calculadora de combinações de Killer Sudoku</h1>
+      <section class="answer-summary"><p class="eyebrow">Resumo</p><h2>Resumo da calculadora</h2><dl class="facts-list"><div><dt>Função</dt><dd>Lista conjuntos de dígitos que batem com a soma e a quantidade de casas.</dd></div>
+            <div><dt>Entradas</dt><dd>Use soma, casas, dígitos disponíveis e a opção de repetição.</dd></div>
+            <div><dt>Uso padrão</dt><dd>Deixe a repetição desligada nas gaiolas comuns de Killer Sudoku.</dd></div>
+            <div><dt>Acesso</dt><dd>A ferramenta é grátis, sem cadastro e funciona no navegador.</dd></div></dl></section>
+      <p>Informe a soma da gaiola e a quantidade de casas para ver todas as combinações possíveis. Depois, desligue os dígitos que já foram descartados pela linha, coluna ou bloco.</p>
+      <p>A configuração padrão segue o Killer Sudoku sem repetição dentro da gaiola. A opção de repetição serve para variantes, Kakuro, KenKen e outros puzzles que permitam números iguais.</p>
+      <section id="calculator" class="tool-layout content-tool" aria-label="Calculadora de combinações de Killer Sudoku"><div><h2>Encontrar combinações da gaiola</h2><p>Comece pela soma e pelo número de casas; depois remova os dígitos que a grade já tornou impossíveis.</p><ul><li>Não permita repetição no Killer Sudoku comum.</li>
+              <li>Ative repetição somente quando a regra do puzzle autorizar.</li>
+              <li>Copie o resultado para comparar candidatos nas suas anotações.</li></ul></div>
+        <div class="calculator-panel"><form id="pageComboForm" class="combo-form"><label><span>Soma</span><input id="pageSumInput" type="number" min="1" max="90" value="17" inputmode="numeric"></label><label><span>Casas</span><input id="pageCellsInput" type="number" min="1" max="9" value="3" inputmode="numeric"></label><label class="check-label"><input id="pageRepeatInput" type="checkbox"><span>Permitir repetição</span></label></form>
+          <div class="digits" id="pageDigits" aria-label="Dígitos disponíveis"></div><div class="result-head"><strong id="pageComboCount">0 combinações</strong><button id="pageCopyCombosBtn" type="button">Copiar</button></div><div id="pageComboResults" class="combo-results" aria-live="polite"></div></div>
+      </section>
+
+        <section class="combination-chart-section" aria-labelledby="killer-sudoku-combination-chart">
+          <h2 id="killer-sudoku-combination-chart">Tabela de combinações de Killer Sudoku</h2>
+          <p>Tabela completa sem repetição para gaiolas padrão. Escolha a quantidade de casas e procure a soma.</p>
+          <nav class="chart-index" aria-label="Tabela de combinações de Killer Sudoku">
+            <a href="#cage-2-cells">Gaiolas de 2 casas</a>
+            <a href="#cage-3-cells">Gaiolas de 3 casas</a>
+            <a href="#cage-4-cells">Gaiolas de 4 casas</a>
+            <a href="#cage-5-cells">Gaiolas de 5 casas</a>
+            <a href="#cage-6-cells">Gaiolas de 6 casas</a>
+            <a href="#cage-7-cells">Gaiolas de 7 casas</a>
+            <a href="#cage-8-cells">Gaiolas de 8 casas</a>
+            <a href="#cage-9-cells">Gaiolas de 9 casas</a>
+          </nav>
+          <section class="cage-chart" aria-labelledby="cage-2-cells">
+            <h3 id="cage-2-cells">Gaiolas de 2 casas</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">Soma</th><th scope="col">Combinações possíveis</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">3</th><td>1+2</td></tr>
+                <tr><th scope="row">4</th><td>1+3</td></tr>
+                <tr><th scope="row">5</th><td>1+4, 2+3</td></tr>
+                <tr><th scope="row">6</th><td>1+5, 2+4</td></tr>
+                <tr><th scope="row">7</th><td>1+6, 2+5, 3+4</td></tr>
+                <tr><th scope="row">8</th><td>1+7, 2+6, 3+5</td></tr>
+                <tr><th scope="row">9</th><td>1+8, 2+7, 3+6, 4+5</td></tr>
+                <tr><th scope="row">10</th><td>1+9, 2+8, 3+7, 4+6</td></tr>
+                <tr><th scope="row">11</th><td>2+9, 3+8, 4+7, 5+6</td></tr>
+                <tr><th scope="row">12</th><td>3+9, 4+8, 5+7</td></tr>
+                <tr><th scope="row">13</th><td>4+9, 5+8, 6+7</td></tr>
+                <tr><th scope="row">14</th><td>5+9, 6+8</td></tr>
+                <tr><th scope="row">15</th><td>6+9, 7+8</td></tr>
+                <tr><th scope="row">16</th><td>7+9</td></tr>
+                <tr><th scope="row">17</th><td>8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-3-cells">
+            <h3 id="cage-3-cells">Gaiolas de 3 casas</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">Soma</th><th scope="col">Combinações possíveis</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">6</th><td>1+2+3</td></tr>
+                <tr><th scope="row">7</th><td>1+2+4</td></tr>
+                <tr><th scope="row">8</th><td>1+2+5, 1+3+4</td></tr>
+                <tr><th scope="row">9</th><td>1+2+6, 1+3+5, 2+3+4</td></tr>
+                <tr><th scope="row">10</th><td>1+2+7, 1+3+6, 1+4+5, 2+3+5</td></tr>
+                <tr><th scope="row">11</th><td>1+2+8, 1+3+7, 1+4+6, 2+3+6, 2+4+5</td></tr>
+                <tr><th scope="row">12</th><td>1+2+9, 1+3+8, 1+4+7, 1+5+6, 2+3+7, 2+4+6, 3+4+5</td></tr>
+                <tr><th scope="row">13</th><td>1+3+9, 1+4+8, 1+5+7, 2+3+8, 2+4+7, 2+5+6, 3+4+6</td></tr>
+                <tr><th scope="row">14</th><td>1+4+9, 1+5+8, 1+6+7, 2+3+9, 2+4+8, 2+5+7, 3+4+7, 3+5+6</td></tr>
+                <tr><th scope="row">15</th><td>1+5+9, 1+6+8, 2+4+9, 2+5+8, 2+6+7, 3+4+8, 3+5+7, 4+5+6</td></tr>
+                <tr><th scope="row">16</th><td>1+6+9, 1+7+8, 2+5+9, 2+6+8, 3+4+9, 3+5+8, 3+6+7, 4+5+7</td></tr>
+                <tr><th scope="row">17</th><td>1+7+9, 2+6+9, 2+7+8, 3+5+9, 3+6+8, 4+5+8, 4+6+7</td></tr>
+                <tr><th scope="row">18</th><td>1+8+9, 2+7+9, 3+6+9, 3+7+8, 4+5+9, 4+6+8, 5+6+7</td></tr>
+                <tr><th scope="row">19</th><td>2+8+9, 3+7+9, 4+6+9, 4+7+8, 5+6+8</td></tr>
+                <tr><th scope="row">20</th><td>3+8+9, 4+7+9, 5+6+9, 5+7+8</td></tr>
+                <tr><th scope="row">21</th><td>4+8+9, 5+7+9, 6+7+8</td></tr>
+                <tr><th scope="row">22</th><td>5+8+9, 6+7+9</td></tr>
+                <tr><th scope="row">23</th><td>6+8+9</td></tr>
+                <tr><th scope="row">24</th><td>7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-4-cells">
+            <h3 id="cage-4-cells">Gaiolas de 4 casas</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">Soma</th><th scope="col">Combinações possíveis</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">10</th><td>1+2+3+4</td></tr>
+                <tr><th scope="row">11</th><td>1+2+3+5</td></tr>
+                <tr><th scope="row">12</th><td>1+2+3+6, 1+2+4+5</td></tr>
+                <tr><th scope="row">13</th><td>1+2+3+7, 1+2+4+6, 1+3+4+5</td></tr>
+                <tr><th scope="row">14</th><td>1+2+3+8, 1+2+4+7, 1+2+5+6, 1+3+4+6, 2+3+4+5</td></tr>
+                <tr><th scope="row">15</th><td>1+2+3+9, 1+2+4+8, 1+2+5+7, 1+3+4+7, 1+3+5+6, 2+3+4+6</td></tr>
+                <tr><th scope="row">16</th><td>1+2+4+9, 1+2+5+8, 1+2+6+7, 1+3+4+8, 1+3+5+7, 1+4+5+6, 2+3+4+7, 2+3+5+6</td></tr>
+                <tr><th scope="row">17</th><td>1+2+5+9, 1+2+6+8, 1+3+4+9, 1+3+5+8, 1+3+6+7, 1+4+5+7, 2+3+4+8, 2+3+5+7, 2+4+5+6</td></tr>
+                <tr><th scope="row">18</th><td>1+2+6+9, 1+2+7+8, 1+3+5+9, 1+3+6+8, 1+4+5+8, 1+4+6+7, 2+3+4+9, 2+3+5+8, 2+3+6+7, 2+4+5+7, 3+4+5+6</td></tr>
+                <tr><th scope="row">19</th><td>1+2+7+9, 1+3+6+9, 1+3+7+8, 1+4+5+9, 1+4+6+8, 1+5+6+7, 2+3+5+9, 2+3+6+8, 2+4+5+8, 2+4+6+7, 3+4+5+7</td></tr>
+                <tr><th scope="row">20</th><td>1+2+8+9, 1+3+7+9, 1+4+6+9, 1+4+7+8, 1+5+6+8, 2+3+6+9, 2+3+7+8, 2+4+5+9, 2+4+6+8, 2+5+6+7, 3+4+5+8, 3+4+6+7</td></tr>
+                <tr><th scope="row">21</th><td>1+3+8+9, 1+4+7+9, 1+5+6+9, 1+5+7+8, 2+3+7+9, 2+4+6+9, 2+4+7+8, 2+5+6+8, 3+4+5+9, 3+4+6+8, 3+5+6+7</td></tr>
+                <tr><th scope="row">22</th><td>1+4+8+9, 1+5+7+9, 1+6+7+8, 2+3+8+9, 2+4+7+9, 2+5+6+9, 2+5+7+8, 3+4+6+9, 3+4+7+8, 3+5+6+8, 4+5+6+7</td></tr>
+                <tr><th scope="row">23</th><td>1+5+8+9, 1+6+7+9, 2+4+8+9, 2+5+7+9, 2+6+7+8, 3+4+7+9, 3+5+6+9, 3+5+7+8, 4+5+6+8</td></tr>
+                <tr><th scope="row">24</th><td>1+6+8+9, 2+5+8+9, 2+6+7+9, 3+4+8+9, 3+5+7+9, 3+6+7+8, 4+5+6+9, 4+5+7+8</td></tr>
+                <tr><th scope="row">25</th><td>1+7+8+9, 2+6+8+9, 3+5+8+9, 3+6+7+9, 4+5+7+9, 4+6+7+8</td></tr>
+                <tr><th scope="row">26</th><td>2+7+8+9, 3+6+8+9, 4+5+8+9, 4+6+7+9, 5+6+7+8</td></tr>
+                <tr><th scope="row">27</th><td>3+7+8+9, 4+6+8+9, 5+6+7+9</td></tr>
+                <tr><th scope="row">28</th><td>4+7+8+9, 5+6+8+9</td></tr>
+                <tr><th scope="row">29</th><td>5+7+8+9</td></tr>
+                <tr><th scope="row">30</th><td>6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-5-cells">
+            <h3 id="cage-5-cells">Gaiolas de 5 casas</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">Soma</th><th scope="col">Combinações possíveis</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">15</th><td>1+2+3+4+5</td></tr>
+                <tr><th scope="row">16</th><td>1+2+3+4+6</td></tr>
+                <tr><th scope="row">17</th><td>1+2+3+4+7, 1+2+3+5+6</td></tr>
+                <tr><th scope="row">18</th><td>1+2+3+4+8, 1+2+3+5+7, 1+2+4+5+6</td></tr>
+                <tr><th scope="row">19</th><td>1+2+3+4+9, 1+2+3+5+8, 1+2+3+6+7, 1+2+4+5+7, 1+3+4+5+6</td></tr>
+                <tr><th scope="row">20</th><td>1+2+3+5+9, 1+2+3+6+8, 1+2+4+5+8, 1+2+4+6+7, 1+3+4+5+7, 2+3+4+5+6</td></tr>
+                <tr><th scope="row">21</th><td>1+2+3+6+9, 1+2+3+7+8, 1+2+4+5+9, 1+2+4+6+8, 1+2+5+6+7, 1+3+4+5+8, 1+3+4+6+7, 2+3+4+5+7</td></tr>
+                <tr><th scope="row">22</th><td>1+2+3+7+9, 1+2+4+6+9, 1+2+4+7+8, 1+2+5+6+8, 1+3+4+5+9, 1+3+4+6+8, 1+3+5+6+7, 2+3+4+5+8, 2+3+4+6+7</td></tr>
+                <tr><th scope="row">23</th><td>1+2+3+8+9, 1+2+4+7+9, 1+2+5+6+9, 1+2+5+7+8, 1+3+4+6+9, 1+3+4+7+8, 1+3+5+6+8, 1+4+5+6+7, 2+3+4+5+9, 2+3+4+6+8, 2+3+5+6+7</td></tr>
+                <tr><th scope="row">24</th><td>1+2+4+8+9, 1+2+5+7+9, 1+2+6+7+8, 1+3+4+7+9, 1+3+5+6+9, 1+3+5+7+8, 1+4+5+6+8, 2+3+4+6+9, 2+3+4+7+8, 2+3+5+6+8, 2+4+5+6+7</td></tr>
+                <tr><th scope="row">25</th><td>1+2+5+8+9, 1+2+6+7+9, 1+3+4+8+9, 1+3+5+7+9, 1+3+6+7+8, 1+4+5+6+9, 1+4+5+7+8, 2+3+4+7+9, 2+3+5+6+9, 2+3+5+7+8, 2+4+5+6+8, 3+4+5+6+7</td></tr>
+                <tr><th scope="row">26</th><td>1+2+6+8+9, 1+3+5+8+9, 1+3+6+7+9, 1+4+5+7+9, 1+4+6+7+8, 2+3+4+8+9, 2+3+5+7+9, 2+3+6+7+8, 2+4+5+6+9, 2+4+5+7+8, 3+4+5+6+8</td></tr>
+                <tr><th scope="row">27</th><td>1+2+7+8+9, 1+3+6+8+9, 1+4+5+8+9, 1+4+6+7+9, 1+5+6+7+8, 2+3+5+8+9, 2+3+6+7+9, 2+4+5+7+9, 2+4+6+7+8, 3+4+5+6+9, 3+4+5+7+8</td></tr>
+                <tr><th scope="row">28</th><td>1+3+7+8+9, 1+4+6+8+9, 1+5+6+7+9, 2+3+6+8+9, 2+4+5+8+9, 2+4+6+7+9, 2+5+6+7+8, 3+4+5+7+9, 3+4+6+7+8</td></tr>
+                <tr><th scope="row">29</th><td>1+4+7+8+9, 1+5+6+8+9, 2+3+7+8+9, 2+4+6+8+9, 2+5+6+7+9, 3+4+5+8+9, 3+4+6+7+9, 3+5+6+7+8</td></tr>
+                <tr><th scope="row">30</th><td>1+5+7+8+9, 2+4+7+8+9, 2+5+6+8+9, 3+4+6+8+9, 3+5+6+7+9, 4+5+6+7+8</td></tr>
+                <tr><th scope="row">31</th><td>1+6+7+8+9, 2+5+7+8+9, 3+4+7+8+9, 3+5+6+8+9, 4+5+6+7+9</td></tr>
+                <tr><th scope="row">32</th><td>2+6+7+8+9, 3+5+7+8+9, 4+5+6+8+9</td></tr>
+                <tr><th scope="row">33</th><td>3+6+7+8+9, 4+5+7+8+9</td></tr>
+                <tr><th scope="row">34</th><td>4+6+7+8+9</td></tr>
+                <tr><th scope="row">35</th><td>5+6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-6-cells">
+            <h3 id="cage-6-cells">Gaiolas de 6 casas</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">Soma</th><th scope="col">Combinações possíveis</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">21</th><td>1+2+3+4+5+6</td></tr>
+                <tr><th scope="row">22</th><td>1+2+3+4+5+7</td></tr>
+                <tr><th scope="row">23</th><td>1+2+3+4+5+8, 1+2+3+4+6+7</td></tr>
+                <tr><th scope="row">24</th><td>1+2+3+4+5+9, 1+2+3+4+6+8, 1+2+3+5+6+7</td></tr>
+                <tr><th scope="row">25</th><td>1+2+3+4+6+9, 1+2+3+4+7+8, 1+2+3+5+6+8, 1+2+4+5+6+7</td></tr>
+                <tr><th scope="row">26</th><td>1+2+3+4+7+9, 1+2+3+5+6+9, 1+2+3+5+7+8, 1+2+4+5+6+8, 1+3+4+5+6+7</td></tr>
+                <tr><th scope="row">27</th><td>1+2+3+4+8+9, 1+2+3+5+7+9, 1+2+3+6+7+8, 1+2+4+5+6+9, 1+2+4+5+7+8, 1+3+4+5+6+8, 2+3+4+5+6+7</td></tr>
+                <tr><th scope="row">28</th><td>1+2+3+5+8+9, 1+2+3+6+7+9, 1+2+4+5+7+9, 1+2+4+6+7+8, 1+3+4+5+6+9, 1+3+4+5+7+8, 2+3+4+5+6+8</td></tr>
+                <tr><th scope="row">29</th><td>1+2+3+6+8+9, 1+2+4+5+8+9, 1+2+4+6+7+9, 1+2+5+6+7+8, 1+3+4+5+7+9, 1+3+4+6+7+8, 2+3+4+5+6+9, 2+3+4+5+7+8</td></tr>
+                <tr><th scope="row">30</th><td>1+2+3+7+8+9, 1+2+4+6+8+9, 1+2+5+6+7+9, 1+3+4+5+8+9, 1+3+4+6+7+9, 1+3+5+6+7+8, 2+3+4+5+7+9, 2+3+4+6+7+8</td></tr>
+                <tr><th scope="row">31</th><td>1+2+4+7+8+9, 1+2+5+6+8+9, 1+3+4+6+8+9, 1+3+5+6+7+9, 1+4+5+6+7+8, 2+3+4+5+8+9, 2+3+4+6+7+9, 2+3+5+6+7+8</td></tr>
+                <tr><th scope="row">32</th><td>1+2+5+7+8+9, 1+3+4+7+8+9, 1+3+5+6+8+9, 1+4+5+6+7+9, 2+3+4+6+8+9, 2+3+5+6+7+9, 2+4+5+6+7+8</td></tr>
+                <tr><th scope="row">33</th><td>1+2+6+7+8+9, 1+3+5+7+8+9, 1+4+5+6+8+9, 2+3+4+7+8+9, 2+3+5+6+8+9, 2+4+5+6+7+9, 3+4+5+6+7+8</td></tr>
+                <tr><th scope="row">34</th><td>1+3+6+7+8+9, 1+4+5+7+8+9, 2+3+5+7+8+9, 2+4+5+6+8+9, 3+4+5+6+7+9</td></tr>
+                <tr><th scope="row">35</th><td>1+4+6+7+8+9, 2+3+6+7+8+9, 2+4+5+7+8+9, 3+4+5+6+8+9</td></tr>
+                <tr><th scope="row">36</th><td>1+5+6+7+8+9, 2+4+6+7+8+9, 3+4+5+7+8+9</td></tr>
+                <tr><th scope="row">37</th><td>2+5+6+7+8+9, 3+4+6+7+8+9</td></tr>
+                <tr><th scope="row">38</th><td>3+5+6+7+8+9</td></tr>
+                <tr><th scope="row">39</th><td>4+5+6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-7-cells">
+            <h3 id="cage-7-cells">Gaiolas de 7 casas</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">Soma</th><th scope="col">Combinações possíveis</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">28</th><td>1+2+3+4+5+6+7</td></tr>
+                <tr><th scope="row">29</th><td>1+2+3+4+5+6+8</td></tr>
+                <tr><th scope="row">30</th><td>1+2+3+4+5+6+9, 1+2+3+4+5+7+8</td></tr>
+                <tr><th scope="row">31</th><td>1+2+3+4+5+7+9, 1+2+3+4+6+7+8</td></tr>
+                <tr><th scope="row">32</th><td>1+2+3+4+5+8+9, 1+2+3+4+6+7+9, 1+2+3+5+6+7+8</td></tr>
+                <tr><th scope="row">33</th><td>1+2+3+4+6+8+9, 1+2+3+5+6+7+9, 1+2+4+5+6+7+8</td></tr>
+                <tr><th scope="row">34</th><td>1+2+3+4+7+8+9, 1+2+3+5+6+8+9, 1+2+4+5+6+7+9, 1+3+4+5+6+7+8</td></tr>
+                <tr><th scope="row">35</th><td>1+2+3+5+7+8+9, 1+2+4+5+6+8+9, 1+3+4+5+6+7+9, 2+3+4+5+6+7+8</td></tr>
+                <tr><th scope="row">36</th><td>1+2+3+6+7+8+9, 1+2+4+5+7+8+9, 1+3+4+5+6+8+9, 2+3+4+5+6+7+9</td></tr>
+                <tr><th scope="row">37</th><td>1+2+4+6+7+8+9, 1+3+4+5+7+8+9, 2+3+4+5+6+8+9</td></tr>
+                <tr><th scope="row">38</th><td>1+2+5+6+7+8+9, 1+3+4+6+7+8+9, 2+3+4+5+7+8+9</td></tr>
+                <tr><th scope="row">39</th><td>1+3+5+6+7+8+9, 2+3+4+6+7+8+9</td></tr>
+                <tr><th scope="row">40</th><td>1+4+5+6+7+8+9, 2+3+5+6+7+8+9</td></tr>
+                <tr><th scope="row">41</th><td>2+4+5+6+7+8+9</td></tr>
+                <tr><th scope="row">42</th><td>3+4+5+6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-8-cells">
+            <h3 id="cage-8-cells">Gaiolas de 8 casas</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">Soma</th><th scope="col">Combinações possíveis</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">36</th><td>1+2+3+4+5+6+7+8</td></tr>
+                <tr><th scope="row">37</th><td>1+2+3+4+5+6+7+9</td></tr>
+                <tr><th scope="row">38</th><td>1+2+3+4+5+6+8+9</td></tr>
+                <tr><th scope="row">39</th><td>1+2+3+4+5+7+8+9</td></tr>
+                <tr><th scope="row">40</th><td>1+2+3+4+6+7+8+9</td></tr>
+                <tr><th scope="row">41</th><td>1+2+3+5+6+7+8+9</td></tr>
+                <tr><th scope="row">42</th><td>1+2+4+5+6+7+8+9</td></tr>
+                <tr><th scope="row">43</th><td>1+3+4+5+6+7+8+9</td></tr>
+                <tr><th scope="row">44</th><td>2+3+4+5+6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <section class="cage-chart" aria-labelledby="cage-9-cells">
+            <h3 id="cage-9-cells">Gaiolas de 9 casas</h3>
+            <div class="combination-table-wrap"><table class="combination-table">
+              <thead><tr><th scope="col">Soma</th><th scope="col">Combinações possíveis</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">45</th><td>1+2+3+4+5+6+7+8+9</td></tr>
+              </tbody>
+            </table></div>
+          </section>
+          <h2>Faixas de soma das gaiolas</h2>
+          <div class="combination-table-wrap"><table class="combination-table cage-range-table">
+            <thead><tr><th scope="col">Casas</th><th scope="col">Mínimo</th><th scope="col">Máximo</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">2</th><td>1 + 2 = 3</td><td>8 + 9 = 17</td></tr>
+              <tr><th scope="row">3</th><td>1 + 2 + 3 = 6</td><td>7 + 8 + 9 = 24</td></tr>
+              <tr><th scope="row">4</th><td>1 + 2 + 3 + 4 = 10</td><td>6 + 7 + 8 + 9 = 30</td></tr>
+              <tr><th scope="row">5</th><td>1 + 2 + 3 + 4 + 5 = 15</td><td>5 + 6 + 7 + 8 + 9 = 35</td></tr>
+              <tr><th scope="row">6</th><td>1 + 2 + 3 + 4 + 5 + 6 = 21</td><td>4 + 5 + 6 + 7 + 8 + 9 = 39</td></tr>
+              <tr><th scope="row">7</th><td>1 + 2 + 3 + 4 + 5 + 6 + 7 = 28</td><td>3 + 4 + 5 + 6 + 7 + 8 + 9 = 42</td></tr>
+              <tr><th scope="row">8</th><td>1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 = 36</td><td>2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 = 44</td></tr>
+              <tr><th scope="row">9</th><td>1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 = 45</td><td>1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 = 45</td></tr>
+            </tbody>
+          </table></div>
+          <h3>Combinações forçadas ou únicas</h3>
+          <p>Somas extremas costumam deixar um único conjunto: 3 em 2 casas é 1 + 2, 17 é 8 + 9, 10 em 4 casas é 1 + 2 + 3 + 4 e 30 é 6 + 7 + 8 + 9.</p>
+          <h3>Regra dos 45</h3>
+          <p>Os dígitos de 1 a 9 somam 45. Em uma linha, coluna ou bloco 3×3 completo, as somas conhecidas ajudam a descobrir o total das casas restantes.</p>
+        </section>
+
+      <h2>Como usar a calculadora</h2><ol><li>Digite a soma da gaiola.</li>
+          <li>Informe quantas casas ela possui.</li>
+          <li>Mantenha a repetição desligada no Killer Sudoku padrão.</li>
+          <li>Desative dígitos excluídos pela linha, coluna, bloco ou gaiola.</li>
+          <li>Compare as combinações restantes com as posições possíveis na grade.</li></ol>
+      <h2>Exemplo: 17 em 3 casas</h2><p>Uma gaiola de 3 casas com soma 17 e sem repetição tem sete combinações básicas: 1 + 7 + 9, 2 + 6 + 9, 2 + 7 + 8, 3 + 5 + 9, 3 + 6 + 8, 4 + 5 + 8 e 4 + 6 + 7.</p>
+      <p>A calculadora resolve a parte aritmética. A escolha final ainda depende das restrições de linha, coluna, bloco e da posição de cada casa na gaiola.</p>
+      <h2>Gaiolas comuns</h2><table class="example-table"><thead><tr><th>Pista</th><th>Combinações sem repetição</th><th>Como ajuda</th></tr></thead><tbody><tr><td>3 em 2 casas</td><td>1 + 2</td><td>Os dois dígitos ficam definidos.</td></tr>
+            <tr><td>17 em 2 casas</td><td>8 + 9</td><td>Par alto útil para eliminar candidatos em linhas e blocos.</td></tr>
+            <tr><td>10 em 4 casas</td><td>1 + 2 + 3 + 4</td><td>Gaiola baixa que exclui dígitos maiores.</td></tr>
+            <tr><td>30 em 4 casas</td><td>6 + 7 + 8 + 9</td><td>Gaiola alta que exclui dígitos menores.</td></tr></tbody></table>
+      <h2>Killer Sudoku, Kakuro e KenKen</h2><p>Killer Sudoku combina as regras do Sudoku com somas de gaiolas e normalmente não repete dígitos. Kakuro e KenKen também usam combinações, mas podem ter regras diferentes. Confira o enunciado antes de permitir repetição.</p>
+      <h2>Perguntas frequentes</h2><div class="faq-list"><details><summary>Para que serve a calculadora?</summary><p>Ela lista conjuntos de dígitos compatíveis com uma soma e quantidade de casas, permitindo retirar números indisponíveis.</p></details>
+          <details><summary>Devo permitir repetição?</summary><p>Não no Killer Sudoku padrão. Ative apenas em variantes que autorizem dígitos repetidos.</p></details>
+          <details><summary>Por que a soma máxima pode passar de 45?</summary><p>Isso atende variantes com repetição. Sem repetição, os dígitos de 1 a 9 somam 45.</p></details>
+          <details><summary>Ela resolve a grade inteira?</summary><p>Não. A ferramenta calcula as gaiolas; linhas, colunas, blocos e posições ainda exigem lógica de Sudoku.</p></details></div>
+      <h2>Outros puzzles de lógica</h2><p>Você também pode jogar Star Battle e consultar o guia de regras em português. Não é preciso criar conta. <a href="/pt-br/#play">Star Battle</a> · <a href="/pt-br/star-battle">Star Battle</a></p>
+    </article></main>
+    <footer class="site-footer"><div class="section-shell"><span>Daily Logic Lab</span><nav class="footer-links" aria-label="Navegação do rodapé"><a href="/pt-br/about">Sobre</a><a href="/pt-br/contact">Contato</a><a href="/pt-br/privacy-policy">Privacidade</a><a href="/sitemap.xml">Mapa do site</a></nav></div></footer>
+    <script>(()=>{const activeDigits=new Set([1,2,3,4,5,6,7,8,9]),sumInput=document.querySelector('#pageSumInput'),cellsInput=document.querySelector('#pageCellsInput'),repeatInput=document.querySelector('#pageRepeatInput'),digits=document.querySelector('#pageDigits'),comboCount=document.querySelector('#pageComboCount'),comboResults=document.querySelector('#pageComboResults'),copyButton=document.querySelector('#pageCopyCombosBtn');for(let digit=1;digit<=9;digit+=1){const button=document.createElement('button');button.type='button';button.className='digit-toggle active';button.textContent=String(digit);button.setAttribute('aria-pressed','true');button.addEventListener('click',()=>{activeDigits.has(digit)?activeDigits.delete(digit):activeDigits.add(digit);button.classList.toggle('active',activeDigits.has(digit));button.setAttribute('aria-pressed',activeDigits.has(digit)?'true':'false');updateCombinations()});digits.appendChild(button)}document.querySelector('#pageComboForm').addEventListener('input',updateCombinations);copyButton.addEventListener('click',async()=>{const text=[...comboResults.querySelectorAll('.combo-pill')].map(node=>node.textContent).join('\n');if(navigator.clipboard){await navigator.clipboard.writeText(text);comboCount.textContent="Copiado";window.setTimeout(updateCombinations,900)}});updateCombinations();function updateCombinations(){const sum=clamp(Number(sumInput.value||0),1,90),count=clamp(Number(cellsInput.value||0),1,9),combos=findCombos(sum,count,[...activeDigits].sort((a,b)=>a-b),repeatInput.checked);comboCount.textContent=combos.length+' '+(combos.length===1?"combinação":"combinações");comboResults.innerHTML='';if(!combos.length){appendPill("Nenhuma combinação");return}combos.forEach(combo=>appendPill(combo.join(' + ')))}function appendPill(text){const pill=document.createElement('span');pill.className='combo-pill';pill.textContent=text;comboResults.appendChild(pill)}function findCombos(target,length,digitList,allowRepeats){const results=[];function walk(startIndex,combo,total){if(combo.length===length){if(total===target)results.push([...combo]);return}if(total>=target)return;for(let i=startIndex;i<digitList.length;i+=1){const digit=digitList[i];combo.push(digit);walk(allowRepeats?i:i+1,combo,total+digit);combo.pop()}}walk(0,[],0);return results}function clamp(value,min,max){return Math.min(max,Math.max(min,value))}})();</script>
+  </body>
+</html>

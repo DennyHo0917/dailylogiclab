@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 const require = createRequire(import.meta.url);
 const Logic = require("logic-solver");
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const BASE_COUNT = 13;
+const BASE_COUNT = 64;
 
 const PROFILES = {
   classic: {
@@ -268,7 +268,7 @@ function fingerprint(puzzle) {
 function generateBases(key, profile) {
   const bases = [];
   const seen = new Set();
-  for (let candidate = 0; bases.length < BASE_COUNT && candidate < 500; candidate += 1) {
+  for (let candidate = 0; bases.length < BASE_COUNT && candidate < 5000; candidate += 1) {
     const template = profile.templates[candidate % profile.templates.length];
     const solution = transformSolution(template, profile.size, candidate % 8);
     const regions = generateRegions(profile, solution, (candidate * 0x9e3779b9) >>> 0);

@@ -1,12 +1,6 @@
 (function exposeLogicGameCore(root) {
   "use strict";
 
-  const DIFFICULTIES = {
-    easy: { label: "Easy", index: 0 },
-    medium: { label: "Medium", index: 1 },
-    hard: { label: "Hard", index: 2 }
-  };
-
   const GAME_ORDER = ["tents-and-trees", "hashi", "slitherlink", "nonogram"];
 
   function hashString(value) {
@@ -16,6 +10,35 @@
       hash = Math.imul(hash, 16777619);
     }
     return hash >>> 0;
+  }
+
+  function dateNumber(value) {
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value || ""));
+    if (!match) return null;
+    const date = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3])));
+    if (date.getUTCFullYear() !== Number(match[1]) || date.getUTCMonth() !== Number(match[2]) - 1 || date.getUTCDate() !== Number(match[3])) return null;
+    return Math.floor(date.getTime() / 86400000);
+  }
+
+  function nextDailyStreak(previousDate, currentStreak, today) {
+    const current = dateNumber(today);
+    const previous = dateNumber(previousDate);
+    const streak = Number.isInteger(Number(currentStreak)) && Number(currentStreak) > 0 ? Number(currentStreak) : 0;
+    if (current === null) return 1;
+    if (previous === current) return streak || 1;
+    if (previous === current - 1) return streak + 1;
+    return 1;
+  }
+
+  function normalizeProgress(saved, expected) {
+    if (!saved || saved.version !== 1 || saved.game !== expected.game || saved.mode !== expected.mode || saved.difficulty !== expected.difficulty) return null;
+    if (saved.mode === "daily" && saved.date !== expected.today) return null;
+    return {
+      ...saved,
+      seed: Number(saved.seed) >>> 0,
+      elapsed: Math.max(0, Math.floor(Number(saved.elapsed) || 0)),
+      started: Boolean(saved.started)
+    };
   }
 
   function createRng(seed) {
@@ -957,9 +980,10 @@
   }
 
   const api = {
-    DIFFICULTIES,
     GAME_ORDER,
     hashString,
+    nextDailyStreak,
+    normalizeProgress,
     createRng,
     cellKey,
     parseCellKey,

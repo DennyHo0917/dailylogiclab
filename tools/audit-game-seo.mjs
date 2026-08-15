@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const site = "https://dailylogiclab.com";
 const games = ["tents-and-trees", "hashi", "slitherlink", "nonogram"];
+const ogImages = Object.fromEntries(games.map((game) => [game, `${site}/og-${game}.png`]));
 const locales = [
   ["", "en"], ["de/", "de"], ["es/", "es"], ["fr/", "fr"],
   ["ja/", "ja"], ["pt-br/", "pt-BR"], ["zh-cn/", "zh-CN"]
@@ -39,7 +40,8 @@ for (const [prefix, language] of locales) {
     for (const tag of ["og:title", "og:description", "og:image", "og:image:alt", "twitter:title", "twitter:description", "twitter:image", "twitter:image:alt"]) {
       if (!html.includes(`"${tag}"`)) failures.push(`${relative}: missing ${tag}`);
     }
-    if (!schema?.["@graph"]?.some((node) => node["@type"] === "WebApplication" && node.inLanguage === language && node.dateModified === "2026-08-14")) failures.push(`${relative}: WebApplication schema mismatch`);
+    if (!schema?.["@graph"]?.some((node) => node["@type"] === "WebApplication" && node.inLanguage === language && node.dateModified === "2026-08-15")) failures.push(`${relative}: WebApplication schema mismatch`);
+    if (!html.includes(`<meta property="og:image" content="${ogImages[game]}">`) || !html.includes(`<meta name="twitter:image" content="${ogImages[game]}">`)) failures.push(`${relative}: game-specific social image mismatch`);
     if (!schema?.["@graph"]?.some((node) => node["@type"] === "FAQPage" && node.inLanguage === language)) failures.push(`${relative}: FAQ schema mismatch`);
     if ((html.match(/class="game-card compact-game-card"/g) || []).length !== 4) failures.push(`${relative}: expected 4 related-game cards`);
     if ((html.match(/class="mini-preview /g) || []).length !== 4) failures.push(`${relative}: expected 4 game previews`);
