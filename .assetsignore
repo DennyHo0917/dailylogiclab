@@ -1,0 +1,14 @@
+node_modules/
+.git/
+.github/
+tools/
+
+.assetsignore
+.gitignore
+wrangler.jsonc
+package.json
+package-lock.json
+
+*.md
+screenshot-desktop.png
+screenshot-mobile.png
