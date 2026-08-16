@@ -15,6 +15,10 @@
     return hash >>> 0;
   }
 
+  function progressStorageKey(mode, profileKey) {
+    return `dll-two-not-touch-progress-v2-${mode}-${profileKey}`;
+  }
+
   function dateNumber(value) {
     const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value || ""));
     if (!match) return null;
@@ -36,18 +40,48 @@
     return 1;
   }
 
-  function normalizeProgress(saved, expectedMode, today, size) {
-    if (!saved || saved.version !== 1 || saved.mode !== expectedMode || !profiles[saved.profileKey]) return null;
-    if (saved.mode === "daily" && saved.date !== today) return null;
-    if (!Array.isArray(saved.cells) || saved.cells.length !== size ||
-        saved.cells.some((row) => !Array.isArray(row) || row.length !== size || row.some((value) => ![0, 1, 2].includes(value)))) return null;
+  function parseProgressJson(value) {
+    if (typeof value !== "string" || !value) return null;
+    try {
+      const parsed = JSON.parse(value);
+      return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function normalizeProgress(saved, expected) {
+    if (!saved || typeof saved !== "object" || Array.isArray(saved) || ![1, 2].includes(saved.version) ||
+        (saved.version === 2 && saved.game !== "two-not-touch") || saved.mode !== expected.mode ||
+        saved.profileKey !== expected.profileKey || !profiles[saved.profileKey]) return null;
+    const puzzleDate = saved.version === 1 ? String(saved.date || "") : saved.puzzleDate;
+    if (typeof puzzleDate !== "string" || (saved.mode === "daily"
+      ? dateNumber(puzzleDate) === null || puzzleDate !== expected.puzzleDate
+      : puzzleDate !== "")) return null;
+    const validId = (typeof saved.id === "string" && saved.id.length > 0) ||
+      (Number.isInteger(saved.id) && Number.isFinite(saved.id));
+    const expectedPenalty = expected.hintPenalties.slice(0, saved.hintCount).reduce((sum, value) => sum + value, 0);
+    if (!Number.isInteger(saved.seed) || saved.seed < 0 || saved.seed > 0xffffffff || saved.seed !== expected.seed ||
+        !validId || saved.id !== expected.id || !Number.isFinite(saved.elapsed) || saved.elapsed < 0 ||
+        (saved.version === 2 && !Number.isInteger(saved.elapsed)) || typeof saved.started !== "boolean" ||
+        !Number.isInteger(saved.hintCount) || saved.hintCount < 0 || saved.hintCount > expected.maxHints ||
+        !Number.isInteger(saved.hintPenalty) || saved.hintPenalty !== expectedPenalty ||
+        (!saved.started && saved.elapsed !== 0)) return null;
+    if (!Array.isArray(saved.cells) || saved.cells.length !== expected.size ||
+        saved.cells.some((row) => !Array.isArray(row) || row.length !== expected.size || row.some((value) => ![0, 1, 2].includes(value)))) return null;
     return {
-      ...saved,
+      version: 2,
+      game: "two-not-touch",
+      mode: saved.mode,
+      profileKey: saved.profileKey,
+      puzzleDate,
+      seed: saved.seed,
+      id: saved.id,
       cells: saved.cells.map((row) => [...row]),
-      elapsed: Math.max(0, Math.floor(Number(saved.elapsed) || 0)),
-      hintCount: Math.max(0, Math.floor(Number(saved.hintCount) || 0)),
-      hintPenalty: Math.max(0, Math.floor(Number(saved.hintPenalty) || 0)),
-      started: Boolean(saved.started)
+      elapsed: Math.floor(saved.elapsed),
+      started: saved.started,
+      hintCount: saved.hintCount,
+      hintPenalty: saved.hintPenalty
     };
   }
 
@@ -290,5 +324,5 @@
     return JSON.stringify(puzzle.regions);
   }
 
-  root.DLL_TWO_NOT_TOUCH_CORE = { profiles, hashString, nextDailyStreak, normalizeProgress, countSolutions, generatePuzzle, validateSolution, fingerprint, solveQuick };
+  root.DLL_TWO_NOT_TOUCH_CORE = { profiles, hashString, progressStorageKey, nextDailyStreak, parseProgressJson, normalizeProgress, countSolutions, generatePuzzle, validateSolution, fingerprint, solveQuick };
 })(typeof window === "undefined" ? globalThis : window);

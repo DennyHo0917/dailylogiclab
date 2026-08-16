@@ -24,18 +24,38 @@ assert.equal(core.nextDailyStreak("2025-12-31", 4, "2026-01-01"), 5, "year bound
 assert.equal(core.nextDailyStreak("2026-08-13", 4, "2026-08-15"), 1, "missed day must reset streak");
 assert.equal(core.nextDailyStreak("broken", "broken", "2026-08-15"), 1, "damaged streak data must reset safely");
 assert.equal(core.nextDailyStreak("2026-08-16", 9, "2026-08-15"), 1, "future completion date must reset safely");
+assert.equal(core.parseProgressJson("{"), null, "damaged JSON must be discarded");
+assert.equal(core.parseProgressJson("[]"), null, "non-object JSON must be discarded");
+const progressKeys = new Set();
+for (const mode of ["daily", "practice"]) for (const profileKey of Object.keys(core.profiles)) {
+  progressKeys.add(core.progressStorageKey(mode, profileKey));
+}
+assert.equal(progressKeys.size, 6, "each Two Not Touch mode/profile needs its own archive key");
 
 const savedCells = Array.from({ length: 7 }, () => Array(7).fill(0));
 savedCells[2][3] = 1;
+const savedSeed = core.hashString("daily-two-not-touch-2026-08-15-1star");
+const savedPuzzle = core.generatePuzzle("quick", savedSeed, 227, catalog);
+const expectedProgress = { mode: "daily", profileKey: "quick", puzzleDate: "2026-08-15", seed: savedPuzzle.seed, id: savedPuzzle.id, size: 7, maxHints: 3, hintPenalties: [30, 60, 120] };
 const savedProgress = core.normalizeProgress({
-  version: 1, mode: "daily", date: "2026-08-15", profileKey: "quick", seed: 42, id: 1,
-  cells: savedCells, elapsed: 61.9, hintCount: 2, hintPenalty: 45, started: true
-}, "daily", "2026-08-15", 7);
+  version: 1, mode: "daily", date: "2026-08-15", profileKey: "quick", seed: savedPuzzle.seed, id: savedPuzzle.id,
+  cells: savedCells, elapsed: 61.9, hintCount: 2, hintPenalty: 90, started: true
+}, expectedProgress);
 assert.equal(savedProgress.elapsed, 61, "saved elapsed time must restore as whole seconds");
 assert.equal(savedProgress.cells[2][3], 1, "saved board marks must restore");
 assert.equal(savedProgress.hintCount, 2, "saved hint count must restore");
-assert.equal(core.normalizeProgress({ ...savedProgress, date: "2026-08-14" }, "daily", "2026-08-15", 7), null, "expired daily progress must be rejected");
-assert.equal(core.normalizeProgress({ ...savedProgress, cells: [[0]] }, "daily", "2026-08-15", 7), null, "damaged progress must be rejected");
+assert.equal(savedProgress.puzzleDate, "2026-08-15", "legacy daily date must migrate to puzzleDate");
+assert.equal(core.nextDailyStreak("2026-08-14", 4, savedProgress.puzzleDate), 5, "completion after midnight must credit the puzzle date");
+assert.equal(core.normalizeProgress({ ...savedProgress, puzzleDate: "2026-08-14" }, expectedProgress), null, "expired daily progress must be rejected");
+assert.equal(core.normalizeProgress({ ...savedProgress, cells: [[0]] }, expectedProgress), null, "damaged progress must be rejected");
+assert.equal(core.normalizeProgress({ ...savedProgress, seed: savedPuzzle.seed + 1 }, expectedProgress), null, "wrong daily seed must be rejected");
+assert.equal(core.normalizeProgress({ ...savedProgress, elapsed: -1 }, expectedProgress), null, "invalid timer must be rejected");
+assert.equal(core.normalizeProgress({ ...savedProgress, hintCount: 4 }, expectedProgress), null, "invalid hint count must be rejected");
+assert.equal(core.normalizeProgress({ ...savedProgress, hintPenalty: 1 }, expectedProgress), null, "invalid hint penalty must be rejected");
+assert.equal(core.normalizeProgress({ ...savedProgress, id: {} }, expectedProgress), null, "invalid puzzle id must be rejected");
+for (const [from, to, label] of [["2026-07-31", "2026-08-01", "month"], ["2025-12-31", "2026-01-01", "year"]]) {
+  assert.notEqual(core.hashString(`daily-two-not-touch-${from}-1star`), core.hashString(`daily-two-not-touch-${to}-1star`), `${label} boundary must change the daily seed`);
+}
 
 for (const profileKey of ["classic", "expert"]) {
   assert.ok(catalog[profileKey].bases.length >= 64, `${profileKey}: catalog must contain at least 64 bases`);

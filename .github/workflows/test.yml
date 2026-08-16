@@ -28,3 +28,5 @@ jobs:
         run: node tools/check-site.mjs
       - name: Route audit
         run: node tools/audit-routes.mjs
+      - name: Cloudflare deployment dry run
+        run: npx wrangler deploy --dry-run

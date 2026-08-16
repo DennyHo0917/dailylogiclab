@@ -67,6 +67,9 @@
     practiceReady: "Practice puzzle ready. Start when you are ready.",
     timerStarted: "Timer started. Solve it clean.",
     puzzleReset: "Puzzle reset. Start when you are ready.",
+    resetConfirm: "Click Reset again to clear this board.",
+    newPuzzleConfirm: "Click New Puzzle again to replace this practice board.",
+    dailyConfirm: "Click Daily again to replace yesterday's board.",
     pressStartMove: "Press Start before making a move.",
     selectVisibleIsland: "Select a visible island to change its bridge count.",
     islandsNotVisible: "Those islands are not directly visible to each other.",
@@ -140,15 +143,24 @@
 
   const statsKey = "dll-logic-stats";
   const preferenceKey = `dll-difficulty-${game}`;
-  const progressKey = `dll-logic-progress-${game}-v1`;
+  const legacyProgressKey = `dll-logic-progress-${game}-v1`;
   const recentKey = `dll-logic-recent-${game}-v1`;
-  const todayKey = getTodayKey();
+  const DISCARD_CONFIRM_MS = 4000;
   let timerId = null;
+  let lastSaveAt = 0;
+  let pendingAction = null;
+  let pendingActionTimer = null;
   let state;
 
   init();
 
   function init() {
+    try {
+      const legacy = localStorage.getItem(legacyProgressKey);
+      if (legacy && !core.parseProgressJson(legacy)) localStorage.removeItem(legacyProgressKey);
+    } catch {
+      // Storage can be unavailable in private browsing.
+    }
     els.title.textContent = text.title;
     els.intro.textContent = text.intro;
     els.rulesText.textContent = text.rules;
@@ -170,11 +182,12 @@
   function bindEvents() {
     els.startBtn.addEventListener("click", startPuzzle);
     els.startOverlay.addEventListener("click", startPuzzle);
-    els.resetBtn.addEventListener("click", resetPuzzle);
+    els.resetBtn.addEventListener("click", () => requestDestructiveAction("reset", ui.resetConfirm, resetPuzzle));
     els.checkBtn.addEventListener("click", () => checkPuzzle(true));
-    els.newPuzzleBtn.addEventListener("click", () => loadPuzzle("practice", els.difficulty.value, "new_puzzle"));
-    els.dailyBtn.addEventListener("click", () => loadPuzzle("daily", els.difficulty.value));
-    els.practiceBtn.addEventListener("click", () => loadPuzzle("practice", els.difficulty.value, "new_puzzle"));
+    els.newPuzzleBtn.addEventListener("click", () => requestDestructiveAction("new-puzzle", ui.newPuzzleConfirm,
+      () => loadPuzzle("practice", els.difficulty.value, "new_puzzle")));
+    els.dailyBtn.addEventListener("click", loadDailyPuzzle);
+    els.practiceBtn.addEventListener("click", () => loadPuzzle("practice", els.difficulty.value));
     els.shareBtn.addEventListener("click", shareResult);
     els.difficulty.addEventListener("change", () => {
       localStorage.setItem(preferenceKey, els.difficulty.value);
@@ -194,19 +207,23 @@
   }
 
   function loadPuzzle(mode, difficulty, cause = "load") {
+    if (state?.puzzle) saveProgress();
     stopTimer();
-    if (cause === "initial") {
-      const restored = restoreProgress(mode, difficulty);
+    clearPendingAction();
+    const puzzleDate = mode === "daily" ? getTodayKey() : "";
+    if (cause !== "new_puzzle") {
+      const restored = restoreProgress(mode, difficulty, puzzleDate);
       if (restored) {
         state = restored;
         render();
         setStatus(state.started ? ui.inProgress : mode === "daily" ? ui.todayReady : ui.practiceReady, "");
         if (state.started) startTimer();
+        if (cause !== "initial" || new URLSearchParams(window.location.search).has("mode")) syncRoute(mode);
         return;
       }
     }
     const baseSeed = mode === "daily"
-      ? core.hashString(`daily-${game}-${todayKey}-${difficulty}`)
+      ? core.hashString(`daily-${game}-${puzzleDate}-${difficulty}`)
       : createPracticeSeed(difficulty);
     let generated;
     try {
@@ -222,6 +239,7 @@
       puzzle,
       mode,
       difficulty,
+      puzzleDate,
       seed,
       started: false,
       solved: false,
@@ -274,6 +292,7 @@
 
   function startPuzzle() {
     if (state.started || state.solved) return;
+    clearPendingAction();
     state.started = true;
     state.startedAt = Date.now();
     startTimer();
@@ -301,6 +320,37 @@
     render();
     saveProgress();
     setStatus(ui.puzzleReset, "");
+  }
+
+  function loadDailyPuzzle() {
+    if (state.mode !== "daily" || state.puzzleDate === getTodayKey()) {
+      loadPuzzle("daily", els.difficulty.value);
+      return;
+    }
+    requestDestructiveAction("daily", ui.dailyConfirm, () => loadPuzzle("daily", els.difficulty.value));
+  }
+
+  function hasActiveProgress() {
+    if (!state?.started || state.solved) return false;
+    return state.tents.size > 0 || state.grass.size > 0 || state.bridges.size > 0 || state.marks.size > 0;
+  }
+
+  function requestDestructiveAction(actionKey, message, action) {
+    if (!hasActiveProgress() || pendingAction === actionKey) {
+      clearPendingAction();
+      action();
+      return;
+    }
+    pendingAction = actionKey;
+    window.clearTimeout(pendingActionTimer);
+    pendingActionTimer = window.setTimeout(clearPendingAction, DISCARD_CONFIRM_MS);
+    setStatus(message, "");
+  }
+
+  function clearPendingAction() {
+    pendingAction = null;
+    if (pendingActionTimer) window.clearTimeout(pendingActionTimer);
+    pendingActionTimer = null;
   }
 
   function handleBoardClick(event) {
@@ -370,25 +420,32 @@
       setStatus(ui.islandsNotVisible, "error");
       return;
     }
-    state.bridges.set(edge.key, ((state.bridges.get(edge.key) || 0) + 1) % 3);
+    const next = ((state.bridges.get(edge.key) || 0) + 1) % 3;
+    if (next) state.bridges.set(edge.key, next);
+    else state.bridges.delete(edge.key);
     state.selectedIsland = null;
     afterMove();
   }
 
   function cycleSlither(target) {
     const key = target.dataset.edge;
-    state.marks.set(key, ((state.marks.get(key) || 0) + 1) % 3);
+    const next = ((state.marks.get(key) || 0) + 1) % 3;
+    if (next) state.marks.set(key, next);
+    else state.marks.delete(key);
     afterMove();
   }
 
   function cycleNonogram(target, forceX) {
     const key = core.cellKey(Number(target.dataset.row), Number(target.dataset.col));
     const current = state.marks.get(key) || 0;
-    state.marks.set(key, forceX ? (current === 2 ? 0 : 2) : (current + 1) % 3);
+    const next = forceX ? (current === 2 ? 0 : 2) : (current + 1) % 3;
+    if (next) state.marks.set(key, next);
+    else state.marks.delete(key);
     afterMove();
   }
 
   function afterMove() {
+    clearPendingAction();
     const result = evaluate();
     state.errors = result.errors;
     updateBoardState();
@@ -776,7 +833,7 @@
     timerId = window.setInterval(() => {
       updateElapsed();
       els.timer.textContent = formatTime(state.elapsed);
-      saveProgress();
+      if (Date.now() - lastSaveAt >= 20000) saveProgress();
     }, 1000);
   }
 
@@ -803,33 +860,70 @@
     }
   }
 
-  function restoreProgress(mode, difficulty) {
-    const saved = core.normalizeProgress(readJson(progressKey, null), { game, mode, difficulty, today: todayKey });
+  function progressKey(mode, difficulty) {
+    return core.progressStorageKey(game, mode, difficulty);
+  }
+
+  function readProgress(key) {
+    try {
+      return core.parseProgressJson(localStorage.getItem(key));
+    } catch {
+      return null;
+    }
+  }
+
+  function restoreProgress(mode, difficulty, puzzleDate) {
+    const key = progressKey(mode, difficulty);
+    let saved = readProgress(key);
+    let sourceKey = key;
     if (!saved) {
-      clearProgress();
+      const legacy = readProgress(legacyProgressKey);
+      if (legacy?.game === game && legacy.mode === mode && legacy.difficulty === difficulty) {
+        saved = legacy;
+        sourceKey = legacyProgressKey;
+      }
+    }
+    if (!saved) {
+      clearProgress(mode, difficulty);
       return null;
     }
     try {
-      const puzzle = core.generatePuzzle(game, saved.seed, difficulty);
+      let puzzle;
+      let seed;
+      if (mode === "daily") {
+        const generated = core.generatePuzzleWithRetry(game, core.hashString(`daily-${game}-${puzzleDate}-${difficulty}`), difficulty, mode);
+        puzzle = generated.puzzle;
+        seed = generated.seed;
+      } else {
+        if (!Number.isInteger(saved.seed) || saved.seed < 0 || saved.seed > 0xffffffff) throw new Error("Invalid seed");
+        seed = saved.seed;
+        puzzle = core.generatePuzzle(game, seed, difficulty);
+      }
+      saved = core.normalizeProgress(saved, { game, mode, difficulty, puzzleDate, seed }, puzzle);
+      if (!saved) throw new Error("Invalid progress");
       const restored = {
-        puzzle, mode, difficulty, seed: saved.seed,
+        puzzle, mode, difficulty, puzzleDate: saved.puzzleDate, seed: saved.seed,
         started: saved.started, solved: false, elapsed: saved.elapsed,
         startedAt: saved.started ? Date.now() - saved.elapsed * 1000 : 0,
         errors: new Set(),
-        tents: new Set(Array.isArray(saved.tents) ? saved.tents : []),
-        grass: new Set(Array.isArray(saved.grass) ? saved.grass : []),
-        bridges: new Map(Array.isArray(saved.bridges) ? saved.bridges : []),
-        selectedIsland: Number.isInteger(saved.selectedIsland) ? saved.selectedIsland : null,
-        marks: new Map(Array.isArray(saved.marks) ? saved.marks : [])
+        tents: new Set(saved.tents || []),
+        grass: new Set(saved.grass || []),
+        bridges: new Map(saved.bridges || []),
+        selectedIsland: saved.selectedIsland ?? null,
+        marks: new Map(saved.marks || [])
       };
       const result = game === "tents-and-trees" ? core.validateTents(puzzle, restored.tents)
         : game === "hashi" ? core.validateHashi(puzzle, restored.bridges)
           : game === "slitherlink" ? core.validateSlitherlink(puzzle, restored.marks)
             : core.validateNonogram(puzzle, restored.marks);
       restored.errors = result.errors;
+      if (sourceKey === legacyProgressKey) {
+        writeProgress(restored, key);
+        localStorage.removeItem(legacyProgressKey);
+      }
       return restored;
     } catch {
-      clearProgress();
+      try { localStorage.removeItem(sourceKey); } catch {}
       return null;
     }
   }
@@ -837,22 +931,35 @@
   function saveProgress() {
     if (!state?.puzzle || state.solved) return;
     updateElapsed();
+    writeProgress(state, progressKey(state.mode, state.difficulty));
+  }
+
+  function writeProgress(current, key) {
     try {
-      localStorage.setItem(progressKey, JSON.stringify({
-        version: 1, game, date: state.mode === "daily" ? todayKey : "",
-        mode: state.mode, difficulty: state.difficulty, seed: state.seed,
-        started: state.started, elapsed: state.elapsed, hintCount: 0,
-        tents: [...state.tents], grass: [...state.grass], bridges: [...state.bridges],
-        selectedIsland: state.selectedIsland, marks: [...state.marks]
-      }));
+      const saved = {
+        version: 2,
+        game,
+        mode: current.mode,
+        difficulty: current.difficulty,
+        puzzleDate: current.puzzleDate,
+        seed: current.seed,
+        started: current.started,
+        elapsed: current.elapsed
+      };
+      if (game === "tents-and-trees") Object.assign(saved, { tents: [...current.tents], grass: [...current.grass] });
+      else if (game === "hashi") Object.assign(saved, { bridges: [...current.bridges], selectedIsland: current.selectedIsland });
+      else Object.assign(saved, { marks: [...current.marks] });
+      localStorage.setItem(key, JSON.stringify(saved));
+      lastSaveAt = Date.now();
     } catch {
       // Storage can be unavailable in private browsing.
     }
   }
 
-  function clearProgress() {
+  function clearProgress(mode = state?.mode, difficulty = state?.difficulty) {
+    if (!mode || !difficulty) return;
     try {
-      localStorage.removeItem(progressKey);
+      localStorage.removeItem(progressKey(mode, difficulty));
     } catch {
       // Storage can be unavailable in private browsing.
     }
@@ -877,10 +984,10 @@
     stats.bestTimes = stats.bestTimes || {};
     const bestKey = `${game}-${state.difficulty}-${state.mode}`;
     if (!stats.bestTimes[bestKey] || state.elapsed < stats.bestTimes[bestKey]) stats.bestTimes[bestKey] = state.elapsed;
-    if (state.mode === "daily" && stats.dailyCompleted !== todayKey) {
+    if (state.mode === "daily" && stats.dailyCompleted !== state.puzzleDate) {
       const previous = stats.dailyCompleted;
-      stats.streak = core.nextDailyStreak(previous, stats.streak, todayKey);
-      stats.dailyCompleted = todayKey;
+      stats.streak = core.nextDailyStreak(previous, stats.streak, state.puzzleDate);
+      stats.dailyCompleted = state.puzzleDate;
     }
     saveStats(stats);
   }

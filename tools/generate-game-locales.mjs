@@ -134,6 +134,17 @@ const accessibleStateCopy = {
 };
 Object.entries(accessibleStateCopy).forEach(([key, copy]) => Object.assign(locales[key].c.ui, copy));
 
+const confirmationCopy = {
+  en: { resetConfirm: "Click Reset again to clear this board.", newPuzzleConfirm: "Click New Puzzle again to replace this practice board.", dailyConfirm: "Click Daily again to replace yesterday's board." },
+  de: { resetConfirm: "Klicke erneut auf Zurücksetzen, um dieses Spielfeld zu leeren.", newPuzzleConfirm: "Klicke erneut auf Neues Rätsel, um diese Übung zu ersetzen.", dailyConfirm: "Klicke erneut auf Tagesrätsel, um das gestrige Spielfeld zu ersetzen." },
+  es: { resetConfirm: "Pulsa Reiniciar otra vez para borrar este tablero.", newPuzzleConfirm: "Pulsa Nuevo reto otra vez para sustituir esta práctica.", dailyConfirm: "Pulsa Reto diario otra vez para sustituir el tablero de ayer." },
+  fr: { resetConfirm: "Appuyez de nouveau sur Recommencer pour effacer cette grille.", newPuzzleConfirm: "Appuyez de nouveau sur Nouvelle grille pour remplacer cet entraînement.", dailyConfirm: "Appuyez de nouveau sur Défi du jour pour remplacer la grille d’hier." },
+  ja: { resetConfirm: "もう一度リセットを押すと、この盤面を消去します。", newPuzzleConfirm: "もう一度新しい問題を押すと、現在の練習問題を入れ替えます。", dailyConfirm: "もう一度今日の問題を押すと、昨日の盤面を入れ替えます。" },
+  pt: { resetConfirm: "Toque em Reiniciar novamente para limpar este tabuleiro.", newPuzzleConfirm: "Toque em Novo desafio novamente para substituir este treino.", dailyConfirm: "Toque em Desafio diário novamente para substituir o tabuleiro de ontem." },
+  zh: { resetConfirm: "再点一次重置，将清空当前盘面。", newPuzzleConfirm: "再点一次换一道，将替换当前练习题。", dailyConfirm: "再点一次每日题，将替换昨天的盘面。" }
+};
+Object.entries(confirmationCopy).forEach(([key, copy]) => Object.assign(locales[key].c.ui, copy));
+
 const order = ["en", "de", "es", "fr", "ja", "pt", "zh"];
 
 function esc(value) {

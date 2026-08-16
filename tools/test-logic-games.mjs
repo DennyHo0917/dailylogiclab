@@ -14,13 +14,78 @@ assert.equal(games.nextDailyStreak("2025-12-31", 3, "2026-01-01"), 4);
 assert.equal(games.nextDailyStreak("2026-08-13", 3, "2026-08-15"), 1);
 assert.equal(games.nextDailyStreak("invalid", "invalid", "2026-08-15"), 1);
 assert.equal(games.nextDailyStreak("2026-08-16", 8, "2026-08-15"), 1);
-const restoredProgress = games.normalizeProgress({
-  version: 1, game: "hashi", mode: "practice", difficulty: "medium", seed: 123,
-  elapsed: 92.8, started: true, bridges: [["0-1", 2]], hintCount: 0
-}, { game: "hashi", mode: "practice", difficulty: "medium", today: "2026-08-15" });
-assert.equal(restoredProgress.elapsed, 92);
-assert.equal(restoredProgress.seed, 123);
-assert.equal(games.normalizeProgress({ ...restoredProgress, mode: "daily", date: "2026-08-14" }, { game: "hashi", mode: "daily", difficulty: "medium", today: "2026-08-15" }), null);
+assert.equal(games.parseProgressJson("{"), null, "damaged JSON must be discarded");
+assert.equal(games.parseProgressJson("[]"), null, "non-object JSON must be discarded");
+const storageKeys = new Set();
+for (const game of games.GAME_ORDER) for (const mode of ["daily", "practice"]) for (const difficulty of difficulties) {
+  storageKeys.add(games.progressStorageKey(game, mode, difficulty));
+}
+assert.equal(storageKeys.size, games.GAME_ORDER.length * 2 * difficulties.length, "each game/mode/difficulty needs its own archive key");
+
+function progressFixture(game, difficulty = "easy") {
+  const generated = games.generatePuzzleWithRetry(game, games.hashString(`progress-${game}-${difficulty}`), difficulty, "practice");
+  const base = {
+    version: 2, game, mode: "practice", difficulty, puzzleDate: "", seed: generated.seed,
+    elapsed: 92, started: true
+  };
+  if (game === "tents-and-trees") Object.assign(base, { tents: [], grass: [] });
+  else if (game === "hashi") Object.assign(base, { bridges: [], selectedIsland: null });
+  else Object.assign(base, { marks: [] });
+  return { puzzle: generated.puzzle, saved: base, expected: { game, mode: "practice", difficulty, puzzleDate: "", seed: generated.seed } };
+}
+
+for (const game of games.GAME_ORDER) {
+  const { puzzle, saved, expected } = progressFixture(game);
+  assert.equal(games.normalizeProgress(saved, expected, puzzle)?.elapsed, 92, `${game}: valid progress must restore`);
+  assert.equal(games.normalizeProgress({ ...saved, version: 99 }, expected, puzzle), null, `${game}: wrong version must fail`);
+  assert.equal(games.normalizeProgress({ ...saved, seed: saved.seed + 1 }, expected, puzzle), null, `${game}: wrong seed must fail`);
+  assert.equal(games.normalizeProgress({ ...saved, elapsed: -1 }, expected, puzzle), null, `${game}: invalid timer must fail`);
+  assert.equal(games.normalizeProgress({ ...saved, started: false }, expected, puzzle), null, `${game}: stopped timer with elapsed time must fail`);
+}
+
+{
+  const { puzzle, saved, expected } = progressFixture("tents-and-trees");
+  const treeKey = puzzle.trees[0].join(":");
+  const treeKeys = new Set(puzzle.trees.map((cell) => cell.join(":")));
+  const freeKey = Array.from({ length: puzzle.size * puzzle.size }, (_, index) => `${Math.floor(index / puzzle.size)}:${index % puzzle.size}`).find((key) => !treeKeys.has(key));
+  assert.equal(games.normalizeProgress({ ...saved, tents: ["999:0"] }, expected, puzzle), null, "Tents out-of-range cell must fail");
+  assert.equal(games.normalizeProgress({ ...saved, grass: [treeKey] }, expected, puzzle), null, "Tents tree mark must fail");
+  assert.equal(games.normalizeProgress({ ...saved, tents: [freeKey, freeKey] }, expected, puzzle), null, "Tents duplicate cell must fail");
+  assert.equal(games.normalizeProgress({ ...saved, tents: [freeKey], grass: [freeKey] }, expected, puzzle), null, "Tents conflicting marks must fail");
+}
+{
+  const { puzzle, saved, expected } = progressFixture("hashi");
+  const edge = puzzle.edges[0].key;
+  assert.ok(games.normalizeProgress({ ...saved, bridges: [[edge, 2]] }, expected, puzzle), "visible Hashi bridge must restore");
+  assert.equal(games.normalizeProgress({ ...saved, bridges: [["0-999", 1]] }, expected, puzzle), null, "invisible Hashi bridge must fail");
+  assert.equal(games.normalizeProgress({ ...saved, bridges: [[edge, 3]] }, expected, puzzle), null, "invalid Hashi bridge count must fail");
+  assert.equal(games.normalizeProgress({ ...saved, bridges: [[edge, 1], [edge, 2]] }, expected, puzzle), null, "duplicate Hashi bridge must fail");
+}
+{
+  const { puzzle, saved, expected } = progressFixture("slitherlink");
+  const edge = games.slitherEdges(puzzle.size)[0];
+  assert.ok(games.normalizeProgress({ ...saved, marks: [[edge, 1]] }, expected, puzzle), "valid Slitherlink edge must restore");
+  assert.equal(games.normalizeProgress({ ...saved, marks: [["h:99:0", 1]] }, expected, puzzle), null, "invalid Slitherlink edge must fail");
+  assert.equal(games.normalizeProgress({ ...saved, marks: [[edge, 0]] }, expected, puzzle), null, "invisible Slitherlink mark must fail");
+}
+{
+  const { puzzle, saved, expected } = progressFixture("nonogram");
+  assert.ok(games.normalizeProgress({ ...saved, marks: [["0:0", 2]] }, expected, puzzle), "valid Nonogram mark must restore");
+  assert.equal(games.normalizeProgress({ ...saved, marks: [["-1:0", 1]] }, expected, puzzle), null, "invalid Nonogram cell must fail");
+  assert.equal(games.normalizeProgress({ ...saved, marks: [["0:0", 7]] }, expected, puzzle), null, "invalid Nonogram state must fail");
+  assert.equal(games.normalizeProgress({ ...saved, marks: {} }, expected, puzzle), null, "wrong Nonogram data structure must fail");
+}
+
+{
+  const generated = games.generatePuzzleWithRetry("hashi", games.hashString("daily-hashi-2026-08-15-easy"), "easy", "daily");
+  const saved = { version: 2, game: "hashi", mode: "daily", difficulty: "easy", puzzleDate: "2026-08-15", seed: generated.seed, elapsed: 1, started: true, bridges: [], selectedIsland: null };
+  assert.ok(games.normalizeProgress(saved, { game: "hashi", mode: "daily", difficulty: "easy", puzzleDate: "2026-08-15", seed: generated.seed }, generated.puzzle));
+  assert.equal(games.nextDailyStreak("2026-08-14", 4, saved.puzzleDate), 5, "completion after midnight must credit the puzzle date");
+  assert.equal(games.normalizeProgress(saved, { game: "hashi", mode: "daily", difficulty: "easy", puzzleDate: "2026-08-16", seed: generated.seed }, generated.puzzle), null, "expired daily archive must fail");
+  const legacy = { ...saved, version: 1, date: saved.puzzleDate };
+  delete legacy.puzzleDate;
+  assert.equal(games.normalizeProgress(legacy, { game: "hashi", mode: "daily", difficulty: "easy", puzzleDate: "2026-08-15", seed: generated.seed }, generated.puzzle)?.version, 2, "valid v1 archive must migrate");
+}
 assert.equal("DIFFICULTIES" in games, false, "unused DIFFICULTIES export must be removed");
 
 function snapshot(puzzle) {
@@ -105,6 +170,14 @@ assert.equal(recovered.retryCount, 1);
 assert.equal(recovered.seed, games.hashString(`${retryBaseSeed}-retry-1`));
 assert.equal(snapshot(recovered.puzzle), snapshot(recoveredAgain.puzzle), "Daily recovery must be deterministic");
 console.log("generation retry regression: recovered deterministically after a forced first-attempt failure");
+
+for (const [from, to, label] of [["2026-07-31", "2026-08-01", "month"], ["2025-12-31", "2026-01-01", "year"]]) {
+  for (const game of games.GAME_ORDER) {
+    const before = games.generatePuzzleWithRetry(game, games.hashString(`daily-${game}-${from}-easy`), "easy", "daily").puzzle;
+    const after = games.generatePuzzleWithRetry(game, games.hashString(`daily-${game}-${to}-easy`), "easy", "daily").puzzle;
+    assert.notEqual(fingerprint(game, before), fingerprint(game, after), `${game}: ${label} boundary must produce a new daily puzzle`);
+  }
+}
 
 for (const game of games.GAME_ORDER) {
   const fingerprints = Object.fromEntries(difficulties.map((difficulty) => [difficulty, new Set()]));

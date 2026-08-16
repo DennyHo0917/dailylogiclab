@@ -112,6 +112,20 @@ for (const group of localizedContentGroups) {
   }
 }
 
+const killerHomeLinks = {
+  "index.html": "/killer-sudoku-combination-calculator",
+  "de/index.html": "/de/killer-sudoku-kombinationen-rechner",
+  "es/index.html": "/es/calculadora-combinaciones-sudoku-killer",
+  "fr/index.html": "/fr/calculateur-combinaisons-killer-sudoku",
+  "ja/index.html": "/ja/killer-sudoku-combination-calculator",
+  "pt-br/index.html": "/pt-br/calculadora-combinacoes-killer-sudoku",
+  "zh-cn/index.html": "/zh-cn/killer-sudoku-combination-calculator"
+};
+for (const [relative, href] of Object.entries(killerHomeLinks)) {
+  const html = fs.readFileSync(path.join(root, relative), "utf8");
+  assert.ok(html.includes(`href="${href}"`), `${relative}: Killer Sudoku internal link must use its localized page`);
+}
+
 for (const relative of [
   "killer-sudoku-combination-calculator.html",
   "de/killer-sudoku-kombinationen-rechner.html",
@@ -169,20 +183,32 @@ assert.ok(appSource.includes('els.board.addEventListener("keydown", handleBoardK
 assert.ok(!/cell\.addEventListener\("click"/.test(appSource), "app.js: cells must not bind individual click listeners");
 assert.ok(appSource.includes("}, 1000);"), "app.js: timer must update once per second");
 assert.ok(appSource.includes("saveProgress") && appSource.includes("restoreProgress"), "app.js: progress persistence is missing");
+assert.ok(appSource.includes("Date.now() - lastSaveAt >= 20000"), "app.js: progress heartbeat must be throttled");
+assert.ok(appSource.includes("state.puzzleDate"), "app.js: daily state must keep a stable puzzle date");
 
 const logicSource = fs.readFileSync(path.join(root, "logic-games.js"), "utf8");
 for (const token of ["handleBoardKeydown", "stateTent", "stateGrass", "stateFilled", "stateLine", "getIslandBridgeCount", "saveProgress", "restoreProgress"]) {
   assert.ok(logicSource.includes(token), `logic-games.js: missing ${token}`);
 }
+assert.ok(logicSource.includes("Date.now() - lastSaveAt >= 20000"), "logic-games.js: progress heartbeat must be throttled");
+assert.ok(logicSource.includes("state.puzzleDate"), "logic-games.js: daily state must keep a stable puzzle date");
+assert.ok(!logicSource.includes("hintCount: 0"), "logic-games.js: unused hint count must not be archived");
 
 const packageJson = JSON.parse(fs.readFileSync(path.join(root, "package.json"), "utf8"));
 assert.match(packageJson.devDependencies?.wrangler || "", /^\d+\.\d+\.\d+$/, "package.json: Wrangler must be an exact local devDependency");
 const assetsIgnore = fs.readFileSync(path.join(root, ".assetsignore"), "utf8");
 for (const ignored of ["node_modules/", ".git/", ".github/", "tools/"]) assert.ok(assetsIgnore.includes(ignored), `.assetsignore: missing ${ignored}`);
-for (const deployed of ["_headers", "_redirects", "robots.txt", "sitemap.xml", "llms.txt", "site.webmanifest"]) {
+for (const deployed of ["_headers", "_redirects", "robots.txt", "sitemap.xml", "llms.txt", "site.webmanifest", "og-image.png", "og-tents-and-trees.png", "og-hashi.png", "og-slitherlink.png", "og-nonogram.png", "og-killer-sudoku.png"]) {
   assert.ok(fs.existsSync(path.join(root, deployed)), `${deployed}: required deploy asset is missing`);
   assert.ok(!assetsIgnore.split(/\r?\n/).includes(deployed), `.assetsignore: ${deployed} must deploy`);
 }
+const deployFiles = files.filter((file) => {
+  const relative = path.relative(root, file).replaceAll("\\", "/");
+  return !relative.startsWith(".github/") && !relative.startsWith("tools/") &&
+    ![".assetsignore", ".gitignore", "wrangler.jsonc", "package.json", "package-lock.json", "screenshot-desktop.png", "screenshot-mobile.png"].includes(relative) &&
+    !relative.endsWith(".md");
+});
+for (const file of deployFiles) assert.ok(fs.statSync(file).size < 25 * 1024 * 1024, `${path.relative(root, file)}: deployed file exceeds Cloudflare's 25 MiB limit`);
 
 const scriptFiles = files.filter((file) => /\.(?:m?js)$/.test(file));
 for (const file of scriptFiles) {

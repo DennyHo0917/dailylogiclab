@@ -12,6 +12,10 @@
     return hash >>> 0;
   }
 
+  function progressStorageKey(game, mode, difficulty) {
+    return `dll-logic-progress-v2-${game}-${mode}-${difficulty}`;
+  }
+
   function dateNumber(value) {
     const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value || ""));
     if (!match) return null;
@@ -30,15 +34,85 @@
     return 1;
   }
 
-  function normalizeProgress(saved, expected) {
-    if (!saved || saved.version !== 1 || saved.game !== expected.game || saved.mode !== expected.mode || saved.difficulty !== expected.difficulty) return null;
-    if (saved.mode === "daily" && saved.date !== expected.today) return null;
-    return {
-      ...saved,
-      seed: Number(saved.seed) >>> 0,
-      elapsed: Math.max(0, Math.floor(Number(saved.elapsed) || 0)),
-      started: Boolean(saved.started)
+  function parseProgressJson(value) {
+    if (typeof value !== "string" || !value) return null;
+    try {
+      const parsed = JSON.parse(value);
+      return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function validCellKeys(values, size, forbidden = new Set()) {
+    if (!Array.isArray(values)) return null;
+    const seen = new Set();
+    for (const value of values) {
+      if (typeof value !== "string" || !/^\d+:\d+$/.test(value) || seen.has(value) || forbidden.has(value)) return null;
+      const [row, col] = parseCellKey(value);
+      if (!inside(row, col, size)) return null;
+      seen.add(value);
+    }
+    return values.slice();
+  }
+
+  function validEntries(values, allowedKeys, allowedValues) {
+    if (!Array.isArray(values)) return null;
+    const seen = new Set();
+    for (const entry of values) {
+      if (!Array.isArray(entry) || entry.length !== 2 || typeof entry[0] !== "string" ||
+          !allowedKeys.has(entry[0]) || !allowedValues.has(entry[1]) || seen.has(entry[0])) return null;
+      seen.add(entry[0]);
+    }
+    return values.map((entry) => [...entry]);
+  }
+
+  function normalizeProgress(saved, expected, puzzle) {
+    if (!saved || typeof saved !== "object" || Array.isArray(saved) || ![1, 2].includes(saved.version) ||
+        saved.game !== expected.game || saved.mode !== expected.mode || saved.difficulty !== expected.difficulty || !puzzle) return null;
+    const puzzleDate = saved.version === 1 ? String(saved.date || "") : saved.puzzleDate;
+    if (typeof puzzleDate !== "string" || (saved.mode === "daily"
+      ? dateNumber(puzzleDate) === null || puzzleDate !== expected.puzzleDate
+      : puzzleDate !== "")) return null;
+    if (!Number.isInteger(saved.seed) || saved.seed < 0 || saved.seed > 0xffffffff ||
+        (expected.seed !== undefined && saved.seed !== expected.seed) ||
+        !Number.isFinite(saved.elapsed) || saved.elapsed < 0 ||
+        (saved.version === 2 && !Number.isInteger(saved.elapsed)) || typeof saved.started !== "boolean" ||
+        (!saved.started && saved.elapsed !== 0)) return null;
+
+    const normalized = {
+      version: 2,
+      game: saved.game,
+      mode: saved.mode,
+      difficulty: saved.difficulty,
+      puzzleDate,
+      seed: saved.seed,
+      elapsed: Math.floor(saved.elapsed),
+      started: saved.started
     };
+    if (saved.game === "tents-and-trees") {
+      const trees = new Set(puzzle.trees.map(([row, col]) => cellKey(row, col)));
+      const tents = validCellKeys(saved.tents, puzzle.size, trees);
+      const grass = validCellKeys(saved.grass, puzzle.size, trees);
+      if (!tents || !grass || tents.some((key) => grass.includes(key))) return null;
+      return { ...normalized, tents, grass };
+    }
+    if (saved.game === "hashi") {
+      const bridges = validEntries(saved.bridges, new Set(puzzle.edges.map((edge) => edge.key)), new Set([1, 2]));
+      if (!bridges || !(saved.selectedIsland === null ||
+          (Number.isInteger(saved.selectedIsland) && saved.selectedIsland >= 0 && saved.selectedIsland < puzzle.islands.length))) return null;
+      return { ...normalized, bridges, selectedIsland: saved.selectedIsland };
+    }
+    if (saved.game === "slitherlink") {
+      const marks = validEntries(saved.marks, new Set(slitherEdges(puzzle.size)), new Set([1, 2]));
+      return marks ? { ...normalized, marks } : null;
+    }
+    if (saved.game === "nonogram") {
+      const marks = validEntries(saved.marks, new Set(Array.from({ length: puzzle.size * puzzle.size }, (_, index) =>
+        cellKey(Math.floor(index / puzzle.size), index % puzzle.size))), new Set([1, 2]));
+      return marks ? { ...normalized, marks } : null;
+    }
+    return null;
   }
 
   function createRng(seed) {
@@ -982,7 +1056,9 @@
   const api = {
     GAME_ORDER,
     hashString,
+    progressStorageKey,
     nextDailyStreak,
+    parseProgressJson,
     normalizeProgress,
     createRng,
     cellKey,
