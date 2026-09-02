@@ -32,6 +32,14 @@ const UI_TEXT = {
     hintNoneLeft: "No hints left for this puzzle. Keep solving or start a new practice.",
     hintConflict: "Hint {index}: fix the highlighted conflict first. +{penalty}s",
     hintNoCompletion: "Hint {index}: your current marks have no valid completion. Undo one of them. +{penalty}s",
+    hintEvidence: "Hint 1: look at the highlighted evidence cells. +{penalty}s",
+    hintTechnique: "Hint 2: {technique} involving {groups}. +{penalty}s",
+    hintExplanation: "Hint 3: {explanation} +{penalty}s",
+    techniqueStarAdjacency: "Star adjacency",
+    techniqueGroupCompleted: "Completed group",
+    techniqueForcedCandidates: "Forced candidates",
+    techniqueGroupInteraction: "Group interaction",
+    techniqueUnknown: "Board deduction",
     hintFocus: "Hint 1: focus on {group}; it has the fewest options. +{penalty}s",
     hintSolutionStar: "Hint 3: this square is a star in the solution. +{penalty}s",
     hintSingleCandidate: "Hint {index}: only one candidate remains in {group}. +{penalty}s",
@@ -1103,12 +1111,18 @@ function showHint() {
   const result = isSolved();
   const hintLevel = state.hintCount;
   const penalty = HINT_PENALTIES[hintLevel];
+  let hintEventTracked = false;
+  const trackHintUsedOnce = (extra = {}) => {
+    if (hintEventTracked) return;
+    hintEventTracked = true;
+    trackEvent("hint_used", getPuzzleEventData(extra));
+  };
 
   if (result.errors.size) {
     state.errors = result.errors;
     applyHintPenalty(penalty);
     setStatus(t("hintConflict", { index: hintLevel + 1, penalty }), "error");
-    trackEvent("hint_used", getPuzzleEventData({ outcome: "conflict", hint_level: hintLevel + 1, penalty_seconds: penalty }));
+    trackHintUsedOnce({ outcome: "conflict", hint_level: hintLevel + 1, hint_stage: hintLevel + 1, penalty_seconds: penalty });
     renderBoard();
     updateControls();
     updateSharePreview();
@@ -1118,28 +1132,44 @@ function showHint() {
   if (countCurrentCompletions(1) === 0) {
     applyHintPenalty(penalty);
     setStatus(t("hintNoCompletion", { index: hintLevel + 1, penalty }), "error");
-    trackEvent("hint_used", getPuzzleEventData({ outcome: "no_valid_completion", hint_level: hintLevel + 1, penalty_seconds: penalty }));
+    trackHintUsedOnce({ outcome: "no_valid_completion", hint_level: hintLevel + 1, hint_stage: hintLevel + 1, penalty_seconds: penalty });
     renderBoard();
     updateControls();
     updateSharePreview();
     return;
   }
 
-  const candidates = getCandidates();
-  const groups = [
-    ...groupHints("row", candidates),
-    ...groupHints("col", candidates),
-    ...groupHints("region", candidates)
-  ];
-  const sortedGroups = groups
-    .filter((group) => group.cells.length)
-    .sort((a, b) => a.cells.length - b.cells.length);
-
-  if (hintLevel === 0 && sortedGroups.length) {
-    const group = sortedGroups[0];
+  const deduction = typeof TWO_NOT_TOUCH_CORE.analyzeBoard === "function"
+    ? TWO_NOT_TOUCH_CORE.analyzeBoard(state.puzzle, state.cells)
+    : null;
+  if (deduction && Array.isArray(deduction.evidenceCells) && Array.isArray(deduction.targetCells)) {
+    const highlighted = hintLevel >= 2 ? deduction.targetCells : deduction.evidenceCells;
+    highlighted.forEach(([row, col]) => {
+      if (Number.isInteger(row) && Number.isInteger(col) && inside(row, col)) state.hints.add(getKey(row, col));
+    });
     applyHintPenalty(penalty);
-    setStatus(t("hintFocus", { group: describeHintGroup(group), penalty }), "");
-    trackEvent("hint_used", getPuzzleEventData({ outcome: "focus_group", hint_type: group.type, hint_group: describeHintGroup(group), hint_level: 1, penalty_seconds: penalty }));
+    const groups = describeDeductionGroups(deduction);
+    const eventData = {
+      outcome: "deduction",
+      hint_type: deduction.technique,
+      hint_technique: deduction.technique,
+      technique: deduction.technique,
+      hint_group: groups,
+      hint_level: hintLevel + 1,
+      hint_stage: hintLevel + 1,
+      penalty_seconds: penalty
+    };
+    if (hintLevel === 0) {
+      setStatus(t("hintEvidence", { penalty }), "");
+      eventData.outcome = "deduction_evidence";
+    } else if (hintLevel === 1) {
+      setStatus(t("hintTechnique", { technique: describeDeductionTechnique(deduction.technique), groups, penalty }), "");
+      eventData.outcome = "deduction_technique";
+    } else {
+      setStatus(t("hintExplanation", { explanation: describeDeductionExplanation(deduction), penalty }), "");
+      eventData.outcome = "deduction_explanation";
+    }
+    trackHintUsedOnce(eventData);
     renderBoard();
     updateControls();
     updateSharePreview();
@@ -1152,7 +1182,7 @@ function showHint() {
       applyHintPenalty(penalty);
       state.hints.add(starKey);
       setStatus(t("hintSolutionStar", { penalty }), "");
-      trackEvent("hint_used", getPuzzleEventData({ outcome: "solution_star", hint_level: 3, penalty_seconds: penalty }));
+      trackHintUsedOnce({ outcome: "solution_star", hint_level: 3, hint_stage: 3, penalty_seconds: penalty });
       renderBoard();
       updateControls();
       updateSharePreview();
@@ -1160,30 +1190,8 @@ function showHint() {
     }
   }
 
-  const single = groups.find((group) => group.needed === 1 && group.cells.length === 1);
-
-  if (single) {
-    applyHintPenalty(penalty);
-    state.hints.add(single.cells[0]);
-    setStatus(t("hintSingleCandidate", { index: hintLevel + 1, group: describeHintGroup(single), penalty }), "");
-    trackEvent("hint_used", getPuzzleEventData({ outcome: "single_candidate", hint_type: single.type, hint_group: describeHintGroup(single), hint_level: hintLevel + 1, penalty_seconds: penalty }));
-    renderBoard();
-    updateControls();
-    updateSharePreview();
-    return;
-  }
-
-  const narrow = sortedGroups.find((group) => group.cells.length > 1);
-
-  if (narrow) {
-    applyHintPenalty(penalty);
-    narrow.cells.forEach((key) => state.hints.add(key));
-    setStatus(t("hintNarrowGroup", { index: hintLevel + 1, group: describeHintGroup(narrow), penalty }), "");
-    trackEvent("hint_used", getPuzzleEventData({ outcome: "narrow_group", hint_type: narrow.type, hint_group: describeHintGroup(narrow), hint_level: hintLevel + 1, penalty_seconds: penalty }));
-  } else {
-    setStatus(t("hintNoUseful"), "");
-    trackEvent("hint_used", getPuzzleEventData({ outcome: "no_hint", hint_level: hintLevel + 1, penalty_seconds: 0 }));
-  }
+  setStatus(t("hintNoUseful"), "");
+  trackHintUsedOnce({ outcome: "no_hint", hint_level: hintLevel + 1, hint_stage: hintLevel + 1, penalty_seconds: 0 });
   renderBoard();
   updateControls();
   updateSharePreview();
@@ -1302,66 +1310,82 @@ function markGroup(type, index, errors) {
   });
 }
 
-function getCandidates() {
-  const candidates = new Set();
-  forEachCell((row, col) => {
-    if (state.cells[row][col] === STAR || state.cells[row][col] === BLOCK) return;
-    if (groupHasRequiredStars("row", row) || groupHasRequiredStars("col", col) || groupHasRequiredStars("region", regionIndex(row, col))) return;
-    if (touchesStar(row, col)) return;
-    candidates.add(getKey(row, col));
-  });
-  return candidates;
-}
-
-function groupHints(type, candidates) {
-  const { size, starsPerGroup } = getProfile();
-  const groups = [];
-  for (let i = 0; i < size; i += 1) {
-    let placed = 0;
-    const cells = [];
-    forEachCell((row, col) => {
-      const key = getKey(row, col);
-      const inGroup =
-        (type === "row" && row === i) ||
-        (type === "col" && col === i) ||
-        (type === "region" && regionIndex(row, col) === i);
-      if (!inGroup) return;
-      if (state.cells[row][col] === STAR) placed += 1;
-      if (candidates.has(key)) cells.push(key);
-    });
-    if (placed < starsPerGroup && cells.length) groups.push({ type, index: i, cells, needed: starsPerGroup - placed });
-  }
-  return groups;
-}
-
 function describeHintGroup(group) {
   if (group.type === "row") return t("groupRow", { index: group.index + 1 });
   if (group.type === "col") return t("groupCol", { index: group.index + 1 });
   return t("groupRegion", { label: REGION_LABELS[group.index] });
 }
 
-function touchesStar(row, col) {
-  for (let rowDelta = -1; rowDelta <= 1; rowDelta += 1) {
-    for (let colDelta = -1; colDelta <= 1; colDelta += 1) {
-      if (rowDelta === 0 && colDelta === 0) continue;
-      const nextRow = row + rowDelta;
-      const nextCol = col + colDelta;
-      if (!inside(nextRow, nextCol)) continue;
-      if (state.cells[nextRow][nextCol] === STAR) return true;
-    }
-  }
-  return false;
+const HINT_TECHNIQUE_KEYS = {
+  star_adjacency: "techniqueStarAdjacency",
+  group_completed: "techniqueGroupCompleted",
+  forced_candidates: "techniqueForcedCandidates",
+  group_interaction: "techniqueGroupInteraction"
+};
+
+function describeDeductionTechnique(technique) {
+  return t(HINT_TECHNIQUE_KEYS[technique] || "techniqueUnknown");
 }
 
-function groupHasRequiredStars(type, index) {
-  let count = 0;
-  forEachCell((row, col) => {
-    if (state.cells[row][col] !== STAR) return;
-    if (type === "row" && row === index) count += 1;
-    if (type === "col" && col === index) count += 1;
-    if (type === "region" && regionIndex(row, col) === index) count += 1;
-  });
-  return count >= getProfile().starsPerGroup;
+function describeAnalysisGroup(type, index) {
+  return describeHintGroup({ type: type === "column" ? "col" : type, index });
+}
+
+function validHintCell(cell) {
+  return Array.isArray(cell) && cell.length === 2 && Number.isInteger(cell[0]) && Number.isInteger(cell[1]) && inside(cell[0], cell[1]);
+}
+
+function formatHintCell(cell) {
+  return validHintCell(cell) ? `row ${cell[0] + 1}, column ${cell[1] + 1}` : "the highlighted cell";
+}
+
+function formatHintCells(cells) {
+  const validCells = Array.isArray(cells) ? cells.filter(validHintCell) : [];
+  return validCells.length ? validCells.map(formatHintCell).join(", ") : "the highlighted cells";
+}
+
+function describeDeductionGroups(deduction) {
+  const data = deduction.explanationData || {};
+  if (data.sourceGroupType && data.targetGroupType) {
+    return `${describeAnalysisGroup(data.sourceGroupType, data.sourceGroupIndex)} and ${describeAnalysisGroup(data.targetGroupType, data.targetGroupIndex)}`;
+  }
+  if (data.groupType) return describeAnalysisGroup(data.groupType, data.groupIndex);
+  const starCell = data.starCell || deduction.evidenceCells?.[0];
+  if (validHintCell(starCell)) {
+    return [
+      describeAnalysisGroup("row", starCell[0]),
+      describeAnalysisGroup("col", starCell[1]),
+      describeAnalysisGroup("region", regionIndex(starCell[0], starCell[1]))
+    ].join(", ");
+  }
+  return "the highlighted cells";
+}
+
+function describeDeductionExplanation(deduction) {
+  const data = deduction.explanationData || {};
+  if (deduction.technique === "star_adjacency") {
+    const starCell = data.starCell || deduction.evidenceCells?.[0];
+    return `The star at ${formatHintCell(starCell)} blocks its neighboring cells, so ${formatHintCells(deduction.targetCells)} must be blocked.`;
+  }
+  if (deduction.technique === "group_completed") {
+    const group = describeAnalysisGroup(data.groupType, data.groupIndex);
+    return `The ${group} already has ${data.placedStars} of ${data.requiredStars} stars, so its remaining cells must be blocked.`;
+  }
+  if (deduction.technique === "forced_candidates") {
+    const group = describeAnalysisGroup(data.groupType, data.groupIndex);
+    const remaining = Number(data.remainingStars) || 0;
+    const noun = remaining === 1 ? "star" : "stars";
+    return `The ${group} still needs ${remaining} ${noun}, and only ${formatHintCells(data.candidateCells || deduction.targetCells)} can take them, so those cells must be stars.`;
+  }
+  if (deduction.technique === "group_interaction") {
+    const source = describeAnalysisGroup(data.sourceGroupType, data.sourceGroupIndex);
+    const target = describeAnalysisGroup(data.targetGroupType, data.targetGroupIndex);
+    const remaining = Number(data.remainingStars) || 0;
+    const noun = remaining === 1 ? "star" : "stars";
+    return `All candidates for the ${source} are inside the ${target}; with ${remaining} remaining ${noun} in each group, ${formatHintCells(data.eliminatedCells || deduction.targetCells)} must be blocked.`;
+  }
+  const action = deduction.action === "star" ? "stars" : "blocked cells";
+  return `The highlighted evidence forces the target cells to be ${action}.`;
 }
 
 function regionIndex(row, col) {
@@ -1490,12 +1514,19 @@ function setStatus(message, tone) {
 
 function getPuzzleEventData(extra = {}) {
   const profile = getProfile();
+  const hintStage = extra.hint_stage ?? extra.hint_level ?? state.hintCount;
   return {
+    game_name: "two-not-touch",
+    profile: profile.key,
     mode: state.mode,
     star_mode: profile.starMode,
     grid_size: profile.size,
     stars_per_group: profile.starsPerGroup,
     puzzle_id: String(state.puzzle.id),
+    seed: state.puzzle.seed,
+    elapsed: elapsed,
+    hint_stage: hintStage,
+    technique: extra.technique ?? "",
     proof: "unique_solution",
     language: LANGUAGE_KEY,
     stars: state.cells.flat().filter((value) => value === STAR).length,

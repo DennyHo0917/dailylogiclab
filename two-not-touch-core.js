@@ -267,6 +267,252 @@
     return count;
   }
 
+  /**
+   * Return the first deterministic, local deduction visible from the marks.
+   * Coordinates are [row, col] and use the same zero-based indexing as cells.
+   */
+  function analyzeBoard(puzzle, cells) {
+    const profile = profiles[puzzle?.profileKey];
+    const regions = puzzle?.regions;
+    if (!profile || !Array.isArray(regions) || regions.length !== profile.size ||
+        regions.some((row) => !Array.isArray(row) || row.length !== profile.size ||
+          row.some((region) => !Number.isInteger(region) || region < 0 || region >= profile.size))) return null;
+
+    const { size, starsPerGroup } = profile;
+    const board = [];
+    for (let row = 0; row < size; row += 1) {
+      if (!Array.isArray(cells?.[row]) || cells[row].length !== size || cells[row].some((value) => ![0, 1, 2].includes(value))) return null;
+      board.push([...cells[row]]);
+    }
+
+    const index = (row, col) => row * size + col;
+    const coordinates = (cellIndexes) => cellIndexes.map((cell) => [Math.floor(cell / size), cell % size]);
+    const rowStars = Array(size).fill(0);
+    const columnStars = Array(size).fill(0);
+    const regionStars = Array(size).fill(0);
+    for (let row = 0; row < size; row += 1) for (let col = 0; col < size; col += 1) {
+      if (board[row][col] !== 1) continue;
+      rowStars[row] += 1;
+      columnStars[col] += 1;
+      regionStars[regions[row][col]] += 1;
+    }
+    if ([...rowStars, ...columnStars, ...regionStars].some((count) => count > starsPerGroup)) return null;
+
+    const neighbors = (cell) => {
+      const row = Math.floor(cell / size);
+      const col = cell % size;
+      const nearby = [];
+      for (let rowDelta = -1; rowDelta <= 1; rowDelta += 1) for (let colDelta = -1; colDelta <= 1; colDelta += 1) {
+        if (!rowDelta && !colDelta) continue;
+        const nextRow = row + rowDelta;
+        const nextCol = col + colDelta;
+        if (nextRow >= 0 && nextRow < size && nextCol >= 0 && nextCol < size) nearby.push(index(nextRow, nextCol));
+      }
+      return nearby;
+    };
+
+    for (let cell = 0; cell < size * size; cell += 1) {
+      if (board[Math.floor(cell / size)][cell % size] !== 1) continue;
+      if (neighbors(cell).some((neighbor) => board[Math.floor(neighbor / size)][neighbor % size] === 1)) return null;
+      const row = Math.floor(cell / size);
+      const col = cell % size;
+      const targets = neighbors(cell).filter((neighbor) => board[Math.floor(neighbor / size)][neighbor % size] === 0);
+      if (targets.length) {
+        return {
+          technique: "star_adjacency",
+          targetCells: coordinates(targets),
+          evidenceCells: [[row, col]],
+          action: "block",
+          explanationData: { rule: "star-blocks-eight-neighbors", starCell: [row, col], adjacentCount: targets.length }
+        };
+      }
+    }
+
+    const groups = [];
+    for (let row = 0; row < size; row += 1) groups.push({ type: "row", index: row, cells: Array.from({ length: size }, (_, col) => index(row, col)) });
+    for (let col = 0; col < size; col += 1) groups.push({ type: "column", index: col, cells: Array.from({ length: size }, (_, row) => index(row, col)) });
+    for (let region = 0; region < size; region += 1) {
+      groups.push({
+        type: "region",
+        index: region,
+        cells: Array.from({ length: size * size }, (_, cell) => cell).filter((cell) => regions[Math.floor(cell / size)][cell % size] === region)
+      });
+    }
+
+    const legalCandidate = (cell) => {
+      const row = Math.floor(cell / size);
+      const col = cell % size;
+      return board[row][col] === 0 &&
+        !neighbors(cell).some((neighbor) => board[Math.floor(neighbor / size)][neighbor % size] === 1) &&
+        rowStars[row] < starsPerGroup && columnStars[col] < starsPerGroup && regionStars[regions[row][col]] < starsPerGroup;
+    };
+    const compatibleStarSet = (targetCells) => {
+      const targetSet = new Set(targetCells);
+      const additions = Array.from({ length: size * 3 }, () => 0);
+      for (const cell of targetCells) {
+        if (neighbors(cell).some((neighbor) => targetSet.has(neighbor))) return false;
+        const row = Math.floor(cell / size);
+        const col = cell % size;
+        additions[row] += 1;
+        additions[size + col] += 1;
+        additions[size * 2 + regions[row][col]] += 1;
+      }
+      return additions.every((count, groupIndex) => {
+        const current = groupIndex < size ? rowStars[groupIndex]
+          : groupIndex < size * 2 ? columnStars[groupIndex - size]
+            : regionStars[groupIndex - size * 2];
+        return current + count <= starsPerGroup;
+      });
+    };
+    const groupStates = groups.map((group) => {
+      const stars = group.cells.filter((cell) => board[Math.floor(cell / size)][cell % size] === 1);
+      const empty = group.cells.filter((cell) => board[Math.floor(cell / size)][cell % size] === 0);
+      return { group, stars, empty, candidates: empty.filter(legalCandidate) };
+    });
+
+    for (const state of groupStates) {
+      if (state.stars.length === starsPerGroup && state.empty.length) {
+        return {
+          technique: "group_completed",
+          targetCells: coordinates(state.empty),
+          evidenceCells: coordinates(state.stars),
+          action: "block",
+          explanationData: {
+            groupType: state.group.type,
+            groupIndex: state.group.index,
+            requiredStars: starsPerGroup,
+            placedStars: state.stars.length,
+            targetCount: state.empty.length
+          }
+        };
+      }
+    }
+
+    for (const state of groupStates) {
+      const remainingStars = starsPerGroup - state.stars.length;
+      if (remainingStars > 0 && state.candidates.length === remainingStars && compatibleStarSet(state.candidates)) {
+        const evidence = state.group.cells.filter((cell) => !state.candidates.includes(cell));
+        return {
+          technique: "forced_candidates",
+          targetCells: coordinates(state.candidates),
+          evidenceCells: coordinates(evidence.length ? evidence : state.candidates),
+          action: "star",
+          explanationData: {
+            groupType: state.group.type,
+            groupIndex: state.group.index,
+            remainingStars,
+            candidateCells: coordinates(state.candidates)
+          }
+        };
+      }
+    }
+
+    const interactionDirections = [
+      ["region", "row"],
+      ["region", "column"],
+      ["row", "region"],
+      ["column", "region"]
+    ];
+    for (const [sourceType, targetType] of interactionDirections) {
+      for (const source of groupStates.filter((state) => state.group.type === sourceType)) {
+        const sourceRemaining = starsPerGroup - source.stars.length;
+        if (sourceRemaining <= 0 || source.candidates.length < sourceRemaining) continue;
+        const sourceSet = new Set(source.candidates);
+        for (const target of groupStates.filter((state) => state.group.type === targetType)) {
+          const targetRemaining = starsPerGroup - target.stars.length;
+          if (targetRemaining !== sourceRemaining || target.candidates.length < targetRemaining) continue;
+          const targetSet = new Set(target.candidates);
+          if (!source.candidates.every((cell) => targetSet.has(cell))) continue;
+          const eliminated = target.candidates.filter((cell) => !sourceSet.has(cell));
+          if (!eliminated.length) continue;
+          const sourceCandidateCells = coordinates(source.candidates);
+          const targetCandidateCells = coordinates(target.candidates);
+          return {
+            technique: "group_interaction",
+            targetCells: coordinates(eliminated),
+            evidenceCells: sourceCandidateCells,
+            action: "block",
+            explanationData: {
+              direction: `${sourceType}_to_${targetType}`,
+              sourceGroupType: sourceType,
+              sourceGroupIndex: source.group.index,
+              targetGroupType: targetType,
+              targetGroupIndex: target.group.index,
+              remainingStars: sourceRemaining,
+              sourceCandidateCells,
+              targetCandidateCells,
+              eliminatedCells: coordinates(eliminated)
+            }
+          };
+        }
+      }
+    }
+    return null;
+  }
+
+  function scoreHumanDifficulty(puzzle) {
+    const weights = {
+      star_adjacency: 1,
+      group_completed: 1,
+      forced_candidates: 2,
+      group_interaction: 3
+    };
+    const techniqueCounts = Object.fromEntries(Object.keys(weights).map((technique) => [technique, 0]));
+    const profile = profiles[puzzle?.profileKey];
+    if (!profile) return { score: 0, level: null, techniqueCounts, steps: 0, stalled: true };
+
+    const cells = Array.from({ length: profile.size }, () => Array(profile.size).fill(0));
+    const hasUnknown = () => cells.some((row) => row.some((value) => value === 0));
+    let score = 0;
+    let steps = 0;
+    let level = null;
+    let levelWeight = 0;
+    let stalled = false;
+
+    while (hasUnknown()) {
+      const deduction = analyzeBoard(puzzle, cells);
+      const weight = deduction && weights[deduction.technique];
+      if (!deduction || !weight || !Array.isArray(deduction.targetCells) || !deduction.targetCells.length) {
+        stalled = true;
+        break;
+      }
+
+      const value = deduction.action === "star" ? 1 : deduction.action === "block" ? 2 : 0;
+      const targets = [];
+      const seen = new Set();
+      for (const cell of deduction.targetCells) {
+        if (!Array.isArray(cell) || cell.length !== 2 || !Number.isInteger(cell[0]) || !Number.isInteger(cell[1]) ||
+            cell[0] < 0 || cell[0] >= profile.size || cell[1] < 0 || cell[1] >= profile.size) {
+          targets.length = 0;
+          break;
+        }
+        const key = `${cell[0]}-${cell[1]}`;
+        if (seen.has(key) || cells[cell[0]][cell[1]] !== 0) {
+          targets.length = 0;
+          break;
+        }
+        seen.add(key);
+        targets.push(cell);
+      }
+      if (!value || !targets.length) {
+        stalled = true;
+        break;
+      }
+
+      targets.forEach(([row, col]) => { cells[row][col] = value; });
+      techniqueCounts[deduction.technique] += 1;
+      score += weight;
+      steps += 1;
+      if (weight > levelWeight) {
+        level = deduction.technique;
+        levelWeight = weight;
+      }
+    }
+
+    if (!hasUnknown()) stalled = false;
+    return { score, level, techniqueCounts, steps, stalled };
+  }
+
   function transformGrid(grid, transform) {
     let result = grid.map((row) => [...row]);
     if (transform >= 4) result = result.map((row) => [...row].reverse());
@@ -324,5 +570,5 @@
     return JSON.stringify(puzzle.regions);
   }
 
-  root.DLL_TWO_NOT_TOUCH_CORE = { profiles, hashString, progressStorageKey, nextDailyStreak, parseProgressJson, normalizeProgress, countSolutions, generatePuzzle, validateSolution, fingerprint, solveQuick };
+  root.DLL_TWO_NOT_TOUCH_CORE = { profiles, hashString, progressStorageKey, nextDailyStreak, parseProgressJson, normalizeProgress, countSolutions, analyzeBoard, scoreHumanDifficulty, generatePuzzle, validateSolution, fingerprint, solveQuick };
 })(typeof window === "undefined" ? globalThis : window);
