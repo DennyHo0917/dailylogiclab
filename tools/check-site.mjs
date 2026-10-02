@@ -9,7 +9,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const site = "https://dailylogiclab.com";
 const files = [];
 const pageRecords = [];
-const versionedAssets = ["app.js", "logic-games-core.js", "logic-games.js", "two-not-touch-core.js", "two-not-touch-catalog.js", "styles.css"];
+const versionedAssets = ["app.js", "logic-games-core.js", "logic-games.js", "two-not-touch-core.js", "two-not-touch-catalog.js", "navigation.js", "support-config.js", "support.js", "styles.css"];
 const assetVersions = Object.fromEntries(versionedAssets.map((asset) => [
   asset,
   createHash("sha256").update(fs.readFileSync(path.join(root, asset), "utf8").replaceAll("\r\n", "\n")).digest("hex").slice(0, 10)
@@ -29,6 +29,9 @@ const htmlFiles = files.filter((file) => file.endsWith(".html"));
 for (const file of htmlFiles) {
   const html = fs.readFileSync(file, "utf8");
   const relative = path.relative(root, file);
+  if (html.includes('class="site-footer"')) {
+    assert.ok(html.includes('/support-config.js?v=') && html.includes('/support.js?v='), `${relative}: missing shared donation assets`);
+  }
   assert.match(html, /^<!doctype html>/i, `${relative}: missing doctype`);
   assert.match(html, /<html[\s>]/i, `${relative}: missing html element`);
   assert.match(html, /<\/html>\s*$/i, `${relative}: missing closing html element`);

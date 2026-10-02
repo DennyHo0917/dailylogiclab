@@ -2,6 +2,10 @@ import fs from "node:fs";
 import { createHash } from "node:crypto";
 
 const SITE = "https://dailylogiclab.com";
+const supportScriptTags = ["navigation.js", "support-config.js", "support.js"].map((name) => {
+  const version = createHash("sha256").update(fs.readFileSync(name, "utf8").replaceAll("\r\n", "\n")).digest("hex").slice(0, 10);
+  return `<script defer src="/${name}?v=${version}"></script>`;
+}).join("\n");
 const SOURCE = "killer-sudoku-combination-calculator.html";
 const OG_IMAGE = `${SITE}/og-killer-sudoku.png`;
 const DATE = "2026-08-15";
@@ -185,6 +189,7 @@ ${alternateLinks()}
     <meta property="og:title" content="${esc(page.ogTitle)}"><meta property="og:description" content="${esc(page.ogDescription)}"><meta property="og:type" content="website"><meta property="og:url" content="${SITE}${routes[key]}"><meta property="og:image" content="${OG_IMAGE}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${esc(page.imageAlt)}">
     <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(page.ogTitle)}"><meta name="twitter:description" content="${esc(page.ogDescription)}"><meta name="twitter:image" content="${OG_IMAGE}"><meta name="twitter:image:alt" content="${esc(page.imageAlt)}">
     <link rel="stylesheet" href="${asset}styles.css?v=${stylesVersion}"><script type="application/ld+json">${schema(page, key)}</script>
+  ${supportScriptTags}
   </head>
   <body>
     <header class="topbar"><a class="brand" href="${home}#play"><span class="brand-mark">DL</span><span>Daily Logic Lab</span></a>

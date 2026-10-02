@@ -2,6 +2,12 @@ node_modules/
 .git/
 .github/
 tools/
+server/
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+.wrangler/
 
 .assetsignore
 .gitignore

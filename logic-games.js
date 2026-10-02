@@ -501,6 +501,7 @@
   }
 
   function render() {
+    window.DailyLogicSupport?.setPuzzleSolved(state.solved);
     renderMeta();
     renderBoard();
     renderStats();

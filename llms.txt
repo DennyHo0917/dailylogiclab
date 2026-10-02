@@ -17,10 +17,14 @@ practice boards are solver-checked for exactly one solution.
 - [Two Not Touch Puzzle](https://dailylogiclab.com/): explanation of the no-touch puzzle format.
 - [Queens Puzzle Alternative](https://dailylogiclab.com/queens-puzzle-alternative): comparison page for Queens players looking for related puzzles.
 - [Killer Sudoku Combinations Calculator & Chart](https://dailylogiclab.com/killer-sudoku-combination-calculator): browser calculator and static 2-to-9-cell cage reference.
+- [About Daily Logic Lab](https://dailylogiclab.com/about): available games, free access and optional content tips.
+- [Privacy Policy](https://dailylogiclab.com/privacy-policy): analytics, browser storage and optional payments.
 
 ## Useful facts
 
 - The site is free and does not require an account.
+- Optional one-time tips for puzzle content already provided can be made by card through Stripe or with supported cryptocurrencies. Tips are not required to play and do not unlock extra features.
+- Card amounts are selected on the site before opening Stripe Checkout. Cryptocurrency transfers are made in the player's wallet; the site does not request a transaction hash or confirm a transfer.
 - Two Not Touch offers 1-star 7x7, 2-star 10x10, and 3-star 14x14 boards.
 - Each accepted puzzle is checked by a solver for a unique solution.
 - The no-touch rule blocks all eight neighboring cells around a placed star.

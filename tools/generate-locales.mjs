@@ -3,9 +3,14 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { applySupportContentUpdates, SUPPORT_CONTENT_MODIFIED } from "./support-content-updates.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = "https://dailylogiclab.com";
+const supportScriptTags = ["navigation.js", "support-config.js", "support.js"].map((name) => {
+  const version = createHash("sha256").update(readFileSync(path.join(ROOT, name), "utf8").replaceAll("\r\n", "\n")).digest("hex").slice(0, 10);
+  return `<script defer src="/${name}?v=${version}"></script>`;
+}).join("\n");
 const HOME_LASTMOD = "2026-08-15";
 const SUPPORT_LASTMOD = "2026-06-22";
 const CONTENT_LASTMOD = "2026-08-15";
@@ -2649,6 +2654,8 @@ const supportContent = {
   }
 };
 
+applySupportContentUpdates(supportContent);
+
 const languageLinks = languages
   .map((language) => `<link rel="alternate" hreflang="${language.hreflang}" href="${SITE}${language.path}">`)
   .join("\n    ");
@@ -2972,6 +2979,7 @@ function page(language) {
     <script type="application/ld+json">
       ${jsonLd(language)}
     </script>
+  ${supportScriptTags}
   </head>
   <body>
     <header class="topbar">
@@ -3359,6 +3367,7 @@ function longtailArticlePage(article, language) {
     <script type="application/ld+json">
       ${longtailArticleJsonLd(article, language, content)}
     </script>
+  ${supportScriptTags}
   </head>
   <body>
     <header class="topbar">
@@ -3413,6 +3422,7 @@ function supportJsonLd(language, pageKey, content) {
       url: `${SITE}${supportPath(language, pageKey)}`,
       inLanguage: language.htmlLang,
       description: content.description,
+      ...(content.dateModified ? { dateModified: content.dateModified } : {}),
       isPartOf: { "@id": `${SITE}${language.path}#website` }
     },
     null,
@@ -3470,6 +3480,7 @@ function supportPage(language, pageKey) {
     <script type="application/ld+json">
       ${supportJsonLd(language, pageKey, content)}
     </script>
+  ${supportScriptTags}
   </head>
   <body>
     <header class="topbar">
@@ -3534,7 +3545,7 @@ ${alternateBlock}
       return languages.map(
         (language) => `  <url>
     <loc>${SITE}${supportPath(language, pageKey)}</loc>
-    <lastmod>${SUPPORT_LASTMOD}</lastmod>
+    <lastmod>${pageKey === "contact" ? SUPPORT_LASTMOD : SUPPORT_CONTENT_MODIFIED}</lastmod>
 ${supportAlternateBlock}
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
@@ -3572,6 +3583,25 @@ const homeOnly = process.argv.includes("--home-only");
 const localeOption = process.argv.find((argument) => argument.startsWith("--locales="));
 const selectedKeys = localeOption ? new Set(localeOption.slice("--locales=".length).split(",")) : null;
 const selectedLanguages = selectedKeys ? languages.filter((language) => selectedKeys.has(language.key)) : languages;
+
+// Update only factual support content, without rebuilding game or guide pages.
+if (process.argv.includes("--support-only")) {
+  const updatedUrls = new Set();
+  for (const language of selectedLanguages) {
+    for (const pageKey of ["about", "privacy"]) {
+      await writeFile(path.resolve(supportOutPath(language, pageKey)), supportPage(language, pageKey), "utf8");
+      updatedUrls.add(`${SITE}${supportPath(language, pageKey)}`);
+    }
+  }
+  const currentSitemap = readFileSync(path.join(ROOT, "sitemap.xml"), "utf8");
+  const updatedSitemap = currentSitemap.replace(/<url>[\s\S]*?<\/url>/g, (entry) => {
+    const url = entry.match(/<loc>([^<]+)<\/loc>/)?.[1];
+    return updatedUrls.has(url) ? entry.replace(/<lastmod>[^<]+<\/lastmod>/, `<lastmod>${SUPPORT_CONTENT_MODIFIED}</lastmod>`) : entry;
+  });
+  await writeFile(path.join(ROOT, "sitemap.xml"), updatedSitemap, "utf8");
+  console.log(`${updatedUrls.size} localized about/privacy pages and sitemap dates updated`);
+  process.exit(0);
+}
 
 for (const language of selectedLanguages) {
   const outPath = path.resolve(language.out);

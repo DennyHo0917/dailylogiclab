@@ -24,6 +24,8 @@ jobs:
         run: node tools/test-logic-games.mjs
       - name: SEO audit
         run: node tools/audit-game-seo.mjs
+      - name: Payment amount validation and checkout configuration checks
+        run: npm run test:payments
       - name: HTML and JavaScript syntax checks
         run: node tools/check-site.mjs
       - name: Route audit

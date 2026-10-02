@@ -5,6 +5,10 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = "https://dailylogiclab.com";
+const supportScriptTags = ["navigation.js", "support-config.js", "support.js"].map((name) => {
+  const version = createHash("sha256").update(fs.readFileSync(path.join(ROOT, name), "utf8").replaceAll("\r\n", "\n")).digest("hex").slice(0, 10);
+  return `<script defer src="/${name}?v=${version}"></script>`;
+}).join("\n");
 const games = ["tents-and-trees", "hashi", "slitherlink", "nonogram"];
 const ogImages = {
   "tents-and-trees": "og-tents-and-trees.png",
@@ -206,6 +210,7 @@ ${hreflangs(gameKey)}
     <meta property="og:type" content="website"><meta property="og:site_name" content="Daily Logic Lab"><meta property="og:title" content="${esc(game.seo)}"><meta property="og:description" content="${esc(game.desc)}"><meta property="og:url" content="${SITE}${canonicalPath}"><meta property="og:image" content="${SITE}/${ogImages[gameKey]}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${esc(game.name)}"><meta property="og:locale" content="${locale.lang.replace("-", "_")}">${ogAlternates}
     <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(game.seo)}"><meta name="twitter:description" content="${esc(game.desc)}"><meta name="twitter:image" content="${SITE}/${ogImages[gameKey]}"><meta name="twitter:image:alt" content="${esc(game.name)}"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="stylesheet" href="${versionedAsset("styles.css")}">
     <script type="application/ld+json">${JSON.stringify(schema)}</script>
+  ${supportScriptTags}
   </head>
   <body data-game="${gameKey}" data-base-path="${canonicalPath}">
     <header class="topbar">

@@ -4,7 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const assets = ["app.js", "logic-games-core.js", "logic-games.js", "two-not-touch-core.js", "two-not-touch-catalog.js", "styles.css"];
+const assets = ["app.js", "logic-games-core.js", "logic-games.js", "two-not-touch-core.js", "two-not-touch-catalog.js", "navigation.js", "support-config.js", "support.js", "styles.css"];
 const versions = Object.fromEntries(assets.map((asset) => [
   asset,
   createHash("sha256").update(fs.readFileSync(path.join(root, asset), "utf8").replaceAll("\r\n", "\n")).digest("hex").slice(0, 10)
@@ -13,7 +13,7 @@ const htmlFiles = [];
 
 function walk(directory) {
   for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
-    if (entry.name === ".git") continue;
+    if (entry.name === ".git" || entry.name === "node_modules") continue;
     const target = path.join(directory, entry.name);
     if (entry.isDirectory()) walk(target);
     else if (entry.name.endsWith(".html")) htmlFiles.push(target);
@@ -24,7 +24,14 @@ walk(root);
 let changed = 0;
 for (const file of htmlFiles) {
   const original = fs.readFileSync(file, "utf8");
-  let html = original.replace(
+  let html = original;
+  if (html.includes('class="language-switcher') && !html.includes('src="/navigation.js')) {
+    html = html.replace(/<\/head>/i, '    <script defer src="/navigation.js"></script>\n  </head>');
+  }
+  if (html.includes('class="site-footer"') && !html.includes('src="/support.js')) {
+    html = html.replace(/<\/head>/i, '    <script defer src="/support-config.js"></script>\n    <script defer src="/support.js"></script>\n  </head>');
+  }
+  html = html.replace(
     /(<link rel="stylesheet" href="[^"]*styles\.css)(?:\?v=[^"]*)?("\s*\/?>)/g,
     `$1?v=${versions["styles.css"]}$2`
   );

@@ -1420,6 +1420,7 @@ function updateStartOverlay() {
 }
 
 function updateControls() {
+  window.DailyLogicSupport?.setPuzzleSolved(state.solved);
   const playable = state.started && !state.solved;
   const nextPenalty = HINT_PENALTIES[state.hintCount];
   els.hintBtn.textContent = nextPenalty ? t("hintButton", { penalty: nextPenalty }) : t("noHintsLeft");
