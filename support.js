@@ -153,6 +153,14 @@
   const intro = element("p", "support-intro", copy.intro);
   intro.id = "supportIntro";
   content.append(close, icon, title, intro);
+  const methods = element("div", "support-methods");
+  const card = element("section", "support-method support-bank-card");
+  card.setAttribute("aria-labelledby", "supportCardTitle");
+  const cardTitle = element("h3", "support-method-title", copy.card);
+  cardTitle.id = "supportCardTitle";
+  card.append(cardTitle);
+  methods.append(card);
+  content.append(methods);
 
   // The server creates Checkout Sessions. Card details stay on Stripe.
   if (config.stripeCheckoutEnabled) {
@@ -255,7 +263,7 @@
         stripe.textContent = buttonText;
       }
     });
-    content.append(form, element("p", "support-or", copy.or));
+    card.append(form);
   } else if (config.stripeUrl) {
     try {
       const url = new URL(config.stripeUrl);
@@ -266,13 +274,17 @@
         stripe.target = "_blank";
         stripe.rel = "noopener noreferrer";
         stripe.addEventListener("click", () => track("donation_card_click", { payment_method: "card" }));
-        content.append(stripe, element("p", "support-card-note", copy.cardNote), element("p", "support-or", copy.or));
+        card.append(stripe, element("p", "support-card-note", copy.cardNote));
       }
     } catch { /* Keep an invalid card configuration out of the payment UI. */ }
   }
 
-  const crypto = element("div", "support-crypto");
-  crypto.append(element("h3", "support-method-title", copy.crypto));
+  if (card.children.length === 1) card.hidden = true;
+  const crypto = element("section", "support-method support-crypto");
+  crypto.setAttribute("aria-labelledby", "supportCryptoTitle");
+  const cryptoTitle = element("h3", "support-method-title", copy.crypto);
+  cryptoTitle.id = "supportCryptoTitle";
+  crypto.append(cryptoTitle);
   function choices(label, name) {
     const fieldset = element("fieldset", "support-field");
     fieldset.append(element("legend", "", label));
@@ -319,7 +331,7 @@
   wallet.append(qr, addressLabel, address, copyButton, status, element("p", "support-qr-note", copy.qrNote));
   const suggestedAmount = element("p", "support-suggested");
   crypto.append(wallet, suggestedAmount, element("p", "support-note", copy.note));
-  content.append(crypto);
+  methods.append(crypto);
   if (!networks.length) {
     crypto.hidden = true;
     content.append(element("p", "support-note", copy.unavailable));
