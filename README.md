@@ -115,10 +115,11 @@ account and US$1 price, validates the amount and same-origin return URL, and use
 an idempotency key for retries. Checkout receives the chosen total directly.
 Stripe collects card details and records payments in its Dashboard. Success or
 cancellation returns to the puzzle page without claiming payment verification.
-This flow grants no account credit or paid features and requires no webhook or
-publishable key.
+This flow grants no account credit or paid features and needs no publishable key.
+Payment reporting uses the verified server webhook described below.
 
-The production Worker needs `STRIPE_SECRET_KEY` as a Cloudflare secret. The
+The production Worker needs `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` and
+`GA4_API_SECRET` as Cloudflare secrets. The
 public account ID, price ID and site origin are in `wrangler.jsonc`. Before a
 production deployment, configure the dedicated account's key with
 `npx wrangler secret put STRIPE_SECRET_KEY`. Never put it in `support-config.js`,
@@ -174,10 +175,44 @@ Card events carry the selected amount and payment method, not a crypto network.
 callback gets at most 1.5 seconds before redirect, so unavailable analytics cannot
 block Checkout. Localhost support interactions are not sent to GA4. These events
 do not send card details, emails, wallet addresses, transaction hashes or Checkout
-Session IDs. They measure intent, not received revenue: no `purchase` event is
-emitted from a click or a return-page visit. Use Stripe payment records to confirm
-card revenue; an accurate GA4 payment conversion would need separate server-side
-verification and reporting.
+Session IDs. They measure intent: no `purchase` event is emitted from a click
+or a return-page visit.
+
+`POST /api/support/stripe-webhook` verifies Stripe's raw-body HMAC signature and
+five-minute timestamp window. It accepts live `checkout.session.completed` and
+`checkout.session.async_payment_succeeded` events for this project, re-reads the
+session from the dedicated Stripe account, and requires a complete, paid session
+with the expected US$1 price, quantity and total. Only then does the server send
+GA4's standard `purchase` event with USD `value`, `transaction_id` and item data.
+This is successful gross card revenue, before Stripe fees and bank payouts;
+refunds, disputes, net bank deposits and cryptocurrency receipts are not reported
+by this integration.
+
+A Durable Object per Checkout Session persists successful submission and
+serializes duplicate callbacks. The transaction reference is a stable hash,
+not a raw Stripe identifier. Failed transport returns 503 for Stripe retries.
+A browser's GA4 client/session identifiers are included in Stripe metadata when
+available (at most 800 ms wait); otherwise reporting uses a transaction-specific
+numeric client identifier and labels visit attribution unavailable. No names,
+emails, card numbers or wallet addresses are included in the purchase payload.
+The browser's payment flow remains available when analytics cannot be read.
+
+Configure the webhook using the dedicated account and a private env file outside
+the repository; the tool saves the signing secret there without printing it:
+
+```text
+node --env-file=C:/private/dailylogiclab-stripe.env tools/configure-stripe-webhook.mjs C:/private/dailylogiclab-stripe.env
+```
+
+Upload the three secrets to the `dailylogiclab` Worker. The public GA4 measurement
+ID and Durable Object binding/migration are in `wrangler.jsonc`. GitHub deployment
+applies the migration. Standard `purchase` parameters support GA4 purchase and
+revenue reports without custom revenue metrics. Google's debug validation endpoint
+does not record events or validate the API secret; a successful collect HTTP
+response alone also does not prove report visibility. Verify a real paid tip in
+GA4 after configuration. Never send fixture purchases to the production collector.
+The lightweight local preview serves Checkout, not the production Durable Object
+webhook; webhook tests use isolated Stripe/GA4 stubs.
 
 For GA4 exploration reports, register event-scoped custom dimensions for
 `language`, `entry_point`, `payment_method`, `amount_source`, `chain`, `token`

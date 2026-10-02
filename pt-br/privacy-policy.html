@@ -63,8 +63,8 @@
 }
     </script>
   <script defer src="/navigation.js?v=e94bc9d521"></script>
-<script defer src="/support-config.js?v=b5d5c1e689"></script>
-<script defer src="/support.js?v=0516b2f3d0"></script>
+<script defer src="/support-config.js?v=6a6f735334"></script>
+<script defer src="/support.js?v=786d026c5f"></script>
   </head>
   <body>
     <header class="topbar">
@@ -108,6 +108,7 @@
         <h2>Analytics</h2>
         <p>Daily Logic Lab usa Google Analytics para entender uso agregado, como visualizações, início de puzzles, dicas, conferências e informações gerais de dispositivo ou navegador.</p>
               <p>Também medimos avisos de apoio, abertura do diálogo, valores escolhidos, pedidos de pagamento, erros, redirecionamentos e cópias do endereço. Essas interações não comprovam pagamento. Os eventos podem incluir idioma, ponto de entrada, método, valor, rede e moeda; não adicionamos dados de cartão, e-mails, endereços de carteira, hashes de transação ou identificadores do Checkout.</p>
+              <p>Separadamente, nosso servidor confirma os pagamentos com cartão no Stripe e envia uma compra ao Google Analytics com o valor antes das taxas, a moeda e uma referência de transação pseudonimizada. Quando disponíveis, os identificadores de cliente e sessão do Analytics são enviados ao Stripe para relacionar o pagamento à visita; caso contrário, usamos um identificador específico do pagamento, sem atribuição a uma visita. Notificações repetidas não são contadas novamente. Esses eventos não enviam dados de cartão, nomes, e-mails nem identificadores originais de pagamento do Stripe.</p>
 
         <h2>Gorjetas e pagamentos opcionais</h2>
         <p>Para gorjetas com cartão, nosso servidor envia ao Stripe o valor escolhido, o idioma e a página de retorno para criar um pagamento único. O Stripe processa o pagamento e os dados de contato preenchidos lá. Podemos consultar os pagamentos e os dados de cliente fornecidos ao Stripe em seu painel. Este site não coleta números de cartão.</p>

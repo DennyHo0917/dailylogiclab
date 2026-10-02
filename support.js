@@ -126,6 +126,18 @@
     } catch { afterEvent?.(); }
   }
 
+  async function paymentAnalyticsContext() {
+    if (["localhost", "127.0.0.1", "[::1]"].includes(location.hostname) || typeof window.gtag !== "function" || !/^G-[A-Z0-9]+$/.test(config.ga4MeasurementId || "")) return {};
+    const read = (field) => new Promise((resolve) => {
+      const timer = setTimeout(() => resolve(undefined), 800);
+      try {
+        window.gtag("get", config.ga4MeasurementId, field, (value) => { clearTimeout(timer); resolve(value); });
+      } catch { clearTimeout(timer); resolve(undefined); }
+    });
+    const [clientId, sessionId] = await Promise.all([read("client_id"), read("session_id")]);
+    return { clientId, sessionId };
+  }
+
   const dialog = element("dialog", "support-dialog");
   dialog.id = "supportDialog";
   dialog.setAttribute("aria-labelledby", "supportTitle");
@@ -210,9 +222,10 @@
       track("donation_checkout_start", { payment_method: "card", amount_usd: amount });
       try {
         requestId ||= window.crypto.randomUUID();
+        const analytics = await paymentAnalyticsContext();
         const response = await fetch("/api/support/checkout", {
           method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ amount, language, returnPath: location.pathname, requestId }),
+          body: JSON.stringify({ amount, language, returnPath: location.pathname, requestId, analytics, entryPoint }),
           signal: AbortSignal.timeout(50000)
         });
         const result = await response.json();

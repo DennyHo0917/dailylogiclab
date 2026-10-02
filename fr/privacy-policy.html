@@ -63,8 +63,8 @@
 }
     </script>
   <script defer src="/navigation.js?v=e94bc9d521"></script>
-<script defer src="/support-config.js?v=b5d5c1e689"></script>
-<script defer src="/support.js?v=0516b2f3d0"></script>
+<script defer src="/support-config.js?v=6a6f735334"></script>
+<script defer src="/support.js?v=786d026c5f"></script>
   </head>
   <body>
     <header class="topbar">
@@ -108,6 +108,7 @@
         <h2>Analytique</h2>
         <p>Daily Logic Lab utilise Google Analytics pour comprendre l'usage agrégé : pages vues, lancements de puzzle, indices, vérifications et informations générales de navigateur ou d'appareil.</p>
               <p>Nous mesurons aussi l’affichage des invitations à soutenir le site, l’ouverture du dialogue, les montants choisis, les demandes de paiement, les erreurs, les redirections et les copies d’adresse. Ces actions ne confirment pas un paiement. Les événements peuvent inclure langue, point d’entrée, moyen de paiement, montant, réseau et devise ; nous n’y ajoutons ni données de carte, ni e-mail, ni adresse de portefeuille, ni hash de transaction, ni identifiant Checkout.</p>
+              <p>Notre serveur vérifie également les paiements par carte auprès de Stripe et transmet un achat à Google Analytics, avec le montant avant frais, la devise et une référence de transaction pseudonyme. Lorsqu’ils sont disponibles, les identifiants du client et de la session Analytics sont transmis à Stripe pour rattacher le paiement à la visite. Sinon, un identifiant propre au paiement est utilisé sans attribution à une visite. Les notifications répétées ne sont comptées qu’une fois. Ces événements ne transmettent ni carte, ni nom, ni e-mail, ni identifiant original de paiement Stripe.</p>
 
         <h2>Pourboires et paiements facultatifs</h2>
         <p>Pour un pourboire par carte, notre serveur transmet à Stripe le montant, la langue et la page de retour afin de créer un paiement unique. Stripe traite le paiement et les coordonnées saisies sur sa page. Nous pouvons consulter les paiements et les renseignements client fournis à Stripe dans son tableau de bord. Ce site ne recueille pas les numéros de carte.</p>

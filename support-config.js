@@ -3,6 +3,7 @@
 // Add the Daily Logic Lab account's hosted Stripe Payment Link to stripeUrl.
 // Keep API keys and webhook secrets outside this public repository.
 window.DailyLogicSupportConfig = {
+  ga4MeasurementId: "G-6NY29HPM34",
   stripeCheckoutEnabled: true,
   stripeUrl: "https://buy.stripe.com/14AbJ1bNNff46Vjgti8Zq00",
   stripeAmounts: [

@@ -63,8 +63,8 @@
 }
     </script>
   <script defer src="/navigation.js?v=e94bc9d521"></script>
-<script defer src="/support-config.js?v=b5d5c1e689"></script>
-<script defer src="/support.js?v=0516b2f3d0"></script>
+<script defer src="/support-config.js?v=6a6f735334"></script>
+<script defer src="/support.js?v=786d026c5f"></script>
   </head>
   <body>
     <header class="topbar">
@@ -108,6 +108,7 @@
         <h2>Analytics</h2>
         <p>Daily Logic Lab uses Google Analytics to understand aggregate site usage, such as page views, puzzle starts, hints, checks, and general device or browser information. Google may use cookies or similar technologies for measurement.</p>
               <p>Support measurement includes prompt views, dialog opens, selected amounts, payment-page requests, errors, redirects and wallet-address copies. These are interaction signals, not proof of payment. Events can include language, entry point, payment method, amount, network and currency; we do not add card details, email addresses, wallet addresses, transaction hashes or Checkout Session identifiers to these events.</p>
+              <p>Separately, our server confirms successful card payments with Stripe and reports a purchase to Google Analytics with the amount before fees, currency and a pseudonymous transaction reference. If available, browser analytics client and session identifiers are passed to Stripe to associate the payment with the visit; otherwise a payment-specific identifier is used without visit attribution. Repeated notifications are deduplicated. Card details, names, email addresses and raw Stripe payment identifiers are not sent in these analytics events.</p>
 
         <h2>Optional Tips and Payments</h2>
         <p>For card tips, our server sends the selected amount, page language and return page to Stripe to create a one-time payment page. Stripe processes the payment and any contact details entered there. We can view payment records and customer information provided to Stripe in our Stripe Dashboard; this website does not collect card numbers.</p>

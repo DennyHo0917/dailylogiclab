@@ -63,8 +63,8 @@
 }
     </script>
   <script defer src="/navigation.js?v=e94bc9d521"></script>
-<script defer src="/support-config.js?v=b5d5c1e689"></script>
-<script defer src="/support.js?v=0516b2f3d0"></script>
+<script defer src="/support-config.js?v=6a6f735334"></script>
+<script defer src="/support.js?v=786d026c5f"></script>
   </head>
   <body>
     <header class="topbar">
@@ -108,6 +108,7 @@
         <h2>解析</h2>
         <p>Daily Logic Lab は Google Analytics を使い、ページ表示、パズル開始、ヒント、チェック、一般的な端末やブラウザ情報などを集計して改善に役立てます。</p>
               <p>応援の案内表示、ダイアログ表示、選択金額、決済画面の作成依頼、エラー、移動、アドレスのコピーも計測します。これらは操作の記録で、支払い完了を示すものではありません。言語、入口、支払い方法、金額、ネットワーク、通貨を含むことがありますが、カード情報、メールアドレス、ウォレットアドレス、取引ハッシュ、Checkout識別子はこれらのイベントに追加しません。</p>
+              <p>別途、サーバーでStripeのカード決済成功を確認し、手数料控除前の金額、通貨、仮名化した取引参照をGoogle Analyticsの購入イベントとして送信します。取得できる場合はAnalyticsのクライアントIDとセッションIDをStripeへ渡し、支払いと訪問を関連付けます。取得できない場合は決済ごとの識別子を使い、訪問には関連付けません。同じ通知は重複計上しません。カード情報、氏名、メールアドレス、Stripeの元の決済識別子をこれらの分析イベントに送ることはありません。</p>
 
         <h2>任意のチップと決済</h2>
         <p>カードでのチップでは、サーバーからStripeへ選択金額、画面の言語、戻り先のページを送り、一度限りの決済画面を作成します。Stripeが決済とそこで入力した連絡先を処理します。運営者はStripeの管理画面で決済記録やStripeに提供された顧客情報を確認できます。このサイトでカード番号を収集することはありません。</p>

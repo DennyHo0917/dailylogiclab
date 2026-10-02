@@ -63,8 +63,8 @@
 }
     </script>
   <script defer src="/navigation.js?v=e94bc9d521"></script>
-<script defer src="/support-config.js?v=b5d5c1e689"></script>
-<script defer src="/support.js?v=0516b2f3d0"></script>
+<script defer src="/support-config.js?v=6a6f735334"></script>
+<script defer src="/support.js?v=786d026c5f"></script>
   </head>
   <body>
     <header class="topbar">
@@ -108,6 +108,7 @@
         <h2>分析统计</h2>
         <p>Daily Logic Lab 使用 Google Analytics 了解聚合使用情况，例如页面浏览、开始题目、使用提示、检查盘面以及一般设备或浏览器信息。</p>
               <p>我们也统计支持提示展示、弹窗打开、金额选择、付款页创建请求、失败、跳转及收款地址复制。这些操作不代表付款成功。事件可能包含语言、入口、付款方式、金额、网络和币种；不会向这些事件加入银行卡信息、邮箱、钱包地址、交易哈希或 Checkout 会话标识。</p>
+              <p>此外，服务端会向 Stripe 核实银行卡付款成功，再向 Google Analytics 上报购买事件，包含扣手续费前的付款金额、币种和假名化的交易参考编号。如果能取得浏览器的 Analytics 客户端和会话标识，会把它们传给 Stripe，以便将付款关联到本次访问；无法取得时使用该笔付款专属的标识，不关联访问来源。重复通知不会重复计入收入。这些统计事件不发送银行卡信息、姓名、邮箱或 Stripe 原始付款标识。</p>
 
         <h2>可选打赏与支付</h2>
         <p>银行卡打赏时，服务端把所选金额、页面语言和返回页面发送给 Stripe，创建一次性付款页。Stripe 处理付款及用户在其页面填写的联系信息。我们可以在 Stripe 管理后台查看付款记录及用户向 Stripe 提供的客户信息；本站不收集银行卡号。</p>

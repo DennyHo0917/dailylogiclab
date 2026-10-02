@@ -67,6 +67,10 @@ export async function createTipCheckout(request, env, fetchStripe = fetch) {
       success_url: returnUrl.href,
       cancel_url: returnUrl.href,
       "metadata[project]": "dailylogiclab-content-tips-v1",
+      "metadata[ga_language]": language,
+      "metadata[ga_entry_point]": ["footer", "completion"].includes(body.entryPoint) ? body.entryPoint : "unknown",
+      ...(/^\d{1,20}\.\d{1,20}$/.test(body.analytics?.clientId || "") ? { "metadata[ga_client_id]": body.analytics.clientId } : {}),
+      ...(/^\d{1,15}$/.test(String(body.analytics?.sessionId || "")) && Number(body.analytics.sessionId) > 0 ? { "metadata[ga_session_id]": String(body.analytics.sessionId) } : {}),
       "payment_intent_data[description]": "Daily Logic Lab — optional tip for puzzle content already provided",
       "payment_intent_data[metadata][purpose]": "tips_for_provided_puzzle_content"
     });

@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "test": "node tools/test-two-not-touch.mjs && node tools/test-logic-games.mjs && node tools/audit-game-seo.mjs && node tools/check-site.mjs && node tools/audit-routes.mjs",
-    "test:payments": "node tools/test-stripe-checkout.mjs",
+    "test:payments": "node tools/test-stripe-checkout.mjs && node tools/test-payment-analytics.mjs",
     "deploy:dry-run": "wrangler deploy --dry-run"
   },
   "devDependencies": {
