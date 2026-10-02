@@ -9,7 +9,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const site = "https://dailylogiclab.com";
 const files = [];
 const pageRecords = [];
-const versionedAssets = ["app.js", "logic-games-core.js", "logic-games.js", "two-not-touch-core.js", "two-not-touch-catalog.js", "navigation.js", "support-config.js", "support.js", "styles.css"];
+const versionedAssets = ["analytics.js", "app.js", "logic-games-core.js", "logic-games.js", "two-not-touch-core.js", "two-not-touch-catalog.js", "navigation.js", "support-config.js", "support.js", "styles.css"];
 const assetVersions = Object.fromEntries(versionedAssets.map((asset) => [
   asset,
   createHash("sha256").update(fs.readFileSync(path.join(root, asset), "utf8").replaceAll("\r\n", "\n")).digest("hex").slice(0, 10)
@@ -31,6 +31,13 @@ for (const file of htmlFiles) {
   const relative = path.relative(root, file);
   if (html.includes('class="site-footer"')) {
     assert.ok(html.includes('/support-config.js?v=') && html.includes('/support.js?v='), `${relative}: missing shared donation assets`);
+    assert.match(html, /<script defer src="\/analytics\.js\?v=/, `${relative}: missing shared analytics`);
+  }
+  assert.ok(!html.includes("googletagmanager.com/gtag"), `${relative}: unguarded Google tag loader`);
+  assert.ok(!html.includes("gtag('config'"), `${relative}: unguarded inline analytics initialization`);
+  for (const asset of ["app.js", "logic-games.js", "support.js"]) {
+    if (!html.includes(`${asset}?v=`)) continue;
+    assert.ok(html.indexOf("/analytics.js?v=") >= 0 && html.indexOf("/analytics.js?v=") < html.indexOf(`${asset}?v=`), `${relative}: analytics must initialize before ${asset}`);
   }
   assert.match(html, /^<!doctype html>/i, `${relative}: missing doctype`);
   assert.match(html, /<html[\s>]/i, `${relative}: missing html element`);

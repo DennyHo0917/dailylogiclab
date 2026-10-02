@@ -203,7 +203,7 @@ function page(localeKey, gameKey) {
 <html lang="${locale.lang}">
   <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NY29HPM34"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-6NY29HPM34');</script>
+    <script defer src="${versionedAsset("analytics.js")}"></script>
     <title>${esc(game.seo)}</title><meta name="description" content="${esc(game.desc)}"><meta name="robots" content="index, follow, max-image-preview:large"><meta name="theme-color" content="#245c53">
     <link rel="canonical" href="${SITE}${canonicalPath}">
 ${hreflangs(gameKey)}

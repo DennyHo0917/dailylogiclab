@@ -495,7 +495,7 @@
     els.completionPanel.hidden = false;
     els.completionTime.textContent = formatTime(state.elapsed);
     els.completionDifficulty.textContent = ui.difficulties[state.difficulty];
-    const params = getEventData({ completion_time: state.elapsed });
+    const params = getEventData({ time_seconds: state.elapsed, completion_time: state.elapsed });
     trackEvent("puzzle_complete", params);
     if (state.mode === "daily") trackEvent("daily_puzzle_complete", params);
   }
@@ -1005,7 +1005,11 @@
   }
 
   function getEventData(extra = {}) {
-    return { game_name: game, mode: state.mode, difficulty: state.difficulty, ...extra };
+    return {
+      game_name: game, language: document.documentElement.lang.toLowerCase(),
+      mode: state.mode, difficulty: state.difficulty,
+      elapsed_seconds: state.elapsed, ...extra
+    };
   }
 
   function trackEvent(name, params = {}) {

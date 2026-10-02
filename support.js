@@ -111,7 +111,7 @@
 
   function track(name, extra = {}, afterEvent) {
     // Interactions measure intent. Only Stripe can confirm a card payment.
-    if (["localhost", "127.0.0.1", "[::1]"].includes(location.hostname) || typeof window.gtag !== "function") {
+    if (!window.DailyLogicAnalytics?.enabled || typeof window.gtag !== "function") {
       afterEvent?.();
       return;
     }
@@ -127,7 +127,7 @@
   }
 
   async function paymentAnalyticsContext() {
-    if (["localhost", "127.0.0.1", "[::1]"].includes(location.hostname) || typeof window.gtag !== "function" || !/^G-[A-Z0-9]+$/.test(config.ga4MeasurementId || "")) return {};
+    if (!window.DailyLogicAnalytics?.enabled || typeof window.gtag !== "function" || !/^G-[A-Z0-9]+$/.test(config.ga4MeasurementId || "")) return {};
     const read = (field) => new Promise((resolve) => {
       const timer = setTimeout(() => resolve(undefined), 800);
       try {

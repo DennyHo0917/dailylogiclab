@@ -156,6 +156,19 @@ and the production Worker secret.
 
 ### Support analytics and search metadata
 
+All tracked pages share `analytics.js`. Google Analytics loads only on
+`dailylogiclab.com` and `www.dailylogiclab.com`; local files, localhost, LAN
+previews and Worker preview hosts neither load Google's tag nor queue events.
+Disabled analytics still completes callbacks, so card Checkout remains usable.
+
+All five games emit `puzzle_complete` once per completion, including
+`game_name`, the page's `language`, `mode` and `time_seconds`. The daily-only
+`daily_puzzle_complete` remains a diagnostic subset, not another completion to
+add to the total. Two Not Touch no longer emits the legacy `puzzle_solved` event.
+In this site's GA4 property, mark `puzzle_complete` as a key event and unmark
+`puzzle_solved`; keep `purchase` as the separate payment event. These settings
+apply going forward and do not rewrite the historical key-event counts.
+
 The support flow keeps its existing `donation_*` event names for continuity:
 
 | Event | Meaning |

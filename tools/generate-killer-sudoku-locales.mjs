@@ -2,6 +2,7 @@ import fs from "node:fs";
 import { createHash } from "node:crypto";
 
 const SITE = "https://dailylogiclab.com";
+const analyticsVersion = createHash("sha256").update(fs.readFileSync("analytics.js", "utf8").replaceAll("\r\n", "\n")).digest("hex").slice(0, 10);
 const supportScriptTags = ["navigation.js", "support-config.js", "support.js"].map((name) => {
   const version = createHash("sha256").update(fs.readFileSync(name, "utf8").replaceAll("\r\n", "\n")).digest("hex").slice(0, 10);
   return `<script defer src="/${name}?v=${version}"></script>`;
@@ -180,8 +181,7 @@ function render(page, key) {
 <html lang="${meta.lang}">
   <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NY29HPM34"></script>
-    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-6NY29HPM34');</script>
+    <script defer src="/analytics.js?v=${analyticsVersion}"></script>
     <title>${esc(page.title)}</title><meta name="description" content="${esc(page.description)}"><meta name="robots" content="index, follow, max-image-preview:large"><meta name="theme-color" content="#245c53">
     <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest">
     <link rel="canonical" href="${SITE}${routes[key]}">

@@ -18,6 +18,8 @@ jobs:
           cache: npm
       - name: Install test dependency
         run: npm ci
+      - name: Production-only analytics and unified game completion checks
+        run: node tools/test-analytics.mjs
       - name: Two Not Touch modes, solver, validator, performance, and diversity checks
         run: node tools/test-two-not-touch.mjs
       - name: Generator, solver, validator, performance, and diversity checks

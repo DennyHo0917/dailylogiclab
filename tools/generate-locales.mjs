@@ -19,7 +19,7 @@ const HOME_DATE_MODIFIED = "2026-08-15";
 const CONTENT_DATE_MODIFIED = "2026-08-15";
 const OG_IMAGE = `${SITE}/og-image.png`;
 const GITHUB_URL = "https://github.com/DennyHo0917/dailylogiclab";
-const assetVersion = (file) => createHash("sha256").update(readFileSync(path.join(ROOT, file))).digest("hex").slice(0, 10);
+const assetVersion = (file) => createHash("sha256").update(readFileSync(path.join(ROOT, file), "utf8").replaceAll("\r\n", "\n")).digest("hex").slice(0, 10);
 const versionedAsset = (file) => `${file}?v=${assetVersion(file)}`;
 
 const geoFacts = {
@@ -2938,14 +2938,7 @@ function page(language) {
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NY29HPM34"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-6NY29HPM34');
-    </script>
+    <script defer src="/${versionedAsset("analytics.js")}"></script>
     <title>${escapeHtml(language.meta.title)}</title>
     <meta name="description" content="${escapeHtml(language.meta.description)}">
     <meta name="language" content="${escapeHtml(profile.languageName)}">
@@ -3331,14 +3324,7 @@ function longtailArticlePage(article, language) {
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NY29HPM34"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-6NY29HPM34');
-    </script>
+    <script defer src="/${versionedAsset("analytics.js")}"></script>
     <title>${escapeHtml(content.title)}</title>
     <meta name="description" content="${escapeHtml(content.description)}">
     <meta name="language" content="${escapeHtml(profile.languageName)}">
@@ -3444,14 +3430,7 @@ function supportPage(language, pageKey) {
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6NY29HPM34"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-6NY29HPM34');
-    </script>
+    <script defer src="/${versionedAsset("analytics.js")}"></script>
     <title>${escapeHtml(content.title)}</title>
     <meta name="description" content="${escapeHtml(content.description)}">
     <meta name="language" content="${escapeHtml(profile.languageName)}">

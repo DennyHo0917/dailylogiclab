@@ -1248,7 +1248,6 @@ function markSolved() {
     }),
     "success"
   );
-  trackEvent("puzzle_solved", getPuzzleEventData({ time_seconds: elapsed, new_best: isBest }));
   trackEvent("puzzle_complete", getPuzzleEventData({ time_seconds: elapsed, new_best: isBest }));
   if (state.mode === "daily") trackEvent("daily_puzzle_complete", getPuzzleEventData({ time_seconds: elapsed, new_best: isBest }));
   renderBoard();
@@ -1529,7 +1528,7 @@ function getPuzzleEventData(extra = {}) {
     hint_stage: hintStage,
     technique: extra.technique ?? "",
     proof: "unique_solution",
-    language: LANGUAGE_KEY,
+    language: document.documentElement.lang.toLowerCase(),
     stars: state.cells.flat().filter((value) => value === STAR).length,
     elapsed_seconds: elapsed,
     hint_count: state.hintCount,
